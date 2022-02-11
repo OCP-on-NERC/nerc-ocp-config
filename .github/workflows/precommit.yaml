@@ -1,0 +1,8 @@
+name: Run pre-commit checks
+
+on:
+  pull_request:
+
+jobs:
+  run-linters:
+    uses: ocp-on-nerc/workflows/.github/workflows/precommit.yaml@main
