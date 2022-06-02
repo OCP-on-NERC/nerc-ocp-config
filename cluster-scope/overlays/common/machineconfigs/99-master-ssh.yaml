@@ -1,0 +1,17 @@
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  labels:
+    machineconfiguration.openshift.io/role: master
+  name: 99-master-ssh
+spec:
+  config:
+    ignition:
+      version: 3.2.0
+    passwd:
+      users:
+      - name: core
+        sshAuthorizedKeys:
+        - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDwxZw52X4wl4PT2gQwjxg8LnLcAc7R+kNFVYkxbsTO89jWhjK7J+Giz+gUNOioBz4IY6/5SCd0tGYFCp4m0F7a8Pp9JRr8aEtpzjaC6LTtD17UxK5+IJxxKCaF3FZ6yvWGU77umvm3oRszv+2rILqSLUjgc//LyaaIasgV2HIbOCUkgwynEBrEDhH2Ma5Ie8z+9u7M63xvUXrYsp0a5otTepjb+8CELq9qO+/xJeWBGhl7F1uUTD3b+eemqntIAr/G/30UNE9TpHsTlVTTnhaMmIz233U9Kz2aGt14UraLvI7u7dhPgJ2R0JQTXrdJjA97Rk/CrRy/gquy8/m4MzCt naved001
+        - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDHU+dRblINH9VOKWKluyyE1xz0GG6YMIiTCgUlDrEzvybC0Y0luIj87rQFHmihYFrmYdrCe2v2dFo1LggJEMPh3jfrXzJVl7KjbTOdsUSVwWCHD07uAiyNmH7aNGFuS4B6oiQj5NSTzl5C0Mvt/JIZmkky2305tZoF40bGlHP/U3tXoU+QPRqV44HR0AdkMArHADQoR/cpEQJantNuQsV2BouzfOJ8GcFLDU2ZPESgubrd4CxQ7p2+uujl0WsTsz0Ip3FkJINBHBnOGM9NteHVsiGJgmg3oeOhcH31bjYOToRNKvjAiepAsQMjhfm3GE850DcFJO6kEGD8umbhRiXZIfGJkqw1HWzcaN09q9cOWczMUytGBy6BGc7eNdf03F9FHLOO8c5gcA6Sd7rJFZD6LbRv+O8mtbLpL9Bi41I/5vNgNo0HI0Z2w56r9F8rRQ+jy4HR29hvV5yR7LZHC2kJ3TZiZBeqy5UG6SlQI4fOq1JHQ9/IzT4wV+sxQz38k3Yir6RE/Yg9N8wTMxpYG5/LsXa/eGRThCRbbaY5IgSK4NAWDDhMEt9TqTwrNSzEMi6Xv5DLROtyctUNN5fcN2M+evcJ4GqUgaw87e6Jk89cyQj/f3XLRjO2Yxudl5uLDd4f5aOnMJxsr8+3j5xMe8BNM9VkZqhPM/FEhi40xAl9lQ== larsks
+        - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCq84cKunBHIGbdn7Su4upENPn9Ahmy7TqpkTShmh4YMX+a4eG36DtoAEY71psj040Z/bAfssICCyRxEeysW7wVegdRm19UsoFAg2VUcMuJH4EKzmZ0QqFY7vYN6d3DWBFdAH242yzAHHJ7smTmksM1nuJBKUw2Q00olEegL7QYisnQpCj8fZiHSOyPZlFnr1yjXCfbyp4rWXXuBhW3KsOPeUzqYxZthJ64f2JhZ6dRnbjdfIrVxcpuj527JNxTN3yWLMAxK1NLdQ7pg9un4fupv4RFQDLp7wDfdUB5Pfju6QFhv5gEG+cx7hmiAgWzdhmPRVMEpkF82XvhqBvST96R knikolla
