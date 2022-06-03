@@ -3,3 +3,4 @@ kind: Kustomization
 resources:
 - ../common
 - ../../base/operators.coreos.com/subscriptions/openshift-gitops-operator
+- clusterversion.yaml
