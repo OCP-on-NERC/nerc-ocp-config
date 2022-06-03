@@ -11,84 +11,12 @@ metadata:
   name: openshift-gitops-openshift-gitops-argocd-application-controller
 rules:
   - apiGroups:
-      - '*'
+    - '*'
     resources:
-      - '*'
+    - '*'
     verbs:
-      - get
-      - list
-      - watch
+    - '*'
   - nonResourceURLs:
-      - '*'
+    - '*'
     verbs:
-      - get
-      - list
-  - apiGroups:
-      - operators.coreos.com
-    resources:
-      - '*'
-    verbs:
-      - '*'
-  - apiGroups:
-      - operator.openshift.io
-    resources:
-      - '*'
-    verbs:
-      - '*'
-  - apiGroups:
-      - user.openshift.io
-    resources:
-      - '*'
-    verbs:
-      - '*'
-  - apiGroups:
-      - config.openshift.io
-    resources:
-      - '*'
-    verbs:
-      - '*'
-  - apiGroups:
-      - console.openshift.io
-    resources:
-      - '*'
-    verbs:
-      - '*'
-  - apiGroups:
-      - ""
-    resources:
-      - namespaces
-      - persistentvolumeclaims
-      - persistentvolumes
-      - configmaps
-    verbs:
-      - '*'
-  - apiGroups:
-      - rbac.authorization.k8s.io
-    resources:
-      - '*'
-    verbs:
-      - '*'
-  - apiGroups:
-      - storage.k8s.io
-    resources:
-      - '*'
-    verbs:
-      - '*'
-  - apiGroups:
-      - machine.openshift.io
-    resources:
-      - '*'
-    verbs:
-      - '*'
-  - apiGroups:
-      - machineconfig.openshift.io
-    resources:
-      - '*'
-    verbs:
-      - '*'
-  - apiGroups:
-      - compliance.openshift.io
-    resources:
-      - scansettingbindings
-    verbs:
-      - '*'
+    - '*'
