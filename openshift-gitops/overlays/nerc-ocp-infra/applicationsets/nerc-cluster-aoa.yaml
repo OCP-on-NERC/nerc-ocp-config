@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: nerc-cluster-aoa
+spec:
+  generators:
+    - clusters: {}
+  template:
+    metadata:
+      name: "{{ name }}-aoa"
+    spec:
+      project: default
+      destination:
+        namespace: openshift-gitops
+        name: nerc-ocp-infra
+      source:
+        path: "clusters/{{ name }}"
+        repoURL: https://github.com/ocp-on-nerc/nerc-ocp-apps.git
+        targetRevision: HEAD
+      syncPolicy:
+        automated:
+          selfHeal: true
+        syncOptions:
+          - ApplyOutOfSyncOnly=true
