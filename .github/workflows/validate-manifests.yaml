@@ -1,0 +1,25 @@
+name: Kustomize build overlays
+
+on:
+  pull_request:
+    paths:
+      - '**.yaml'
+
+jobs:
+  validate-manifests:
+    runs-on: ubuntu-latest
+    env:
+      KUSTOMIZE_VERSION: v4.5.5
+      TERM: xterm-256color
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Pull kustomize image
+        run: |
+          docker pull k8s.gcr.io/kustomize/kustomize:${KUSTOMIZE_VERSION}
+
+      - name: Validate manifests
+        run: |
+          export KUSTOMIZE="docker run --rm -v $PWD:$PWD -w $PWD k8s.gcr.io/kustomize/kustomize:${KUSTOMIZE_VERSION}"
+          ./ci/validate-manifests.sh
