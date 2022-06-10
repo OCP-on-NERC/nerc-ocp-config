@@ -3,4 +3,5 @@ kind: Kustomization
 resources:
 - ../common
 - ../../bundles/openshift-gitops
+- ../../base/operators.coreos.com/subscriptions/cert-manager
 - clusterversion.yaml
