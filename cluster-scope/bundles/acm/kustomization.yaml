@@ -3,3 +3,4 @@ kind: Kustomization
 resources:
 - ../../base/operators.coreos.com/subscriptions/acm
 - ../../base/core/namespaces/open-cluster-management
+- ../../base/operators.coreos.com/operatorgroups/open-cluster-management
