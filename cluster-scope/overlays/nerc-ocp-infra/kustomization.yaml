@@ -4,5 +4,4 @@ resources:
 - ../common
 - ../../bundles/openshift-gitops
 - ../../bundles/acm
-- ../../base/operators.coreos.com/subscriptions/cert-manager
 - clusterversion.yaml
