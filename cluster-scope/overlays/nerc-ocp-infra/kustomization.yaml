@@ -6,4 +6,5 @@ resources:
 - ../common
 - ../../bundles/openshift-gitops
 - ../../bundles/acm
+- ../../bundles/odf
 - clusterversion.yaml
