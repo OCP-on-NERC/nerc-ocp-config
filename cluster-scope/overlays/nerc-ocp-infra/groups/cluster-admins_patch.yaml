@@ -1,0 +1,16 @@
+apiVersion: user.openshift.io/v1
+kind: Group
+metadata:
+  name: cluster-admins
+  annotations:
+    kustomize.config.k8s.io/behavior: replace
+users:
+- jtriley
+- larsks
+- tzumainn
+- chrisstafford
+- knikolla
+- aabaris
+- naved001
+- joachimweyl
+- mikthoma

@@ -9,3 +9,4 @@ resources:
 
 patches:
   - path: oauths/cluster_patch.yaml
+  - path: groups/cluster-admins_patch.yaml
