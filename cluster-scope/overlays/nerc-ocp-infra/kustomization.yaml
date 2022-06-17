@@ -6,3 +6,6 @@ resources:
 - ../../bundles/acm
 - ../../base/operators.coreos.com/subscriptions/cert-manager
 - clusterversion.yaml
+
+patches:
+  - path: oauths/cluster_patch.yaml
