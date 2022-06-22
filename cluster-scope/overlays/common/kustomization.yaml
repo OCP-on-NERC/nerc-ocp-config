@@ -3,4 +3,5 @@ kind: Kustomization
 resources:
 - machineconfigs/99-master-ssh.yaml
 - machineconfigs/99-worker-ssh.yaml
+- ../../base/operators.coreos.com/subscriptions/cert-manager
 - ../../base/operators.coreos.com/subscriptions/external-secrets-operator
