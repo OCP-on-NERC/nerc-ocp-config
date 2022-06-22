@@ -6,7 +6,7 @@ resources:
 - ../common
 - ../../bundles/openshift-gitops
 - ../../bundles/acm
-- ../../bundles/odf
+- ../../bundles/odf-external
 - clusterversion.yaml
 
 patches:
