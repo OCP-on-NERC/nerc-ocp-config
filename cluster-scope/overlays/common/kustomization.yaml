@@ -5,3 +5,6 @@ resources:
 - machineconfigs/99-worker-ssh.yaml
 - ../../base/operators.coreos.com/subscriptions/cert-manager
 - ../../base/operators.coreos.com/subscriptions/external-secrets-operator
+- ../../base/config.openshift.io/oauths/cluster
+- ../../base/rbac.authorization.k8s.io/clusterrolebindings/self-provisioners
+- ../../bundles/cluster-admin-rbac/

@@ -8,3 +8,7 @@ resources:
 - ../../bundles/acm
 - ../../bundles/odf
 - clusterversion.yaml
+
+patches:
+  - path: oauths/cluster_patch.yaml
+  - path: groups/cluster-admins_patch.yaml
