@@ -1,0 +1,50 @@
+variant: openshift
+version: 4.10.0
+metadata:
+  name: configure-bond0
+  labels:
+    machineconfiguration.openshift.io/role: master
+storage:
+  files:
+    - path: /etc/mco/ctl-0-nic1.nmconnection
+      contents:
+        local: ctl-0-nic1.nmconnection
+    - path: /etc/mco/ctl-0-nic2.nmconnection
+      contents:
+        local: ctl-0-nic2.nmconnection
+    - path: /etc/mco/ctl-1-nic1.nmconnection
+      contents:
+        local: ctl-1-nic1.nmconnection
+    - path: /etc/mco/ctl-1-nic2.nmconnection
+      contents:
+        local: ctl-1-nic2.nmconnection
+    - path: /etc/mco/ctl-2-nic1.nmconnection
+      contents:
+        local: ctl-2-nic1.nmconnection
+    - path: /etc/mco/ctl-2-nic2.nmconnection
+      contents:
+        local: ctl-2-nic2.nmconnection
+    - path: /etc/NetworkConfiguration/system-connections/bond0.nmconnection
+      contents:
+        local: bond0.nmconnection
+    - path: /etc/mco/configure-bond0-ports.sh
+      contents:
+        local: configure-bond0-ports.sh
+      mode: 0755
+systemd:
+  units:
+    - name: configure-bond0-ports.service
+      enabled: true
+      contents: |
+        [Unit]
+        Description = Apply node-specific network configuration for bond0
+        RequiredBy = NetworkManager.service
+        After = network-pre.target
+        Before = NetworkManager.service
+
+        [Service]
+        Type = oneshot
+        ExecStart = /etc/mco/configure-bond0-ports.sh
+
+        [Install]
+        WantedBy = multi-user.service

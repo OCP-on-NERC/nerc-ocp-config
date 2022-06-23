@@ -8,6 +8,7 @@ resources:
 - ../../bundles/acm
 - ../../bundles/odf
 - clusterversion.yaml
+- machineconfigs/configure-bond0
 
 patches:
   - path: oauths/cluster_patch.yaml

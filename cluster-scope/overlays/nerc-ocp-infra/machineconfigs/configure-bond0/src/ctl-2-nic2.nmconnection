@@ -1,0 +1,10 @@
+[connection]
+id=ens5f1
+type=ethernet
+interface-name=ens5f1
+master=bond0
+slave-type=bond
+autoconnect=true
+
+[ethernet]
+mtu=9000
