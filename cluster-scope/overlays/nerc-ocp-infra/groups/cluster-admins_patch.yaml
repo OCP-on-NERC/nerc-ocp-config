@@ -5,12 +5,14 @@ metadata:
   annotations:
     kustomize.config.k8s.io/behavior: replace
 users:
-- jtriley
-- larsks
-- tzumainn
-- chrisstafford
-- knikolla
 - aabaris
-- naved001
+- chrisstafford
+- computate
+- dystewart
 - joachimweyl
+- jtriley
+- knikolla
+- larsks
 - mikthoma
+- naved001
+- tzumainn
