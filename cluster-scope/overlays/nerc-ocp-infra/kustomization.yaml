@@ -8,6 +8,7 @@ resources:
 - ../../bundles/acm
 - ../../bundles/odf
 - clusterversion.yaml
+- machineconfigs/disable-net-ifnames.yaml
 
 patches:
   - path: oauths/cluster_patch.yaml
