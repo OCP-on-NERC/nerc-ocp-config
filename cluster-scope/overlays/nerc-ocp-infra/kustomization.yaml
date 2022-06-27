@@ -12,6 +12,7 @@ resources:
 - groupsyncs/github-ocp-on-nerc.yaml
 - clusterrolebindings/nerc-ops-cluster-reader.yaml
 - clusterrolebindings/nerc-ops-sudoers.yaml
+- clusterrolebindings/nerc-ops-portforward.yaml
 
 patches:
 - path: oauths/cluster_patch.yaml
