@@ -8,6 +8,9 @@ resources:
 - ../../bundles/acm
 - ../../bundles/odf
 - clusterversion.yaml
+- machineconfigs/disable-net-ifnames.yaml
+- machineconfigs/mellanox-udev-rules
+- machineconfigs/configure-bond0
 
 patches:
   - path: oauths/cluster_patch.yaml
