@@ -4,3 +4,5 @@ resources:
 - ../../base/rbac.authorization.k8s.io/clusterrolebindings/cluster-admins-nerc-sudoer
 - ../../base/rbac.authorization.k8s.io/clusterrolebindings/cluster-admins-nerc-reader
 - ../../base/user.openshift.io/groups/cluster-admins
+- ../../base/rbac.authorization.k8s.io/clusterroles/allow-portforward-all
+- ../../base/rbac.authorization.k8s.io/clusterrolebindings/cluster-admins-nerc-portforward
