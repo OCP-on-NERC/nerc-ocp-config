@@ -3,7 +3,7 @@ kind: Subscription
 metadata:
     name: kubernetes-nmstate-operator
 spec:
-    channel: "4.10"
+    channel: stable
     installPlanApproval: Automatic
     name: kubernetes-nmstate-operator
     source: redhat-operators
