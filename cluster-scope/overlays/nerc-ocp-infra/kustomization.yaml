@@ -22,3 +22,4 @@ resources:
 patches:
 - path: oauths/cluster_patch.yaml
 - path: consoles.operator.openshift.io/cluster_patch.yaml
+- path: storageclasses/ocs-external-storagecluster-ceph-rbd_patch.yaml
