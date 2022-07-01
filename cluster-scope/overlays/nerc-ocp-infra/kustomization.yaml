@@ -6,8 +6,8 @@ resources:
 - ../common
 - ../../bundles/openshift-gitops
 - ../../bundles/acm
-- ../../bundles/odf
 - ../../base/operator.openshift.io/networks/cluster
+- ../../bundles/odf-external
 - clusterversion.yaml
 - machineconfigs/disable-net-ifnames.yaml
 - machineconfigs/mellanox-udev-rules
