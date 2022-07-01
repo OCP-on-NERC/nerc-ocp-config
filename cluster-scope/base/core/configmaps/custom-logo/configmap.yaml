@@ -4,5 +4,5 @@ binaryData:
 kind: ConfigMap
 metadata:
   creationTimestamp: null
-  name: nerc-logo
-  namespace: openshift-config
+  name: custom-logo
+  namespace: openshift-console
