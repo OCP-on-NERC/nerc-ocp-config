@@ -1,0 +1,13 @@
+apiVersion: operator.openshift.io/v1
+kind: Console
+metadata:
+  name: cluster
+spec:
+  plugins:
+    - odf-console
+    - acm
+    - mce
+  customization:
+    customLogoFile:
+      name: nerc-logo
+      key: nerc-logo.png
