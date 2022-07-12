@@ -8,6 +8,7 @@ resources:
 - ../../bundles/openshift-gitops
 - ../../bundles/acm
 - ../../base/operator.openshift.io/networks/cluster
+- ../../base/operators.coreos.com/subscriptions/cert-manager
 - ../../bundles/odf-external
 - clusterversion.yaml
 - machineconfigs/disable-net-ifnames.yaml
