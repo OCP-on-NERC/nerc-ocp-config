@@ -3,23 +3,23 @@ kind: Service
 metadata:
   annotations: null
   labels:
-    app.kubernetes.io/instance: nerc
+    app.kubernetes.io/instance: nerc-vault
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: vault
-    helm.sh/chart: vault-0.18.0
-  name: vault-standby
-  namespace: vault
+    helm.sh/chart: vault-0.20.1
+  name: nerc-vault-standby
+  namespace: default
 spec:
   ports:
-    - name: http
-      port: 8200
-      targetPort: 8200
-    - name: https-internal
-      port: 8201
-      targetPort: 8201
+  - name: http
+    port: 8200
+    targetPort: 8200
+  - name: https-internal
+    port: 8201
+    targetPort: 8201
   publishNotReadyAddresses: true
   selector:
-    app.kubernetes.io/instance: nerc
+    app.kubernetes.io/instance: nerc-vault
     app.kubernetes.io/name: vault
     component: server
     vault-active: "false"

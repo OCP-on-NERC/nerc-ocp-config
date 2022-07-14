@@ -2,20 +2,20 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   labels:
-    app.kubernetes.io/instance: nerc
+    app.kubernetes.io/instance: nerc-vault
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: vault
-    helm.sh/chart: vault-0.18.0
-  name: vault-discovery-role
+    helm.sh/chart: vault-0.20.1
+  name: nerc-vault-discovery-role
   namespace: vault
 rules:
-  - apiGroups:
-      - ""
-    resources:
-      - pods
-    verbs:
-      - get
-      - watch
-      - list
-      - update
-      - patch
+- apiGroups:
+  - ""
+  resources:
+  - pods
+  verbs:
+  - get
+  - watch
+  - list
+  - update
+  - patch
