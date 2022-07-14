@@ -1,0 +1,5 @@
+kind: Kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+namespace: external-secrets-operator
+resources:
+    - namespace.yaml
