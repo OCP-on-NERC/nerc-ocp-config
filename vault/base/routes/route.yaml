@@ -6,7 +6,7 @@ metadata:
 spec:
   to:
     kind: Service
-    name: vault
+    name: nerc-vault
   tls:
     termination: edge
     insecureEdgeTerminationPolicy: Redirect
