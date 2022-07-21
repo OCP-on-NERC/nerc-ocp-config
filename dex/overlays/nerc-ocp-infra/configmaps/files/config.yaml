@@ -1,0 +1,36 @@
+issuer: https://dex-dex.apps.nerc-ocp-infra.rc.fas.harvard.edu
+
+storage:
+  type: memory
+
+web:
+  http: "0.0.0.0:5556"
+
+grpc:
+  addr: "0.0.0.0:5557"
+
+telemetry:
+  http: "0.0.0.0:5558"
+
+oauth2:
+  skipApprovalScreen: true
+
+staticClients:
+  - id: vault
+    name: Vault
+    redirectURIs:
+      - https://vault-ui-vault.apps.nerc-ocp-infra.rc.fas.harvard.edu/oidc/callback
+      - https://vault-ui-vault.apps.nerc-ocp-infra.rc.fas.harvard.edu/ui/vault/auth/oidc/oidc/callback
+    secretEnv: VAULT_SECRET
+
+connectors:
+  - type: openshift
+    id: openshift
+    name: OpenShift
+    config:
+      issuer: https://kubernetes.default.svc
+      clientID: system:serviceaccount:dex:dex
+      clientSecret: $OPENSHIFT_CLIENT_SECRET
+      redirectURI: https://dex-dex.apps.nerc-ocp-infra.rc.fas.harvard.edu/callback
+      groups:
+        - system:authenticated
