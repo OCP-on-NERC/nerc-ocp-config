@@ -20,9 +20,11 @@ resources:
 - clusterrolebindings/nerc-ops-cluster-reader.yaml
 - clusterrolebindings/nerc-ops-sudoers.yaml
 - clusterrolebindings/nerc-ops-portforward.yaml
+- external-secrets/default-ingress-certificate.yaml
 
 patches:
 - path: oauths/cluster_patch.yaml
 - path: consoles.operator.openshift.io/cluster_patch.yaml
 - path: storageclasses/ocs-external-storagecluster-ceph-rbd_patch.yaml
 - path: clustersecretstores/nerc-cluster-secrets_patch.yaml
+- path: ingresscontrollers/default_patch.yaml
