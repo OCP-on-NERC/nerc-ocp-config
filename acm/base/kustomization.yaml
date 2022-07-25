@@ -1,0 +1,8 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+commonLabels:
+  nerc.mghpcc.org/kustomized: "true"
+
+resources:
+- agent-install.openshift.io/agentserviceconfigs/agent/agentserviceconfig.yaml
+- metal3.io/provisionings/provisioning-configuration/provisioning.yaml

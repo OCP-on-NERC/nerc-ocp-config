@@ -8,8 +8,10 @@ resources:
 - ../../bundles/openshift-gitops
 - ../../bundles/acm
 - ../../bundles/acm/observability
+- ../../bundles/vault
 - ../../base/operator.openshift.io/networks/cluster
 - ../../bundles/odf-external
+- ../../bundles/external-secrets-clustersecretstore
 - clusterversion.yaml
 - machineconfigs/disable-net-ifnames.yaml
 - machineconfigs/mellanox-udev-rules
@@ -24,3 +26,4 @@ patches:
 - path: oauths/cluster_patch.yaml
 - path: consoles.operator.openshift.io/cluster_patch.yaml
 - path: storageclasses/ocs-external-storagecluster-ceph-rbd_patch.yaml
+- path: clustersecretstores/nerc-cluster-secrets_patch.yaml
