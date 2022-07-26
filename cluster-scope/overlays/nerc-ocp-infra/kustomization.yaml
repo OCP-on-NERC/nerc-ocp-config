@@ -21,6 +21,7 @@ resources:
 - clusterrolebindings/nerc-ops-sudoers.yaml
 - clusterrolebindings/nerc-ops-portforward.yaml
 - external-secrets/default-ingress-certificate.yaml
+- externalsecrets
 
 patches:
 - path: oauths/cluster_patch.yaml
