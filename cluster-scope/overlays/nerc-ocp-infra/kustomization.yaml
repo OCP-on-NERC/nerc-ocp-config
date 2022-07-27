@@ -20,7 +20,6 @@ resources:
 - clusterrolebindings/nerc-ops-cluster-reader.yaml
 - clusterrolebindings/nerc-ops-sudoers.yaml
 - clusterrolebindings/nerc-ops-portforward.yaml
-- external-secrets/default-ingress-certificate.yaml
 - externalsecrets
 
 patches:
