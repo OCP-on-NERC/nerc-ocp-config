@@ -4,3 +4,4 @@ resources:
 - github-client-secret.yaml
 - github-ocp-on-nerc.yaml
 - rook-ceph-external-cluster-details.yaml
+- default-ingress-certificate.yaml
