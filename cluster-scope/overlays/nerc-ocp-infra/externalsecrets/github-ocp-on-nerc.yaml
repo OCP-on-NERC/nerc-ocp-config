@@ -1,0 +1,16 @@
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: github-ocp-on-nerc
+  namesapce: openshift-config
+spec:
+  secretStoreRef:
+    name: nerc-cluster-secrets
+    kind: ClusterSecretStore
+  target:
+    name: github-ocp-on-nerc
+  data:
+  - secretKey: token
+    remoteRef:
+      key: nerc/nerc-ocp-infra/group-sync-operator/github-ocp-on-nerc
+      property: token
