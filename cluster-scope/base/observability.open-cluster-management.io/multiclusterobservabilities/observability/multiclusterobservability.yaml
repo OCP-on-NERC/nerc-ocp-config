@@ -41,4 +41,3 @@ spec:
       replicas: 3
     queryFrontendMemcached:
       replicas: 3
-      
