@@ -1,0 +1,43 @@
+apiVersion: observability.open-cluster-management.io/v1beta2
+kind: MultiClusterObservability
+metadata:
+  name: observability
+spec:
+  # See: https://access.redhat.com/documentation/en-us/red_hat_advanced_cluster_management_for_kubernetes/2.5/html/apis/apis#rhacm-docs_apis_multiclusterobservability_jsonmulticlusterobservability
+  enableDownsampling: true
+  observabilityAddonSpec:
+    enableMetrics: true
+    interval: 300
+  storageConfig:
+    alertmanagerStorageSize: 1Gi
+    compactStorageSize: 100Gi
+    receiveStorageSize: 100Gi
+    ruleStorageSize: 1Gi
+    storageClass: gp2
+    storeStorageSize: 10Gi
+    metricObjectStorage:
+      key: thanos.yaml
+      name: thanos-object-storage
+  advanced:
+    rbacQueryProxy:
+      replicas: 2
+    grafana:
+      replicas: 2
+    alertmanager:
+      replicas: 3
+    observatoriumAPI:
+      replicas: 2
+    queryFrontend:
+      replicas: 2
+    query:
+      replicas: 2
+    receive:
+      replicas: 3
+    rule:
+      replicas: 3
+    store:
+      replicas: 3
+    storeMemcached:
+      replicas: 3
+    queryFrontendMemcached:
+      replicas: 3
