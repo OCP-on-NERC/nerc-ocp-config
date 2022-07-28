@@ -7,6 +7,7 @@ resources:
 - ../common
 - ../../bundles/openshift-gitops
 - ../../bundles/acm
+- ../../bundles/acm/observability
 - ../../bundles/vault
 - ../../base/operator.openshift.io/networks/cluster
 - ../../bundles/odf-external
@@ -28,3 +29,7 @@ patches:
 - path: storageclasses/ocs-external-storagecluster-ceph-rbd_patch.yaml
 - path: clustersecretstores/nerc-cluster-secrets_patch.yaml
 - path: ingresscontrollers/default_patch.yaml
+
+patchesStrategicMerge:
+  - externalsecrets/open-cluster-management-observability-multiclusterhub-operator-pull-secret_patch.yaml
+  - externalsecrets/open-cluster-management-observability-thanos-object-storage_patch.yaml
