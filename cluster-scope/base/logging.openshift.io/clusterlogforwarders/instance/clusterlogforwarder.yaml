@@ -1,0 +1,21 @@
+apiVersion: logging.openshift.io/v1
+kind: ClusterLogForwarder
+metadata:
+  name: instance
+  namespace: openshift-logging
+spec:
+  outputs:
+    - name: loki-operator
+      type: loki
+      #url: https://lokistack-distributor-http.openshift-operators-redhat.svc.cluster.local:3100/loki/api/v1/push
+      url: https://lokistack-distributor-http.openshift-operators-redhat.svc.cluster.local:3100
+      secret:
+          name: service-ca
+  pipelines:
+    - name: send-logs
+      inputRefs:
+        - application
+        - infrastructure
+        - audit
+      outputRefs:
+        - loki-operator

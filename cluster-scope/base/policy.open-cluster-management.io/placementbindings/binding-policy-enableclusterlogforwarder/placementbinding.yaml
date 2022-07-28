@@ -1,0 +1,13 @@
+apiVersion: policy.open-cluster-management.io/v1
+kind: PlacementBinding
+metadata:
+  name: binding-policy-enableclusterlogforwarder
+  namespace: open-cluster-management
+placementRef:
+  name: placement-policy-enableclusterlogforwarder
+  kind: PlacementRule
+  apiGroup: apps.open-cluster-management.io
+subjects:
+  - name: policy-enableclusterlogforwarder
+    kind: Policy
+    apiGroup: policy.open-cluster-management.io

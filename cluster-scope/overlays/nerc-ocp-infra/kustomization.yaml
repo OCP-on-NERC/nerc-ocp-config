@@ -4,32 +4,34 @@ commonLabels:
   nerc.mghpcc.org/kustomized: "true"
 
 resources:
-- ../common
-- ../../bundles/openshift-gitops
-- ../../bundles/acm
-- ../../bundles/acm/observability
-- ../../bundles/vault
-- ../../base/operator.openshift.io/networks/cluster
-- ../../bundles/odf-external
-- ../../bundles/external-secrets-clustersecretstore
-- clusterversion.yaml
-- machineconfigs/disable-net-ifnames.yaml
-- machineconfigs/mellanox-udev-rules
-- machineconfigs/configure-bond0
-- nodenetworkconfigurationpolicies/vlan-2177-nese.yaml
-- groupsyncs/github-ocp-on-nerc.yaml
-- clusterrolebindings/nerc-ops-cluster-reader.yaml
-- clusterrolebindings/nerc-ops-sudoers.yaml
-- clusterrolebindings/nerc-ops-portforward.yaml
-- externalsecrets
-
-patches:
-- path: oauths/cluster_patch.yaml
-- path: consoles.operator.openshift.io/cluster_patch.yaml
-- path: storageclasses/ocs-external-storagecluster-ceph-rbd_patch.yaml
-- path: clustersecretstores/nerc-cluster-secrets_patch.yaml
-- path: ingresscontrollers/default_patch.yaml
+#- ../common
+#- ../../bundles/openshift-gitops
+#- ../../bundles/acm
+#- ../../bundles/acm/observability
+- ../../bundles/loki
+#- ../../bundles/vault
+#- ../../base/operator.openshift.io/networks/cluster
+#- ../../bundles/odf-external
+#- ../../bundles/external-secrets-clustersecretstore
+#- clusterversion.yaml
+#- machineconfigs/disable-net-ifnames.yaml
+#- machineconfigs/mellanox-udev-rules
+#- machineconfigs/configure-bond0
+#- nodenetworkconfigurationpolicies/vlan-2177-nese.yaml
+#- groupsyncs/github-ocp-on-nerc.yaml
+#- clusterrolebindings/nerc-ops-cluster-reader.yaml
+#- clusterrolebindings/nerc-ops-sudoers.yaml
+#- clusterrolebindings/nerc-ops-portforward.yaml
+#- externalsecrets
+#
+#patches:
+#- path: oauths/cluster_patch.yaml
+#- path: consoles.operator.openshift.io/cluster_patch.yaml
+#- path: storageclasses/ocs-external-storagecluster-ceph-rbd_patch.yaml
+#- path: clustersecretstores/nerc-cluster-secrets_patch.yaml
+#- path: ingresscontrollers/default_patch.yaml
 
 patchesStrategicMerge:
-  - externalsecrets/open-cluster-management-observability-multiclusterhub-operator-pull-secret_patch.yaml
-  - externalsecrets/open-cluster-management-observability-thanos-object-storage_patch.yaml
+#  - externalsecrets/open-cluster-management-observability-multiclusterhub-operator-pull-secret_patch.yaml
+#  - externalsecrets/open-cluster-management-observability-thanos-object-storage_patch.yaml
+  - externalsecrets/loki-thanos-object-storage_patch.yaml

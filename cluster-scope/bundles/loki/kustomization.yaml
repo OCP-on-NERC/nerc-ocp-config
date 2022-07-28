@@ -1,0 +1,27 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../../base/core/namespaces/openshift-operators-redhat
+  - ../../base/objectbucket.io/objectbucketclaims/loki-objectbucketclaim
+  - ../../base/external-secrets.io/externalsecrets/loki-thanos-object-storage
+  - ../../base/core/namespaces/openshift-logging
+  - ../../base/operators.coreos.com/operatorgroups/openshift-operators-redhat
+  - ../../base/operators.coreos.com/subscriptions/loki-operator
+  - ../../base/operators.coreos.com/subscriptions/elasticsearch-operator
+  - ../../base/loki.grafana.com/lokistacks/lokistack
+  - ../../base/operators.coreos.com/operatorgroups/openshift-logging
+  - ../../base/operators.coreos.com/subscriptions/cluster-logging
+  - ../../base/logging.openshift.io/clusterloggings/instance
+  - ../../base/logging.openshift.io/clusterlogforwarders/instance
+  - ../../base/policy.open-cluster-management.io/policies/policy-enableclusterlogforwarder
+  - ../../base/policy.open-cluster-management.io/placementbindings/binding-policy-enableclusterlogforwarder
+  - ../../base/policy.open-cluster-management.io/placementrules/placement-policy-enableclusterlogforwarder
+#
+#  - openshift-operators-redhat-namespace.yaml
+#  - loki-bucket-claim.yaml
+#  - external-secret-thanos-object-storage.yaml
+#  - openshift-logging-namespace.yaml
+#  - lokioperator-operatorgroup-v1.yaml
+#  - lokioperator-operatorgroup-v1alpha2.yaml
+#  - lokioperator-subscription.yaml
+#  - lokioperator.yaml
