@@ -12,4 +12,4 @@ resources:
 patches:
 - path: clustersecretstores/nerc-cluster-secrets_patch.yaml
 - path: ingresscontrollers/default_patch.yaml
-- path: apiserver/default_patch.yaml
+- path: apiservers/default_patch.yaml
