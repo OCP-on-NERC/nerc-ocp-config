@@ -5,4 +5,11 @@ commonLabels:
 
 resources:
 - ../common
+- ../../bundles/external-secrets-clustersecretstore
 - clusterversion.yaml
+- externalsecrets
+
+patches:
+- path: clustersecretstores/nerc-cluster-secrets_patch.yaml
+- path: ingresscontrollers/default_patch.yaml
+- path: apiserver/default_patch.yaml
