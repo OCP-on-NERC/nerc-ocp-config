@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dex
+spec:
+  template:
+    spec:
+      containers:
+        - command:
+            - "/usr/local/bin/dex"
+            - "serve"
+            - "/etc/dex/cfg/config.yaml"
+          image: quay.io/dexidp/dex:v2.28.1
+          imagePullPolicy: Always
+          name: dex
+          ports:
+            - containerPort: 5556
+              name: web
+            - containerPort: 5557
+              name: grpc
+            - containerPort: 5558
+              name: telemetry
+          volumeMounts:
+            - mountPath: /etc/dex/cfg
+              name: config
+            - name: ssl
+              mountPath: /etc/ssl/certs/ca.crt
+              subPath: ca.crt
+            - name: ssl
+              mountPath: /etc/ssl/certs/namespace
+              subPath: namespace
+            - name: ssl
+              mountPath: /etc/ssl/certs/service-ca.crt
+              subPath: service-ca.crt
+            - name: ssl
+              mountPath: /etc/ssl/certs/token
+              subPath: token
+          resources:
+            limits:
+              cpu: 500m
+              memory: 512Mi
+          envFrom:
+            - secretRef:
+                name: dex-clients
+          env:
+            - name: OPENSHIFT_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: dex-sa-token
+                  key: token
+      volumes:
+        - name: config
+          configMap:
+            name: dex
+        - name: ssl
+          secret:
+            secretName: dex-sa-token
+            items:
+              - key: ca.crt
+                path: ca.crt
+              - key: namespace
+                path: namespace
+              - key: service-ca.crt
+                path: service-ca.crt
+              - key: token
+                path: token
