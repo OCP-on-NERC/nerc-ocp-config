@@ -1,0 +1,8 @@
+apiVersion: operator.openshift.io/v1
+kind: APIServer
+metadata:
+  name: cluster
+  namespace: openshift-config
+spec:
+  defaultCertificate:
+    name: default-api-certificate
