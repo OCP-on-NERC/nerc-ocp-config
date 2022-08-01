@@ -22,6 +22,7 @@ resources:
 - clusterrolebindings/nerc-ops-sudoers.yaml
 - clusterrolebindings/nerc-ops-portforward.yaml
 - externalsecrets
+- apiserver/cluster_patch.yaml
 
 patches:
 - path: oauths/cluster_patch.yaml
@@ -29,7 +30,6 @@ patches:
 - path: storageclasses/ocs-external-storagecluster-ceph-rbd_patch.yaml
 - path: clustersecretstores/nerc-cluster-secrets_patch.yaml
 - path: ingresscontrollers/default_patch.yaml
-- path: apiserver/cluster_patch.yaml
 
 patchesStrategicMerge:
   - externalsecrets/open-cluster-management-observability-multiclusterhub-operator-pull-secret_patch.yaml
