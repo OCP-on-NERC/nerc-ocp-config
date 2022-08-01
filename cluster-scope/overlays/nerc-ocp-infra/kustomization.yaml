@@ -23,7 +23,7 @@ resources:
 - clusterrolebindings/nerc-ops-sudoers.yaml
 - clusterrolebindings/nerc-ops-portforward.yaml
 - externalsecrets
-- apiserver/cluster_patch.yaml
+- apiserver/api_server_cert.yaml
 
 patches:
 - path: oauths/cluster_patch.yaml
