@@ -12,30 +12,27 @@ spec:
         https://lokistack-querier-http.openshift-operators-redhat.svc.cluster.local:3100
       withCredentials: true
       jsonData:
-        tlsAuthWithCACert: true
+        tlsSkipVerify: true
         httpHeaderName1: X-Scope-OrgID
       secureJsonData:
         httpHeaderValue1: application
-        tlsCACert: // TODO
     - name: infrastructure-logging
       type: loki
       url: >-
         https://lokistack-querier-http.openshift-operators-redhat.svc.cluster.local:3100
       withCredentials: true
       jsonData:
-        tlsAuthWithCACert: true
+        tlsSkipVerify: true
         httpHeaderName1: X-Scope-OrgID
       secureJsonData:
         httpHeaderValue1: infrastructure
-        tlsCACert: // TODO
     - name: audit-logging
       type: loki
       url: >-
         https://lokistack-querier-http.openshift-operators-redhat.svc.cluster.local:3100
       withCredentials: true
       jsonData:
-        tlsAuthWithCACert: true
+        tlsSkipVerify: true
         httpHeaderName1: X-Scope-OrgID
       secureJsonData:
         httpHeaderValue1: audit
-        tlsCACert: // TODO

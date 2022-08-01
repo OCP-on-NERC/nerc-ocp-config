@@ -7,10 +7,11 @@ spec:
   outputs:
     - name: loki-operator
       type: loki
-      #url: https://lokistack-distributor-http.openshift-operators-redhat.svc.cluster.local:3100/loki/api/v1/push
       url: https://lokistack-distributor-http.openshift-operators-redhat.svc.cluster.local:3100
       secret:
           name: service-ca
+      loki:
+        tenantKey: log_type
   pipelines:
     - name: send-logs
       inputRefs:
