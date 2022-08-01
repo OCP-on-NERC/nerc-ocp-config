@@ -6,7 +6,7 @@ The directory layout of this repository follows the standards of the
 
 [nerc]: https://nerc.mghpcc.org/
 [operate first]: https://www.operate-first.cloud/
-[adr-0009]: https://github.com/operate-first/blueprint/blob/main/docs/adr/0009-cluster-resources.md
+[adr-0009]: https://github.com/operate-first/blueprint/blob/main/adr/0009-cluster-resources.md
 
 ## Validations make your life easier
 
