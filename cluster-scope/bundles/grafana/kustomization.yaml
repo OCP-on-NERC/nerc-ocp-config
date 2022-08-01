@@ -1,0 +1,9 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../../base/core/namespaces/grafana
+  - ../../base/operators.coreos.com/operatorgroups/grafana
+  - ../../base/operators.coreos.com/subscriptions/grafana-operator
+  - ../../base/integreatly.org/grafanas/logging-grafana
+  - ../../base/integreatly.org/grafanadatasources/application-logging
+  - ../../base/core/routes/logging-grafana
