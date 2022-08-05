@@ -9,6 +9,7 @@ resources:
 - clusterversion.yaml
 - externalsecrets
 - apiserver/api_server_cert.yaml
+- ingresscontrollers/external-apps-ingress-controller.yaml
 
 patches:
 - path: clustersecretstores/nerc-cluster-secrets_patch.yaml
