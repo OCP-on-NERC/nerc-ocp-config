@@ -6,3 +6,4 @@ commonLabels:
 resources:
 - ../common
 - clusterversion.yaml
+- ingresscontrollers/external-apps-ingress-controller.yaml
