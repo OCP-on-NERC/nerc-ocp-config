@@ -8,7 +8,8 @@ resources:
 - ../../bundles/external-secrets-clustersecretstore
 - clusterversion.yaml
 - externalsecrets
-- apiserver/api_server_cert.yaml
+- apiserver/cluster.yaml
+- secretstores
 
 patches:
 - path: clustersecretstores/nerc-cluster-secrets_patch.yaml
