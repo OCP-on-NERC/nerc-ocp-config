@@ -5,8 +5,8 @@ metadata:
   namespace: openshift-config
 spec:
   secretStoreRef:
-    name: nerc-cluster-secrets
-    kind: ClusterSecretStore
+    name: apiserver-secret-store
+    kind: SecretStore
   target:
     name: default-api-certificate
     template:

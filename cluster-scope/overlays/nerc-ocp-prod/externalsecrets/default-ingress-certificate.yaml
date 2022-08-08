@@ -2,11 +2,11 @@ apiVersion: external-secrets.io/v1beta1
 kind: ExternalSecret
 metadata:
   name: default-ingress-certificate
-  namespace: openshift-ingress
+  namespace: openshift-ingress-operator
 spec:
   secretStoreRef:
-    name: nerc-cluster-secrets
-    kind: ClusterSecretStore
+    name: ingress-controller-secret-store
+    kind: SecretStore
   target:
     name: default-ingress-certificate
     template:
