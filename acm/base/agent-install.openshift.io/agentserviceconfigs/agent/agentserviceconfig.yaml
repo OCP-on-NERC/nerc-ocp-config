@@ -8,7 +8,7 @@ spec:
       - ReadWriteOnce
     resources:
       requests:
-        storage: 100M
+        storage: 1G
   filesystemStorage:
     accessModes:
       - ReadWriteOnce
