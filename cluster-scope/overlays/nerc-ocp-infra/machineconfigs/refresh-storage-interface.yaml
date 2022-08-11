@@ -1,0 +1,34 @@
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  labels:
+    machineconfiguration.openshift.io/role: master
+  name: refresh-storage-interface
+spec:
+  config:
+    ignition:
+      version: 3.2.0
+  systemd:
+    units:
+      - name: refresh-storage-interface.timer
+        enabled: true
+        contents: |
+          [Timer]
+          OnBootSec=3d
+          OnUnitActiveSec=3d
+          RandomizedDelaySec=4h
+
+          [Install]
+          WantedBy=timers.target
+      - name: refresh-storage-interface.service
+        contents: |
+          [Unit]
+          Description=Refresh storage interface
+          Requires=NetworkManager.service
+          After=NetworkManager.service
+
+          [Service]
+          Type=oneshot
+          ExecStartPre=/bin/sh -c "echo BEFORE:; /usr/sbin/ip addr show bond0.2177"
+          ExecStart=/bin/sh -c "nmcli c down bond0.2177; nmcli c up bond0.2177"
+          ExecStartPost=/bin/sh -c "echo AFTER:; /usr/sbin/ip addr show bond0.2177"
