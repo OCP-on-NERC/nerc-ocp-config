@@ -24,6 +24,7 @@ resources:
 - clusterrolebindings/nerc-ops-portforward.yaml
 - externalsecrets
 - apiserver/cluster.yaml
+- metrics-bucket-storage
 
 patches:
 - path: oauths/cluster_patch.yaml
