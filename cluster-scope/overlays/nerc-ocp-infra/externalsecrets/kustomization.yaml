@@ -5,3 +5,4 @@ resources:
 - github-ocp-on-nerc.yaml
 - rook-ceph-external-cluster-details.yaml
 - default-ingress-certificate.yaml
+- default-api-certificate.yaml
