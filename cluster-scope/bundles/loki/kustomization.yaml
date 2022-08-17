@@ -18,9 +18,6 @@ resources:
   - ../../base/rbac.authorization.k8s.io/clusterrolebindings/lokistack-tenant-logs
   - ../../base/rbac.authorization.k8s.io/clusterrolebindings/lokistack-gateway-auth-delegator
   - ../../base/external-secrets.io/externalsecrets/openshift-logging-lokistack-gateway-bearer-token
-#  - ../../base/policy.open-cluster-management.io/policies/policy-enableclusterlogforwarder
-#  - ../../base/policy.open-cluster-management.io/placementbindings/binding-policy-enableclusterlogforwarder
-#  - ../../base/policy.open-cluster-management.io/placementrules/placement-policy-enableclusterlogforwarder
   - ../../base/core/deployments/lokistack-distributor-custom
   - ../../base/core/deployments/lokistack-querier-custom
   - ../../base/core/deployments/lokistack-query-frontend-custom

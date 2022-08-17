@@ -7,6 +7,6 @@ roleRef:
   apiGroup: rbac.authorization.k8s.io
   name: system:auth-delegator
 subjects:
-- kind: ServiceAccount
-  name: lokistack-gateway
-  namespace: openshift-operators-redhat
+  - kind: ServiceAccount
+    name: lokistack-gateway
+    namespace: openshift-operators-redhat
