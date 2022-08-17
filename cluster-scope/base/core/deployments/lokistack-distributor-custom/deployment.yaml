@@ -46,10 +46,6 @@ spec:
         - -ingester.client.tls-server-name=lokistack-ingester-grpc.openshift-operators-redhat.svc.cluster.local
         - -server.grpc-tls-cert-path=/var/run/tls/grpc/tls.crt
         - -server.grpc-tls-key-path=/var/run/tls/grpc/tls.key
-        - -s3.http.insecure-skip-verify
-        - -distributor.ingestion-rate-limit-mb=10000
-        - -distributor.ingestion-burst-size-mb=10000
-        - -validation.reject-old-samples=false
         image: registry.redhat.io/openshift-logging/logging-loki-rhel8@sha256:ea850177bb0a51143c90f15747182d3e226dd2361f0dac97b52db8e03427d4a2
         imagePullPolicy: IfNotPresent
         livenessProbe:
