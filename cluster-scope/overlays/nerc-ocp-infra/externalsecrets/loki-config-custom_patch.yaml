@@ -1,7 +1,8 @@
 apiVersion: external-secrets.io/v1beta1
 kind: ExternalSecret
+namespace: openshift-operators-redhat
 metadata:
-  name: loki-thanos-object-storage
+  name: lokistack-config-custom
   namespace: openshift-operators-redhat
 spec:
   data:
@@ -17,7 +18,7 @@ spec:
     remoteRef:
       key: nerc/nerc-ocp-infra/loki-thanos-object-storage
       property: access_key_id
-  - secretKey: secret_access_key
+  - secretKey: access_key_secret
     remoteRef:
       key: nerc/nerc-ocp-infra/loki-thanos-object-storage
-      property: secret_access_key
+      property: access_key_secret

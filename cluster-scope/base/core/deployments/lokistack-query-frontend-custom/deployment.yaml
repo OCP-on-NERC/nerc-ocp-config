@@ -1,0 +1,117 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lokistack-query-frontend-custom
+  namespace: openshift-operators-redhat
+  labels:
+    app.kubernetes.io/component: query-frontend
+    app.kubernetes.io/created-by: lokistack-controller
+    app.kubernetes.io/instance: lokistack
+    app.kubernetes.io/managed-by: lokistack-controller
+    app.kubernetes.io/name: lokistack
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: query-frontend
+      app.kubernetes.io/created-by: lokistack-controller
+      app.kubernetes.io/instance: lokistack
+      app.kubernetes.io/managed-by: lokistack-controller
+      app.kubernetes.io/name: lokistack
+      loki.grafana.com/gossip: 'true'
+  revisionHistoryLimit: 10
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/component: query-frontend
+        app.kubernetes.io/created-by: lokistack-controller
+        app.kubernetes.io/instance: lokistack
+        app.kubernetes.io/managed-by: lokistack-controller
+        app.kubernetes.io/name: lokistack
+        loki.grafana.com/gossip: 'true'
+      annotations:
+        loki.grafana.com/config-hash: f75cfcb83e70a9520ab4becae17ce7888ba59c5a
+      creationTimestamp: null
+      name: loki-query-frontend-lokistack
+    spec:
+      containers:
+      - args:
+        - -target=query-frontend
+        - -config.file=/etc/loki/config/config.yaml
+        - -runtime-config.file=/etc/loki/config/runtime-config.yaml
+        - -server.http-tls-cert-path=/var/run/tls/http/tls.crt
+        - -server.http-tls-key-path=/var/run/tls/http/tls.key
+        - -server.grpc-tls-cert-path=/var/run/tls/grpc/tls.crt
+        - -server.grpc-tls-key-path=/var/run/tls/grpc/tls.key
+        image: registry.redhat.io/openshift-logging/logging-loki-rhel8@sha256:ea850177bb0a51143c90f15747182d3e226dd2361f0dac97b52db8e03427d4a2
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          failureThreshold: 10
+          httpGet:
+            path: /loki/api/v1/status/buildinfo
+            port: 3100
+            scheme: HTTPS
+          periodSeconds: 30
+          successThreshold: 1
+          timeoutSeconds: 2
+        name: loki-query-frontend
+        ports:
+        - containerPort: 3100
+          name: metrics
+          protocol: TCP
+        - containerPort: 9095
+          name: grpclb
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /loki/api/v1/status/buildinfo
+            port: 3100
+            scheme: HTTPS
+          initialDelaySeconds: 15
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        resources:
+          requests:
+            cpu: 200m
+            memory: 500Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /etc/loki/config
+          name: config
+        - mountPath: /var/run/tls/http
+          name: lokistack-query-frontend-http
+        - mountPath: /var/run/tls/grpc
+          name: lokistack-query-frontend-grpc
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext:
+        runAsNonRoot: true
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - secret:
+          defaultMode: 420
+          secretName: lokistack-config-custom
+        name: config
+      - name: lokistack-query-frontend-http
+        secret:
+          defaultMode: 420
+          secretName: lokistack-query-frontend-http
+      - name: lokistack-query-frontend-grpc
+        secret:
+          defaultMode: 420
+          secretName: lokistack-query-frontend-grpc

@@ -4,26 +4,38 @@ metadata:
   name: lokistack
   namespace: openshift-operators-redhat
 spec:
-  managementState: Unmanaged
+  managementState: Managed
   storage:
     secret:
       name: thanos-object-storage
       type: s3
   template:
     compactor:
-      replicas: 1
+      replicas: 0
+      nodeSelector:
+        name: none
     distributor:
-      replicas: 1
+      replicas: 0
+      nodeSelector:
+        name: none
     gateway:
       replicas: 1
     indexGateway:
-      replicas: 1
+      replicas: 0
+      nodeSelector:
+        name: none
     ingester:
-      replicas: 1
+      replicas: 0
+      nodeSelector:
+        name: none
     querier:
-      replicas: 1
+      replicas: 0
+      nodeSelector:
+        name: none
     queryFrontend:
-      replicas: 1
+      replicas: 0
+      nodeSelector:
+        name: none
   tenants:
     mode: openshift-logging
   size: 1x.extra-small

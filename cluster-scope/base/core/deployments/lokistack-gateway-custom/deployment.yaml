@@ -1,0 +1,198 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lokistack-gateway-custom
+  namespace: openshift-operators-redhat
+  labels:
+    app.kubernetes.io/component: lokistack-gateway
+    app.kubernetes.io/created-by: lokistack-controller
+    app.kubernetes.io/instance: lokistack
+    app.kubernetes.io/managed-by: lokistack-controller
+    app.kubernetes.io/name: lokistack
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: lokistack-gateway
+      app.kubernetes.io/created-by: lokistack-controller
+      app.kubernetes.io/instance: lokistack
+      app.kubernetes.io/managed-by: lokistack-controller
+      app.kubernetes.io/name: lokistack
+  revisionHistoryLimit: 10
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/component: lokistack-gateway
+        app.kubernetes.io/created-by: lokistack-controller
+        app.kubernetes.io/instance: lokistack
+        app.kubernetes.io/managed-by: lokistack-controller
+        app.kubernetes.io/name: lokistack
+      annotations:
+        loki.grafana.com/config-hash: 2e0ed464e2862413bc6bf83c3a1823ac4cea72a9
+      creationTimestamp: null
+      name: lokistack-gateway
+    spec:
+      containers:
+      - args:
+        - --debug.name=lokistack-gateway
+        - --web.listen=0.0.0.0:8080
+        - --web.internal.listen=0.0.0.0:8081
+        - --web.healthchecks.url=https://localhost:8080
+        - --log.level=warn
+        - --logs.read.endpoint=https://lokistack-query-frontend-http.openshift-operators-redhat.svc.cluster.local:3100
+        - --logs.tail.endpoint=https://lokistack-query-frontend-http.openshift-operators-redhat.svc.cluster.local:3100
+        - --logs.write.endpoint=https://lokistack-distributor-http.openshift-operators-redhat.svc.cluster.local:3100
+        - --rbac.config=/etc/lokistack-gateway/rbac.yaml
+        - --tenants.config=/etc/lokistack-gateway/tenants.yaml
+        - --tls.internal.server.cert-file=/var/run/tls/http/tls.crt
+        - --tls.internal.server.key-file=/var/run/tls/http/tls.key
+        - --logs.tls.ca-file=/var/run/ca/service-ca.crt
+        - --tls.server.cert-file=/var/run/tls/http/tls.crt
+        - --tls.server.key-file=/var/run/tls/http/tls.key
+        - --tls.healthchecks.server-ca-file=/var/run/ca/service-ca.crt
+        - --tls.healthchecks.server-name=lokistack-gateway-http.openshift-operators-redhat.svc.cluster.local
+        image: registry.redhat.io/openshift-logging/lokistack-gateway-rhel8@sha256:db950226508ef3bff50416649f32bfb89c27a4200fdb0c63ddbc0b10384fe3d5
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          failureThreshold: 10
+          httpGet:
+            path: /live
+            port: 8081
+            scheme: HTTPS
+          periodSeconds: 30
+          successThreshold: 1
+          timeoutSeconds: 2
+        name: gateway
+        ports:
+        - containerPort: 8081
+          name: metrics
+          protocol: TCP
+        - containerPort: 8080
+          name: public
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 12
+          httpGet:
+            path: /ready
+            port: 8081
+            scheme: HTTPS
+          periodSeconds: 5
+          successThreshold: 1
+          timeoutSeconds: 1
+        resources:
+          requests:
+            cpu: 100m
+            memory: 256Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /etc/lokistack-gateway/rbac.yaml
+          name: rbac
+          readOnly: true
+          subPath: rbac.yaml
+        - mountPath: /etc/lokistack-gateway/tenants.yaml
+          name: tenants
+          readOnly: true
+          subPath: tenants.yaml
+        - mountPath: /etc/lokistack-gateway/lokistack-gateway.rego
+          name: lokistack-gateway
+          readOnly: true
+          subPath: lokistack-gateway.rego
+        - mountPath: /var/run/tls/http
+          name: tls-secret
+          readOnly: true
+        - mountPath: /var/run/ca
+          name: lokistack-ca-bundle
+          readOnly: true
+      - args:
+        - --log.level=warn
+        - --opa.package=lokistack
+        - --opa.matcher=kubernetes_namespace_name
+        - --web.listen=:8082
+        - --web.internal.listen=:8083
+        - --web.healthchecks.url=http://localhost:8082
+        - --tls.internal.server.cert-file=/var/run/tls/http/tls.crt
+        - --tls.internal.server.key-file=/var/run/tls/http/tls.key
+        - --openshift.mappings=application=loki.grafana.com
+        - --openshift.mappings=infrastructure=loki.grafana.com
+        - --openshift.mappings=audit=loki.grafana.com
+        image: registry.redhat.io/openshift-logging/opa-openshift-rhel8@sha256:1c0c2cdd0076f8d12743a7e6bf2cb213d2480e616bd297a0ff746c26d89247bc
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          failureThreshold: 10
+          httpGet:
+            path: /live
+            port: 8083
+            scheme: HTTPS
+          periodSeconds: 30
+          successThreshold: 1
+          timeoutSeconds: 2
+        name: opa
+        ports:
+        - containerPort: 8082
+          name: public
+          protocol: TCP
+        - containerPort: 8083
+          name: opa-metrics
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 12
+          httpGet:
+            path: /ready
+            port: 8083
+            scheme: HTTPS
+          periodSeconds: 5
+          successThreshold: 1
+          timeoutSeconds: 1
+        resources: {}
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /var/run/tls/http
+          name: tls-secret
+          readOnly: true
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext:
+        runAsNonRoot: true
+      serviceAccount: lokistack-gateway
+      serviceAccountName: lokistack-gateway
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - configMap:
+          defaultMode: 420
+          name: lokistack-gateway
+        name: rbac
+      - configMap:
+          defaultMode: 420
+          name: lokistack-gateway
+        name: tenants
+      - configMap:
+          defaultMode: 420
+          name: lokistack-gateway
+        name: lokistack-gateway
+      - name: tls-secret
+        secret:
+          defaultMode: 420
+          secretName: lokistack-gateway-http
+      - configMap:
+          defaultMode: 420
+          name: lokistack-ca-bundle
+        name: lokistack-ca-bundle

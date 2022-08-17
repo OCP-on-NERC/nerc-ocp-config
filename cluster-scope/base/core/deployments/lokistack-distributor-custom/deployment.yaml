@@ -1,0 +1,127 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lokistack-distributor-custom
+  namespace: openshift-operators-redhat
+  labels:
+    app.kubernetes.io/component: distributor
+    app.kubernetes.io/created-by: lokistack-controller
+    app.kubernetes.io/instance: lokistack
+    app.kubernetes.io/managed-by: lokistack-controller
+    app.kubernetes.io/name: lokistack
+    nerc.mghpcc.org/kustomized: 'true'
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/component: distributor
+        app.kubernetes.io/created-by: lokistack-controller
+        app.kubernetes.io/instance: lokistack
+        app.kubernetes.io/managed-by: lokistack-controller
+        app.kubernetes.io/name: lokistack
+        loki.grafana.com/gossip: 'true'
+        nerc.mghpcc.org/kustomized: 'true'
+      annotations:
+        loki.grafana.com/config-hash: f75cfcb83e70a9520ab4becae17ce7888ba59c5a
+      creationTimestamp: null
+      name: loki-distributor-lokistack
+    spec:
+      containers:
+      - args:
+        - -target=distributor
+        - -config.file=/etc/loki/config/config.yaml
+        - -runtime-config.file=/etc/loki/config/runtime-config.yaml
+        - -server.http-tls-cert-path=/var/run/tls/http/tls.crt
+        - -server.http-tls-key-path=/var/run/tls/http/tls.key
+        - -ingester.client.tls-enabled=true
+        - -ingester.client.tls-ca-path=/var/run/ca/service-ca.crt
+        - -ingester.client.tls-server-name=lokistack-ingester-grpc.openshift-operators-redhat.svc.cluster.local
+        - -server.grpc-tls-cert-path=/var/run/tls/grpc/tls.crt
+        - -server.grpc-tls-key-path=/var/run/tls/grpc/tls.key
+        - -s3.http.insecure-skip-verify
+        - -distributor.ingestion-rate-limit-mb=10000
+        - -distributor.ingestion-burst-size-mb=10000
+        - -validation.reject-old-samples=false
+        image: registry.redhat.io/openshift-logging/logging-loki-rhel8@sha256:ea850177bb0a51143c90f15747182d3e226dd2361f0dac97b52db8e03427d4a2
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          failureThreshold: 10
+          httpGet:
+            path: /loki/api/v1/status/buildinfo
+            port: 3100
+            scheme: HTTPS
+          periodSeconds: 30
+          successThreshold: 1
+          timeoutSeconds: 2
+        name: loki-distributor
+        ports:
+        - containerPort: 3100
+          name: metrics
+          protocol: TCP
+        - containerPort: 9095
+          name: grpclb
+          protocol: TCP
+        - containerPort: 7946
+          name: gossip-ring
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /ready
+            port: 3100
+            scheme: HTTPS
+          initialDelaySeconds: 15
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        resources:
+          requests:
+            cpu: "1"
+            memory: 500Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /etc/loki/config
+          name: config
+        - mountPath: /var/run/tls/http
+          name: lokistack-distributor-http
+        - mountPath: /var/run/ca
+          name: lokistack-ca-bundle
+        - mountPath: /var/run/tls/grpc
+          name: lokistack-distributor-grpc
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext:
+        runAsNonRoot: true
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - secret:
+          defaultMode: 420
+          secretName: lokistack-config-custom
+        name: config
+      - name: lokistack-distributor-http
+        secret:
+          defaultMode: 420
+          secretName: lokistack-distributor-http
+      - configMap:
+          defaultMode: 420
+          name: lokistack-ca-bundle
+        name: lokistack-ca-bundle
+      - name: lokistack-distributor-grpc
+        secret:
+          defaultMode: 420
+          secretName: lokistack-distributor-grpc

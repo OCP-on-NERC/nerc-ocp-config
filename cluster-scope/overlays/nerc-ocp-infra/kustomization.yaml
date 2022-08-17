@@ -14,7 +14,6 @@ resources:
 - ../../base/operator.openshift.io/networks/cluster
 - ../../bundles/odf-external
 - ../../bundles/external-secrets-clustersecretstore
-- ../../base/core/namespaces/dex
 - clusterversion.yaml
 - machineconfigs/disable-net-ifnames.yaml
 - machineconfigs/mellanox-udev-rules
@@ -37,3 +36,5 @@ patchesStrategicMerge:
   - externalsecrets/open-cluster-management-observability-multiclusterhub-operator-pull-secret_patch.yaml
   - externalsecrets/open-cluster-management-observability-thanos-object-storage_patch.yaml
   - externalsecrets/loki-thanos-object-storage_patch.yaml
+  - externalsecrets/loki-config-custom_patch.yaml
+  - externalsecrets/openshift-logging-lokistack-gateway-bearer-token_patch.yaml

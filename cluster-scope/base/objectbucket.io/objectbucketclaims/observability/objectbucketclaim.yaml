@@ -5,4 +5,4 @@ metadata:
   namespace: open-cluster-management-observability
 spec:
   generateBucketName: observability
-  storageClassName: openshift-storage.noobaa.io
+  storageClassName: metrics-bucket-storage

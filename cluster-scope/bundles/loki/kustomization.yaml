@@ -2,8 +2,9 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ../../base/core/namespaces/openshift-operators-redhat
-  - ../../base/objectbucket.io/objectbucketclaims/loki-objectbucketclaim
+  - ../../base/objectbucket.io/objectbucketclaims/openshift-operators-redhat-objectbucketclaim
   - ../../base/external-secrets.io/externalsecrets/loki-thanos-object-storage
+  - ../../base/external-secrets.io/externalsecrets/lokistack-config-custom
   - ../../base/core/namespaces/openshift-logging
   - ../../base/operators.coreos.com/operatorgroups/openshift-operators-redhat
   - ../../base/operators.coreos.com/subscriptions/loki-operator
@@ -13,6 +14,16 @@ resources:
   - ../../base/operators.coreos.com/subscriptions/cluster-logging
   - ../../base/logging.openshift.io/clusterloggings/instance
   - ../../base/logging.openshift.io/clusterlogforwarders/instance
-  - ../../base/policy.open-cluster-management.io/policies/policy-enableclusterlogforwarder
-  - ../../base/policy.open-cluster-management.io/placementbindings/binding-policy-enableclusterlogforwarder
-  - ../../base/policy.open-cluster-management.io/placementrules/placement-policy-enableclusterlogforwarder
+  - ../../base/rbac.authorization.k8s.io/clusterroles/lokistack-tenant-logs
+  - ../../base/rbac.authorization.k8s.io/clusterrolebindings/lokistack-tenant-logs
+  - ../../base/rbac.authorization.k8s.io/clusterrolebindings/lokistack-gateway-auth-delegator
+  - ../../base/external-secrets.io/externalsecrets/openshift-logging-lokistack-gateway-bearer-token
+#  - ../../base/policy.open-cluster-management.io/policies/policy-enableclusterlogforwarder
+#  - ../../base/policy.open-cluster-management.io/placementbindings/binding-policy-enableclusterlogforwarder
+#  - ../../base/policy.open-cluster-management.io/placementrules/placement-policy-enableclusterlogforwarder
+  - ../../base/core/deployments/lokistack-distributor-custom
+  - ../../base/core/deployments/lokistack-querier-custom
+  - ../../base/core/deployments/lokistack-query-frontend-custom
+  - ../../base/core/statefulsets/lokistack-compactor-custom
+  - ../../base/core/statefulsets/lokistack-index-gateway-custom
+  - ../../base/core/statefulsets/lokistack-ingester-custom
