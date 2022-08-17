@@ -137,7 +137,6 @@ data:
           object_store: s3
           schema: v11
           store: boltdb-shipper
-    
     server:
       graceful_shutdown_timeout: 5s
       grpc_server_min_time_between_pings: '10s'
@@ -163,4 +162,4 @@ data:
     analytics:
       reporting_enabled: false
   runtime-config.yaml: |
-    overrides: 
+    overrides:

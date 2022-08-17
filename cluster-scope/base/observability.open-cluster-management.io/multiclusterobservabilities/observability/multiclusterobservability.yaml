@@ -3,7 +3,7 @@ kind: MultiClusterObservability
 metadata:
   name: observability
   nodeSelector:
-    node-role.kubernetes.io/infra: 
+    node-role.kubernetes.io/infra:
 spec:
   # See: https://access.redhat.com/documentation/en-us/red_hat_advanced_cluster_management_for_kubernetes/2.5/html/apis/apis#rhacm-docs_apis_multiclusterobservability_jsonmulticlusterobservability
   enableDownsampling: true
