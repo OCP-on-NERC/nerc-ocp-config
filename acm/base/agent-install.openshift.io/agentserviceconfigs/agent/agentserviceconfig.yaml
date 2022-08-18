@@ -14,13 +14,13 @@ spec:
       - ReadWriteOnce
     resources:
       requests:
-        storage: 100Gi
+        storage: 100G
   imageStorage:
     accessModes:
       - ReadWriteOnce
     resources:
       requests:
-        storage: 100Gi
+        storage: 100G
   osImages:
     # You can get the value for "version" from "oc adm release info <openshiftVersion>"
     - cpuArchitecture: x86_64
