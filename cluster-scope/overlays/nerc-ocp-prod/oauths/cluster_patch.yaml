@@ -1,0 +1,22 @@
+apiVersion: config.openshift.io/v1
+kind: OAuth
+metadata:
+  name: cluster
+spec:
+  identityProviders:
+    - mappingMethod: claim
+      name: mss-keycloak
+      openID:
+        claims:
+          email:
+            - email
+          name:
+            - name
+          preferredUsername:
+            - preferred_username
+        clientID: ocp-prod
+        clientSecret:
+          name: oauths-clientsecret-nerc
+        extraScopes: []
+        issuer: https://keycloak.mss.mghpcc.org/auth/realms/mss
+      type: OpenID
