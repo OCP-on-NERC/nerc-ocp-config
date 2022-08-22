@@ -7,7 +7,7 @@ spec:
   audit:
     profile: Default
   servingCerts:
-    namesCertificates:
+    namedCertificates:
       - names:
         - api.nerc-ocp-infra.rc.fas.harvard.edu
         serviceCertificate:
