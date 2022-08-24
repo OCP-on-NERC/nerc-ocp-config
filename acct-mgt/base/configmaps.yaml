@@ -1,0 +1,49 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: acct-mgt-configmap
+data:
+  ACCT_MGT_ADMIN_USERNAME: "admin"
+  ACCT_MGT_QUOTA_DEF_FILE: "/app/quota/quotas.json"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: acct-mgt-quota-configmap
+data:
+  quotas.json: |
+    {
+      ":requests.cpu":                  { "base": 2, "coefficient": 0 },
+      ":requests.memory":               { "base": 2, "coefficient": 0 },
+      ":limits.cpu":                    { "base": 2, "coefficient": 0 },
+      ":limits.memory":                 { "base": 2, "coefficient": 0 },
+      ":requests.storage":              { "base": 2, "coefficient": 0, "units": "Gi" },
+      ":limits.storage":                { "base": 2, "coefficient": 0, "units": "Gi" },
+      ":requests.ephemeral-storage":    { "base": 2, "coefficient": 8, "units": "Gi" },
+      ":limits.ephemeral-storage":      { "base": 2, "coefficient": 8, "units": "Gi" },
+      ":persistentvolumeclaims":        { "base": 2, "coefficient": 0 },
+      ":replicationcontrollers":        { "base": 2, "coefficient": 0 },
+      ":resourcequotas":                { "base": 5, "coefficient": 0 },
+      ":services":                      { "base": 4, "coefficient": 0 },
+      ":services.loadbalancers":        { "base": 2, "coefficient": 0 },
+      ":services.nodeports":            { "base": 2, "coefficient": 0 },
+      ":secrets":                       { "base": 4, "coefficient": 0 },
+      ":configmaps":                    { "base": 4, "coefficient": 0 },
+      ":openshift.io/imagestreams":     { "base": 2, "coefficient": 0 },
+      "BestEffort:pods":                { "base": 2, "coefficient": 2 },
+      "NotBestEffort:pods":             { "base": 2, "coefficient": 2 },
+      "NotBestEffort:requests.memory":  { "base": 2, "coefficient": 4, "units": "Gi"  },
+      "NotBestEffort:limits.memory":    { "base": 2, "coefficient": 4, "units": "Gi"  },
+      "NotBestEffort:requests.cpu":     { "base": 2, "coefficient": 2 },
+      "NotBestEffort:limits.cpu":       { "base": 2, "coefficient": 2 },
+      "Terminating:pods":               { "base": 2, "coefficient": 2 },
+      "Terminating:requests.memory":    { "base": 2, "coefficient": 4, "units": "Gi"  },
+      "Terminating:limits.memory":      { "base": 2, "coefficient": 4, "units": "Gi"  },
+      "Terminating:requests.cpu":       { "base": 2, "coefficient": 2 },
+      "Terminating:limits.cpu":         { "base": 2, "coefficient": 2 },
+      "NotTerminating:pods":            { "base": 2, "coefficient": 2 },
+      "NotTerminating:requests.memory": { "base": 2, "coefficient": 4, "units": "Gi"  },
+      "NotTerminating:limits.memory":   { "base": 2, "coefficient": 4, "units": "Gi"  },
+      "NotTerminating:requests.cpu":    { "base": 2, "coefficient": 2 },
+      "NotTerminating:limits.cpu":      { "base": 2, "coefficient": 2 }
+    }
