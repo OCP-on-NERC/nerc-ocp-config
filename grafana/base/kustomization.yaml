@@ -8,6 +8,6 @@ resources:
   - grafanadatasources
   - routes
 commonLabels:
-  app.kubernetes.io/name: loki
-  app.kubernetes.io/component: lokistack
+  app.kubernetes.io/name: grafana
+  app.kubernetes.io/component: grafana
   app.kubernetes.io/part-of: cluster-logging
