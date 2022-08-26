@@ -7,6 +7,6 @@ resources:
   - clusterloggings
   - clusterlogforwarders
 commonLabels:
-  app.kubernetes.io/name: loki
-  app.kubernetes.io/component: lokistack
+  app.kubernetes.io/name: logging
+  app.kubernetes.io/component: logging
   app.kubernetes.io/part-of: cluster-logging
