@@ -6,4 +6,3 @@ metadata:
     openshift.io/node-selector: ""
   labels:
     openshift.io/cluster-monitoring: 'true'
-spec: {}
