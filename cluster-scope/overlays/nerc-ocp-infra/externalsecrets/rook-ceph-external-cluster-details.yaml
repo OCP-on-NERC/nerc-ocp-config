@@ -2,7 +2,7 @@ apiVersion: external-secrets.io/v1beta1
 kind: ExternalSecret
 metadata:
   name: rook-ceph-external-cluster-details
-  namesapce: openshift-storage
+  namespace: openshift-storage
 spec:
   secretStoreRef:
     name: nerc-cluster-secrets
