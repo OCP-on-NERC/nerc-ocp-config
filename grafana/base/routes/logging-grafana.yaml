@@ -1,0 +1,17 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: logging-grafana
+  namespace: grafana
+spec:
+  host: logging-grafana.apps.nerc-ocp-infra.rc.fas.harvard.edu
+  to:
+    kind: Service
+    name: grafana-service
+    weight: 100
+  port:
+    targetPort: grafana
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+  wildcardPolicy: None
