@@ -3,7 +3,7 @@
 : "${KUSTOMIZE:=kustomize}"
 
 find_overlays() {
-    find . -regex '.*/overlays/[^/]*/kustomization.yaml' -printf '%h\n'
+    find . -regex '.*/overlays/[^/]*/kustomization.yaml' -exec dirname {} \;
 }
 
 okay() {
