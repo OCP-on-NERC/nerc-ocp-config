@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: acct-mgt
+spec:
+  replicas: 1
+  template:
+    spec:
+      containers:
+        - name: acct-mgt
+          envFrom:
+            - secretRef:
+                name: acct-mgt-secrets
+            - configMapRef:
+                name: acct-mgt-configmap
+          image: "ghcr.io/cci-moc/openshift-acct-mgt:master"
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          volumeMounts:
+            - name: quota-vol
+              mountPath: /app/quota
+              readOnly: true
+      volumes:
+        - name: quota-vol
+          configMap:
+            name: acct-mgt-quota-configmap
+      serviceAccountName: acct-mgt-serviceaccount
+      automountServiceAccountToken: true
