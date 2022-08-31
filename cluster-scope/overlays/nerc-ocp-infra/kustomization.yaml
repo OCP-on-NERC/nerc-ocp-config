@@ -13,6 +13,9 @@ resources:
 - ../../bundles/odf-external
 - ../../bundles/external-secrets-clustersecretstore
 - ../../base/core/namespaces/dex
+- ../../base/core/namespaces/grafana
+- ../../base/core/namespaces/openshift-logging
+- ../../base/core/namespaces/openshift-operators-redhat
 - clusterversion.yaml
 - machineconfigs/disable-net-ifnames.yaml
 - machineconfigs/refresh-storage-interface.yaml
