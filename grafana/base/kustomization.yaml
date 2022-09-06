@@ -3,6 +3,7 @@ kind: Kustomization
 resources:
   - operatorgroups
   - subscriptions
+  - configmaps
   - grafanas
   - grafanadatasources
   - routes
