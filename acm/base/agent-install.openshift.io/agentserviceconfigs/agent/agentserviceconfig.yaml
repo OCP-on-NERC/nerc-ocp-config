@@ -8,23 +8,32 @@ spec:
       - ReadWriteOnce
     resources:
       requests:
-        storage: 100M
+        storage: 1G
   filesystemStorage:
     accessModes:
       - ReadWriteOnce
     resources:
       requests:
-        storage: 100M
+        storage: 100G
   imageStorage:
     accessModes:
       - ReadWriteOnce
     resources:
       requests:
-        storage: 20G
+        storage: 100G
   osImages:
     # You can get the value for "version" from "oc adm release info <openshiftVersion>"
-    - openshiftVersion: "4.10"
-      version: "410.84.202205191234-0"
-      url: "https://mirror.openshift.com/pub/openshift-v4/x86_64/dependencies/rhcos/4.10/4.10.16/rhcos-live.x86_64.iso"
-      rootFSUrl: "https://mirror.openshift.com/pub/openshift-v4/x86_64/dependencies/rhcos/4.10/4.10.16/rhcos-live-rootfs.x86_64.img"
-      cpuArchitecture: "x86_64"
+    - cpuArchitecture: x86_64
+      openshiftVersion: '4.10'
+      rootFSUrl: >-
+        https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.10/4.10.16/rhcos-4.10.16-x86_64-live-rootfs.x86_64.img
+      url: >-
+        https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.10/4.10.16/rhcos-4.10.16-x86_64-live.x86_64.iso
+      version: 410.84.202201251210-0
+    - cpuArchitecture: x86_64
+      openshiftVersion: '4.11'
+      rootFSUrl: >-
+        https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.11/4.11.0/rhcos-4.11.0-x86_64-live-rootfs.x86_64.img
+      url: >-
+        https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.11/4.11.0/rhcos-4.11.0-x86_64-live.x86_64.iso
+      version: 411.86.202208031059-0

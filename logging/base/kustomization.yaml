@@ -1,0 +1,11 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - operatorgroups
+  - subscriptions
+  - clusterloggings
+  - clusterlogforwarders
+commonLabels:
+  app.kubernetes.io/name: logging
+  app.kubernetes.io/component: logging
+  app.kubernetes.io/part-of: cluster-logging
