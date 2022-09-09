@@ -14,6 +14,7 @@ resources:
 - ../../bundles/odf-external
 - ../../bundles/external-secrets-clustersecretstore
 - ../../base/core/namespaces/dex
+- ../../base/core/namespaces/patch-operator
 - ../../base/core/namespaces/grafana
 - ../../base/core/namespaces/openshift-logging
 - ../../base/core/namespaces/openshift-operators-redhat
