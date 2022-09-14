@@ -5,5 +5,12 @@ commonLabels:
 
 resources:
 - ../common
+- ../../bundles/external-secrets-clustersecretstore
 - ../../bundles/acct-mgt
 - clusterversion.yaml
+- externalsecrets
+- apiserver/cluster.yaml
+- secretstores
+
+patches:
+- path: ingresscontrollers/default_patch.yaml
