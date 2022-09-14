@@ -9,12 +9,18 @@ resources:
 - ../../bundles/acm
 - ../../bundles/acm/observability
 - ../../bundles/vault
+- ../../bundles/patch-operator
 - ../../base/operator.openshift.io/networks/cluster
 - ../../bundles/odf-external
 - ../../bundles/external-secrets-clustersecretstore
 - ../../base/core/namespaces/dex
+- ../../base/core/namespaces/grafana
+- ../../base/core/namespaces/openshift-logging
+- ../../base/core/namespaces/openshift-operators-redhat
+- ../../base/operators.coreos.com/subscriptions/openshift-pipelines-operator
 - clusterversion.yaml
 - machineconfigs/disable-net-ifnames.yaml
+- machineconfigs/refresh-storage-interface.yaml
 - machineconfigs/mellanox-udev-rules
 - machineconfigs/configure-bond0
 - nodenetworkconfigurationpolicies/vlan-2177-nese.yaml
@@ -23,6 +29,8 @@ resources:
 - clusterrolebindings/nerc-ops-sudoers.yaml
 - clusterrolebindings/nerc-ops-portforward.yaml
 - externalsecrets
+- apiserver/cluster.yaml
+- metrics-bucket-storage
 
 patches:
 - path: oauths/cluster_patch.yaml

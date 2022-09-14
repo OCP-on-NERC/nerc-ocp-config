@@ -1,0 +1,6 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - ../../base/core/namespaces/acct-mgt
+  - ../../base/rbac.authorization.k8s.io/clusterrolebindings/acct-mgt-serviceaccount

@@ -22,6 +22,11 @@ staticClients:
       - https://vault-ui-vault.apps.nerc-ocp-infra.rc.fas.harvard.edu/oidc/callback
       - https://vault-ui-vault.apps.nerc-ocp-infra.rc.fas.harvard.edu/ui/vault/auth/oidc/oidc/callback
     secretEnv: VAULT_SECRET
+  - id: grafana
+    name: Grafana
+    redirectURIs:
+      - https://logging-grafana.apps.nerc-ocp-infra.rc.fas.harvard.edu/login/generic_oauth
+    secretEnv: GRAFANA_SECRET
 
 connectors:
   - type: openshift
