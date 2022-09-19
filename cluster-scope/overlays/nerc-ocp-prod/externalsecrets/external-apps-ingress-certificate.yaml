@@ -5,7 +5,7 @@ metadata:
   namespace: openshift-ingress-operator
 spec:
   secretStoreRef:
-    name: ingress-controller-secret-store
+    name: nerc-secret-store
     kind: SecretStore
   target:
     name: external-apps-ingress-certificate
