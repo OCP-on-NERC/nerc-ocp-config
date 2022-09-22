@@ -52,23 +52,22 @@ spec:
 
         S3Retention="10"
         PVCRetention="2d"
-
         snapshot_pvc_path=$(workspaces.snapshots.path)
 
         echo Setting up mc connection to S3 Bucket
-        mc alias set store ${S3EndPoint} ${S3AccessKey} ${S3SecretKey} --api S3v4
+        mc alias set store ${ENDPOINT} ${ACCESS_KEY_ID} ${SECRET_ACCESS_KEY} --api S3v4
 
-        echo Syncing contents of ${snapshot_pvc_path}/ to Bucket ${S3Bucket} that are newer than ${S3Retention}
-        mc mirror ${snapshot_pvc_path}/ store/${S3Bucket}/ --newer-than ${S3Retention}
+        echo Syncing contents of ${snapshot_pvc_path}/ to Bucket ${BUCKET} that are newer than ${S3Retention}
+        mc mirror ${snapshot_pvc_path}/ store/${BUCKET}/ --newer-than ${S3Retention}
 
-        echo Removing files from Bucket ${S3Bucket} that are older than ${S3Retention}
+        echo Removing files from Bucket ${BUCKET} that are older than ${S3Retention}
 
-        mc rm -r --force --older-than ${S3Retention} store/${S3Bucket}
+        mc rm -r --force --older-than ${S3Retention} store/${BUCKET}
 
-        echo Printing contents of Bucket ${S3Bucket}
+        echo Printing contents of Bucket ${BUCKET}
 
         echo --------------------------------------------
-        mc ls store/${S3Bucket}
+        mc ls store/${BUCKET}
         echo --------------------------------------------
 
         echo Removing files from PVC that are older than ${PVCRetention} in path ${snapshot_pvc_path}
