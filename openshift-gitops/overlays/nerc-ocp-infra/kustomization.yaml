@@ -6,3 +6,5 @@ resources:
 - applicationsets
 - externalsecrets
 - configs
+- serviceaccounts/patch-operator.yaml
+- patches/dex-config.yaml

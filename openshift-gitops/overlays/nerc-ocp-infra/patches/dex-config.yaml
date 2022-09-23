@@ -1,0 +1,22 @@
+apiVersion: redhatcop.redhat.io/v1alpha1
+kind: Patch
+metadata:
+  name: dex-config
+spec:
+  serviceAccountRef:
+    name: patch-operator
+  patches:
+    dex-config:
+      targetObjectRef:
+        apiVersion: v1
+        kind: ConfigMap
+        name: argocd-cm
+        namespace: openshift-gitops
+      patchTemplate: |
+        data:
+          dex.config: "{{ (index . 1).data.config }}"
+      sourceObjectRefs:
+      - apiVersion: v1
+        kind: Secret
+        name: dex-config
+        namespace: openshift-gitops
