@@ -1,0 +1,13 @@
+- apiGroups:
+  - tekton.dev
+  clusters:
+  - '*'
+  kinds:
+  - TaskRun
+  - PipelineRun
+- apiGroups:
+  - "internal.open-cluster-management.io"
+  kinds:
+  - "ManagedClusterInfo"
+  clusters:
+  - "*"
