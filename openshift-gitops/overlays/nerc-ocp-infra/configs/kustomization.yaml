@@ -1,0 +1,18 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+configMapGenerator:
+  - name: argocd-cm
+    files:
+      - argocd-cm/application.instanceLabelKey
+      - argocd-cm/application.resourceTrackingMethod
+      - argocd-cm/statusbadge.enabled
+      - argocd-cm/admin.enabled
+      - argocd-cm/ga.anonymizeusers
+      - argocd-cm/url
+      - argocd-cm/users.anonymous.enabled
+      - argocd-cm/resource.exclusions
+      - argocd-cm/dex.config
+
+generatorOptions:
+  disableNameSuffixHash: true
