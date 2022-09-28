@@ -1,10 +1,4 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-namespace: openshift-gitops
-
 resources:
 - applicationsets
-- externalsecrets
-- configs
-- serviceaccounts/patch-operator.yaml
-- patches/dex-config.yaml
