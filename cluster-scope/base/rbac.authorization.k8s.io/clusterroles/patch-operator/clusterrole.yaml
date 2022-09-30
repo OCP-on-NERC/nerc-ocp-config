@@ -14,3 +14,13 @@ rules:
       - get
       - watch
       - list
+  - apiGroups:
+      - integreatly.org
+    resources:
+      - grafanas
+    verbs:
+      - update
+      - patch
+      - get
+      - watch
+      - list
