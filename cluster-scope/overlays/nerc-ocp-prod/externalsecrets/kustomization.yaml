@@ -6,3 +6,4 @@ resources:
 - oauths-clientsecret-nerc.yaml
 - github-client-secret.yaml
 - github-group-sync-token.yaml
+- rook-ceph-external-cluster-details.yaml
