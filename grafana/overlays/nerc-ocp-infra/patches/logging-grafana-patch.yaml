@@ -18,7 +18,7 @@ spec:
             auth.generic_oauth:
               client_id: grafana
               client_secret: {{ (index . 1).data.GRAFANA_SECRET | b64dec }}
-      patchType: application/strategic-merge-patch+json
+      patchType: application/merge-patch+json
       sourceObjectRefs:
       - apiVersion: v1
         kind: Secret
