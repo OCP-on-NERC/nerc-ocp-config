@@ -5,8 +5,5 @@ metadata:
   namespace: grafana
 spec:
   config:
-    auth.generic_oauth:
-      client_id: grafana
-      client_secret: oauth-client-secret
     server:
       root_url: https://logging-grafana.apps.nerc-ocp-infra.rc.fas.harvard.edu

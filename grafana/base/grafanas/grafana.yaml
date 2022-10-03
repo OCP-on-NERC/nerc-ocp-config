@@ -17,8 +17,6 @@ spec:
       enabled: true
       scopes: openid email groups profile
       email_attribute_path: name
-      client_id: grafana
-      client_secret: $GRAFANA_SECRET
       api_url: https://dex-dex.apps.nerc-ocp-infra.rc.fas.harvard.edu/userinfo
       auth_url: https://dex-dex.apps.nerc-ocp-infra.rc.fas.harvard.edu/auth
       token_url: https://dex-dex.apps.nerc-ocp-infra.rc.fas.harvard.edu/token

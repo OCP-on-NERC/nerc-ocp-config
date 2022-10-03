@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - ../../base
   - externalsecrets
+  - patches/logging-grafana-patch.yaml
 
 patchesStrategicMerge:
   - grafanas/logging-grafana_patch.yaml
