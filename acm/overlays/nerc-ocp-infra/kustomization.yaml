@@ -1,6 +1,15 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+commonLabels:
+  nerc.mghpcc.org/kustomized: "true"
+
 resources:
 - ../../base
-- managedclusters
-- klusterletaddonconfigs
+
+# See https://rcarrata.com/openshift/argo-and-acm/
+- gitopscluster/argocd-managed.yaml
+- managedclustersetbindings/argocd-managed.yaml
+- managedclustersets/argocd-managed.yaml
+- placements/argocd-managed.yaml
+
+- clusters
