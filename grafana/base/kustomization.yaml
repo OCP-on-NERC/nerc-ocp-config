@@ -7,6 +7,7 @@ resources:
   - grafanas
   - grafanadatasources
   - routes
+  - serviceaccounts
 commonLabels:
   app.kubernetes.io/name: grafana
   app.kubernetes.io/component: grafana

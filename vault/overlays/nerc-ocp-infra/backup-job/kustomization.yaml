@@ -9,6 +9,7 @@ configMapGenerator:
     name: backup-vault-run
 resources:
   - cronjob.yaml
+  - externalsecret.yaml
   - pvc.yaml
   - rolebinding.yaml
   - sa.yaml

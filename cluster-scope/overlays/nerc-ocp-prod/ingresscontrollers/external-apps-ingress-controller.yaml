@@ -1,0 +1,20 @@
+apiVersion: operator.openshift.io/v1
+kind: IngressController
+metadata:
+  name: external-apps-ingress-controller
+  namespace: openshift-ingress-operator
+spec:
+  domain: apps.shift.nerc.mghpcc.org
+  defaultCertificate:
+    name: external-apps-ingress-certificate
+  endpointPublishingStrategy:
+    type: LoadBalancerService
+    loadBalancer:
+      scope: External
+  nodePlacement:
+    nodeSelector:
+      matchLabels:
+        zone: external
+  namespaceSelector:
+    matchLabels:
+      type: external
