@@ -6,7 +6,6 @@ commonLabels:
 resources:
 - ../common
 - ../../bundles/acct-mgt
-- clusterversion.yaml
 - ingresscontrollers/external-apps-ingress-controller.yaml
 - externalsecrets
 - apiserver/cluster.yaml
