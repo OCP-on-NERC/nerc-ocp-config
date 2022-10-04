@@ -17,8 +17,3 @@ spec:
         path: "clusters/{{ name }}"
         repoURL: https://github.com/ocp-on-nerc/nerc-ocp-apps.git
         targetRevision: HEAD
-      syncPolicy:
-        automated:
-          selfHeal: true
-        syncOptions:
-          - ApplyOutOfSyncOnly=true
