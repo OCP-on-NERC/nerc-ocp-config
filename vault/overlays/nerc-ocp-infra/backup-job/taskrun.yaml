@@ -12,4 +12,4 @@ spec:
         claimName: vault-snapshots
     - name: backup-job
       secret:
-        secretName: backup-job
+        secretName: vault-backup-s3-endpoint
