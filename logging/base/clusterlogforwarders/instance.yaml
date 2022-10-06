@@ -20,6 +20,15 @@ spec:
       url: https://lokistack-gateway-http.openshift-operators-redhat.svc.cluster.local:8080/api/logs/v1/audit
       secret:
         name: lokistack-gateway-bearer-token
+      loki:
+        labelKeys:
+          - log_type
+          - level
+          - service
+          - kubernetes.namespace_name
+          - kubernetes.pod_name
+          - kubernetes.host
+          - kubernetes.labels
   pipelines:
     - name: send-app-logs
       inputRefs:
