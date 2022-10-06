@@ -7,3 +7,4 @@ metadata:
     include.release.openshift.io/single-node-developer: "true"
     release.openshift.io/create-only: "true"
   name: cluster
+spec: {}

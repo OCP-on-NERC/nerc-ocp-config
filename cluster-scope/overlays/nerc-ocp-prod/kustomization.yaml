@@ -13,3 +13,27 @@ resources:
 
 patches:
 - path: ingresscontrollers/default_patch.yaml
+
+- target:
+    group: "external-secrets.io"
+    name: ".*"
+  patch: |
+    - op: add
+      path: /metadata/annotations/argocd.argoproj.io~1sync-options
+      value: "SkipDryRunOnMissingResource=true"
+
+- target:
+    group: "operator.external-secrets.io"
+    name: ".*"
+  patch: |
+    - op: add
+      path: /metadata/annotations/argocd.argoproj.io~1sync-options
+      value: "SkipDryRunOnMissingResource=true"
+
+- target:
+    group: "nmstate.io"
+    name: ".*"
+  patch: |
+    - op: add
+      path: /metadata/annotations/argocd.argoproj.io~1sync-options
+      value: "SkipDryRunOnMissingResource=true"
