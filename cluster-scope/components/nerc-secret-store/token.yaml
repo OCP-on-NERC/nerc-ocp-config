@@ -1,0 +1,10 @@
+# Kubernetes will automatically update this secret with a token
+# corresponding to the named ServiceAccount.
+
+apiVersion: v1
+kind: Secret
+metadata:
+  name: vault-secret-reader
+  annotations:
+    kubernetes.io/service-account.name: vault-secret-reader
+type: kubernetes.io/service-account-token
