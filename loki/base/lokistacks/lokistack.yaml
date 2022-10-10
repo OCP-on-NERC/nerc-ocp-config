@@ -4,6 +4,11 @@ metadata:
   name: lokistack
   namespace: openshift-operators-redhat
 spec:
+  limits:
+    global:
+      ingestion:
+        ingestionBurstSize: 10
+        ingestionRate: 10
   managementState: Managed
   storage:
     secret:
