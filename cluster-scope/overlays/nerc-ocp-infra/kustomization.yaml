@@ -23,7 +23,6 @@ resources:
 - machineconfigs/mellanox-udev-rules
 - machineconfigs/configure-bond0
 - nodenetworkconfigurationpolicies/vlan-2177-nese.yaml
-- groupsyncs/github-ocp-on-nerc.yaml
 - clusterrolebindings/nerc-ops-cluster-reader.yaml
 - clusterrolebindings/nerc-ops-sudoers.yaml
 - clusterrolebindings/nerc-ops-portforward.yaml
