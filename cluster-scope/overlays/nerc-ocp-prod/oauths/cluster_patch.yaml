@@ -20,3 +20,12 @@ spec:
         extraScopes: []
         issuer: https://keycloak.mss.mghpcc.org/auth/realms/mss
       type: OpenID
+    - name: github
+      mappingMethod: claim
+      type: GitHub
+      github:
+        clientID: 771ea98004d436c6e529
+        clientSecret:
+          name: github-client-secret
+        teams:
+          - ocp-on-nerc/nerc-ops

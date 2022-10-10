@@ -4,3 +4,4 @@ resources:
 - default-ingress-certificate.yaml
 - default-api-certificate.yaml
 - oauths-clientsecret-nerc.yaml
+- github-client-secret.yaml
