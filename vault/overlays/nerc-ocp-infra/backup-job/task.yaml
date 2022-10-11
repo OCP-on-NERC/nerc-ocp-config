@@ -3,6 +3,10 @@ kind: Task
 metadata:
   name: backup-vault
 spec:
+  stepTemplate:
+    env:
+      - name: "HOME"
+        value: "/tekton/home"
   workspaces:
     - name: snapshots
       mountPath: /snapshots
