@@ -16,7 +16,6 @@ resources:
 - ../../base/core/namespaces/dex
 - ../../base/core/namespaces/grafana
 - ../../base/core/namespaces/openshift-logging
-- ../../base/core/namespaces/openshift-operators-redhat
 - ../../base/operators.coreos.com/subscriptions/openshift-pipelines-operator
 - clusterversion.yaml
 - machineconfigs/disable-net-ifnames.yaml
