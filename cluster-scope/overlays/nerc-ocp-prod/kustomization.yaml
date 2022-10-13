@@ -39,11 +39,3 @@ patches:
     - op: add
       path: /metadata/annotations/argocd.argoproj.io~1sync-options
       value: "SkipDryRunOnMissingResource=true"
-
-- target:
-    group: "logging.openshift.io"
-    name: ".*"
-  patch: |
-    - op: add
-      path: /metadata/annotations/argocd.argoproj.io~1sync-options
-      value: "SkipDryRunOnMissingResource=true"
