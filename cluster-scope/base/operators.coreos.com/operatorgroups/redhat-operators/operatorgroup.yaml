@@ -3,5 +3,4 @@ kind: OperatorGroup
 metadata:
   name: redhat-operators
   namespace: openshift-operators-redhat
-spec:
-  upgradeStrategy: Default
+spec: {}
