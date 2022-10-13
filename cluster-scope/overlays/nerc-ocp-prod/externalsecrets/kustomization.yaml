@@ -5,3 +5,4 @@ resources:
 - default-api-certificate.yaml
 - oauths-clientsecret-nerc.yaml
 - github-client-secret.yaml
+- github-group-sync-token.yaml

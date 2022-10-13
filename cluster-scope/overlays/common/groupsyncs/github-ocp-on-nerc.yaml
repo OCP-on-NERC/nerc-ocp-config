@@ -10,5 +10,5 @@ spec:
       organization: ocp-on-nerc
       prune: true
       credentialsSecret:
-        name: github-ocp-on-nerc
+        name: github-group-sync-token
         namespace: group-sync-operator
