@@ -15,8 +15,8 @@ resources:
 - ../../bundles/external-secrets-clustersecretstore
 - ../../base/core/namespaces/dex
 - ../../base/core/namespaces/grafana
-- ../../base/core/namespaces/openshift-logging
 - ../../base/operators.coreos.com/subscriptions/openshift-pipelines-operator
+- ../../base/operators.coreos.com/subscriptions/loki-operator
 - clusterversion.yaml
 - machineconfigs/disable-net-ifnames.yaml
 - machineconfigs/refresh-storage-interface.yaml

@@ -5,7 +5,6 @@ commonLabels:
 
 resources:
 - ../common
-- ../../base/core/namespaces/openshift-logging
 - ../../bundles/acct-mgt
 - ingresscontrollers/external-apps-ingress-controller.yaml
 - externalsecrets
