@@ -12,4 +12,5 @@ resources:
 - ../../bundles/nmstate
 - ../../bundles/console
 - ../../bundles/image-registry
+- ../../bundles/logging
 - ../../base/operator.openshift.io/ingresscontrollers/default
