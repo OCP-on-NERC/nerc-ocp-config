@@ -3,6 +3,7 @@ kind: Kustomization
 resources:
   - clusterloggings
   - clusterlogforwarders
+  - externalsecrets
 commonLabels:
   app.kubernetes.io/name: logging
   app.kubernetes.io/component: logging

@@ -6,4 +6,3 @@ resources:
 
 patchesStrategicMerge:
   - externalsecrets/loki-thanos-object-storage_patch.yaml
-  - externalsecrets/openshift-logging-lokistack-gateway-bearer-token_patch.yaml
