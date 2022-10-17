@@ -3,3 +3,6 @@ kind: Kustomization
 
 resources:
 - ../../base
+
+patchesStrategicMerge:
+  - externalsecrets/openshift-logging-lokistack-gateway-bearer-token_patch.yaml
