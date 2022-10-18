@@ -54,7 +54,7 @@ spec:
         #!/bin/sh
         set -e
 
-        S3Retention="10"
+        S3Retention="10d"
         PVCRetention="2d"
         snapshot_pvc_path=$(workspaces.snapshots.path)
 
