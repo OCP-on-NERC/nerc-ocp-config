@@ -3,3 +3,4 @@ kind: Kustomization
 resources:
 - openshift-config
 - openshift-ingress-operator
+- openshift-logging
