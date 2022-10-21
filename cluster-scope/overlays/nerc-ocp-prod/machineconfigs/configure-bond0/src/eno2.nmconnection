@@ -1,0 +1,10 @@
+[connection]
+id=eno2
+type=ethernet
+interface-name=eno2
+master=bond0
+slave-type=bond
+autoconnect=true
+
+[ethernet]
+mtu=9000
