@@ -10,6 +10,8 @@ resources:
 - externalsecrets
 - apiserver/cluster.yaml
 - secretstores
+- machineconfigs/configure-bond0
+- nodenetworkconfigurationpolicies
 
 patches:
 - path: ingresscontrollers/default_patch.yaml

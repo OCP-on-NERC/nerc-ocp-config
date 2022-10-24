@@ -1,0 +1,20 @@
+apiVersion: nmstate.io/v1
+kind: NodeNetworkConfigurationPolicy
+metadata:
+  name: vlan-2180-nese
+spec:
+  nodeSelector:
+    nerc.mghpcc.org/external-ingress: "true"
+  desiredState:
+    interfaces:
+    - name: bond0.2180
+      type: vlan
+      state: up
+      ipv4:
+        enabled: true
+        dhcp: true
+        auto-routes: true
+      vlan:
+        base-iface: bond0
+        id: 2180
+      mtu: 1500
