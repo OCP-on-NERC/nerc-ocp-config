@@ -3,7 +3,7 @@ version: 4.10.0
 metadata:
   name: configure-bond0
   labels:
-    machineconfiguration.openshift.io/role: master
+    machineconfiguration.openshift.io/role: worker
 storage:
   files:
     - path: /etc/NetworkManager/system-connections/bond0.nmconnection
