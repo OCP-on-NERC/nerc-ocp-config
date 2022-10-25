@@ -10,7 +10,6 @@ resources:
 - ../../bundles/acm/observability
 - ../../bundles/vault
 - ../../bundles/patch-operator
-- ../../base/operator.openshift.io/networks/cluster
 - ../../bundles/odf-external
 - ../../bundles/external-secrets-clustersecretstore
 - ../../base/core/namespaces/dex

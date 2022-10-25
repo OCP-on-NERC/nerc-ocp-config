@@ -13,5 +13,6 @@ resources:
 - ../../bundles/logging
 - ../../bundles/group-sync-operator
 - ../../base/operator.openshift.io/ingresscontrollers/default
+- ../../base/operator.openshift.io/networks/cluster
 - groupsyncs
 - machineconfigs
