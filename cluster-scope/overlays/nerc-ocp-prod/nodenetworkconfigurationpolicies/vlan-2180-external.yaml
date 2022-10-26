@@ -1,7 +1,7 @@
 apiVersion: nmstate.io/v1
 kind: NodeNetworkConfigurationPolicy
 metadata:
-  name: vlan-2180-nese
+  name: vlan-2180-external
 spec:
   nodeSelector:
     nerc.mghpcc.org/external-ingress: "true"
