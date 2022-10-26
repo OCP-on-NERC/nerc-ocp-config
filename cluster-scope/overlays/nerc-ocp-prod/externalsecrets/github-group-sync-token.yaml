@@ -5,8 +5,8 @@ metadata:
   namespace: openshift-config
 spec:
   secretStoreRef:
-    name: nerc-cluster-secrets
-    kind: ClusterSecretStore
+    name: nerc-secret-store
+    kind: SecretStore
   target:
     name: github-ocp-on-nerc
   data:
