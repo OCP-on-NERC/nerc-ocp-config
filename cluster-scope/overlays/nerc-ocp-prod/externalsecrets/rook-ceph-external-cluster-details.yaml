@@ -5,8 +5,8 @@ metadata:
   namespace: openshift-storage
 spec:
   secretStoreRef:
-    name: nerc-cluster-secrets
-    kind: ClusterSecretStore
+    name: nerc-secret-store
+    kind: SecretStore
   target:
     name: rook-ceph-external-cluster-details
   data:
