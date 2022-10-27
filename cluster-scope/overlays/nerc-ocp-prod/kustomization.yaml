@@ -14,6 +14,7 @@ resources:
 - secretstores
 - machineconfigs/configure-bond0
 - nodenetworkconfigurationpolicies
+- metallb
 
 patches:
 - path: ingresscontrollers/default_patch.yaml
