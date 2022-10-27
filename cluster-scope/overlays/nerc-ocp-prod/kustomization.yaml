@@ -13,6 +13,7 @@ resources:
 - apiserver/cluster.yaml
 - secretstores
 - machineconfigs/configure-bond0
+- machineconfigs/routes-vlan-2180
 - nodenetworkconfigurationpolicies
 - metallb
 
