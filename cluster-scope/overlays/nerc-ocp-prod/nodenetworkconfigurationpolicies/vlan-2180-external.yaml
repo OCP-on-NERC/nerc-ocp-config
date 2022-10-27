@@ -19,10 +19,12 @@ spec:
         id: 2180
       mtu: 1500
     routes:
-      - table-id: 200
-        destination: 0.0.0.0/0
-        next-hop-address: 199.94.61.1
-        next-hop-interface: bond0.2180
+      config:
+        - table-id: 200
+          destination: 0.0.0.0/0
+          next-hop-address: 199.94.61.1
+          next-hop-interface: bond0.2180
     route-rules:
-      - ip-from: 199.94.61.0/24
-        route-table: 200
+      config:
+        - ip-from: 199.94.61.0/24
+          route-table: 200
