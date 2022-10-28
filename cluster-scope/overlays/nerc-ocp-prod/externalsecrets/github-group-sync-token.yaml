@@ -8,9 +8,9 @@ spec:
     name: nerc-secret-store
     kind: SecretStore
   target:
-    name: github-ocp-on-nerc
+    name: github-group-sync-token
   data:
   - secretKey: token
     remoteRef:
-      key: nerc/nerc-ocp-prod/group-sync-operator/github-ocp-on-nerc
+      key: nerc/nerc-ocp-prod/group-sync-operator/github-group-sync-token
       property: token
