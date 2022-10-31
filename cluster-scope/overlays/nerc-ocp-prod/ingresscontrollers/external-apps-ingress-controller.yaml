@@ -4,7 +4,7 @@ metadata:
   name: external-apps-ingress-controller
   namespace: openshift-ingress-operator
 spec:
-  domain: apps.shift.nerc.mghpcc.org
+  domain: apps.openshift.nerc.mghpcc.org
   defaultCertificate:
     name: external-apps-ingress-certificate
   endpointPublishingStrategy:
