@@ -4,7 +4,7 @@ metadata:
   name: cluster
 spec:
   identityProviders:
-    - mappingMethod: claim
+    - mappingMethod: lookup
       name: mss-keycloak
       openID:
         claims:
