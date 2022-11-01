@@ -17,6 +17,7 @@ resources:
 - machineconfigs/routes-vlan-2180
 - nodenetworkconfigurationpolicies
 - metallb
+- rolebindings/xdmod-admins.yaml
 
 patches:
 - path: ingresscontrollers/default_patch.yaml
