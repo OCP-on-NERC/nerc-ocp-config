@@ -8,6 +8,7 @@ resources:
 - ../../bundles/acct-mgt
 - ../../bundles/metallb
 - ../../bundles/odf-external
+- ../../bundles/xdmod-reader
 - ingresscontrollers/external-apps-ingress-controller.yaml
 - externalsecrets
 - apiserver/cluster.yaml
