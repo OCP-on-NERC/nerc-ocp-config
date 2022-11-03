@@ -3,7 +3,7 @@ kind: Kustomization
 namespace: acct-mgt
 resources:
   - ../../base
+  - externalsecret.yaml
 patchesStrategicMerge:
   - patches/configmap_patch.yaml
   - patches/deployment_patch.yaml
-  - patches/externalsecret_patch.yaml
