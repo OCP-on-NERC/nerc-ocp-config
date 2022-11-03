@@ -11,7 +11,7 @@ spec:
       template:
         metadata:
           name: auto-unseal-vault
-        spec: 
+        spec:
           serviceAccountName: auto-unseal-job
           restartPolicy: Never
           containers:
@@ -19,12 +19,12 @@ spec:
               image: quay.io/dystewar/vault-unseal:latest
               imagePullPolicy: IfNotPresent
               command: ["bash"]
-              args: 
+              args:
                 - /scripts/check-vault-seal.sh
-              volumeMounts: 
+              volumeMounts:
                 - mountPath: scripts
                   name: scripts
           volumes:
             - name: scripts
-              configMap: auto-unseal
-              
+              configMap:
+                name: auto-unseal
