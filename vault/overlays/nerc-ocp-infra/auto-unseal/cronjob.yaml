@@ -1,0 +1,30 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: auto-unseal-vault
+spec:
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1
+  schedule: "0 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          name: auto-unseal-vault
+        spec: 
+          serviceAccountName: auto-unseal-job
+          restartPolicy: Never
+          containers:
+            - name: auto-unseal-vault
+              image: quay.io/dystewar/vault-unseal:latest
+              imagePullPolicy: IfNotPresent
+              command: ["bash"]
+              args: 
+                - /scripts/check-vault-seal.sh
+              volumeMounts: 
+                - mountPath: scripts
+                  name: scripts
+          volumes:
+            - name: scripts
+              configMap: auto-unseal
+              
