@@ -6,7 +6,6 @@ commonLabels:
 resources:
   - configmaps.yaml
   - deployment.yaml
-  - externalsecret.yaml
   - route.yaml
   - service.yaml
   - serviceaccount.yaml
