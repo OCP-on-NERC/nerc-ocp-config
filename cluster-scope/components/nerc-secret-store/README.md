@@ -1,3 +1,7 @@
+# Accessing the secret store from a new namespace
+
+Each new namespace requires authorization via the Vault UI before being granted access to the secret store, as tokens are bound to namespaces.
+
 # A note about service account tokens
 
 In Kubernetes 1.24 and later, creating a ServiceAccount will no longer automatically create a Secret with an authentication token. This means that using a `serviceAccountRef` when configuring a SecretStore (or ClusterSecretStore) will no longer work, because the external secrets controller will not be able to find an appropriate token from the ServiceAccount.
@@ -13,5 +17,7 @@ auth:
       name: "vault-secret-reader"
       key: "token"
 ```
+
+This step is done by including this component via `kustomization.yaml`.
 
 [1]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#manually-create-a-service-account-api-token
