@@ -5,4 +5,6 @@ resources:
   - ../../../base/objectbucket.io/objectbucketclaims/observability
   - ../../../base/external-secrets.io/externalsecrets/open-cluster-management-observability-thanos-object-storage
   - ../../../base/external-secrets.io/externalsecrets/open-cluster-management-observability-multiclusterhub-operator-pull-secret
+  - ../../../base/external-secrets.io/externalsecrets/open-cluster-management-observability-alertmanager-config
+  - ../../../base/core/configmaps/thanos-ruler-custom-rules/
   - ../../../base/observability.open-cluster-management.io/multiclusterobservabilities/observability
