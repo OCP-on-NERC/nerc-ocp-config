@@ -14,7 +14,7 @@ spec:
   nodePlacement:
     nodeSelector:
       matchLabels:
-        zone: external
+        nerc.mghpcc.org/external-ingress: 'true'
   namespaceSelector:
     matchLabels:
       type: external
