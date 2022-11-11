@@ -1,4 +1,4 @@
-Including file content in ignition configs is a pain, because it has to be base64 encoded. The `Makefile` in this directory uses [Butane][] to transpile `MachineConfig` resources, automatically including and encoding content from files.
+Including file content in ignition configs is a pain, because it has to be base64 encoded. The `Makefiles` in in these directories uses [Butane][] to transpile `MachineConfig` resources, automatically including and encoding content from files.
 
 Read "[Creating machine configs with Butane][]" in the [OpenShift documentation][] for more information.
 
