@@ -14,6 +14,7 @@ resources:
 - secretstores
 - machineconfigs/configure-bond0
 - machineconfigs/set-rpfilter-loose
+- machineconfigs/public-ingress
 - nodenetworkconfigurationpolicies
 - metallb
 
