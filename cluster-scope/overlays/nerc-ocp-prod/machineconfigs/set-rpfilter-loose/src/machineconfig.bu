@@ -1,12 +1,12 @@
 variant: openshift
 version: 4.10.0
 metadata:
-  name: routes-vlan-2180
+  name: set-rpfilter-loose
   labels:
     machineconfiguration.openshift.io/role: "worker"
 storage:
   files:
-    - path: /etc/NetworkManager/dispatcher.d/routes-vlan-2180
+    - path: /etc/sysctl.d/rpfilter.conf
       mode: 0755
       contents:
-        local: routes-vlan-2180.sh
+        local: rpfilter.conf

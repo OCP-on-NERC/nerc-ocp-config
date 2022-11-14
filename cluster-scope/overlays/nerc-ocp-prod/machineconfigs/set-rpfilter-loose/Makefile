@@ -1,7 +1,7 @@
 MACHINECONFIGS = \
 	machineconfig.yaml
 
-%.yaml: src/%.bu $(wildcard src/*.nmconnection)
+%.yaml: src/%.bu src/rpfilter.conf
 	butane -o $@ -d src $<
 
 all: $(MACHINECONFIGS)

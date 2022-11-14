@@ -14,7 +14,8 @@ resources:
 - apiserver/cluster.yaml
 - secretstores
 - machineconfigs/configure-bond0
-- machineconfigs/routes-vlan-2180
+- machineconfigs/set-rpfilter-loose
+- machineconfigs/public-ingress
 - nodenetworkconfigurationpolicies
 - metallb
 
