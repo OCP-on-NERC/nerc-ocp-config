@@ -9,6 +9,7 @@ resources:
 - ../../bundles/metallb
 # - ../../bundles/odf-external
 - ../../bundles/xdmod-reader
+- ../../base/core/namespaces/openshift-gitops
 - ingresscontrollers/external-apps-ingress-controller.yaml
 - externalsecrets
 - apiserver/cluster.yaml
