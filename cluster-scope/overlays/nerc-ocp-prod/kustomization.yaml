@@ -7,8 +7,8 @@ resources:
 - ../common
 - ../../bundles/acct-mgt
 - ../../bundles/metallb
-# - ../../bundles/odf-external
 - ../../bundles/xdmod-reader
+# feature/odf
 - ../../base/core/namespaces/openshift-gitops
 - ingresscontrollers/external-apps-ingress-controller.yaml
 - externalsecrets
@@ -24,7 +24,6 @@ resources:
 patches:
 - path: ingresscontrollers/default_patch.yaml
 - path: oauths/cluster_patch.yaml
-# - path: storageclasses/ocs-external-storagecluster-ceph-rbd_patch.yaml
 
 - target:
     group: "metallb.io"

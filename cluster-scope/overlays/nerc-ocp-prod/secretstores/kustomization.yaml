@@ -5,5 +5,4 @@ resources:
 - openshift-config
 - openshift-ingress
 - openshift-logging
-- openshift-storage
 - group-sync-operator
