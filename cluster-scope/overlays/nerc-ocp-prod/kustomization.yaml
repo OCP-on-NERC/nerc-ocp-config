@@ -18,6 +18,7 @@ resources:
 - machineconfigs/public-ingress
 - nodenetworkconfigurationpolicies
 - metallb
+- clusterversion.yaml
 
 patches:
 - path: ingresscontrollers/default_patch.yaml
