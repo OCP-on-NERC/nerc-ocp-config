@@ -1,0 +1,14 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+commonLabels:
+  nerc.mghpcc.org/feature: odf
+
+components:
+  - ../../../../components/nerc-secret-store
+
+resources:
+  - ../../../../bundles/odf-external
+  - externalsecrets/rook-ceph-external-cluster-details.yaml
+
+patches:
+  - path: storageclasses/ocs-external-storagecluster-ceph-rbd_patch.yaml
