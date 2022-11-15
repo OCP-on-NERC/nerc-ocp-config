@@ -14,6 +14,7 @@ resources:
 - ../../bundles/external-secrets-clustersecretstore
 - ../../base/core/namespaces/dex
 - ../../base/core/namespaces/grafana
+- ../../base/core/namespaces/nerc-ocp-prod
 - ../../base/operators.coreos.com/subscriptions/openshift-pipelines-operator
 - ../../base/operators.coreos.com/subscriptions/loki-operator
 - clusterversion.yaml
