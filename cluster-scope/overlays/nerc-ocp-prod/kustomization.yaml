@@ -7,7 +7,7 @@ resources:
 - ../common
 - ../../bundles/acct-mgt
 - ../../bundles/metallb
-- ../../bundles/odf-external
+# - ../../bundles/odf-external
 - ../../bundles/xdmod-reader
 - ingresscontrollers/external-apps-ingress-controller.yaml
 - externalsecrets
@@ -22,7 +22,7 @@ resources:
 patches:
 - path: ingresscontrollers/default_patch.yaml
 - path: oauths/cluster_patch.yaml
-- path: storageclasses/ocs-external-storagecluster-ceph-rbd_patch.yaml
+# - path: storageclasses/ocs-external-storagecluster-ceph-rbd_patch.yaml
 
 - target:
     group: "external-secrets.io"
