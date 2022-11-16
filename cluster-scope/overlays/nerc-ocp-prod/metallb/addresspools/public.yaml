@@ -5,6 +5,7 @@ metadata:
   namespace: metallb-system
 spec:
   protocol: layer2
+  autoAssign: false
   addresses:
     - 199.94.61.6/32
     - 199.94.61.240/28
