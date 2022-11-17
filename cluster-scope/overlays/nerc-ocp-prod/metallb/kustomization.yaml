@@ -2,6 +2,5 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: metallb-system
 resources:
-- ipaddresspools/public.yaml
-- l2advertisements/default.yaml
+- addresspools/public.yaml
 - metallbs/metallb.yaml
