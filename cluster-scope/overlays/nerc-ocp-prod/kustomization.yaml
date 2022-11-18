@@ -20,6 +20,7 @@ resources:
 - nodenetworkconfigurationpolicies
 - metallb
 - clusterversion.yaml
+- services/router-external-apps-ingress-controller.yaml
 
 patches:
 - path: ingresscontrollers/default_patch.yaml

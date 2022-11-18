@@ -17,4 +17,4 @@ spec:
         nerc.mghpcc.org/external-ingress: 'true'
   routeSelector:
     matchLabels:
-      type: external
+      nerc.mghpcc.org/external-ingress: 'true'

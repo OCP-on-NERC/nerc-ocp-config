@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    metallb.universe.tf/address-pool: public
+    traffic-policy.network.alpha.openshift.io/local-with-fallback: ""
+  labels:
+    app: router
+    ingresscontroller.operator.openshift.io/owning-ingresscontroller: external-apps-ingress-controller
+    router: router-external-apps-ingress-controller
+  name: router-external-apps-ingress-controller
+  namespace: openshift-ingress
+spec:
+  allocateLoadBalancerNodePorts: true
+  externalTrafficPolicy: Local
+  healthCheckNodePort: 32573
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  loadBalancerIP: 199.94.61.6
+  ports:
+  - name: http
+    nodePort: 31731
+    port: 80
+    targetPort: http
+  - name: https
+    nodePort: 31651
+    port: 443
+    targetPort: https
+  selector:
+    ingresscontroller.operator.openshift.io/deployment-ingresscontroller: external-apps-ingress-controller
+  type: LoadBalancer
