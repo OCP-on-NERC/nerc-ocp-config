@@ -15,6 +15,6 @@ spec:
     nodeSelector:
       matchLabels:
         nerc.mghpcc.org/external-ingress: 'true'
-  namespaceSelector:
+  routeSelector:
     matchLabels:
       type: external
