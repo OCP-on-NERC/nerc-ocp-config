@@ -6,9 +6,9 @@ metadata:
     traffic-policy.network.alpha.openshift.io/local-with-fallback: ""
   labels:
     app: router
-    ingresscontroller.operator.openshift.io/owning-ingresscontroller: external-apps-ingress-controller
-    router: router-external-apps-ingress-controller
-  name: router-external-apps-ingress-controller
+    ingresscontroller.operator.openshift.io/owning-ingresscontroller: external-apps
+    router: router-external-apps
+  name: router-external-apps
   namespace: openshift-ingress
 spec:
   allocateLoadBalancerNodePorts: true
@@ -29,5 +29,5 @@ spec:
     port: 443
     targetPort: https
   selector:
-    ingresscontroller.operator.openshift.io/deployment-ingresscontroller: external-apps-ingress-controller
+    ingresscontroller.operator.openshift.io/deployment-ingresscontroller: external-apps
   type: LoadBalancer
