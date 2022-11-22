@@ -1,0 +1,16 @@
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: external-apps-ingress-certificate
+  namespace: openshift-ingress-operator
+spec:
+  secretStoreRef:
+    name: nerc-secret-store
+    kind: SecretStore
+  target:
+    name: external-apps-ingress-certificate
+    template:
+      type: kubernetes.io/tls
+  dataFrom:
+    - extract:
+        key: nerc/nerc-ocp-prod/openshift-ingress/external-apps-ingress-certificate

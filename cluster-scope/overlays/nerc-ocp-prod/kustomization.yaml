@@ -9,8 +9,8 @@ resources:
 - ../../bundles/metallb
 - ../../bundles/xdmod-reader
 - feature/odf
+- feature/external-ingress
 - ../../base/core/namespaces/openshift-gitops
-- ingresscontrollers/external-apps.yaml
 - externalsecrets
 - apiserver/cluster.yaml
 - secretstores
@@ -20,7 +20,6 @@ resources:
 - nodenetworkconfigurationpolicies
 - metallb
 - clusterversion.yaml
-- services/router-external-apps.yaml
 
 patches:
 - path: ingresscontrollers/default_patch.yaml
