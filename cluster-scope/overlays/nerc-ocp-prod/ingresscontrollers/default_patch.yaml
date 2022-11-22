@@ -6,3 +6,9 @@ metadata:
 spec:
   defaultCertificate:
     name: default-ingress-certificate
+  routeSelector:
+    matchExpressions:
+      - key: nerc.mghpcc.org/external-ingress
+        operator: NotIn
+        values:
+          - "true"

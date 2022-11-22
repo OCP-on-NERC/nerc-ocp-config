@@ -2,7 +2,6 @@ apiVersion: operator.openshift.io/v1
 kind: IngressController
 metadata:
   name: external-apps
-  namespace: openshift-ingress-operator
 spec:
   # The "domain" setting does not automatically apply to routes as you might
   # expect; see https://github.com/OCP-on-NERC/operations/issues/41 for
