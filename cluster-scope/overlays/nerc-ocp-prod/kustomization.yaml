@@ -21,6 +21,15 @@ resources:
 - metallb
 - clusterversion.yaml
 
+generatorOptions:
+  disableNameSuffixHash: true
+
+configMapGenerator:
+  - name: cluster-monitoring-config
+    namespace: openshift-monitoring
+    files:
+      - config.yaml=configmaps/cluster-monitoring-config.yaml
+
 patches:
 - path: ingresscontrollers/default_patch.yaml
 - path: oauths/cluster_patch.yaml
