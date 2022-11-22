@@ -1,0 +1,15 @@
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: nerc-route53-creds
+spec:
+  secretStoreRef:
+    name: nerc-secret-store
+    kind: SecretStore
+  target:
+    name: nerc-route53-creds
+    template:
+      type: Opaque
+  dataFrom:
+    - extract:
+        key: nerc/nerc-ocp-prod/openshift-ingress/route53-creds
