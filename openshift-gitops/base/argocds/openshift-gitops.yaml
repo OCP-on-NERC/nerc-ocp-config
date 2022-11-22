@@ -4,6 +4,13 @@ metadata:
   name: openshift-gitops
   namespace: openshift-gitops
 spec:
+  resourceCustomizations: |
+    Service:
+      health.lua: |
+        hs = {}
+        hs.status = "Healthy"
+        return hs
+
   applicationSet:
     resources:
       limits:
