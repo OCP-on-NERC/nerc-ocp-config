@@ -1,9 +1,12 @@
 apiVersion: operator.openshift.io/v1
 kind: IngressController
 metadata:
-  name: external-apps-ingress-controller
+  name: external-apps
   namespace: openshift-ingress-operator
 spec:
+  # The "domain" setting does not automatically apply to routes as you might
+  # expect; see https://github.com/OCP-on-NERC/operations/issues/41 for
+  # details.
   domain: apps.shift.nerc.mghpcc.org
   defaultCertificate:
     name: external-apps-ingress-certificate
@@ -15,6 +18,6 @@ spec:
     nodeSelector:
       matchLabels:
         nerc.mghpcc.org/external-ingress: 'true'
-  namespaceSelector:
+  routeSelector:
     matchLabels:
-      type: external
+      nerc.mghpcc.org/external-ingress: 'true'
