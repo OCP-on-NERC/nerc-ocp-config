@@ -10,5 +10,5 @@ spec:
   issuerRef:
     kind: Issuer
     name: nerc-external-apps-issuer
-  duration: 2160h  # 90d
-  renewBefore: 360h  # 15d
+  duration: 2160h0m0s     # 90 days
+  renewBefore: 360h0m0s   # 15 days
