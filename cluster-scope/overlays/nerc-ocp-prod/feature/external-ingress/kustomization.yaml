@@ -6,3 +6,4 @@ commonLabels:
 resources:
 - ingresscontrollers/external-apps.yaml
 - externalsecrets/external-apps-ingress-certificate.yaml
+- post-sync-hook
