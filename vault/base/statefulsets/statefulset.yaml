@@ -1,6 +1,8 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
+  annotations:
+    sealed: false
   labels:
     app.kubernetes.io/instance: nerc-vault
     app.kubernetes.io/managed-by: Helm
