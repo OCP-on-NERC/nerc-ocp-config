@@ -1,0 +1,24 @@
+apiVersion: redhatcop.redhat.io/v1alpha1
+kind: Patch
+metadata:
+  name: patch-default-ingress-controller
+spec:
+  serviceAccountRef:
+    name: patcher
+  patches:
+    patch-default-ingress-controller:
+      targetObjectRef:
+        apiVersion: operator.openshift.io/v1
+        kind: IngressController
+        name: default
+      patchType: application/json-patch+json
+      patchTemplate: |
+        # Prevent internal ingress controller from managing external routes.
+        - op: add
+          path: /spec/routeSelector
+          value:
+            matchExpressions:
+              - key: nerc.mghpcc.org/external-ingress
+                operator: NotIn
+                values:
+                  - "true"
