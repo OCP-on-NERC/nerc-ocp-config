@@ -38,39 +38,24 @@ patches:
 - target:
     group: "metallb.io"
     name: ".*"
-  patch: |
-    - op: add
-      path: /metadata/annotations/argocd.argoproj.io~1sync-options
-      value: "SkipDryRunOnMissingResource=true"
+  path: patches/skipdryrunonmissingresource.yaml
 
 - target:
     group: "external-secrets.io"
     name: ".*"
-  patch: |
-    - op: add
-      path: /metadata/annotations/argocd.argoproj.io~1sync-options
-      value: "SkipDryRunOnMissingResource=true"
+  path: patches/skipdryrunonmissingresource.yaml
 
 - target:
     group: "operator.external-secrets.io"
     name: ".*"
-  patch: |
-    - op: add
-      path: /metadata/annotations/argocd.argoproj.io~1sync-options
-      value: "SkipDryRunOnMissingResource=true"
+  path: patches/skipdryrunonmissingresource.yaml
 
 - target:
     group: "nmstate.io"
     name: ".*"
-  patch: |
-    - op: add
-      path: /metadata/annotations/argocd.argoproj.io~1sync-options
-      value: "SkipDryRunOnMissingResource=true"
+  path: patches/skipdryrunonmissingresource.yaml
 
 - target:
     group: "redhatcop.redhat.io"
     name: ".*"
-  patch: |
-    - op: add
-      path: /metadata/annotations/argocd.argoproj.io~1sync-options
-      value: "SkipDryRunOnMissingResource=true"
+  path: patches/skipdryrunonmissingresource.yaml
