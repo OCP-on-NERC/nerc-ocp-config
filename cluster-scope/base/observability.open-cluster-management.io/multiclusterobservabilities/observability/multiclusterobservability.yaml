@@ -41,3 +41,10 @@ spec:
       replicas: 3
     queryFrontendMemcached:
       replicas: 3
+    retentionConfig:
+      blockDuration: 2h
+      deleteDelay: 48h
+      retentionInLocal: 24h
+      retentionResolutionRaw: 30d
+      retentionResolution5m: 90d
+      retentionResolution1h: 0d

@@ -9,6 +9,21 @@ spec:
       ingestion:
         ingestionBurstSize: 10
         ingestionRate: 10
+      retention:
+        days: 90
+        streams:
+          - selector: >
+              {log_type="audit"}
+            priority: 200
+            days: 90
+          - selector: >
+              {log_type="application"}
+            priority: 100
+            days: 30
+          - selector: >
+              {log_type="infrastructure"}
+            priority: 100
+            days: 30
   managementState: Managed
   storage:
     secret:
