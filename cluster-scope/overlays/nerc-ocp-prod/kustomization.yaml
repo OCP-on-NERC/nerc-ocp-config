@@ -21,7 +21,6 @@ resources:
 - nodenetworkconfigurationpolicies
 - metallb
 - clusterversion.yaml
-- argocd-workarounds
 
 generatorOptions:
   disableNameSuffixHash: true
@@ -35,3 +34,28 @@ configMapGenerator:
 patches:
 - path: ingresscontrollers/default_patch.yaml
 - path: oauths/cluster_patch.yaml
+
+- target:
+    group: "metallb.io"
+    name: ".*"
+  path: patches/skipdryrunonmissingresource.yaml
+
+- target:
+    group: "external-secrets.io"
+    name: ".*"
+  path: patches/skipdryrunonmissingresource.yaml
+
+- target:
+    group: "operator.external-secrets.io"
+    name: ".*"
+  path: patches/skipdryrunonmissingresource.yaml
+
+- target:
+    group: "nmstate.io"
+    name: ".*"
+  path: patches/skipdryrunonmissingresource.yaml
+
+- target:
+    group: "redhatcop.redhat.io"
+    name: ".*"
+  path: patches/skipdryrunonmissingresource.yaml
