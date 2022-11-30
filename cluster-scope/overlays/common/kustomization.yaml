@@ -19,3 +19,4 @@ resources:
 - clusterrolebindings/nerc-ops-portforward.yaml
 - groupsyncs
 - machineconfigs
+- externalsecrets
