@@ -1,0 +1,9 @@
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: github-group-sync
+  namespace: group-sync-operator
+spec:
+  secretStoreRef:
+    name: nerc-cluster-secrets
+    kind: ClusterSecretStore
