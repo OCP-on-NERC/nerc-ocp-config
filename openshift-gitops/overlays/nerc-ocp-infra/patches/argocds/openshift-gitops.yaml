@@ -18,3 +18,12 @@ spec:
       - "ManagedClusterInfo"
       clusters:
       - "*"
+  rbac:
+    policy: |
+      p, role:operator, applications, sync, */*, allow
+      p, role:operator, applications, update, */*, allow
+
+      g, system:cluster-admins, role:admin
+      g, cluster-admins, role:admin
+      g, nerc-ops, role:operator
+    scopes: '[groups]'
