@@ -4,6 +4,13 @@ metadata:
   name: openshift-gitops
   namespace: openshift-gitops
 spec:
+  server:
+    insecure: true
+    route:
+      enabled: true
+      tls:
+        insecureEdgeTerminationPolicy: Redirect
+        termination: edge
   resourceExclusions: |
     - apiGroups:
       - tekton.dev
