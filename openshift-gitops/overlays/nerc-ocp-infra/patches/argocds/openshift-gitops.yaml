@@ -11,6 +11,7 @@ spec:
       tls:
         insecureEdgeTerminationPolicy: Redirect
         termination: edge
+  resourceTrackingMethod: annotation
   resourceExclusions: |
     - apiGroups:
       - tekton.dev
