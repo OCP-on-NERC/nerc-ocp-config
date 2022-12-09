@@ -1,5 +1,7 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+commonLabels:
+  nerc.mghpcc.org/bundle: acct-mgt
 
 resources:
   - ../../base/core/namespaces/acct-mgt
