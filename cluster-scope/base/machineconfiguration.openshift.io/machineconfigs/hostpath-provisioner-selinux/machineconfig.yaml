@@ -1,0 +1,24 @@
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  labels:
+    machineconfiguration.openshift.io/role: worker
+  name: hostpath-provisioner-selinux
+spec:
+  config:
+    ignition:
+      version: 3.2.0
+    systemd:
+      units:
+        - name: hostpath-provisioner-selinux.service
+          enabled: true
+          contents: |
+            [Unit]
+            Description=Set SELinux chcon for hostpath-provisioner
+            Before=kubelet.service
+
+            [Service]
+            ExecStart=/usr/bin/chcon -Rt container_file_t /var/hpvolumes
+
+            [Install]
+            WantedBy=multi-user.target
