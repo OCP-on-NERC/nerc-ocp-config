@@ -1,5 +1,7 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+commonLabels:
+  nerc.mghpcc.org/bundle: patch-operator
 resources:
 - ../../base/core/namespaces/patch-operator
 - ../../base/operators.coreos.com/operatorgroups/patch-operator
