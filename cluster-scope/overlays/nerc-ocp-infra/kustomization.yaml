@@ -8,6 +8,7 @@ resources:
 - ../../bundles/openshift-gitops
 - ../../bundles/acm
 - ../../bundles/acm/observability
+- ../../bundles/hostpath-provisioner
 - ../../bundles/vault
 - ../../bundles/patch-operator
 - ../../bundles/odf-external
