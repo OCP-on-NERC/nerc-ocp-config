@@ -4,3 +4,12 @@ resources:
   - ../../base
   - backup-job
 namespace: vault
+
+patches:
+  - target:
+      kind: StatefulSet
+      name: nerc-vault
+    patch: |
+      - op: add
+        path: /spec/volumeClaimTemplates/0/spec/storageClassName
+        value: kubevirt-hostpath-provisioner
