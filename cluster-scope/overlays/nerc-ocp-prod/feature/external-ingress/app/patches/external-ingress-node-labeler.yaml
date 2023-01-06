@@ -1,0 +1,100 @@
+---
+apiVersion: redhatcop.redhat.io/v1alpha1
+kind: Patch
+metadata:
+  name: external-ingress-node-label-wrk-10
+  namespace: openshift-storage
+spec:
+  serviceAccountRef:
+    name: patcher
+  patches:
+    external-ingress-node-label-wrk-10:
+      targetObjectRef:
+        apiVersion: v1
+        kind: Node
+        name: wrk-10
+      patchType: application/strategic-merge-patch+json
+      patchTemplate: |
+        metadata:
+          labels:
+            "nerc.mghpcc.org/external-ingress": "true"
+---
+apiVersion: redhatcop.redhat.io/v1alpha1
+kind: Patch
+metadata:
+  name: external-ingress-node-label-wrk-11
+  namespace: openshift-storage
+spec:
+  serviceAccountRef:
+    name: patcher
+  patches:
+    external-ingress-node-label-wrk-11:
+      targetObjectRef:
+        apiVersion: v1
+        kind: Node
+        name: wrk-11
+      patchType: application/strategic-merge-patch+json
+      patchTemplate: |
+        metadata:
+          labels:
+            "nerc.mghpcc.org/external-ingress": "true"
+---
+apiVersion: redhatcop.redhat.io/v1alpha1
+kind: Patch
+metadata:
+  name: external-ingress-node-label-wrk-13
+  namespace: openshift-storage
+spec:
+  serviceAccountRef:
+    name: patcher
+  patches:
+    external-ingress-node-label-wrk-13:
+      targetObjectRef:
+        apiVersion: v1
+        kind: Node
+        name: wrk-13
+      patchType: application/strategic-merge-patch+json
+      patchTemplate: |
+        metadata:
+          labels:
+            "nerc.mghpcc.org/external-ingress": "true"
+---
+apiVersion: redhatcop.redhat.io/v1alpha1
+kind: Patch
+metadata:
+  name: external-ingress-node-label-wrk-14
+  namespace: openshift-storage
+spec:
+  serviceAccountRef:
+    name: patcher
+  patches:
+    external-ingress-node-label-wrk-14:
+      targetObjectRef:
+        apiVersion: v1
+        kind: Node
+        name: wrk-14
+      patchType: application/strategic-merge-patch+json
+      patchTemplate: |
+        metadata:
+          labels:
+            "nerc.mghpcc.org/external-ingress": "true"
+---
+apiVersion: redhatcop.redhat.io/v1alpha1
+kind: Patch
+metadata:
+  name: external-ingress-node-label-wrk-16
+  namespace: openshift-storage
+spec:
+  serviceAccountRef:
+    name: patcher
+  patches:
+    external-ingress-node-label-wrk-16:
+      targetObjectRef:
+        apiVersion: v1
+        kind: Node
+        name: wrk-16
+      patchType: application/strategic-merge-patch+json
+      patchTemplate: |
+        metadata:
+          labels:
+            "nerc.mghpcc.org/external-ingress": "true"
