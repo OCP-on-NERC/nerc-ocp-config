@@ -1,0 +1,200 @@
+---
+apiVersion: redhatcop.redhat.io/v1alpha1
+kind: Patch
+metadata:
+  name: odf-node-label-wrk-10
+  namespace: openshift-storage
+spec:
+  serviceAccountRef:
+    name: patcher
+  patches:
+    odf-node-label-wrk-10:
+      targetObjectRef:
+        apiVersion: v1
+        kind: Node
+        name: wrk-10
+      patchType: application/strategic-merge-patch+json
+      patchTemplate: |
+        metadata:
+          labels:
+            "cluster.ocs.openshift.io/openshift-storage": ""
+---
+apiVersion: redhatcop.redhat.io/v1alpha1
+kind: Patch
+metadata:
+  name: odf-node-label-wrk-11
+  namespace: openshift-storage
+spec:
+  serviceAccountRef:
+    name: patcher
+  patches:
+    odf-node-label-wrk-11:
+      targetObjectRef:
+        apiVersion: v1
+        kind: Node
+        name: wrk-11
+      patchType: application/strategic-merge-patch+json
+      patchTemplate: |
+        metadata:
+          labels:
+            "cluster.ocs.openshift.io/openshift-storage": ""
+---
+apiVersion: redhatcop.redhat.io/v1alpha1
+kind: Patch
+metadata:
+  name: odf-node-label-wrk-13
+  namespace: openshift-storage
+spec:
+  serviceAccountRef:
+    name: patcher
+  patches:
+    odf-node-label-wrk-13:
+      targetObjectRef:
+        apiVersion: v1
+        kind: Node
+        name: wrk-13
+      patchType: application/strategic-merge-patch+json
+      patchTemplate: |
+        metadata:
+          labels:
+            "cluster.ocs.openshift.io/openshift-storage": ""
+---
+apiVersion: redhatcop.redhat.io/v1alpha1
+kind: Patch
+metadata:
+  name: odf-node-label-wrk-14
+  namespace: openshift-storage
+spec:
+  serviceAccountRef:
+    name: patcher
+  patches:
+    odf-node-label-wrk-14:
+      targetObjectRef:
+        apiVersion: v1
+        kind: Node
+        name: wrk-14
+      patchType: application/strategic-merge-patch+json
+      patchTemplate: |
+        metadata:
+          labels:
+            "cluster.ocs.openshift.io/openshift-storage": ""
+---
+apiVersion: redhatcop.redhat.io/v1alpha1
+kind: Patch
+metadata:
+  name: odf-node-label-wrk-16
+  namespace: openshift-storage
+spec:
+  serviceAccountRef:
+    name: patcher
+  patches:
+    odf-node-label-wrk-16:
+      targetObjectRef:
+        apiVersion: v1
+        kind: Node
+        name: wrk-16
+      patchType: application/strategic-merge-patch+json
+      patchTemplate: |
+        metadata:
+          labels:
+            "cluster.ocs.openshift.io/openshift-storage": ""
+---
+apiVersion: redhatcop.redhat.io/v1alpha1
+kind: Patch
+metadata:
+  name: odf-node-label-wrk-17
+  namespace: openshift-storage
+spec:
+  serviceAccountRef:
+    name: patcher
+  patches:
+    odf-node-label-wrk-17:
+      targetObjectRef:
+        apiVersion: v1
+        kind: Node
+        name: wrk-17
+      patchType: application/strategic-merge-patch+json
+      patchTemplate: |
+        metadata:
+          labels:
+            "cluster.ocs.openshift.io/openshift-storage": ""
+---
+apiVersion: redhatcop.redhat.io/v1alpha1
+kind: Patch
+metadata:
+  name: odf-node-label-wrk-18
+  namespace: openshift-storage
+spec:
+  serviceAccountRef:
+    name: patcher
+  patches:
+    odf-node-label-wrk-18:
+      targetObjectRef:
+        apiVersion: v1
+        kind: Node
+        name: wrk-18
+      patchType: application/strategic-merge-patch+json
+      patchTemplate: |
+        metadata:
+          labels:
+            "cluster.ocs.openshift.io/openshift-storage": ""
+---
+apiVersion: redhatcop.redhat.io/v1alpha1
+kind: Patch
+metadata:
+  name: odf-node-label-wrk-8
+  namespace: openshift-storage
+spec:
+  serviceAccountRef:
+    name: patcher
+  patches:
+    odf-node-label-wrk-8:
+      targetObjectRef:
+        apiVersion: v1
+        kind: Node
+        name: wrk-8
+      patchType: application/strategic-merge-patch+json
+      patchTemplate: |
+        metadata:
+          labels:
+            "cluster.ocs.openshift.io/openshift-storage": ""
+---
+apiVersion: redhatcop.redhat.io/v1alpha1
+kind: Patch
+metadata:
+  name: odf-node-label-wrk-7
+  namespace: openshift-storage
+spec:
+  serviceAccountRef:
+    name: patcher
+  patches:
+    odf-node-label-wrk-7:
+      targetObjectRef:
+        apiVersion: v1
+        kind: Node
+        name: wrk-7
+      patchType: application/strategic-merge-patch+json
+      patchTemplate: |
+        metadata:
+          labels:
+            "cluster.ocs.openshift.io/openshift-storage": ""
+---
+apiVersion: redhatcop.redhat.io/v1alpha1
+kind: Patch
+metadata:
+  name: odf-node-label-wrk-9
+  namespace: openshift-storage
+spec:
+  serviceAccountRef:
+    name: patcher
+  patches:
+    odf-node-label-wrk-9:
+      targetObjectRef:
+        apiVersion: v1
+        kind: Node
+        name: wrk-9
+      patchType: application/strategic-merge-patch+json
+      patchTemplate: |
+        metadata:
+          labels:
+            "cluster.ocs.openshift.io/openshift-storage": ""
