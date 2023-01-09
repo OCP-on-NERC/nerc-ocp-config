@@ -1,58 +1,16 @@
----
 apiVersion: redhatcop.redhat.io/v1alpha1
 kind: Patch
 metadata:
-  name: odf-node-label-ctl-0
+  name: odf-node-label
   namespace: openshift-storage
 spec:
   serviceAccountRef:
     name: patcher
   patches:
-    odf-node-label-ctl-0:
+    odf-node-label:
       targetObjectRef:
         apiVersion: v1
         kind: Node
-        name: ctl-0
-      patchType: application/strategic-merge-patch+json
-      patchTemplate: |
-        metadata:
-          labels:
-            "cluster.ocs.openshift.io/openshift-storage": ""
----
-apiVersion: redhatcop.redhat.io/v1alpha1
-kind: Patch
-metadata:
-  name: odf-node-label-ctl-1
-  namespace: openshift-storage
-spec:
-  serviceAccountRef:
-    name: patcher
-  patches:
-    odf-node-label-ctl-1:
-      targetObjectRef:
-        apiVersion: v1
-        kind: Node
-        name: ctl-1
-      patchType: application/strategic-merge-patch+json
-      patchTemplate: |
-        metadata:
-          labels:
-            "cluster.ocs.openshift.io/openshift-storage": ""
----
-apiVersion: redhatcop.redhat.io/v1alpha1
-kind: Patch
-metadata:
-  name: odf-node-label-ctl-2
-  namespace: openshift-storage
-spec:
-  serviceAccountRef:
-    name: patcher
-  patches:
-    odf-node-label-ctl-2:
-      targetObjectRef:
-        apiVersion: v1
-        kind: Node
-        name: ctl-2
       patchType: application/strategic-merge-patch+json
       patchTemplate: |
         metadata:
