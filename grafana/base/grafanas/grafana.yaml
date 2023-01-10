@@ -6,8 +6,6 @@ metadata:
 spec:
   deployment:
     envFrom:
-      - secretRef:
-          name: github-client-secret
       - configMapRef:
           name: grafana-config-overrides
   config:
