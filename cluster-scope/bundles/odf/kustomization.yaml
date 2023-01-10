@@ -4,6 +4,8 @@ commonLabels:
   nerc.mghpcc.org/bundle: odf
 resources:
 - ../../base/core/namespaces/openshift-storage
+- ../../base/core/serviceaccounts/odf-node-patcher/
 - ../../base/operators.coreos.com/operatorgroups/openshift-storage
 - ../../base/operators.coreos.com/subscriptions/odf-operator
 - ../../base/ocs.openshift.io/ocsinitializations/ocsinit
+- ../../base/rbac.authorization.k8s.io/clusterrolebindings/odf-node-labeler/

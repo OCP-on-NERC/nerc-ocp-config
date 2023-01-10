@@ -1,0 +1,18 @@
+apiVersion: redhatcop.redhat.io/v1alpha1
+kind: Patch
+metadata:
+  name: odf-node-label
+  namespace: openshift-storage
+spec:
+  serviceAccountRef:
+    name: patcher
+  patches:
+    odf-node-label:
+      targetObjectRef:
+        apiVersion: v1
+        kind: Node
+      patchType: application/strategic-merge-patch+json
+      patchTemplate: |
+        metadata:
+          labels:
+            "cluster.ocs.openshift.io/openshift-storage": ""
