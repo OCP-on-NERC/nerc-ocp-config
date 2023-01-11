@@ -3,7 +3,7 @@ apiVersion: redhatcop.redhat.io/v1alpha1
 kind: Patch
 metadata:
   name: external-ingress-node-label-wrk-10
-  namespace: openshift-storage
+  namespace: openshift-ingress
 spec:
   serviceAccountRef:
     name: patcher
@@ -23,7 +23,7 @@ apiVersion: redhatcop.redhat.io/v1alpha1
 kind: Patch
 metadata:
   name: external-ingress-node-label-wrk-11
-  namespace: openshift-storage
+  namespace: openshift-ingress
 spec:
   serviceAccountRef:
     name: patcher
@@ -43,7 +43,7 @@ apiVersion: redhatcop.redhat.io/v1alpha1
 kind: Patch
 metadata:
   name: external-ingress-node-label-wrk-13
-  namespace: openshift-storage
+  namespace: openshift-ingress
 spec:
   serviceAccountRef:
     name: patcher
@@ -63,7 +63,7 @@ apiVersion: redhatcop.redhat.io/v1alpha1
 kind: Patch
 metadata:
   name: external-ingress-node-label-wrk-14
-  namespace: openshift-storage
+  namespace: openshift-ingress
 spec:
   serviceAccountRef:
     name: patcher
@@ -83,7 +83,7 @@ apiVersion: redhatcop.redhat.io/v1alpha1
 kind: Patch
 metadata:
   name: external-ingress-node-label-wrk-16
-  namespace: openshift-storage
+  namespace: openshift-ingress
 spec:
   serviceAccountRef:
     name: patcher
