@@ -27,6 +27,7 @@ resources:
 - externalsecrets
 - apiserver/cluster.yaml
 - metrics-bucket-storage
+- redhatcop.redhat.io/odf-node-patcher.yaml
 
 patches:
 - path: oauths/cluster_patch.yaml
@@ -34,6 +35,7 @@ patches:
 - path: storageclasses/ocs-external-storagecluster-ceph-rbd_patch.yaml
 - path: clustersecretstores/nerc-cluster-secrets_patch.yaml
 - path: ingresscontrollers/default_patch.yaml
+- path: machineconfigs/hostpath-provisioner-selinux_patch.yaml
 
 patchesStrategicMerge:
   - externalsecrets/open-cluster-management-observability-multiclusterhub-operator-pull-secret_patch.yaml

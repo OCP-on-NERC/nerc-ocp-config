@@ -11,6 +11,7 @@ components:
 resources:
   - ../../../../bundles/odf-external
   - externalsecrets/rook-ceph-external-cluster-details.yaml
+  - redhatcop.redhat.io/odf-node-patcher.yaml
 
 patches:
   - path: storageclasses/ocs-external-storagecluster-ceph-rbd_patch.yaml
