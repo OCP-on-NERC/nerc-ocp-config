@@ -59,6 +59,19 @@ data:
             clusterID: "{{ $labels.clusterID }}"
             severity: warning
 
+        - alert: CustomCephStorageFillingUp
+          annotations:
+            summary: Ceph Storage is filling up.
+            description: "The Ceph Storage is {{ $value | humanizePercentage }} full."
+          expr: sum((kubelet_volume_stats_used_bytes{cluster="local-cluster"} * on (namespace,persistentvolumeclaim) group_right() kube_pod_spec_volumes_persistentvolumeclaims_info{cluster="local-cluster"}) * on (namespace,persistentvolumeclaim) group_left(storageclass, provisioner) (kube_persistentvolumeclaim_info{cluster="local-cluster"} * on (storageclass)  group_left(provisioner) kube_storageclass_info{cluster="local-cluster", provisioner=~"(.*rbd.csi.ceph.com)|(.*cephfs.csi.ceph.com)|(ceph.rook.io/block)"}))/sum((kube_persistentvolumeclaim_resource_requests_storage_bytes{cluster="local-cluster"} * on (namespace,persistentvolumeclaim) group_right() kube_pod_spec_volumes_persistentvolumeclaims_info{cluster="local-cluster"}) * on (namespace,persistentvolumeclaim) group_left(storageclass, provisioner) (kube_persistentvolumeclaim_info{cluster="local-cluster"} * on (storageclass)  group_left(provisioner) kube_storageclass_info{cluster="local-cluster", provisioner=~"(.*rbd.csi.ceph.com)|(.*cephfs.csi.ceph.com)|(ceph.rook.io/block)"})) > 0.80
+          for: 1m
+          labels:
+            instance: "{{ $labels.instance }}"
+            cluster: "{{ $labels.cluster }}"
+            clusterID: "{{ $labels.clusterID }}"
+            PersistentVolumeClaim: "{{ $labels.persistentvolumeclaim }}"
+            severity: warning
+
 # Prometheus generates a metric called up that indicates whether a scrape was successful.
 # A value of “1” is scrape indicates success, “0” failure.
 # The up metric is useful for debugging and alerting for targets that are down or having issues.
