@@ -18,7 +18,7 @@ spec:
             Before=kubelet.service
 
             [Service]
-            ExecStartPre=-/usr/bin/install -d /var/hpvolumes -m 0755
+            ExecStartPre=-/usr/bin/install -d /var/hpvolumes -m 0755 -o root -g root
             ExecStart=/usr/bin/chcon -Rt container_file_t /var/hpvolumes
 
             [Install]
