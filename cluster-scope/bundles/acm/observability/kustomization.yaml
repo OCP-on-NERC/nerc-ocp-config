@@ -7,4 +7,5 @@ resources:
   - ../../../base/external-secrets.io/externalsecrets/open-cluster-management-observability-multiclusterhub-operator-pull-secret
   - ../../../base/external-secrets.io/externalsecrets/open-cluster-management-observability-alertmanager-config
   - ../../../base/core/configmaps/thanos-ruler-custom-rules/
+  - ../../../base/core/configmaps/observability-metrics-custom-allowlist/
   - ../../../base/observability.open-cluster-management.io/multiclusterobservabilities/observability
