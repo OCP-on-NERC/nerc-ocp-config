@@ -15,7 +15,7 @@ spec:
       name: thanos-object-storage
       type: s3
     tls:
-      caName: lokistack-ca-bundle-custom
+      caName: openshift-service-ca.crt
   tenants:
     mode: openshift-logging
   size: 1x.medium

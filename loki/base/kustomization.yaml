@@ -3,7 +3,6 @@ kind: Kustomization
 resources:
   - objectbucketclaims
   - externalsecrets
-  - configmaps
   - lokistacks
   - clusterroles
   - clusterrolebindings
