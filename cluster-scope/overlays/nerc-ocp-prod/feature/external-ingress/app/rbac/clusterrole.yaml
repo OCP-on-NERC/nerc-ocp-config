@@ -7,7 +7,7 @@ rules:
   - ""
   resources:
   - services
-  - node
+  - nodes
   verbs:
   - get
   - list
