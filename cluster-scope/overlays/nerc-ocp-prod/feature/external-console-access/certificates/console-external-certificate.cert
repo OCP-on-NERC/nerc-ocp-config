@@ -1,0 +1,23 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: console-external-certificate
+spec:
+  secretName: console-external-certificate
+  duration: 2160h
+  renewBefore: 360h
+  isCA: false
+  privateKey:
+    algorithm: RSA
+    encoding: PKCS1
+    size: 2048
+  usages:
+    - server auth
+    - client auth
+  dnsNames:
+    - console.apps.shift.nerc.mghpcc.org
+  uris:
+    - https://console.apps.shift.nerc.mghpcc.org
+  issuerRef:
+    name: nerc-external-apps-issuer
+    kind: Issuer

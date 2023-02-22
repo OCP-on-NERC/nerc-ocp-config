@@ -1,0 +1,17 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: oauth-openshift-external
+  namespace: openshift-authentication
+  labels:
+    nerc.mghpcc.org/external-ingress: "true"
+spec:
+  host: oauth-openshift.apps.shift.nerc.mghpcc.org
+  tls:
+    insecureEdgeTerminationPolicy: Redirect
+    termination: reencrypt
+  to:
+    kind: Service
+    name: oauth-openshift
+  port:
+    targetPort: 6443

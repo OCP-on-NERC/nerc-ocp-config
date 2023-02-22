@@ -1,0 +1,22 @@
+apiVersion: config.openshift.io/v1
+kind: Ingress
+metadata:
+  name: cluster
+spec:
+  domain: apps.nerc-ocp-prod.rc.fas.harvard.edu
+  componentRoutes:
+    - name: console
+      namespace: openshift-console
+      hostname: console.apps.shift.nerc.mghpcc.org
+      servingCertKeyPairSecret:
+        name: console-external-certificate
+    - name: downloads
+      namespace: openshift-console
+      hostname: downloads.apps.shift.nerc.mghpcc.org
+      servingCertKeyPairSecret:
+        name: downloads-external-certificate
+    - name: oauth-openshift
+      namespace: openshift-authentication
+      hostname: oauth.apps.shift.nerc.mghpcc.org
+      servingCertKeyPairSecret:
+        name: oauth-external-certificate

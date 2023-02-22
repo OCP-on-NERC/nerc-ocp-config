@@ -11,6 +11,7 @@ resources:
 - ../../bundles/xdmod-reader
 - feature/odf
 - feature/external-ingress
+- feature/external-console-access
 - ../../base/core/namespaces/openshift-gitops
 - externalsecrets
 - apiserver/cluster.yaml

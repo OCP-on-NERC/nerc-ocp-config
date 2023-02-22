@@ -1,0 +1,17 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: console-external
+  namespace: openshift-console
+  labels:
+    nerc.mghpcc.org/external-ingress: "true"
+spec:
+  host: console.apps.shift.nerc.mghpcc.org
+  tls:
+    insecureEdgeTerminationPolicy: Redirect
+    termination: reencrypt
+  to:
+    kind: Service
+    name: console
+  port:
+    targetPort: https

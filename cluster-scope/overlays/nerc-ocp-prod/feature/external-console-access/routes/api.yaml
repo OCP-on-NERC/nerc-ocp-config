@@ -1,0 +1,17 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: api-external
+  namespace: openshift-kube-apiserver
+  labels:
+    nerc.mghpcc.org/external-ingress: "true"
+spec:
+  host: api.apps.shift.nerc.mghpcc.org
+  tls:
+    insecureEdgeTerminationPolicy: Redirect
+    termination: reencrypt
+  to:
+    kind: Service
+    name: apiserver
+  port:
+    targetPort: https

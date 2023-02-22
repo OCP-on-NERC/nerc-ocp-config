@@ -1,0 +1,27 @@
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: nerc-external-apps-issuer
+spec:
+  acme:
+    server: https://acme-v02.api.letsencrypt.org/directory
+    privateKeySecretRef:
+      name: nerc-external-apps-issuer
+    solvers:
+      - selector:
+          dnsZones:
+            - "apps.shift.nerc.mghpcc.org"
+        dns01:
+          route53:
+            region: us-east-1
+
+            # The hostedZoneID is optional, but if not provided the associated
+            # IAM account requires the route53:ListHostedZonesByName capability.
+            # (https://cert-manager.io/docs/configuration/acme/dns01/route53/)
+            hostedZoneID: Z05272992YC46BUE2REFK
+            accessKeyIDSecretRef:
+              name: nerc-route53-creds
+              key: ACCESS_KEY_ID
+            secretAccessKeySecretRef:
+              name: nerc-route53-creds
+              key: SECRET_ACCESS_KEY

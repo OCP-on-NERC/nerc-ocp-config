@@ -1,0 +1,16 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: api-external
+  labels:
+    nerc.mghpcc.org/external-ingress: "true"
+spec:
+  host: api.apps.shift.nerc.mghpcc.org
+  port:
+    targetPort: http
+  tls:
+    insecureEdgeTerminationPolicy: Redirect
+    termination: edge
+  to:
+    kind: Service
+    name: api-proxy
