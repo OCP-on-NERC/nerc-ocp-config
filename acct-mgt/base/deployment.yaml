@@ -20,11 +20,11 @@ spec:
               containerPort: 8080
               protocol: TCP
           volumeMounts:
-            - name: quota-vol
-              mountPath: /app/quota
+            - name: config-vol
+              mountPath: /app/config
               readOnly: true
       volumes:
-        - name: quota-vol
+        - name: config-vol
           configMap:
             name: acct-mgt-quota-configmap
       serviceAccountName: acct-mgt-serviceaccount

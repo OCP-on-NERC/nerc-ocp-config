@@ -4,7 +4,8 @@ metadata:
   name: acct-mgt-configmap
 data:
   ACCT_MGT_ADMIN_USERNAME: "admin"
-  ACCT_MGT_QUOTA_DEF_FILE: "/app/quota/quotas.json"
+  ACCT_MGT_QUOTA_DEF_FILE: "/app/config/quotas.json"
+  ACCT_MGT_LIMIT_DEF_FILE: "/app/config/limits.json"
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -47,3 +48,17 @@ data:
       "NotTerminating:requests.cpu":    { "base": 2, "coefficient": 2 },
       "NotTerminating:limits.cpu":      { "base": 2, "coefficient": 2 }
     }
+  limits.json: |
+    [
+        {
+            "type": "Container",
+            "default": {
+                "cpu": "200m",
+                "memory": "512Mi"
+            },
+            "defaultRequest": {
+                "cpu": "100m",
+                "memory": "256Mi"
+            }
+        }
+    ]
