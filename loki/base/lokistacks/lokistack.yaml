@@ -1,14 +1,26 @@
 apiVersion: loki.grafana.com/v1
 kind: LokiStack
 metadata:
-  name: lokistack
-  namespace: openshift-operators-redhat
+  name: logging-loki
+  namespace: openshift-logging
 spec:
   limits:
     global:
       ingestion:
         ingestionBurstSize: 10
         ingestionRate: 10
+      retention:
+        days: 90
+    tenants:
+      audit:
+        retention:
+          days: 90
+      application:
+        retention:
+          days: 30
+      infrastructure:
+        retention:
+          days: 30
   managementState: Managed
   storage:
     secret:
