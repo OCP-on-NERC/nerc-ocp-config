@@ -5,7 +5,10 @@ metadata:
   namespace: "openshift-logging"
 spec:
   managementState: "Managed"
+  logStore:
+    type: lokistack
+    lokistack:
+      name: logging-loki
   collection:
     logs:
-      type: "fluentd"
-      fluentd: {}
+      type: vector

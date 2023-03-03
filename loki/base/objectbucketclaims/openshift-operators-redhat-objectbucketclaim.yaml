@@ -1,8 +1,0 @@
-apiVersion: objectbucket.io/v1alpha1
-kind: ObjectBucketClaim
-metadata:
-  name: openshift-operators-redhat-objectbucketclaim
-  namespace: openshift-operators-redhat
-spec:
-  generateBucketName: openshift-operators-redhat-objectbucketclaim
-  storageClassName: metrics-bucket-storage

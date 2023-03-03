@@ -7,6 +7,7 @@ spec:
     - odf-console
     - acm
     - mce
+    - logging-view-plugin
   customization:
     customLogoFile:
       name: nerc-logo

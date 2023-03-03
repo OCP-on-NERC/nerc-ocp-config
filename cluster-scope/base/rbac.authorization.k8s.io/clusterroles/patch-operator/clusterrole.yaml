@@ -16,8 +16,6 @@ rules:
       - list
   - apiGroups:
       - integreatly.org
-    resources:
-      - grafanas
     verbs:
       - update
       - patch

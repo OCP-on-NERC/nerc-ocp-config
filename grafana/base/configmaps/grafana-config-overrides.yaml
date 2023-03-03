@@ -1,6 +1,0 @@
-kind: ConfigMap
-metadata:
-  name: grafana-config-overrides
-  namespace: grafana
-apiVersion: v1
-data:

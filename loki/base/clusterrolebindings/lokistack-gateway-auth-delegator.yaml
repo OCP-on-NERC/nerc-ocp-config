@@ -9,4 +9,4 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: lokistack-gateway
-    namespace: openshift-operators-redhat
+    namespace: openshift-logging

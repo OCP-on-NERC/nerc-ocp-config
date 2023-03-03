@@ -9,4 +9,4 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: patch-operator
-    namespace: grafana
+    namespace: openshift-logging
