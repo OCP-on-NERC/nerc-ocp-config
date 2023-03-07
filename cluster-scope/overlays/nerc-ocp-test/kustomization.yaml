@@ -5,4 +5,5 @@ commonLabels:
 
 resources:
 - ../common
+- ../../bundles/patch-operator
 - feature/odf
