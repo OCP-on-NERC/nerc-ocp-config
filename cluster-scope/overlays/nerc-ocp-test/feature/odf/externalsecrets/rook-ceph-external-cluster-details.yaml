@@ -1,0 +1,16 @@
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: rook-ceph-external-cluster-details
+  namespace: openshift-storage
+spec:
+  secretStoreRef:
+    name: nerc-secret-store
+    kind: SecretStore
+  target:
+    name: rook-ceph-external-cluster-details
+  data:
+  - secretKey: external_cluster_details
+    remoteRef:
+      key: nerc/nerc-ocp-test/openshift-storage/rook-ceph-external-cluster-details
+      property: external_cluster_details
