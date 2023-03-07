@@ -5,3 +5,4 @@ commonLabels:
 
 resources:
 - ../common
+- feature/odf
