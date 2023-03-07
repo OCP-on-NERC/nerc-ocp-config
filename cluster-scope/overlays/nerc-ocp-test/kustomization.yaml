@@ -4,6 +4,7 @@ commonLabels:
   nerc.mghpcc.org/kustomized: "true"
 
 resources:
+- apiserver/cluster.yaml
 - ../common
 - ../../bundles/patch-operator
 - feature/odf
