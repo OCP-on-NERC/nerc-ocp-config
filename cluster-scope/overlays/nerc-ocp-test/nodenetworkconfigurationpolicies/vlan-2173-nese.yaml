@@ -1,0 +1,20 @@
+apiVersion: nmstate.io/v1
+kind: NodeNetworkConfigurationPolicy
+metadata:
+  name: vlan-2173-nese
+spec:
+  nodeSelector:
+    node-role.kubernetes.io/worker: ""
+  desiredState:
+    interfaces:
+    - name: bond0.2173
+      type: vlan
+      state: up
+      ipv4:
+        enabled: true
+        dhcp: true
+        auto-routes: true
+      vlan:
+        base-iface: bond0
+        id: 2173
+      mtu: 9000

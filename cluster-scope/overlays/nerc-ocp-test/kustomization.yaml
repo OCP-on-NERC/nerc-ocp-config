@@ -9,3 +9,4 @@ resources:
 - ../../bundles/patch-operator
 - feature/odf
 - machineconfigs/configure-bond0
+- nodenetworkconfigurationpolicies/vlan-2173-nese.yaml
