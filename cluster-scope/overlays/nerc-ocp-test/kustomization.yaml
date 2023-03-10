@@ -7,3 +7,4 @@ resources:
 - ../common
 - ../../bundles/patch-operator
 - feature/odf
+- machineconfigs/configure-bond0

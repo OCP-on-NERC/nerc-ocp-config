@@ -1,0 +1,17 @@
+[connection]
+id=bond0
+type=bond
+interface-name=bond0
+autoconnect=true
+connection.autoconnect-slaves=1
+
+[ethernet]
+mtu=9000
+
+[bond]
+mode=802.3ad
+miimon=140
+
+[ipv4]
+method=auto
+dhcp-timeout=86400
