@@ -1,0 +1,25 @@
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: letsencrypt-production-dns01
+spec:
+  acme:
+    email: help@nerc.mghpcc.org
+    privateKeySecretRef:
+      name: letsencrypt-production-key
+    server: https://acme-v02.api.letsencrypt.org/directory
+    solvers:
+    - dns01:
+        cnameStrategy: Follow
+        route53:
+          hostedZoneID: Z05272992YC46BUE2REFK
+          region: us-east-1
+          accessKeyIDSecretRef:
+            key: aws_access_key_id
+            name: aws-route53-credentials
+          secretAccessKeySecretRef:
+            key: aws_secret_access_key
+            name: aws-route53-credentials
+      selector:
+        dnsZones:
+        - shift.nerc.mghpcc.org
