@@ -4,3 +4,4 @@ kind: Component
 resources:
 - issuer-dns01-prod.yaml
 - issuer-dns01-staging.yaml
+- aws-route53-credentials.yaml
