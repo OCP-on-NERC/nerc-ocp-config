@@ -19,41 +19,37 @@ resources:
 - nodenetworkconfigurationpolicies
 - metallb
 - clusterversion.yaml
+- certificates
 
 generatorOptions:
   disableNameSuffixHash: true
 
 configMapGenerator:
-  - name: cluster-monitoring-config
-    namespace: openshift-monitoring
-    files:
-      - config.yaml=configmaps/cluster-monitoring-config.yaml
+- files:
+  - config.yaml=configmaps/cluster-monitoring-config.yaml
+  name: cluster-monitoring-config
+  namespace: openshift-monitoring
 
 patches:
 - path: ingresscontrollers/default_patch.yaml
 - path: oauths/cluster_patch.yaml
-
-- target:
-    group: "metallb.io"
-    name: ".*"
-  path: patches/skipdryrunonmissingresource.yaml
-
-- target:
-    group: "external-secrets.io"
-    name: ".*"
-  path: patches/skipdryrunonmissingresource.yaml
-
-- target:
-    group: "operator.external-secrets.io"
-    name: ".*"
-  path: patches/skipdryrunonmissingresource.yaml
-
-- target:
-    group: "nmstate.io"
-    name: ".*"
-  path: patches/skipdryrunonmissingresource.yaml
-
-- target:
-    group: "redhatcop.redhat.io"
-    name: ".*"
-  path: patches/skipdryrunonmissingresource.yaml
+- path: patches/skipdryrunonmissingresource.yaml
+  target:
+    group: metallb.io
+    name: .*
+- path: patches/skipdryrunonmissingresource.yaml
+  target:
+    group: external-secrets.io
+    name: .*
+- path: patches/skipdryrunonmissingresource.yaml
+  target:
+    group: operator.external-secrets.io
+    name: .*
+- path: patches/skipdryrunonmissingresource.yaml
+  target:
+    group: nmstate.io
+    name: .*
+- path: patches/skipdryrunonmissingresource.yaml
+  target:
+    group: redhatcop.redhat.io
+    name: .*

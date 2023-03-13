@@ -1,0 +1,14 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: default-ingress-certificate
+  namespace: openshift-ingress
+spec:
+  issuerRef:
+    name: letsencrypt-staging-dns01
+    kind: Issuer
+  secretName: default-ingress-certificate
+  duration: 2160h0m0s
+  renewBefore: 360h0m0s
+  dnsNames:
+    - "*.apps.shift.nerc.mghpcc.org"
