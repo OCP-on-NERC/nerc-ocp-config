@@ -9,6 +9,6 @@ spec:
   servingCerts:
     namedCertificates:
       - names:
-        - api.nerc-ocp-prod.rc.fas.harvard.edu
+        - api.shift.nerc.mghpcc.org
         servingCertificate:
           name: default-api-certificate
