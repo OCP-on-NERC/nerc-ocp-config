@@ -29,6 +29,7 @@ configMapGenerator:
   namespace: openshift-monitoring
 
 patches:
+- path: ingresscontrollers/default_patch.yaml
 - path: oauths/cluster_patch.yaml
 - path: patches/skipdryrunonmissingresource.yaml
   target:
