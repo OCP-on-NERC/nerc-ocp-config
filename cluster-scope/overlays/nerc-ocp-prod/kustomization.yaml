@@ -6,7 +6,6 @@ commonLabels:
 resources:
 - ../common
 - ../../bundles/acct-mgt
-- ../../bundles/metallb
 - ../../bundles/patch-operator
 - ../../bundles/xdmod-reader
 - feature/odf
@@ -17,7 +16,6 @@ resources:
 - issuers
 - machineconfigs/configure-bond0
 - nodenetworkconfigurationpolicies
-- metallb
 - clusterversion.yaml
 - certificates
 
