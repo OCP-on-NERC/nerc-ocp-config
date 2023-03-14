@@ -12,7 +12,6 @@ spec:
     - dns01:
         cnameStrategy: Follow
         route53:
-          hostedZoneID: Z05272992YC46BUE2REFK
           region: us-east-1
           accessKeyIDSecretRef:
             key: aws_access_key_id
