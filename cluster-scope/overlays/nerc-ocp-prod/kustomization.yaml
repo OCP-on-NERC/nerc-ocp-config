@@ -9,6 +9,7 @@ resources:
 - ../../bundles/patch-operator
 - ../../bundles/xdmod-reader
 - feature/odf
+- feature/custom-routes
 - ../../base/core/namespaces/openshift-gitops
 - externalsecrets
 - apiserver/cluster.yaml
