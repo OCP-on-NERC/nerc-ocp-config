@@ -72,6 +72,18 @@ data:
             PersistentVolumeClaim: "{{ $labels.persistentvolumeclaim }}"
             severity: warning
 
+        - alert: CustomNetworkInterfaceErrors
+          annotations:
+            summary: Node network transmit errors
+            description: "{{ $value }} node network transmit errors occured"
+          expr: increase(node_network_transmit_errs_total[1h]) > 0
+          for: 1m
+          labels:
+            instance: "{{ $labels.instance }}"
+            cluster: "{{ $labels.cluster }}"
+            clusterID: "{{ $labels.clusterID }}"
+            severity: warning
+
 # Prometheus generates a metric called up that indicates whether a scrape was successful.
 # A value of “1” is scrape indicates success, “0” failure.
 # The up metric is useful for debugging and alerting for targets that are down or having issues.
