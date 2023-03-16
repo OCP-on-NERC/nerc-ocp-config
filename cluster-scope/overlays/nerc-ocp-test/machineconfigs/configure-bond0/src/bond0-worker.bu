@@ -1,7 +1,7 @@
 variant: openshift
 version: 4.10.0
 metadata:
-  name: configure-bond0
+  name: configure-bond0-worker
   labels:
     machineconfiguration.openshift.io/role: worker
 storage:
@@ -10,11 +10,11 @@ storage:
       mode: 0600
       contents:
         local: bond0.nmconnection
-    - path: /etc/NetworkManager/system-connections/eno1.nmconnection
+    - path: /etc/NetworkManager/system-connections/nic1.nmconnection
       mode: 0600
       contents:
-        local: eno1.nmconnection
-    - path: /etc/NetworkManager/system-connections/eno2.nmconnection
+        local: nic1.nmconnection
+    - path: /etc/NetworkManager/system-connections/nic2.nmconnection
       mode: 0600
       contents:
-        local: eno2.nmconnection
+        local: nic2.nmconnection

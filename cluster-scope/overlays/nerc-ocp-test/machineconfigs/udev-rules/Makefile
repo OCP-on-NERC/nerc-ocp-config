@@ -1,8 +1,8 @@
 MACHINECONFIGS = \
-	bond0-controller.yaml \
-	bond0-worker.yaml
+	machineconfig-ixgbe.yaml \
+	machineconfig-i40e.yaml
 
-%.yaml: src/%.bu $(wildcard src/*.nmconnection)
+%.yaml: src/%.bu
 	butane -o $@ -d src $<
 
 all: $(MACHINECONFIGS)
