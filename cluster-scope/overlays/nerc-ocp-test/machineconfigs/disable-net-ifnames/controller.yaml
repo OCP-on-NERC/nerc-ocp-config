@@ -1,7 +1,9 @@
 apiVersion: machineconfiguration.openshift.io/v1
 kind: MachineConfig
 metadata:
-  name: disable-net-ifnames
+  name: disable-net-ifnames-controller
+  labels:
+    machineconfiguration.openshift.io/role: master
 spec:
   config:
     ignition:

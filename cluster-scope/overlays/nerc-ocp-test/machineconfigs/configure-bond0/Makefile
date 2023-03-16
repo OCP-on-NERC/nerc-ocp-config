@@ -1,5 +1,6 @@
 MACHINECONFIGS = \
-	machineconfig.yaml
+	bond0-controller.yaml \
+	bond0-worker.yaml
 
 %.yaml: src/%.bu $(wildcard src/*.nmconnection)
 	butane -o $@ -d src $<
