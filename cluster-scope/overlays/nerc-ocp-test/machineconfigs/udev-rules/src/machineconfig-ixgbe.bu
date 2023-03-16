@@ -1,0 +1,12 @@
+variant: openshift
+version: 4.10.0
+metadata:
+  name: ixgbe-udev-rules
+  labels:
+    machineconfiguration.openshift.io/role: worker
+storage:
+  files:
+    - path: /etc/udev/rules.d/90-ixgbe.rules
+      contents:
+        local: ixgbe.rules
+      mode: 0644

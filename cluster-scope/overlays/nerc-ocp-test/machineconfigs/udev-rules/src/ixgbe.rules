@@ -1,0 +1,2 @@
+SUBSYSTEM=="net",DRIVERS=="ixgbe",KERNELS=="0000:03:00.0",ACTION=="add",NAME="nic1"
+SUBSYSTEM=="net",DRIVERS=="ixgbe",KERNELS=="0000:03:00.1",ACTION=="add",NAME="nic2"

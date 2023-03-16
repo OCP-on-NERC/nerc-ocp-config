@@ -1,0 +1,11 @@
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  name: disable-net-ifnames
+spec:
+  config:
+    ignition:
+      version: 3.2.0
+  kernelArguments:
+    - net.ifnames=0
+    - biosdevname=0

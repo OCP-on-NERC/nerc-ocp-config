@@ -8,5 +8,7 @@ resources:
 - ../common
 - ../../bundles/patch-operator
 - feature/odf
+- machineconfigs/disable-net-ifnames.yaml
+- machineconfigs/udev-rules
 - machineconfigs/configure-bond0
 - nodenetworkconfigurationpolicies/vlan-2175-nese.yaml
