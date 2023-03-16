@@ -19,6 +19,7 @@ resources:
 - nodenetworkconfigurationpolicies
 - clusterversion.yaml
 - certificates
+- consolelinks
 
 generatorOptions:
   disableNameSuffixHash: true
