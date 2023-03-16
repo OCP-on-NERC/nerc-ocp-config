@@ -20,6 +20,9 @@ resources:
 - clusterversion.yaml
 - certificates
 
+components:
+  - ../../components/argocd-skip-dryrun
+
 generatorOptions:
   disableNameSuffixHash: true
 
@@ -32,23 +35,3 @@ configMapGenerator:
 patches:
 - path: ingresscontrollers/default_patch.yaml
 - path: oauths/cluster_patch.yaml
-- path: patches/skipdryrunonmissingresource.yaml
-  target:
-    group: metallb.io
-    name: .*
-- path: patches/skipdryrunonmissingresource.yaml
-  target:
-    group: external-secrets.io
-    name: .*
-- path: patches/skipdryrunonmissingresource.yaml
-  target:
-    group: operator.external-secrets.io
-    name: .*
-- path: patches/skipdryrunonmissingresource.yaml
-  target:
-    group: nmstate.io
-    name: .*
-- path: patches/skipdryrunonmissingresource.yaml
-  target:
-    group: redhatcop.redhat.io
-    name: .*
