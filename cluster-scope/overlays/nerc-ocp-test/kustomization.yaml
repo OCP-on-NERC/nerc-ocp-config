@@ -7,6 +7,7 @@ resources:
 - apiserver/cluster.yaml
 - ../common
 - ../../bundles/patch-operator
+- ../../bundles/rhods-operator
 - feature/odf
 - machineconfigs/disable-net-ifnames
 - machineconfigs/udev-rules
