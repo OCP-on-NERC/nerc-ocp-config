@@ -53,12 +53,12 @@ data:
         {
             "type": "Container",
             "default": {
-                "cpu": "200m",
-                "memory": "512Mi"
+                "cpu": "2",
+                "memory": "1024Mi"
             },
             "defaultRequest": {
-                "cpu": "100m",
-                "memory": "256Mi"
+                "cpu": "1",
+                "memory": "512Mi"
             }
         }
     ]
