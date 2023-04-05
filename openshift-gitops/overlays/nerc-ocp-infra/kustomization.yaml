@@ -5,4 +5,4 @@ resources:
 - applicationsets
 
 patches:
-- patches/argocds/openshift-gitops.yaml
+- path: patches/argocds/openshift-gitops.yaml
