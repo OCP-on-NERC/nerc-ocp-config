@@ -15,18 +15,6 @@ data:
       - node_network_transmit_bytes_total
       - node_network_transmit_errs_total
       - node_network_transmit_packets_total
-      - ipmi_bmc_info
-      - ipmi_chassis_power_state
-      - ipmi_current_amperes
-      - ipmi_current_state
-      - ipmi_dcmi_power_consumption_watts
-      - ipmi_fan_speed_rpm
-      - ipmi_fan_speed_state
-      - ipmi_power_state
-      - ipmi_power_watts
-      - ipmi_scrape_duration_seconds
-      - ipmi_sensor_state
-      - ipmi_sensor_value
-      - ipmi_temperature_celsius
-      - ipmi_temperature_state
-      - ipmi_up
+    matches:
+      - __name__=~"(ipmi_.*)"
+      - __name__=~"(ceph_.*)"
