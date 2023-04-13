@@ -89,6 +89,64 @@ data:
           labels:
             severity: warning
 
+      - name: ipmi
+        rules:
+
+        - alert: CustomIpmiServerPowerSupplyFailure
+          annotations:
+            summary: "{{ $labels.cluster }} Server power supply failure"
+            description: |
+              <https://grafana-open-cluster-management-observability.apps.nerc-ocp-infra.rc.fas.harvard.edu/explore?orgId=1&left=%5B%22now-3h%22,%22now%22,%22Observatorium%22,%7B%22exemplar%22:true,%22expr%22:%22ipmi_power_state%7B%7D%20%3E%200%22%7D%5D|Click here to see these metrics in Observability Monitoring>
+              {{ $labels.cluster }} on instance {{$labels.instance }} has a non-zero power supply state {{ $value }}.
+          expr: ipmi_power_state{} > 0
+          for: 1m
+          labels:
+            severity: warning
+
+        - alert: CustomIpmiChassisPowerSupplyFailure
+          annotations:
+            summary: "{{ $labels.cluster }} Chassis power supply failure"
+            description: |
+              <https://grafana-open-cluster-management-observability.apps.nerc-ocp-infra.rc.fas.harvard.edu/explore?orgId=1&left=%5B%22now-3h%22,%22now%22,%22Observatorium%22,%7B%22exemplar%22:true,%22expr%22:%22ipmi_chassis_power_state%7B%7D%20%3D%3D%200%22%7D%5D|Click here to see these metrics in Observability Monitoring>
+              {{ $labels.cluster}} on instance {{$labels.instance }} chassis power is off.
+          expr: ipmi_chassis_power_state{} == 0
+          for: 1m
+          labels:
+            severity: warning
+
+        - alert: CustomIpmiServerMemoryError
+          annotations:
+            summary: "{{ $labels.cluster }} Server memory error"
+            description: |
+              <https://grafana-open-cluster-management-observability.apps.nerc-ocp-infra.rc.fas.harvard.edu/explore?orgId=1&left=%5B%22now-3h%22,%22now%22,%22Observatorium%22,%7B%22exemplar%22:true,%22expr%22:%22ipmi_sensor_state%7Btype%3D%5C%22Memory%5C%22%7D%20%3E%200%22%7D%5D|Click here to see these metrics in Observability Monitoring>
+              {{ $labels.cluster}} on instance {{$labels.instance }} has a non-zero memory state {{ $value }}.
+          expr: ipmi_sensor_state{type="Memory"} > 0
+          for: 1m
+          labels:
+            severity: warning
+
+        - alert: CustomIpmiLocalDiskError
+          annotations:
+            summary: "{{ $labels.cluster }} Local disk error"
+            description: |
+              <https://grafana-open-cluster-management-observability.apps.nerc-ocp-infra.rc.fas.harvard.edu/explore?orgId=1&left=%5B%22now-3h%22,%22now%22,%22Observatorium%22,%7B%22exemplar%22:true,%22expr%22:%22ipmi_sensor_state%7Btype%3D%5C%22Drive%20Slot%5C%22%7D%20%3E%200%22%7D%5D|Click here to see these metrics in Observability Monitoring>
+              {{ $labels.cluster}} on instance {{$labels.instance }} has a non-zero drive slot state {{ $value }}.
+          expr: ipmi_sensor_state{type="Drive Slot"} > 0
+          for: 1m
+          labels:
+            severity: warning
+
+        - alert: CustomIpmiInternalCoolingFanError
+          annotations:
+            summary: "{{ $labels.cluster}} Internal cooling fan error on {{$labels.instance }}"
+            description: |
+              <https://grafana-open-cluster-management-observability.apps.nerc-ocp-infra.rc.fas.harvard.edu/explore?orgId=1&left=%5B%22now-3h%22,%22now%22,%22Observatorium%22,%7B%22exemplar%22:true,%22expr%22:%22ipmi_fan_speed_state%7B%7D%20%3E%200%22%7D%5D|Click here to see these metrics in Observability Monitoring>
+              {{ $labels.cluster}} on instance {{$labels.instance }} has a non-zero fan speed state {{ $value }}.
+          expr: ipmi_fan_speed_state{} > 0
+          for: 1m
+          labels:
+            severity: warning
+
 # Prometheus generates a metric called up that indicates whether a scrape was successful.
 # A value of “1” is scrape indicates success, “0” failure.
 # The up metric is useful for debugging and alerting for targets that are down or having issues.
