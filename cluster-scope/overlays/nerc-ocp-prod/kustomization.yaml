@@ -8,6 +8,8 @@ resources:
 - ../../bundles/acct-mgt
 - ../../bundles/patch-operator
 - ../../bundles/xdmod-reader
+- ../../base/helm.openshift.io/helmchartrepositories/solr-helm-repo
+- https://solr.apache.org/operator/downloads/crds/v0.6.0/all-with-dependencies.yaml
 - feature/odf
 - feature/custom-routes
 - ../../base/core/namespaces/openshift-gitops
