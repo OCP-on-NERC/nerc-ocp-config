@@ -8,6 +8,7 @@ resources:
 - ../../bundles/acct-mgt
 - ../../bundles/patch-operator
 - ../../bundles/xdmod-reader
+- ../../bundles/amq-broker-rhel8-operator
 - feature/odf
 - feature/custom-routes
 - ../../base/core/namespaces/openshift-gitops
