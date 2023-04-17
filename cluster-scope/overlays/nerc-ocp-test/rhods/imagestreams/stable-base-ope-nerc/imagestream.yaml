@@ -1,0 +1,23 @@
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  name: stable-base-ope-nerc
+  namespace: redhat-ods-applications
+  labels:
+    opendatahub.io/notebook-image: "true"
+  annotations:
+    opendatahub.io/notebook-image-url: "https://quay.io/repository/ucsls/ucsls?tab=tags"
+    opendatahub.io/notebook-image-name: "stable-base-ope-nerc"
+    opendatahub.io/notebook-image-desc: "stable-base-ope-nerc"
+spec:
+  lookupPolicy:
+    local: true
+  tags:
+    - name: latest
+      from:
+        kind: DockerImage
+        name: 'quay.io/rh_ee_keli/ope-template:stable-base-ope-NERC'
+      importPolicy:
+        scheduled: true
+      referencePolicy:
+        type: Source
