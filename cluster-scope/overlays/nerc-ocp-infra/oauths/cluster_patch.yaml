@@ -13,3 +13,4 @@ spec:
           name: github-client-secret
         teams:
           - ocp-on-nerc/nerc-ops
+          - ocp-on-nerc/nerc-logs-metrics
