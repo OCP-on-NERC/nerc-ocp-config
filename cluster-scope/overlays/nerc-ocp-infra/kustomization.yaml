@@ -27,6 +27,7 @@ resources:
 - apiserver/cluster.yaml
 - metrics-bucket-storage
 - redhatcop.redhat.io/odf-node-patcher.yaml
+- configmaps
 
 patches:
 - path: oauths/cluster_patch.yaml
