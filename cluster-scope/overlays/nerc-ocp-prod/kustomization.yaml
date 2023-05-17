@@ -36,3 +36,4 @@ configMapGenerator:
 patches:
 - path: ingresscontrollers/default_patch.yaml
 - path: oauths/cluster_patch.yaml
+- path: kubeletconfigs/system-reserved-patch.yaml
