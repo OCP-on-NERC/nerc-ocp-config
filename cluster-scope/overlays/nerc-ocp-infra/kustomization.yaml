@@ -29,6 +29,15 @@ resources:
 - redhatcop.redhat.io/odf-node-patcher.yaml
 - grafana-dashboards
 
+generatorOptions:
+  disableNameSuffixHash: true
+
+configMapGenerator:
+- files:
+  - config.yaml=configmaps/cluster-monitoring-config.yaml
+  name: cluster-monitoring-config
+  namespace: openshift-monitoring
+
 patches:
 - path: oauths/cluster_patch.yaml
 - path: consoles.operator.openshift.io/cluster_patch.yaml
