@@ -5,6 +5,4 @@ metadata:
   namespace: openshift-config-operator
 spec:
   machineConfigPoolSelector:
-    matchLabels:
-      pools.operator.machineconfiguration.openshift.io/master: ""
-      pools.operator.machineconfiguration.openshift.io/worker: ""
+    $patch: delete
