@@ -5,9 +5,9 @@ metadata:
   namespace: openshift-storage
 spec:
   pvPool:
-    numVolumes: 3
+    numVolumes: 6
     resources:
       requests:
-        storage: 800Gi
+        storage: 400Gi
     storageClass: ocs-external-storagecluster-ceph-rbd
   type: pv-pool
