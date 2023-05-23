@@ -8,7 +8,7 @@ spec:
       mappingMethod: claim
       type: GitHub
       github:
-        clientID: 771ea98004d436c6e529
+        clientID: e87d9a48533084f2aa5f
         clientSecret:
           name: github-client-secret
         teams:
