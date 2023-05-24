@@ -18,6 +18,7 @@ resources:
 - clusterrolebindings/nerc-ops-cluster-reader.yaml
 - clusterrolebindings/nerc-ops-sudoers.yaml
 - clusterrolebindings/nerc-ops-portforward.yaml
+- clusterrolebindings/nerc-logs-metrics-open-cluster-management-cluster-manager-admin.yaml
 - groupsyncs
 - machineconfigs
 - kubeletconfigs
