@@ -1,0 +1,30 @@
+prometheusK8s:
+  additionalAlertmanagerConfigs:
+  - apiVersion: v2
+    bearerToken:
+      key: token
+      name: observability-alertmanager-accessor
+    pathPrefix: /
+    scheme: https
+    staticConfigs:
+    - alertmanager-open-cluster-management-observability.apps.nerc-ocp-infra.rc.fas.harvard.edu
+    tlsConfig:
+      ca:
+        key: service-ca.crt
+        name: hub-alertmanager-router-ca
+      insecureSkipVerify: false
+  externalLabels:
+    managed_cluster: b3c6e302-f119-4adb-bc48-e04c6aa2eaa5
+  volumeClaimTemplate:
+    spec:
+      storageClassName: ocs-external-storagecluster-ceph-rbd
+      resources:
+        requests:
+          storage: 100Gi
+alertmanagerMain:
+  volumeClaimTemplate:
+    spec:
+      storageClassName: ocs-external-storagecluster-ceph-rbd
+      resources:
+        requests:
+          storage: 20Gi

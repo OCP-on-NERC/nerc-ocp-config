@@ -29,6 +29,15 @@ resources:
 - redhatcop.redhat.io/odf-node-patcher.yaml
 - grafana-dashboards
 
+generatorOptions:
+  disableNameSuffixHash: true
+
+configMapGenerator:
+- files:
+  - config.yaml=configmaps/cluster-monitoring-config.yaml
+  name: cluster-monitoring-config
+  namespace: openshift-monitoring
+
 patches:
 - path: oauths/cluster_patch.yaml
 - path: consoles.operator.openshift.io/cluster_patch.yaml
@@ -36,7 +45,5 @@ patches:
 - path: clustersecretstores/nerc-cluster-secrets_patch.yaml
 - path: ingresscontrollers/default_patch.yaml
 - path: machineconfigs/hostpath-provisioner-selinux_patch.yaml
-
-patchesStrategicMerge:
-  - externalsecrets/open-cluster-management-observability-multiclusterhub-operator-pull-secret_patch.yaml
-  - externalsecrets/open-cluster-management-observability-thanos-object-storage_patch.yaml
+- path: externalsecrets/open-cluster-management-observability-multiclusterhub-operator-pull-secret_patch.yaml
+- path: externalsecrets/open-cluster-management-observability-thanos-object-storage_patch.yaml
