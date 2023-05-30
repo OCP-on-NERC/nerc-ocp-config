@@ -1,0 +1,56 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  name: postgresql
+spec:
+  replicas: 1
+  selector:
+    name: postgresql
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        name: postgresql
+    spec:
+      containers:
+        - env:
+            - name: POSTGRESQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-database-secrets
+                  key: DatabaseUser
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-database-secrets
+                  key: DatabasePassword
+            - name: POSTGRESQL_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-database-secrets
+                  key: DatabaseName
+            - name: PGDATA
+              value: /var/lib/postgresql/data/pgdata
+          image: "postgres:13"
+          imagePullPolicy: IfNotPresent
+          name: postgresql
+          ports:
+            - containerPort: 5432
+              protocol: TCP
+          resources:
+            requests:
+              cpu: "1"
+              memory: 2Gi
+            limits:
+              cpu: "1"
+              memory: 2Gi
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: pgsql-data
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      volumes:
+        - name: pgsql-data
+          persistentVolumeClaim:
+            claimName: pgsql-data
