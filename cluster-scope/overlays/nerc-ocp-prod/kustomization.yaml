@@ -8,6 +8,7 @@ resources:
 - ../../bundles/acct-mgt
 - ../../bundles/patch-operator
 - ../../bundles/xdmod-reader
+- ../../bundles/amq-broker-rhel8-operator
 - ../../bundles/crunchy-postgres-operator
 - ../../bundles/amq-streams-operator
 - feature/odf
