@@ -6,4 +6,5 @@ metadata:
 spec:
   machineConfigPoolSelector:
     matchLabels:
-      $patch: delete
+      $patch: replace
+      machineconfiguration.openshift.io/mco-built-in: ""
