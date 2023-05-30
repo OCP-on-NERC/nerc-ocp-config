@@ -1,0 +1,10 @@
+apiVersion: machineconfiguration.openshift.io/v1
+kind: KubeletConfig
+metadata:
+  name: system-reserved
+  namespace: openshift-config-operator
+spec:
+  machineConfigPoolSelector:
+    matchLabels:
+      $patch: replace
+      machineconfiguration.openshift.io/mco-built-in: ""
