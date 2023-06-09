@@ -6,6 +6,7 @@ commonLabels:
 resources:
 - ../common
 - ../../bundles/acct-mgt
+- ../../bundles/curator-operator
 - ../../bundles/patch-operator
 - ../../bundles/xdmod-reader
 - ../../bundles/solr-helm-repo
