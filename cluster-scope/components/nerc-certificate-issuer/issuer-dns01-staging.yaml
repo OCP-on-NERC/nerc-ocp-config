@@ -14,10 +14,10 @@ spec:
         route53:
           region: us-east-1
           accessKeyIDSecretRef:
-            key: aws_access_key_id
+            key: AWS_ACCESS_KEY_ID
             name: aws-route53-credentials
           secretAccessKeySecretRef:
-            key: aws_secret_access_key
+            key: AWS_SECRET_ACCESS_KEY
             name: aws-route53-credentials
       selector:
         dnsZones:
