@@ -5,7 +5,7 @@ metadata:
   namespace: openshift-storage
 spec:
   pvPool:
-    numVolumes: 6
+    numVolumes: 12
     resources:
       requests:
         storage: 400Gi
