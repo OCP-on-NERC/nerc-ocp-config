@@ -15,6 +15,7 @@ data:
       - node_network_transmit_bytes_total
       - node_network_transmit_errs_total
       - node_network_transmit_packets_total
+      - kube_pod_container_info
     matches:
       - __name__=~"(ipmi_.*)"
       - __name__=~"(ceph_.*)"
