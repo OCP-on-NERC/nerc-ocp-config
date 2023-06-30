@@ -4,7 +4,7 @@ metadata:
     name: acm
 spec:
     channel: release-2.6
-    installPlanApproval: Automatic
+    installPlanApproval: Manual
     name: advanced-cluster-management
     source: redhat-operators
     sourceNamespace: openshift-marketplace

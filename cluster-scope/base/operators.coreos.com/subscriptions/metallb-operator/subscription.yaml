@@ -4,7 +4,7 @@ metadata:
     name: metallb-operator
 spec:
     channel: stable
-    installPlanApproval: Automatic
+    installPlanApproval: Manual
     name: metallb-operator
     source: redhat-operators
     sourceNamespace: openshift-marketplace

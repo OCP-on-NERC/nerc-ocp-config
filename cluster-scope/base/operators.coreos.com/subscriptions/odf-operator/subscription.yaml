@@ -4,7 +4,7 @@ metadata:
     name: odf-operator
 spec:
     channel: stable-4.10
-    installPlanApproval: Automatic
+    installPlanApproval: Manual
     name: odf-operator
     source: redhat-operators
     sourceNamespace: openshift-marketplace
