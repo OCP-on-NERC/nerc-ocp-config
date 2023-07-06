@@ -1,2 +1,3 @@
 resources:
   - grafana-dev-dashboard.yaml
+  - grafana-alerts-dashboard.yaml
