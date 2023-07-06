@@ -172,6 +172,17 @@ data:
           labels:
             severity: warning
 
+        - alert: CustomNodeLowAvailableMemory
+          annotations:
+            summary: "{{ $labels.cluster}} node {{$lables.instance }} low on memory"
+            description: |
+              <https://grafana-open-cluster-management-observability.apps.nerc-ocp-infra.rc.fas.harvard.edu/explore?orgId=1&left=%5B%22now-1h%22,%22now%22,%22Observatorium%22,%7B%22exemplar%22:true,%22expr%22:%22node_memory_MemAvailable_bytes%2Fnode_memory_MemTotal_bytes%22%7D%5D|Click here to see these metrics in Observability Monitoring>
+              {{ $labels.cluster}} node {{$labels.instance}} is low on memory.
+            expr: node_memory_MemAvailable_bytes/node_memory_MemTotal_bytes < 0.20
+            from: 1m
+            labels:
+              severity: warning
+
 # Prometheus generates a metric called up that indicates whether a scrape was successful.
 # A value of “1” is scrape indicates success, “0” failure.
 # The up metric is useful for debugging and alerting for targets that are down or having issues.
