@@ -1,0 +1,8 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+commonLabels:
+  nerc.mghpcc.org/bundle: nvidia-gpu-operator
+resources:
+- ../../base/core/namespaces/nvidia-gpu-operator
+- ../../base/operators.coreos.com/operatorgroups/nvidia-gpu-operator
+- ../../base/operators.coreos.com/subscriptions/nvidia-gpu-operator
