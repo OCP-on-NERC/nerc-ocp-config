@@ -11,6 +11,7 @@ data:
       - kube_persistentvolumeclaim_info
       - kube_storageclass_info
       - kubelet_volume_stats_used_bytes
+      - node_memory_MemTotal_bytes
       - node_network_receive_bytes_total
       - node_network_transmit_bytes_total
       - node_network_transmit_errs_total
