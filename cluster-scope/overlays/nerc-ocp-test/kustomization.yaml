@@ -9,12 +9,14 @@ resources:
 - ../../bundles/patch-operator
 - externalsecrets/
 - ../../bundles/rhods-operator
+- ../../bundles/nvidia-gpu-operator
 - feature/odf
 - machineconfigs/disable-net-ifnames
 - machineconfigs/udev-rules
 - machineconfigs/configure-bond0
 - nodenetworkconfigurationpolicies/vlan-2175-nese.yaml
 - secretstores
+- clusterpolicies
 
 patches:
 - path: oauths/cluster_patch.yaml
