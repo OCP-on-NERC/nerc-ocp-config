@@ -9,6 +9,7 @@ resources:
 - ../../bundles/patch-operator
 - externalsecrets/
 - ../../bundles/rhods-operator
+- ../../bundles/node-feature-discovery
 - ../../bundles/nvidia-gpu-operator
 - feature/odf
 - machineconfigs/disable-net-ifnames
@@ -17,6 +18,7 @@ resources:
 - nodenetworkconfigurationpolicies/vlan-2175-nese.yaml
 - secretstores
 - clusterpolicies
+- nodefeaturediscoveries
 
 patches:
 - path: oauths/cluster_patch.yaml
