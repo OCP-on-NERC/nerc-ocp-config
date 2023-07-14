@@ -6,6 +6,7 @@ commonLabels:
 resources:
 - apiserver/cluster.yaml
 - ../common
+- ../../bundles/koku-metrics-operator
 - ../../bundles/patch-operator
 - externalsecrets/
 - ../../bundles/rhods-operator
