@@ -23,3 +23,9 @@ resources:
 
 patches:
 - path: oauths/cluster_patch.yaml
+- target:
+    kind: SecretStore
+  patch: |
+    - op: replace
+      path: /spec/provider/vault/auth/kubernetes/mountPath
+      value: kubernetes/nerc-ocp-test
