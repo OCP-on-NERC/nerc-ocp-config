@@ -21,6 +21,11 @@ spec:
         set -e
 
         echo 'Logging into nerc-vault-0 to retrieve leader'
+        # Set vault addr to the nerc-vault service address
+        export VAULT_ADDR="http://nerc-vault:8200"
+        # Grab jwt token from the backup-job serviceaccount, and make the vault token request using k8s login method
+        export VAULT_TOKEN=$(vault write -field=token auth/kubernetes/backup/login role=backup jwt=$(cat /run/secrets/kubernetes.io/serviceaccount/token))
+
         oc exec -i nerc-vault-0 -- vault operator raft list-peers --format=json > /tmp/peers.json
         leader=$(yq e '.data.config.servers.[] | select(.leader == "true") | .address' -P /tmp/peers.json | cut -d '.' -f1)
 
