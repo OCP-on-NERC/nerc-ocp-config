@@ -3,5 +3,3 @@ kind: OperatorGroup
 metadata:
   name: redhat-ods-operator
 spec:
-  targetNamespaces:
-    - redhat-ods-operator

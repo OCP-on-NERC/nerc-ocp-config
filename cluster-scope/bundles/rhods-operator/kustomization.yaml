@@ -3,6 +3,6 @@ kind: Kustomization
 commonLabels:
   nerc.mghpcc.org/bundle: rhods-operator
 resources:
-- ../../base/core/namespaces/redhat-ods-operator
-- ../../base/operators.coreos.com/operatorgroups/redhat-ods-operator
-- ../../base/operators.coreos.com/subscriptions/redhat-ods-operator
+  - ../../base/core/namespaces/redhat-ods-operator
+  - ../../base/operators.coreos.com/operatorgroups/redhat-ods-operator
+  - ../../base/operators.coreos.com/subscriptions/redhat-ods-operator
