@@ -14,6 +14,7 @@ resources:
 - ../../bundles/amq-broker-rhel8-operator
 - ../../bundles/crunchy-postgres-operator
 - ../../bundles/amq-streams-operator
+- ../../bundles/openshift-pipelines-operator
 - ../../bundles/rhods-operator
 - feature/odf
 - feature/custom-routes
@@ -27,6 +28,7 @@ resources:
 - clusterversion.yaml
 - certificates
 - consolelinks
+- odhdashboardconfigs
 
 components:
   - ../../components/argocd-skip-dryrun
