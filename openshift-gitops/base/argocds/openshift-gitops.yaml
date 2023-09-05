@@ -23,10 +23,10 @@ spec:
     resources:
       limits:
         cpu: "2"
-        memory: 2Gi
+        memory: 10Gi
       requests:
         cpu: 250m
-        memory: 1Gi
+        memory: 5Gi
   dex:
     openShiftOAuth: true
     resources:
