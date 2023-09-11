@@ -16,6 +16,7 @@ resources:
 - ../../bundles/amq-streams-operator
 - ../../bundles/openshift-pipelines-operator
 - ../../bundles/rhods-operator
+- ../../bundles/openshift-custom-metrics-autoscaler-operator
 - feature/odf
 - feature/custom-routes
 - ../../base/core/namespaces/openshift-gitops
