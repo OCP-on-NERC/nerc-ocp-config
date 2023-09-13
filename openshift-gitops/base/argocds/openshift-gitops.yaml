@@ -27,15 +27,6 @@ spec:
       requests:
         cpu: 250m
         memory: 5Gi
-  dex:
-    openShiftOAuth: true
-    resources:
-      limits:
-        cpu: 500m
-        memory: 256Mi
-      requests:
-        cpu: 250m
-        memory: 128Mi
   grafana:
     enabled: false
     ingress:
@@ -114,3 +105,13 @@ spec:
       enabled: true
     service:
       type: ""
+  sso:
+    dex:
+      openShiftOAuth: true
+      resources:
+        limits:
+          cpu: 500m
+          memory: 256Mi
+        requests:
+          cpu: 250m
+          memory: 128Mi
