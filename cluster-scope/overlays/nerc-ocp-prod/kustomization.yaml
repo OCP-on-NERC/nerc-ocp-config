@@ -31,6 +31,7 @@ resources:
 - certificates
 - consolelinks
 - odhdashboardconfigs
+- nodefeaturediscoveries
 
 components:
   - ../../components/argocd-skip-dryrun
