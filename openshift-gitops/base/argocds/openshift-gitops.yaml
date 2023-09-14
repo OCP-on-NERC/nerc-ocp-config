@@ -106,6 +106,7 @@ spec:
     service:
       type: ""
   sso:
+    provider: dex
     dex:
       openShiftOAuth: true
       resources:
