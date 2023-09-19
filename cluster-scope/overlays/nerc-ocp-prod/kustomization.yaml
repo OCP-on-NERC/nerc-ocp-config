@@ -16,6 +16,8 @@ resources:
 - ../../bundles/amq-streams-operator
 - ../../bundles/openshift-pipelines-operator
 - ../../bundles/rhods-operator
+- ../../bundles/node-feature-discovery
+- ../../bundles/nvidia-gpu-operator
 - feature/odf
 - feature/custom-routes
 - ../../base/core/namespaces/openshift-gitops
@@ -29,6 +31,7 @@ resources:
 - certificates
 - consolelinks
 - odhdashboardconfigs
+- nodefeaturediscoveries
 
 components:
   - ../../components/argocd-skip-dryrun
