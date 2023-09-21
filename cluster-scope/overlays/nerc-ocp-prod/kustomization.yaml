@@ -25,6 +25,8 @@ resources:
 - apiserver/cluster.yaml
 - secretstores
 - issuers
+- machineconfigs/disable-net-ifnames
+- machineconfigs/udev-rules
 - machineconfigs/configure-bond0
 - nodenetworkconfigurationpolicies
 - clusterversion.yaml
