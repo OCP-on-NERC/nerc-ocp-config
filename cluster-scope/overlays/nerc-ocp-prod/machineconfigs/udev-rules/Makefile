@@ -1,8 +1,8 @@
 MACHINECONFIGS = \
-	bond0-controller.yaml \
-	bond0-worker.yaml
+	custom-udev-rules-controller.yaml \
+	custom-udev-rules-worker.yaml
 
-%.yaml: src/%.bu $(wildcard src/*.nmconnection)
+%.yaml: src/%.bu
 	butane -o $@ -d src $<
 
 all: $(MACHINECONFIGS)

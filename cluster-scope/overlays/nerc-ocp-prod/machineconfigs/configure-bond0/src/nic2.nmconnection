@@ -1,7 +1,7 @@
 [connection]
-id=eno1
+id=nic2
 type=ethernet
-interface-name=eno1
+interface-name=nic2
 master=bond0
 slave-type=bond
 autoconnect=true
