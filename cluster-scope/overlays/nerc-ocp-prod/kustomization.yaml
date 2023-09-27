@@ -29,6 +29,7 @@ resources:
 - machineconfigs/udev-rules
 - machineconfigs/configure-bond0
 - nodenetworkconfigurationpolicies
+- configmaps/admin-acks.yaml
 - clusterversion.yaml
 - certificates
 - consolelinks
