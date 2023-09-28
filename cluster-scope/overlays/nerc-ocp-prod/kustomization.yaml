@@ -18,7 +18,7 @@ resources:
 - ../../bundles/rhods-operator
 - ../../bundles/node-feature-discovery
 - ../../bundles/nvidia-gpu-operator
-- ../../base/rbac.authorization.k8s.io/clusterroles/allow-edit-rbac/
+- ../../base/rbac.authorization.k8s.io/clusterroles/allow-edit-rbac
 - feature/odf
 - feature/custom-routes
 - ../../base/core/namespaces/openshift-gitops
