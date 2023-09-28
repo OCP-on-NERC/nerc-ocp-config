@@ -5,3 +5,6 @@ commonLabels:
 resources:
 - ../../base/operators.coreos.com/subscriptions/cert-manager
 - ../../base/cert-manager.io/clusterissuers/selfsigned
+- ../../base/rbac.authorization.k8s.io/clusterrolebindings/allow-restricted-runtime-default-scc/
+- ../../base/rbac.authorization.k8s.io/clusterroles/allow-restricted-runtime-default-scc/
+- ../../base/security.openshift.io/securitycontextconstraints/restricted-runtime-default/

@@ -1,5 +1,4 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - bond0-controller.yaml
-  - bond0-worker.yaml
+  - nfd-instance.yaml

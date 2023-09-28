@@ -21,7 +21,6 @@ resources:
 - nodenetworkconfigurationpolicies/vlan-2175-nese.yaml
 - secretstores
 - clusterpolicies
-- nodefeaturediscoveries
 
 patches:
 - path: oauths/cluster_patch.yaml

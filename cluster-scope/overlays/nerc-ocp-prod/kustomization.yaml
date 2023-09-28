@@ -15,7 +15,10 @@ resources:
 - ../../bundles/crunchy-postgres-operator
 - ../../bundles/amq-streams-operator
 - ../../bundles/openshift-pipelines-operator
+- ../../bundles/openshift-opentelemetry-operator
 - ../../bundles/rhods-operator
+- ../../bundles/node-feature-discovery
+- ../../bundles/nvidia-gpu-operator
 - ../../bundles/openshift-custom-metrics-autoscaler-operator
 - feature/odf
 - feature/custom-routes
@@ -24,8 +27,11 @@ resources:
 - apiserver/cluster.yaml
 - secretstores
 - issuers
+- machineconfigs/disable-net-ifnames
+- machineconfigs/udev-rules
 - machineconfigs/configure-bond0
 - nodenetworkconfigurationpolicies
+- configmaps/admin-acks.yaml
 - clusterversion.yaml
 - certificates
 - consolelinks
