@@ -17,6 +17,7 @@ resources:
 - ../../base/core/namespaces/nerc-ocp-prod
 - ../../base/operators.coreos.com/subscriptions/openshift-pipelines-operator
 - ../../base/operators.coreos.com/subscriptions/loki-operator
+- configmaps/admin-acks.yaml
 - clusterversion.yaml
 - machineconfigs/disable-net-ifnames.yaml
 - machineconfigs/refresh-storage-interface.yaml
