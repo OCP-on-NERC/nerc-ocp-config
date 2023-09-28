@@ -15,6 +15,7 @@ resources:
 - ../../bundles/crunchy-postgres-operator
 - ../../bundles/amq-streams-operator
 - ../../bundles/openshift-pipelines-operator
+- ../../bundles/openshift-opentelemetry-operator
 - ../../bundles/rhods-operator
 - ../../bundles/node-feature-discovery
 - ../../bundles/nvidia-gpu-operator
