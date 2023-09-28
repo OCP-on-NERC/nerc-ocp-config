@@ -19,6 +19,7 @@ resources:
 - ../../bundles/rhods-operator
 - ../../bundles/node-feature-discovery
 - ../../bundles/nvidia-gpu-operator
+- ../../bundles/openshift-custom-metrics-autoscaler-operator
 - feature/odf
 - feature/custom-routes
 - ../../base/core/namespaces/openshift-gitops
