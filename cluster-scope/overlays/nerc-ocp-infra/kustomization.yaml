@@ -32,6 +32,9 @@ resources:
 - grafana-dashboards
 - persistentvolumeclaims
 
+components:
+  - ../../components/nerc-oauth-github
+
 generatorOptions:
   disableNameSuffixHash: true
 
@@ -42,7 +45,6 @@ configMapGenerator:
   namespace: openshift-monitoring
 
 patches:
-- path: oauths/cluster_patch.yaml
 - path: consoles.operator.openshift.io/cluster_patch.yaml
 - path: storageclasses/ocs-external-storagecluster-ceph-rbd_patch.yaml
 - path: clustersecretstores/nerc-cluster-secrets_patch.yaml
@@ -50,3 +52,31 @@ patches:
 - path: machineconfigs/hostpath-provisioner-selinux_patch.yaml
 - path: externalsecrets/open-cluster-management-observability-multiclusterhub-operator-pull-secret_patch.yaml
 - path: externalsecrets/open-cluster-management-observability-thanos-object-storage_patch.yaml
+- patch: |
+    apiVersion: config.openshift.io/v1
+    kind: OAuth
+    metadata:
+      name: cluster
+    spec:
+      identityProviders:
+      - name: github
+        github:
+          clientID: 77915cd4cdb5c4df7723
+          teams:
+            - ocp-on-nerc/nerc-ops
+            - ocp-on-nerc/nerc-logs-metrics
+- target:
+    kind: ExternalSecret
+    name: github-client-secret
+  patch: |
+    - op: replace
+      path: /spec/data/0/remoteRef/key
+      value: nerc/nerc-ocp-infra/openshift-config/github-client-secret
+- target:
+    kind: ExternalSecret
+  patch: |
+    - op: replace
+      path: /spec/secretStoreRef
+      value:
+        kind: ClusterSecretStore
+        name: nerc-cluster-secrets
