@@ -1,0 +1,2 @@
+resources:
+  - openshift-storage-db-noobaa-db-pg-0.yaml
