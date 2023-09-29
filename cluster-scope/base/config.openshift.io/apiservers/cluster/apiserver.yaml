@@ -9,6 +9,6 @@ spec:
   servingCerts:
     namedCertificates:
       - names:
-        - api.shift.nerc.mghpcc.org
+          - UPDATE_IN_OVERLAY
         servingCertificate:
           name: default-api-certificate

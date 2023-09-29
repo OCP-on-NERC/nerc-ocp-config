@@ -25,7 +25,6 @@ resources:
 - feature/custom-routes
 - ../../base/core/namespaces/openshift-gitops
 - externalsecrets
-- apiserver/cluster.yaml
 - secretstores
 - issuers
 - machineconfigs/disable-net-ifnames
@@ -98,3 +97,10 @@ patches:
     - op: replace
       path: /spec/data/0/remoteRef/key
       value: nerc/nerc-ocp-prod/openshift-config/github-client-secret
+- target:
+    kind: APIServer
+    name: cluster
+  patch: |
+    - op: replace
+      path: /spec/servingCerts/namedCertificates/0/names/0
+      value: api.shift.nerc.mghpcc.org

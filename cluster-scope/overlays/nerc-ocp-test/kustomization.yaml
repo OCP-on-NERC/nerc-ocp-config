@@ -4,7 +4,6 @@ commonLabels:
   nerc.mghpcc.org/kustomized: "true"
 
 resources:
-- apiserver/cluster.yaml
 - clusterversion.yaml
 - ../common
 - ../../bundles/koku-metrics-operator
@@ -52,3 +51,10 @@ patches:
     - op: replace
       path: /spec/data/0/remoteRef/key
       value: nerc/nerc-ocp-test/openshift-config/github-client-secret
+- target:
+    kind: APIServer
+    name: cluster
+  patch: |
+    - op: replace
+      path: /spec/servingCerts/namedCertificates/0/names/0
+      value: api.nerc-ocp-test.rc.fas.harvard.edu
