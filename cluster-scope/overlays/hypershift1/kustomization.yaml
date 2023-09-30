@@ -6,6 +6,7 @@ commonLabels:
 
 resources:
 - ../../base/openapi
+- ../../base/core/configmaps/admin-acks/
 - ../../base/machineconfiguration.openshift.io/kubeletconfigs/system-reserved
 - ../../base/config.openshift.io/oauths/cluster
 - ../../base/rbac.authorization.k8s.io/clusterrolebindings/self-provisioners
@@ -24,6 +25,15 @@ components:
   - ../../components/nerc-oauth-github
   - ../../components/nerc-certificate-issuer
   - ../../components/custom-certificates
+
+configMapGenerator:
+- name: admin-acks
+  namespace: openshift-config
+  behavior: merge
+  literals:
+    - ack-4.11-kube-1.25-api-removals-in-4.12=true
+    - ack-4.12-kube-1.26-api-removals-in-4.13=true
+    - ack-4.13-kube-1.27-api-removals-in-4.14=true
 
 patches:
 - patch: |
