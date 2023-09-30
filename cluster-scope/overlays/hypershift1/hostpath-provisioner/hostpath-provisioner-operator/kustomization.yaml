@@ -1,0 +1,16 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+commonLabels:
+  operator: hostpath-provisioner
+resources:
+- admissionregistration.k8s.io/validatingwebhookconfigurations/hostpathprovisioner.kubevirt.io
+- apiextensions.k8s.io/customresourcedefinitions/hostpathprovisioners.hostpathprovisioner.kubevirt.io
+- apps/deployments/hostpath-provisioner-operator
+- cert-manager.io/certificates/hostpath-provisioner-operator-webhook-service-cert
+- cert-manager.io/issuers/selfsigned-issuer
+- core/serviceaccounts/hostpath-provisioner-operator
+- core/services/hostpath-provisioner-operator-webhook-service
+- rbac.authorization.k8s.io/clusterrolebindings/hostpath-provisioner-operator
+- rbac.authorization.k8s.io/clusterroles/hostpath-provisioner-operator
+- rbac.authorization.k8s.io/rolebindings/hostpath-provisioner-operator
+- rbac.authorization.k8s.io/roles/hostpath-provisioner-operator

@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: hostpath-provisioner-operator-webhook-service
+  namespace: hostpath-provisioner
+spec:
+  ports:
+    - port: 443
+      protocol: TCP
+      targetPort: 9443
+  selector:
+    name: hostpath-provisioner-operator

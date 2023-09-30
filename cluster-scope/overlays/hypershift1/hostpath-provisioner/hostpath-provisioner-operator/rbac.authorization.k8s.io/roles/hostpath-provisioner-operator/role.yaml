@@ -1,0 +1,171 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: hostpath-provisioner-operator
+rules:
+  - apiGroups:
+      - apps
+    resources:
+      - daemonsets
+    verbs:
+      - list
+      - get
+      - watch
+      - create
+  - apiGroups:
+      - apps
+    resources:
+      - daemonsets
+    resourceNames:
+      - hostpath-provisioner
+      - hostpath-provisioner-csi
+    verbs:
+      - delete
+      - update
+  - apiGroups:
+      - apps
+    resources:
+      - deployments
+    verbs:
+      - list
+      - get
+      - watch
+      - create
+      - delete
+      - update
+  - apiGroups:
+      - ""
+    resources:
+      - endpoints
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - ""
+    resources:
+      - services
+    verbs:
+      - get
+      - list
+      - watch
+      - create
+  - apiGroups:
+      - ""
+    resources:
+      - services
+    resourceNames:
+      - hpp-prometheus-metrics
+    verbs:
+      - 'update'
+      - 'delete'
+  - apiGroups:
+      - ""
+    resources:
+      - configmaps
+    verbs:
+      - create
+      - get
+  - apiGroups:
+      - ""
+    resources:
+      - configmaps
+    resourceNames:
+      - hostpath-provisioner-operator-lock
+    verbs:
+      - update
+  - apiGroups:
+      - ""
+    resources:
+      - serviceaccounts
+    verbs:
+      - 'list'
+      - 'get'
+      - 'create'
+      - 'watch'
+  - apiGroups:
+      - ""
+    resources:
+      - serviceaccounts
+    resourceNames:
+      - hostpath-provisioner-admin
+      - hostpath-provisioner-admin-csi
+    verbs:
+      - 'update'
+      - 'delete'
+  - apiGroups:
+      - "coordination.k8s.io"
+    resources:
+      - leases
+    verbs:
+      - '*'
+  - apiGroups:
+      - "storage.k8s.io"
+    resources:
+      - csistoragecapacities
+    verbs:
+      - '*'
+  - apiGroups:
+      - monitoring.coreos.com
+    resources:
+      - servicemonitors
+      - prometheusrules
+    verbs:
+      - list
+      - get
+      - watch
+      - create
+      - delete
+      - update
+      - patch
+  - apiGroups:
+      - rbac.authorization.k8s.io
+    resources:
+      - rolebindings
+    verbs:
+      - list
+      - get
+      - watch
+      - create
+  - apiGroups:
+      - rbac.authorization.k8s.io
+    resources:
+      - roles
+    verbs:
+      - list
+      - get
+      - watch
+      - create
+  - apiGroups:
+      - rbac.authorization.k8s.io
+    resources:
+      - rolebindings
+    resourceNames:
+      - hostpath-provisioner
+      - hostpath-provisioner-admin
+      - hostpath-provisioner-admin-csi
+      - hostpath-provisioner-monitoring
+    verbs:
+      - update
+      - delete
+  - apiGroups:
+      - rbac.authorization.k8s.io
+    resources:
+      - roles
+    resourceNames:
+      - hostpath-provisioner
+      - hostpath-provisioner-admin
+      - hostpath-provisioner-admin-csi
+      - hostpath-provisioner-monitoring
+    verbs:
+      - update
+      - delete
+  - apiGroups:
+      - batch
+    resources:
+      - jobs
+    verbs:
+      - create
+      - delete
+      - list
+      - watch

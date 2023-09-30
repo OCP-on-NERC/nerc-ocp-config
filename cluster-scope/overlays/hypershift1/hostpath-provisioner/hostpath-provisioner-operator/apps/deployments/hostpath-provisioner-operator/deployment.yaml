@@ -1,0 +1,106 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    prometheus.hostpathprovisioner.kubevirt.io: "true"
+  name: hostpath-provisioner-operator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: hostpath-provisioner-operator
+  template:
+    metadata:
+      labels:
+        name: hostpath-provisioner-operator
+        prometheus.hostpathprovisioner.kubevirt.io: "true"
+    spec:
+      serviceAccountName: hostpath-provisioner-operator
+      containers:
+        - name: hostpath-provisioner-operator
+          ports:
+            - containerPort: 8080
+              name: "metrics"
+              protocol: "TCP"
+          # Replace this with the built image name
+          image: quay.io/kubevirt/hostpath-provisioner-operator:latest
+          command:
+            - hostpath-provisioner-operator
+          imagePullPolicy: Always
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ["ALL"]
+            runAsNonRoot: true
+            seccompProfile:
+              type: RuntimeDefault
+          livenessProbe:
+            failureThreshold: 1
+            httpGet:
+              path: /livez
+              port: 6060
+              scheme: HTTP
+            initialDelaySeconds: 30
+            periodSeconds: 5
+          readinessProbe:
+            failureThreshold: 1
+            httpGet:
+              path: /readyz
+              port: 6060
+              scheme: HTTP
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          resources:
+            requests:
+              cpu: 10m
+              memory: 150Mi
+          env:
+            - name: WATCH_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: INSTALLER_PART_OF_LABEL
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.labels['app.kubernetes.io/part-of']
+            - name: INSTALLER_VERSION_LABEL
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.labels['app.kubernetes.io/version']
+            - name: OPERATOR_NAME
+              value: "hostpath-provisioner-operator"
+            - name: OPERATOR_IMAGE
+              value: "quay.io/kubevirt/hostpath-provisioner-operator:latest"
+            - name: PROVISIONER_IMAGE
+              value: "quay.io/kubevirt/hostpath-provisioner:latest"
+            - name: CSI_PROVISIONER_IMAGE
+              value: "quay.io/kubevirt/hostpath-csi-driver:latest"
+            - name: NODE_DRIVER_REG_IMAGE
+              value: "registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.2.0"
+            - name: LIVENESS_PROBE_IMAGE
+              value: "registry.k8s.io/sig-storage/livenessprobe:v2.3.0"
+            - name: CSI_SNAPSHOT_IMAGE
+              value: "registry.k8s.io/sig-storage/csi-snapshotter:v4.2.1"
+            - name: CSI_SIG_STORAGE_PROVISIONER_IMAGE
+              value: "registry.k8s.io/sig-storage/csi-provisioner:v3.4.1"
+            - name: VERBOSITY
+              value: "3"
+            - name: MONITORING_NAMESPACE
+              value: ""
+          volumeMounts:
+            - mountPath: /tmp/k8s-webhook-server/serving-certs
+              name: apiservice-cert
+      volumes:
+        - name: apiservice-cert
+          secret:
+            defaultMode: 420
+            items:
+              - key: tls.crt
+                path: tls.crt
+              - key: tls.key
+                path: tls.key
+            secretName: hostpath-provisioner-operator-webhook-service-cert

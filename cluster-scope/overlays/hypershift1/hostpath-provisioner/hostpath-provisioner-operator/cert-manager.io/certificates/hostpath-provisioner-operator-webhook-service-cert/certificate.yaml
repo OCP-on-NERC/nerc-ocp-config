@@ -1,0 +1,13 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  namespace: hostpath-provisioner
+  name: hostpath-provisioner-operator-webhook-service-cert
+  labels:
+    name: hostpath-provisioner-operator
+spec:
+  secretName: hostpath-provisioner-operator-webhook-service-cert
+  dnsNames:
+    - hostpath-provisioner-operator-webhook-service.hostpath-provisioner.svc
+  issuerRef:
+    name: selfsigned-issuer

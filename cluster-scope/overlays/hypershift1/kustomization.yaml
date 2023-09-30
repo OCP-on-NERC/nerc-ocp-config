@@ -20,6 +20,7 @@ resources:
 - console
 - groupsyncs
 - clusterrolebindings
+- hostpath-provisioner
 
 components:
   - ../../components/nerc-oauth-github
