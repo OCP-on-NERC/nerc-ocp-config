@@ -12,10 +12,12 @@ resources:
 - ../../bundles/cert-manager
 - ../../bundles/external-secrets
 - ../../bundles/nmstate
+- ../../bundles/group-sync-operator
 - ../../base/operator.openshift.io/networks/cluster
 - clusterissuers
 - certificates
 - console
+- groupsyncs
 
 components:
   - ../../components/nerc-oauth-github

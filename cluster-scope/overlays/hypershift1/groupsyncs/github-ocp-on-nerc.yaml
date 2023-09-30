@@ -1,0 +1,14 @@
+apiVersion: redhatcop.redhat.io/v1alpha1
+kind: GroupSync
+metadata:
+  name: github-ocp-on-nerc
+  namespace: group-sync-operator
+spec:
+  providers:
+  - name: github
+    github:
+      organization: ocp-on-nerc
+      prune: true
+      credentialsSecret:
+        name: github-group-sync
+        namespace: group-sync-operator
