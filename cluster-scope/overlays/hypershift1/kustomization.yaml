@@ -15,6 +15,7 @@ resources:
 - ../../base/operator.openshift.io/networks/cluster
 - clusterissuers
 - certificates
+- console
 
 components:
   - ../../components/nerc-oauth-github

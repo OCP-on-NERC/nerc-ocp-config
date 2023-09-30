@@ -1,0 +1,15 @@
+apiVersion: config.openshift.io/v1
+kind: Ingress
+metadata:
+  name: cluster
+spec:
+  domain: apps.hypershift1.int.massopen.cloud
+  loadBalancer:
+    platform:
+      type: ""
+  componentRoutes:
+  - name: console
+    namespace: openshift-console
+    hostname: console.hypershift1.int.massopen.cloud
+    servingCertKeyPairSecret:
+      name: console-certificate

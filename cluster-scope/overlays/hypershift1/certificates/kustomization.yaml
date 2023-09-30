@@ -3,3 +3,4 @@ kind: Kustomization
 resources:
 - default-api-certificate.yaml
 - default-ingress-certificate.yaml
+- console-certificate.yaml
