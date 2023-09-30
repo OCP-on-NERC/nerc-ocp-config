@@ -18,6 +18,7 @@ resources:
 - certificates
 - console
 - groupsyncs
+- clusterrolebindings
 
 components:
   - ../../components/nerc-oauth-github
