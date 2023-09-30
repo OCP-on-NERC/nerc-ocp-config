@@ -6,9 +6,3 @@ metadata:
 spec:
   audit:
     profile: Default
-  servingCerts:
-    namedCertificates:
-      - names:
-          - UPDATE_IN_OVERLAY
-        servingCertificate:
-          name: default-api-certificate

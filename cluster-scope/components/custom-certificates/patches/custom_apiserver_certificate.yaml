@@ -1,0 +1,12 @@
+apiVersion: config.openshift.io/v1
+kind: APIServer
+metadata:
+  name: cluster
+  namespace: openshift-config
+spec:
+  servingCerts:
+    namedCertificates:
+      - names:
+          - UPDATE_IN_OVERLAY
+        servingCertificate:
+          name: default-api-certificate
