@@ -78,3 +78,13 @@ patches:
       value:
         kind: ClusterSecretStore
         name: nerc-cluster-secrets
+- target:
+    kind: ExternalSecret
+    name: aws-route53-credentials
+  patch: |
+    - op: add
+      path: /metadata/namespace
+      value: openshift-operators
+    - op: replace
+      path: /spec/dataFrom/0/extract/key
+      value: nerc/hypershift1/openshift-operators/aws-route53-credentials
