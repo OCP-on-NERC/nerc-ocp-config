@@ -12,6 +12,7 @@ resources:
 - ../../base/rbac.authorization.k8s.io/clusterrolebindings/self-provisioners
 - ../../bundles/cert-manager
 - ../../bundles/external-secrets
+- ../../bundles/external-secrets-clustersecretstore
 - ../../bundles/nmstate
 - ../../bundles/group-sync-operator
 - ../../base/operator.openshift.io/networks/cluster
@@ -37,6 +38,7 @@ configMapGenerator:
     - ack-4.13-kube-1.27-api-removals-in-4.14=true
 
 patches:
+- path: clustersecretstores/nerc-cluster-secrets_patch.yaml
 - patch: |
     apiVersion: config.openshift.io/v1
     kind: OAuth
@@ -68,3 +70,11 @@ patches:
     - op: replace
       path: /spec/servingCerts/namedCertificates/0/names/0
       value: api.hypershift1.int.massopen.cloud
+- target:
+    kind: ExternalSecret
+  patch: |
+    - op: replace
+      path: /spec/secretStoreRef
+      value:
+        kind: ClusterSecretStore
+        name: nerc-cluster-secrets
