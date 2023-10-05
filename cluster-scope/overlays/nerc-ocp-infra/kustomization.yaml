@@ -29,6 +29,7 @@ resources:
 - metrics-bucket-storage
 - redhatcop.redhat.io/odf-node-patcher.yaml
 - grafana-dashboards
+- persistentvolumeclaims
 
 generatorOptions:
   disableNameSuffixHash: true
