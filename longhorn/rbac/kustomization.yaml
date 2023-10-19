@@ -1,0 +1,11 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+commonLabels:
+  app.kubernetes.io/name: longhorn
+  app.kubernetes.io/instance: longhorn
+
+resources:
+  - clusterrolebindings/longhorn-allow-privileged.yaml
+  - clusterrolebindings/longhorn-allow-finalizers.yaml
+  - clusterroles/longhorn-allow-privileged.yaml
+  - clusterroles/longhorn-allow-finalizers.yaml
