@@ -17,6 +17,8 @@ data:
       - node_network_transmit_errs_total
       - node_network_transmit_packets_total
       - kube_pod_container_info
+      - loki_distributor_bytes_received_total
     matches:
       - __name__=~"(ipmi_.*)"
       - __name__=~"(ceph_.*)"
+      - __name__=~"(log_.*)"
