@@ -7,3 +7,5 @@ resources:
 - ../../base/core/namespaces/open-cluster-management
 - ../../base/operators.coreos.com/operatorgroups/open-cluster-management
 - ../../base/operator.open-cluster-management.io/multiclusterhubs/multiclusterhub
+- ../../base/multicluster.openshift.io/multiclusterengines/multiclusterengine
+- ../../base/metal3.io/provisionings/provisioning-configuration

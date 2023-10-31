@@ -14,6 +14,7 @@ resources:
 - ../../bundles/external-secrets
 - ../../bundles/external-secrets-clustersecretstore
 - ../../bundles/nmstate
+- ../../bundles/acm
 - ../../bundles/group-sync-operator
 - ../../base/operator.openshift.io/networks/cluster
 - clusterissuers
@@ -88,3 +89,35 @@ patches:
     - op: replace
       path: /spec/dataFrom/0/extract/key
       value: nerc/hypershift1/openshift-operators/aws-route53-credentials
+- patch: |
+    apiVersion: operators.coreos.com/v1alpha1
+    kind: Subscription
+    metadata:
+        name: acm
+    spec:
+        channel: release-2.8
+- patch: |
+    apiVersion: multicluster.openshift.io/v1
+    kind: MultiClusterEngine
+    metadata:
+      name: multiclusterengine
+    spec:
+      overrides:
+        components:
+        - enabled: true
+          name: hypershift-preview
+- patch: |
+    apiVersion: metal3.io/v1alpha1
+    kind: Provisioning
+    metadata:
+      name: provisioning-configuration
+    spec:
+      watchAllNamespaces: true
+- patch: |
+    apiVersion: operators.coreos.com/v1alpha1
+    kind: Subscription
+    metadata:
+      name: acm
+      namespace: open-cluster-management
+    spec:
+      channel: release-2.9
