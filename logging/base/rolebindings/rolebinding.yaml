@@ -1,0 +1,13 @@
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: log-collector-privileged-binding-nerc-logs-metrics
+  namespace: openshift-logging
+subjects:
+  - kind: Group
+    apiGroup: rbac.authorization.k8s.io
+    name: nerc-logs-metrics
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: log-collector-privileged
