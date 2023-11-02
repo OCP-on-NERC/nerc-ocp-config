@@ -1,12 +1,11 @@
----
 repos:
   - repo: https://github.com/Lucas-C/pre-commit-hooks
-    rev: v1.1.9
+    rev: v1.5.4
     hooks:
       - id: remove-tabs
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.0.1
+    rev: v4.5.0
     hooks:
       - id: trailing-whitespace
       - id: check-merge-conflict
@@ -18,7 +17,7 @@ repos:
       - id: detect-private-key
 
   - repo: https://github.com/adrienverge/yamllint.git
-    rev: v1.26.3
+    rev: v1.32.0
     hooks:
       - id: yamllint
         files: \.(yaml|yml)$
