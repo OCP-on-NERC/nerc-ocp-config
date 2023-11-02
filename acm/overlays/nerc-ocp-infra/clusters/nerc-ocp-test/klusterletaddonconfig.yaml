@@ -1,0 +1,23 @@
+apiVersion: agent.open-cluster-management.io/v1
+kind: KlusterletAddonConfig
+metadata:
+  name: nerc-ocp-test
+  namespace: nerc-ocp-test
+spec:
+  clusterName: nerc-ocp-test
+  clusterNamespace: nerc-ocp-test
+  clusterLabels:
+    name: nerc-ocp-test
+    cloud: auto-detect
+    vendor: auto-detect
+    cluster.open-cluster-management.io/clusterset: default
+  applicationManager:
+    enabled: true
+  policyController:
+    enabled: true
+  searchCollector:
+    enabled: true
+  certPolicyController:
+    enabled: true
+  iamPolicyController:
+    enabled: true
