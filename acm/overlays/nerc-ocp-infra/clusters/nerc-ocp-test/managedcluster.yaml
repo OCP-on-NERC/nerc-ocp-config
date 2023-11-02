@@ -1,0 +1,12 @@
+apiVersion: cluster.open-cluster-management.io/v1
+kind: ManagedCluster
+metadata:
+  name: nerc-ocp-test
+  labels:
+    name: nerc-ocp-test
+    cloud: BareMetal
+    vendor: OpenShift
+    cluster.open-cluster-management.io/clusterset: argocd-managed
+  annotations: {}
+spec:
+  hubAcceptsClient: true
