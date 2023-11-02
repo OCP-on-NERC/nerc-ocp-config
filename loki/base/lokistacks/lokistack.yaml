@@ -9,6 +9,8 @@ spec:
       ingestion:
         ingestionBurstSize: 10
         ingestionRate: 10
+        perStreamRateLimit: 10
+        perStreamRateLimitBurst: 20
       retention:
         days: 90
     tenants:
