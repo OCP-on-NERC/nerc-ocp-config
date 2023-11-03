@@ -16,6 +16,7 @@ resources:
 - ../../bundles/multicluster-engine-operator
 - ../../base/core/namespaces/dex
 - ../../base/core/namespaces/nerc-ocp-prod
+- ../../base/core/namespaces/grafana
 - ../../base/operators.coreos.com/subscriptions/openshift-pipelines-operator
 - ../../base/operators.coreos.com/subscriptions/loki-operator
 - clusterversion.yaml

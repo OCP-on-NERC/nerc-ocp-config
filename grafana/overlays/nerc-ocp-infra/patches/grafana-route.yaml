@@ -1,0 +1,7 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: grafana
+  namespace: grafana
+spec:
+  host: grafana.apps.nerc-ocp-infra.rc.fas.harvard.edu

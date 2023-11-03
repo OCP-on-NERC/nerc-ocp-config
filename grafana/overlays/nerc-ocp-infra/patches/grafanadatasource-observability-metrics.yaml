@@ -1,0 +1,31 @@
+apiVersion: redhatcop.redhat.io/v1alpha1
+kind: Patch
+metadata:
+  name: grafanadatasource-observability-metrics
+  namespace: grafana
+spec:
+  serviceAccountRef:
+    name: patcher
+  patches:
+    logging-grafana-patch:
+      targetObjectRef:
+        apiVersion: integreatly.org/v1alpha1
+        kind: GrafanaDataSource
+        name: observability-metrics
+        namespace: grafana
+      patchTemplate: |
+        spec:
+          datasources:
+            secureJsonData:
+              httpHeaderValue1: Bearer {{ (index . 1).data.token | b64dec }}
+              tlsCACert: {{ (index . 2).data "service-ca.crt" | b64dec }}
+      patchType: application/merge-patch+json
+      sourceObjectRefs:
+      - apiVersion: v1
+        kind: Secret
+        name: grafana-serviceaccount-token
+        namespace: grafana
+      - apiVersion: v1
+        kind: ConfigMap
+        name: openshift-service-ca.crt
+        namespace: grafana
