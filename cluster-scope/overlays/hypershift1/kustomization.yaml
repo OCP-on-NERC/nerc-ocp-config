@@ -16,6 +16,7 @@ resources:
 - ../../bundles/nmstate
 - ../../bundles/acm
 - ../../bundles/group-sync-operator
+- ../../bundles/openshift-gitops
 - ../../base/operator.openshift.io/networks/cluster
 - clusterissuers
 - certificates
@@ -121,3 +122,11 @@ patches:
       namespace: open-cluster-management
     spec:
       channel: release-2.9
+- patch: |
+    apiVersion: operators.coreos.com/v1alpha1
+    kind: Subscription
+    metadata:
+      name: openshift-gitops-operator
+      namespace: openshift-operators
+    spec:
+      channel: gitops-1.10
