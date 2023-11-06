@@ -19,6 +19,7 @@ resources:
 - ../../bundles/openshift-gitops
 - ../../bundles/metallb
 - ../../base/operator.openshift.io/networks/cluster
+- ../../base/agent-install.openshift.io/agentserviceconfigs/agent
 - clusterissuers
 - certificates
 - console
@@ -131,3 +132,13 @@ patches:
       namespace: openshift-operators
     spec:
       channel: gitops-1.10
+- patch: |
+    apiVersion: agent-install.openshift.io/v1beta1
+    kind: AgentServiceConfig
+    metadata:
+      name: agent
+    spec:
+      imageStorage:
+        resources:
+          requests:
+            storage: 75Gi
