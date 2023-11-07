@@ -39,6 +39,11 @@ resources:
 - odhdashboardconfigs
 
 components:
+  - ../../components/nerc-oauth-keycloak
+  - ../../components/nerc-oauth-github
+
+  # this must come last in order to apply
+  # to all resources.
   - ../../components/argocd-skip-dryrun
 
 generatorOptions:
@@ -52,7 +57,6 @@ configMapGenerator:
 
 patches:
 - path: ingresscontrollers/default_patch.yaml
-- path: oauths/cluster_patch.yaml
 - path: kubeletconfigs/system-reserved-patch.yaml
 - target:
     kind: SecretStore
@@ -60,3 +64,37 @@ patches:
     - op: replace
       path: /spec/provider/vault/auth/kubernetes/mountPath
       value: kubernetes/nerc-ocp-prod
+- patch: |
+    apiVersion: config.openshift.io/v1
+    kind: OAuth
+    metadata:
+      name: cluster
+    spec:
+      identityProviders:
+      - name: mss-keycloak
+        openID:
+          clientID: ocp-prod
+- patch: |
+    apiVersion: config.openshift.io/v1
+    kind: OAuth
+    metadata:
+      name: cluster
+    spec:
+      identityProviders:
+      - name: github
+        github:
+          clientID: 771ea98004d436c6e529
+- target:
+    kind: ExternalSecret
+    name: oauths-clientsecret-nerc
+  patch: |
+    - op: replace
+      path: /spec/data/0/remoteRef/key
+      value: nerc/nerc-ocp-prod/openshift-config/oauths-clientsecret-nerc
+- target:
+    kind: ExternalSecret
+    name: github-client-secret
+  patch: |
+    - op: replace
+      path: /spec/data/0/remoteRef/key
+      value: nerc/nerc-ocp-prod/openshift-config/github-client-secret
