@@ -1,0 +1,30 @@
+apiVersion: kustomize.config.k8s.io/v1alpha1
+kind: Component
+
+resources:
+  - ../../base/external-secrets.io/externalsecrets/oauths-clientsecret-nerc
+
+patches:
+  - patch: |
+      apiVersion: config.openshift.io/v1
+      kind: OAuth
+      metadata:
+        name: cluster
+      spec:
+        identityProviders:
+          - mappingMethod: lookup
+            name: mss-keycloak
+            openID:
+              claims:
+                email:
+                  - email
+                name:
+                  - name
+                preferredUsername:
+                  - preferred_username
+              clientID: REPLACE_IN_OVERLAY
+              clientSecret:
+                name: oauths-clientsecret-nerc
+              extraScopes: []
+              issuer: https://keycloak.mss.mghpcc.org/auth/realms/mss
+            type: OpenID
