@@ -16,6 +16,7 @@ data:
     {
       ":requests.cpu":                  { "base": 2, "coefficient": 0 },
       ":requests.memory":               { "base": 2, "coefficient": 0 },
+      ":requests.nvidia.com/gpu":       { "base": 0, "coefficient": 0 },
       ":limits.cpu":                    { "base": 2, "coefficient": 0 },
       ":limits.memory":                 { "base": 2, "coefficient": 0 },
       ":requests.storage":              { "base": 2, "coefficient": 0, "units": "Gi" },
@@ -55,10 +56,12 @@ data:
             "default": {
                 "cpu": "2",
                 "memory": "1024Mi"
+                "nvidia.com/gpu": "0"
             },
             "defaultRequest": {
                 "cpu": "1",
                 "memory": "512Mi"
+                "nvidia.com/gpu": "0"
             }
         }
     ]
