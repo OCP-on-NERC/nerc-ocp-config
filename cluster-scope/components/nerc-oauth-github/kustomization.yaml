@@ -1,0 +1,23 @@
+apiVersion: kustomize.config.k8s.io/v1alpha1
+kind: Component
+
+resources:
+  - ../../base/external-secrets.io/externalsecrets/github-client-secret
+
+patches:
+  - patch: |
+      apiVersion: config.openshift.io/v1
+      kind: OAuth
+      metadata:
+        name: cluster
+      spec:
+        identityProviders:
+          - name: github
+            mappingMethod: claim
+            type: GitHub
+            github:
+              clientID: REPLACE_IN_OVERLAY
+              clientSecret:
+                name: github-client-secret
+              teams:
+                - ocp-on-nerc/nerc-ops

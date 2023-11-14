@@ -21,11 +21,34 @@ resources:
 - nodenetworkconfigurationpolicies/vlan-2175-nese.yaml
 - secretstores
 
+components:
+  - ../../components/nerc-oauth-github
+
 patches:
-- path: oauths/cluster_patch.yaml
 - target:
     kind: SecretStore
   patch: |
     - op: replace
       path: /spec/provider/vault/auth/kubernetes/mountPath
       value: kubernetes/nerc-ocp-test
+- patch: |
+    apiVersion: config.openshift.io/v1
+    kind: OAuth
+    metadata:
+      name: cluster
+    spec:
+      identityProviders:
+      - name: github
+        github:
+          clientID: e87d9a48533084f2aa5f
+          teams:
+            - ocp-on-nerc/nerc-ops
+            - ocp-on-nerc/nerc-logs-metrics
+            - ocp-on-nerc/nerc-rhods
+- target:
+    kind: ExternalSecret
+    name: github-client-secret
+  patch: |
+    - op: replace
+      path: /spec/data/0/remoteRef/key
+      value: nerc/nerc-ocp-test/openshift-config/github-client-secret
