@@ -18,6 +18,7 @@ resources:
 - ../../bundles/group-sync-operator
 - ../../base/operator.openshift.io/ingresscontrollers/default
 - ../../base/operator.openshift.io/networks/cluster
+- ../../base/config.openshift.io/apiservers/cluster
 - clusterrolebindings/nerc-ops-cluster-reader.yaml
 - clusterrolebindings/nerc-ops-sudoers.yaml
 - clusterrolebindings/nerc-ops-portforward.yaml

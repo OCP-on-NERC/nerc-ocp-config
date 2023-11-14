@@ -26,7 +26,6 @@ resources:
 - machineconfigs/configure-bond0
 - nodenetworkconfigurationpolicies/vlan-2177-nese.yaml
 - externalsecrets
-- apiserver/cluster.yaml
 - metrics-bucket-storage
 - redhatcop.redhat.io/odf-node-patcher.yaml
 - grafana-dashboards
@@ -80,3 +79,10 @@ patches:
       value:
         kind: ClusterSecretStore
         name: nerc-cluster-secrets
+- target:
+    kind: APIServer
+    name: cluster
+  patch: |
+    - op: replace
+      path: /spec/servingCerts/namedCertificates/0/names/0
+      value: api.nerc-ocp-infra.rc.fas.harvard.edu
