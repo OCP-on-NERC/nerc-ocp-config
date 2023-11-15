@@ -17,6 +17,7 @@ resources:
 - ../../bundles/acm
 - ../../bundles/group-sync-operator
 - ../../bundles/openshift-gitops
+- ../../bundles/metallb
 - ../../base/operator.openshift.io/networks/cluster
 - clusterissuers
 - certificates
