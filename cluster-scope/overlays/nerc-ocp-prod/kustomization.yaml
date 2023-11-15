@@ -92,6 +92,13 @@ patches:
       value: nerc/nerc-ocp-prod/openshift-config/oauths-clientsecret-nerc
 - target:
     kind: ExternalSecret
+    name: aws-route53-credentials
+  patch: |
+    - op: replace
+      path: /spec/dataFrom/0/extract/key
+      value: nerc/nerc-ocp-prod/aws-route53-credentials
+- target:
+    kind: ExternalSecret
     name: github-client-secret
   patch: |
     - op: replace
