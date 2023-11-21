@@ -11,6 +11,7 @@ repos:
       - id: check-merge-conflict
       - id: end-of-file-fixer
       - id: check-added-large-files
+        exclude: '^cluster-scope/base/openapi/openshift-api-schema.json$'
       - id: check-case-conflict
       - id: check-json
       - id: check-symlinks
