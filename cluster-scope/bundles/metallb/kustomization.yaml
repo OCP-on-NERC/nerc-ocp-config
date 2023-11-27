@@ -6,3 +6,4 @@ resources:
 - ../../base/core/namespaces/metallb-system
 - ../../base/operators.coreos.com/subscriptions/metallb-operator
 - ../../base/operators.coreos.com/operatorgroups/metallb-system
+- ../../base/metallb.io/metallbs/metallb
