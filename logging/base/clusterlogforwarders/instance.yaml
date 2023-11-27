@@ -4,11 +4,15 @@ metadata:
   name: instance
   namespace: openshift-logging
 spec:
+  outputs:
+    - name: remoteloki
+      type: loki
+      url: https://logging-loki-openshift-logging.apps.nerc-ocp-obs.rc.fas.harvard.edu/api/logs/v1/application
   pipelines:
-  - name: all-to-default
+  - name: all-to-loki
     inputRefs:
     - infrastructure
     - application
     - audit
     outputRefs:
-    - default
+    - remoteloki
