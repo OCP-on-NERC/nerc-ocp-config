@@ -1,0 +1,24 @@
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-staging-dns01
+spec:
+  acme:
+    email: lars@redhat.com
+    privateKeySecretRef:
+      name: letsencrypt-production-key
+    server: https://acme-staging-v02.api.letsencrypt.org/directory
+    solvers:
+    - dns01:
+        cnameStrategy: Follow
+        route53:
+          accessKeyIDSecretRef:
+            name: aws-route53-credentials
+            key: AWS_ACCESS_KEY_ID
+          region: us-east-1
+          secretAccessKeySecretRef:
+            name: aws-route53-credentials
+            key: AWS_SECRET_ACCESS_KEY
+      selector:
+        dnsZones:
+        - int.massopen.cloud

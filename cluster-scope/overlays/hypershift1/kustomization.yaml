@@ -1,0 +1,55 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+commonLabels:
+  nerc.mghpcc.org/kustomized: "true"
+
+resources:
+- ../../base/openapi
+- ../../base/machineconfiguration.openshift.io/kubeletconfigs/system-reserved
+- ../../base/config.openshift.io/oauths/cluster
+- ../../base/rbac.authorization.k8s.io/clusterrolebindings/self-provisioners
+- ../../bundles/cert-manager
+- ../../bundles/external-secrets
+- ../../bundles/nmstate
+- ../../base/operator.openshift.io/networks/cluster
+- clusterissuers
+- certificates
+
+components:
+  - ../../components/nerc-oauth-github
+  - ../../components/nerc-certificate-issuer
+  - ../../components/custom-certificates
+
+patches:
+- patch: |
+    apiVersion: config.openshift.io/v1
+    kind: OAuth
+    metadata:
+      name: cluster
+    spec:
+      identityProviders:
+      - name: github
+        github:
+          clientID: 1a8790fb1d1c5f46c510
+- target:
+    kind: ExternalSecret
+    name: github-client-secret
+  patch: |
+    - op: replace
+      path: /spec/data/0/remoteRef/key
+      value: nerc/hypershift1/openshift-config/github-client-secret
+- target:
+    kind: ExternalSecret
+    name: aws-route53-credentials
+  patch: |
+    - op: replace
+      path: /spec/dataFrom/0/extract/key
+      value: nerc/hypershift1/aws-route53-credentials
+- target:
+    kind: APIServer
+    name: cluster
+  patch: |
+    - op: replace
+      path: /spec/servingCerts/namedCertificates/0/names/0
+      value: api.hypershift1.int.massopen.cloud
