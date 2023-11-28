@@ -4,6 +4,6 @@ kind: Kustomization
 resources:
 - ../../base
 
-patchesStrategicMerge:
-  - externalsecrets/openshift-logging-lokistack-gateway-bearer-token_patch.yaml
-  - clusterlogforwarders/instance_patch.yaml
+patches:
+  - path: externalsecrets/openshift-logging-lokistack-gateway-bearer-token_patch.yaml
+  - path: clusterlogforwarders/instance_patch.yaml

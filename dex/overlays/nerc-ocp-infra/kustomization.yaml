@@ -4,5 +4,5 @@ namespace: dex
 resources:
   - ../../base
   - configmaps
-patchesStrategicMerge:
-  - externalsecrets/dex-clients_patch.yaml
+patches:
+  - path: externalsecrets/dex-clients_patch.yaml
