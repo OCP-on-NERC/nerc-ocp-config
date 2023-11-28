@@ -3,6 +3,7 @@ kind: Kustomization
 
 resources:
 - ../../base/openapi
+- ../../base/core/configmaps/admin-acks/
 - ../../base/machineconfiguration.openshift.io/kubeletconfigs/system-reserved
 - ../../base/config.openshift.io/oauths/cluster
 - ../../base/rbac.authorization.k8s.io/clusterroles/node-labeler/
