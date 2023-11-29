@@ -26,6 +26,7 @@ resources:
 - groupsyncs
 - clusterrolebindings
 - hostpath-provisioner
+- longhorn-settings
 
 components:
   - ../../components/nerc-oauth-github
