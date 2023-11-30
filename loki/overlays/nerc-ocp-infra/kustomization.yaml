@@ -4,5 +4,5 @@ kind: Kustomization
 resources:
 - ../../base
 
-patchesStrategicMerge:
-  - externalsecrets/loki-thanos-object-storage_patch.yaml
+patches:
+  - path: externalsecrets/loki-thanos-object-storage_patch.yaml
