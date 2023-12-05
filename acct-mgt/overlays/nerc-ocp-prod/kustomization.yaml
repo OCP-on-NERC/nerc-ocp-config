@@ -4,6 +4,6 @@ namespace: acct-mgt
 resources:
   - ../../base
   - externalsecret.yaml
-patchesStrategicMerge:
-  - patches/configmap_patch.yaml
-  - patches/deployment_patch.yaml
+patches:
+  - path: patches/configmap_patch.yaml
+  - path: patches/deployment_patch.yaml
