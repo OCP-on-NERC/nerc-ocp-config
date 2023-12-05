@@ -6,8 +6,6 @@ resources:
   - externalsecrets/
   - grafanas/grafana.yaml
   - grafanadatasources/grafanadatasource.yaml
-  - patches/grafana-oauth.yaml
-  - patches/grafanadatasource-observability-metrics.yaml
 
 patches:
   - path: patches/grafana-route.yaml
