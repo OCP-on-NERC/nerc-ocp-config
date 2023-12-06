@@ -6,8 +6,12 @@ metadata:
 spec:
   deployment:
     envFrom:
+      - secretRef:
+          name: oauth-client-secret
+      - secretRef:
+          name: grafana-serviceaccount-token
       - configMapRef:
-          name: grafana-config-overrides
+          name: openshift-service-ca.crt
   config:
     server:
       root_url: https://grafana.apps.nerc-ocp-infra.rc.fas.harvard.edu
