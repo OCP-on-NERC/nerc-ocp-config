@@ -10,7 +10,7 @@ spec:
           name: grafana-config-overrides
   config:
     server:
-      root_url: REPLACE_IN_OVERLAY
+      root_url: https://grafana.apps.nerc-ocp-infra.rc.fas.harvard.edu
     auth.generic_oauth:
       enabled: true
       scopes: openid email groups profile
@@ -24,3 +24,4 @@ spec:
         contains(groups[*], 'nerc-ops')   && 'Editor' ||
         'Deny'
       role_attribute_strict: true
+      client_id: grafana
