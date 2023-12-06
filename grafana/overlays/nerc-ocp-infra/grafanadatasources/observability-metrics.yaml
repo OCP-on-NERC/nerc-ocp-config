@@ -18,4 +18,4 @@ spec:
         httpHeaderValue1: "Bearer ${token}"
         tlsCACert: "${service-ca.crt}"
       type: prometheus
-      url: 'https://thanos-querier.openshift-monitoring.svc.cluster.local:9091/'
+      url: 'http://observability-thanos-query.open-cluster-management-observability.svc.cluster.local:9090/'
