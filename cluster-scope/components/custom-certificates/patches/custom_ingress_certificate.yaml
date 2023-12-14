@@ -4,5 +4,7 @@ metadata:
   name: default
   namespace: openshift-ingress-operator
 spec:
+  httpEmptyRequestsPolicy: Respond
+  replicas: 2
   defaultCertificate:
     name: default-ingress-certificate
