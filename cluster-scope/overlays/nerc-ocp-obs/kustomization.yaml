@@ -1,0 +1,73 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+commonLabels:
+  nerc.mghpcc.org/kustomized: "true"
+
+resources:
+- ../common
+- ../../bundles/node-feature-discovery
+- ../../bundles/patch-operator
+# - ../../bundles/rhods-operator
+- ../../base/core/namespaces/openshift-gitops
+- clusterversion.yaml
+# - machineconfigs/configure-bond0
+# - machineconfigs/disable-net-ifnames.yaml
+# - machineconfigs/udev-rules
+# - nodenetworkconfigurationpolicies/vlan-2177-nese.yaml
+# - externalsecrets
+# - feature/odf
+- secretstores
+
+components:
+  - ../../components/nerc-oauth-github
+
+  # this must come last in order to apply
+  # to all resources.
+  - ../../components/argocd-skip-dryrun
+
+generatorOptions:
+  disableNameSuffixHash: true
+
+configMapGenerator:
+- name: admin-acks
+  namespace: openshift-config
+  behavior: merge
+  literals:
+    - ack-4.11-kube-1.25-api-removals-in-4.12=true
+    - ack-4.12-kube-1.26-api-removals-in-4.13=true
+- files:
+  - config.yaml=configmaps/cluster-monitoring-config.yaml
+  name: cluster-monitoring-config
+  namespace: openshift-monitoring
+
+patches:
+# - path: ingresscontrollers/default_patch.yaml
+- patch: |
+    apiVersion: config.openshift.io/v1
+    kind: OAuth
+    metadata:
+      name: cluster
+    spec:
+      identityProviders:
+      - name: github
+        github:
+#          clientID: $(GITHUB_CLIENT_ID)
+#          clientSecret: $(GITHUB_CLIENT_SECRET)
+#          teams:
+#            - ocp-on-nerc/nerc-ops
+#            - ocp-on-nerc/nerc-logs-metrics
+- target:
+    kind: ExternalSecret
+    name: github-client-secret
+  patch: |
+    - op: replace
+      path: /spec/data/0/remoteRef/key
+      value: nerc/nerc-ocp-obs/openshift-config/github-client-secret
+
+- target:
+    kind: APIServer
+    name: cluster
+  patch: |
+    - op: replace
+      path: /spec/servingCerts/namedCertificates/0/names/0
+      value: api.nerc-ocp-obs.rc.fas.harvard.edu
