@@ -1,0 +1,20 @@
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: github-group-sync
+  namespace: group-sync-operator
+spec:
+  secretStoreRef:
+    name: nerc-cluster-secrets
+    kind: ClusterSecretStore
+  target:
+    name: github-group-sync
+  data:
+  - secretKey: appId
+    remoteRef:
+      key: nerc/nerc-ocp-obs/group-sync-operator/github-group-sync-token
+      property: appId
+  - secretKey: privateKey
+    remoteRef:
+      key: nerc/nerc-ocp-obs/group-sync-operator/github-group-sync-token
+      property: privateKey
