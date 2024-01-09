@@ -49,8 +49,8 @@ spec:
         cpu: "6"
         memory: 16Gi
   notebookController:
-    enabled: false
-    notebookNamespace: nerc-dev-null
+    enabled: true
+    notebookNamespace: rhods-notebooks
     pvcSize: 20Gi
   notebookSizes:
   - name: X Small
