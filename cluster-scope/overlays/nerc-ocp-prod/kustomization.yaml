@@ -39,6 +39,7 @@ resources:
 components:
   - ../../components/nerc-oauth-keycloak
   - ../../components/nerc-oauth-github
+  - ../../components/resourcequotas/ope-course-quota
 
   # this must come last in order to apply
   # to all resources.
