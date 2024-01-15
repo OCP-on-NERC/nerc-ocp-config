@@ -21,6 +21,8 @@ resources:
 - ../../bundles/nvidia-gpu-operator
 - ../../bundles/openshift-custom-metrics-autoscaler-operator
 - ../../base/rbac.authorization.k8s.io/clusterroles/allow-edit-rbac
+- ../../base/user.openshift.io/groups/cs210
+- ../../base/user.openshift.io/groups/ee440
 - feature/odf
 - feature/custom-routes
 - ../../base/core/namespaces/openshift-gitops
