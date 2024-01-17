@@ -6,3 +6,7 @@ resources:
 
 patches:
   - path: externalsecrets/openshift-logging-lokistack-gateway-bearer-token_patch.yaml
+<<<<<<< HEAD
+=======
+  - path: clusterlogforwarders/instance_patch.yaml
+>>>>>>> 75f3ac21a79fba40eed23bb137115bc6894f0ab3

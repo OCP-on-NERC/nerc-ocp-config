@@ -4,3 +4,4 @@ kind: Kustomization
 resources:
   - nerc-ocp-prod
   - nerc-ocp-test
+  - nerc-ocp-obs

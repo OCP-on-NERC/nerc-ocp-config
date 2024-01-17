@@ -26,6 +26,7 @@ staticClients:
     name: Grafana
     redirectURIs:
       - https://logging-grafana.apps.nerc-ocp-infra.rc.fas.harvard.edu/login/generic_oauth
+      - https://grafana.apps.nerc-ocp-infra.rc.fas.harvard.edu/login/generic_oauth
     secretEnv: GRAFANA_SECRET
 
 connectors:
