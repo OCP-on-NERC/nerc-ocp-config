@@ -1,0 +1,12 @@
+kind: ResourceQuota
+apiVersion: v1
+metadata:
+  name: ope-course-quota
+  namespace: rhods-notebooks
+spec:
+  hard:
+    limits.cpu: '1000'
+    limits.ephemeral-storage: 30Gi
+    limits.memory: 3000000Mi
+    persistentvolumeclaims: '400'
+    requests.storage: 400Gi

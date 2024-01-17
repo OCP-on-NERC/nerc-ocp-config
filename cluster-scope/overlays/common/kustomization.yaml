@@ -17,12 +17,13 @@ resources:
 - ../../bundles/image-registry
 - ../../bundles/logging
 - ../../bundles/group-sync-operator
-- ../../base/operator.openshift.io/ingresscontrollers/default
 - ../../base/operator.openshift.io/networks/cluster
-- ../../base/config.openshift.io/apiservers/cluster
 - clusterrolebindings/nerc-ops-cluster-reader.yaml
 - clusterrolebindings/nerc-ops-sudoers.yaml
 - clusterrolebindings/nerc-ops-portforward.yaml
 - clusterrolebindings/nerc-logs-metrics-open-cluster-management-cluster-manager-admin.yaml
 - groupsyncs
 - machineconfigs
+
+components:
+- ../../components/custom-certificates
