@@ -33,6 +33,12 @@ configMapGenerator:
   namespace: openshift-monitoring
 
 patches:
+- target:
+    kind: SecretStore
+  patch: |
+    - op: replace
+      path: /spec/provider/vault/auth/kubernetes/mountPath
+      value: kubernetes/nerc-ocp-obs
 - patch: |
     apiVersion: config.openshift.io/v1
     kind: OAuth
