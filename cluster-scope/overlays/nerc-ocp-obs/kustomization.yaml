@@ -46,6 +46,7 @@ patches:
           teams:
             - ocp-on-nerc/nerc-ops
             - ocp-on-nerc/nerc-logs-metrics
+            - ocp-on-nerc/nerc-obs-admins
 - target:
     kind: ExternalSecret
     name: oauths-clientsecret-nerc
