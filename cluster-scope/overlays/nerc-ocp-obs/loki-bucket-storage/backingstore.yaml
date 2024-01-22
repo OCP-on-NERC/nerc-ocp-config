@@ -1,0 +1,13 @@
+apiVersion: noobaa.io/v1alpha1
+kind: BackingStore
+metadata:
+  name: loki-backing-store
+  namespace: openshift-storage
+spec:
+  pvPool:
+    numVolumes: 3
+    resources:
+      requests:
+        storage: 400Gi
+    storageClass: loki-ocs-storagecluster-ceph-rbd
+  type: pv-pool

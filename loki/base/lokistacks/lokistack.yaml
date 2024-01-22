@@ -33,4 +33,4 @@ spec:
   tenants:
     mode: openshift-logging
   size: 1x.medium
-  storageClassName: ocs-external-storagecluster-ceph-rbd
+  storageClassName: loki-ocs-storagecluster-ceph-rbd

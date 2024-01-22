@@ -5,4 +5,4 @@ metadata:
   namespace: openshift-logging
 spec:
   generateBucketName: openshift-logging-objectbucketclaim
-  storageClassName: metrics-bucket-storage
+  storageClassName: loki-bucket-storage
