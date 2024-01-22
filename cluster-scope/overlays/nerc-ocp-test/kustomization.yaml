@@ -23,6 +23,14 @@ resources:
 components:
   - ../../components/nerc-oauth-github
 
+configMapGenerator:
+- name: admin-acks
+  namespace: openshift-config
+  behavior: merge
+  literals:
+    - ack-4.11-kube-1.25-api-removals-in-4.12=true
+    - ack-4.12-kube-1.26-api-removals-in-4.13=true
+
 patches:
 - target:
     kind: SecretStore
