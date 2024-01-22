@@ -4,9 +4,8 @@ metadata:
   labels:
     app.kubernetes.io/component: manager
     app.kubernetes.io/created-by: curator
-    app.kubernetes.io/instance: controller-manager
     app.kubernetes.io/managed-by: kustomize
-    app.kubernetes.io/name: deployment
+    app.kubernetes.io/name: curator
     app.kubernetes.io/part-of: curator
     control-plane: controller-manager
   name: curator-controller-manager
