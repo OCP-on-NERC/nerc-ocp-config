@@ -9,6 +9,9 @@ resources:
 - ../../base/core/namespaces/openshift-gitops
 - clusterversion.yaml
 - secretstores
+- logs-storage
+- logsarchive-storage
+- feature/odf
 
 components:
   - ../../components/nerc-oauth-github
