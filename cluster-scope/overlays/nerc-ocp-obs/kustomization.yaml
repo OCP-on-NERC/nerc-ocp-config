@@ -7,7 +7,9 @@ resources:
 - ../common
 - ../../bundles/node-feature-discovery
 - ../../base/core/namespaces/openshift-gitops
+- ../../base/rbac.authorization.k8s.io/clusterroles/allow-edit-rbac
 - clusterversion.yaml
+- externalsecrets
 - secretstores
 - logs-storage
 - logsarchive-storage
@@ -56,13 +58,6 @@ patches:
             - ocp-on-nerc/nerc-ops
             - ocp-on-nerc/nerc-logs-metrics
             - ocp-on-nerc/nerc-obs-admins
-- target:
-    kind: ExternalSecret
-    name: oauths-clientsecret-nerc
-  patch: |
-    - op: replace
-      path: /spec/data/0/remoteRef/key
-      value: nerc/nerc-ocp-obs/openshift-config/oauths-clientsecret-nerc
 - target:
     kind: ExternalSecret
     name: aws-route53-credentials
