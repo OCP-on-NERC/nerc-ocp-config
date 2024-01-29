@@ -9,6 +9,9 @@ resources:
 - ../../base/core/namespaces/openshift-gitops
 - clusterversion.yaml
 - secretstores
+- logs-storage
+- logsarchive-storage
+- feature/odf
 
 components:
   - ../../components/nerc-oauth-github
@@ -33,6 +36,12 @@ configMapGenerator:
   namespace: openshift-monitoring
 
 patches:
+- target:
+    kind: SecretStore
+  patch: |
+    - op: replace
+      path: /spec/provider/vault/auth/kubernetes/mountPath
+      value: kubernetes/nerc-ocp-obs
 - patch: |
     apiVersion: config.openshift.io/v1
     kind: OAuth
@@ -46,6 +55,7 @@ patches:
           teams:
             - ocp-on-nerc/nerc-ops
             - ocp-on-nerc/nerc-logs-metrics
+            - ocp-on-nerc/nerc-obs-admins
 - target:
     kind: ExternalSecret
     name: oauths-clientsecret-nerc

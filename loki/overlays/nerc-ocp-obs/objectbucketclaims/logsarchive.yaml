@@ -1,0 +1,8 @@
+apiVersion: objectbucket.io/v1alpha1
+kind: ObjectBucketClaim
+metadata:
+  name: logsarchive-obc
+  namespace: openshift-logging
+spec:
+  generateBucketName: logsarchive-obc
+  storageClassName: logsarchive-bucket-storage

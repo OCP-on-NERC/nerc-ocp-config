@@ -1,0 +1,9 @@
+apiVersion: objectbucket.io/v1alpha1
+kind: ObjectBucketClaim
+metadata:
+  name: logs-obc
+  namespace: openshift-logging
+spec:
+  generateBucketName: logs-obc
+  # Change this later with the loki-bucket-storage
+  storageClassName: logs-bucket-storage
