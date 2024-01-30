@@ -6,6 +6,7 @@ commonLabels:
 resources:
 - ../common
 - ../../bundles/node-feature-discovery
+- ../../bundles/clusterissuer-http01
 - ../../base/core/namespaces/openshift-gitops
 - ../../base/rbac.authorization.k8s.io/clusterroles/allow-edit-rbac
 - clusterversion.yaml
