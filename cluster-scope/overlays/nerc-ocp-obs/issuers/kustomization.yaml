@@ -3,3 +3,12 @@ kind: Kustomization
 resources:
 - openshift-config
 - openshift-ingress
+
+patches:
+  - target:
+      kind: Issuer
+    patch: |
+      - path: /spec/acme/solvers/0/selector/dnsZones
+        op: replace
+        value:
+          - obs.nerc.mghpcc.org
