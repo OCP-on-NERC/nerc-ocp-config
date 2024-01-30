@@ -15,6 +15,7 @@ resources:
 - logsarchive-storage
 - feature/odf
 - issuers
+- certificates
 
 components:
   - ../../components/nerc-oauth-github
