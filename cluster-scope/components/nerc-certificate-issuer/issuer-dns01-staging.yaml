@@ -6,7 +6,7 @@ spec:
   acme:
     email: help@nerc.mghpcc.org
     privateKeySecretRef:
-      name: letsencrypt-production-key
+      name: letsencrypt-staging-key
     server: https://acme-staging-v02.api.letsencrypt.org/directory
     solvers:
     - dns01:
