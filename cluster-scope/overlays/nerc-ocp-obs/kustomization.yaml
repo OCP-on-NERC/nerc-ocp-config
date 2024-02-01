@@ -105,4 +105,5 @@ patches:
         vault:
           auth:
             kubernetes:
-              mountPath: kubernetes/nerc-ocp-obs/
+              mountPath: kubernetes/nerc-ocp-obs
+          server: https://vault-ui-vault.apps.nerc-ocp-infra.rc.fas.harvard.edu/
