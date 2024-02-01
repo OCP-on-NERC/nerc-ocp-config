@@ -12,7 +12,6 @@ resources:
 - ../../base/rbac.authorization.k8s.io/clusterroles/allow-edit-rbac
 - clusterversion.yaml
 - externalsecrets
-- secretstores
 - logs-storage
 - logsarchive-storage
 - feature/odf
