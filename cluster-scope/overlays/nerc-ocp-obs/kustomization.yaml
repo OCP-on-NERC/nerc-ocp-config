@@ -7,6 +7,7 @@ resources:
 - ../common
 - ../../bundles/node-feature-discovery
 - ../../bundles/clusterissuer-http01
+- ../../bundles/nerc-certificate-clusterissuers
 - ../../base/core/namespaces/openshift-gitops
 - ../../base/rbac.authorization.k8s.io/clusterroles/allow-edit-rbac
 - clusterversion.yaml
@@ -15,7 +16,6 @@ resources:
 - logs-storage
 - logsarchive-storage
 - feature/odf
-- issuers
 - certificates
 
 components:
@@ -82,3 +82,11 @@ patches:
     - op: replace
       path: /spec/servingCerts/namedCertificates/0/names/0
       value: api.nerc-ocp-obs.rc.fas.harvard.edu
+- target:
+    kind: ClusterIssuer
+    name: letsencrypt-.*-dns01
+  patch: |
+    - op: replace
+      path: /spec/acme/solvers/0/selector/dnsZones
+      value:
+        - obs.nerc.mghpcc.org
