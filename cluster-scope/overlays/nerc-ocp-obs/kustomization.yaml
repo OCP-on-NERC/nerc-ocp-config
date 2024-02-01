@@ -8,11 +8,11 @@ resources:
 - ../../bundles/node-feature-discovery
 - ../../bundles/clusterissuer-http01
 - ../../bundles/nerc-certificate-clusterissuers
+- ../../bundles/external-secrets-clustersecretstore
 - ../../base/core/namespaces/openshift-gitops
 - ../../base/rbac.authorization.k8s.io/clusterroles/allow-edit-rbac
 - clusterversion.yaml
 - externalsecrets
-- secretstores
 - logs-storage
 - logsarchive-storage
 - feature/odf
@@ -75,6 +75,11 @@ patches:
     - op: replace
       path: /spec/data/0/remoteRef/key
       value: nerc/nerc-ocp-obs/openshift-config/github-client-secret
+    - op: replace
+      path: /spec/secretStoreRef
+      value:
+        kind: ClusterSecretStore
+        name: nerc-cluster-secrets
 - target:
     kind: APIServer
     name: cluster
@@ -90,3 +95,14 @@ patches:
       path: /spec/acme/solvers/0/selector/dnsZones
       value:
         - obs.nerc.mghpcc.org
+- patch: |
+    apiVersion: external-secrets.io/v1beta1
+    kind: ClusterSecretStore
+    metadata:
+      name: nerc-cluster-secrets
+    spec:
+      provider:
+        vault:
+          auth:
+            kubernetes:
+              mountPath: kubernetes/nerc-ocp-obs/
