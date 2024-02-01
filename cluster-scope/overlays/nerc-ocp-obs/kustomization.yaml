@@ -81,7 +81,7 @@ patches:
   patch: |
     - op: replace
       path: /spec/servingCerts/namedCertificates/0/names/0
-      value: api.nerc-ocp-obs.rc.fas.harvard.edu
+      value: api.obs.nerc.mghpcc.org
 - target:
     kind: ClusterIssuer
     name: letsencrypt-.*-dns01
