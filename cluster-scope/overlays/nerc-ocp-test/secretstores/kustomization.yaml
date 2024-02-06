@@ -3,3 +3,4 @@ kind: Kustomization
 resources:
 - openshift-config
 - group-sync-operator
+- openshift-logging
