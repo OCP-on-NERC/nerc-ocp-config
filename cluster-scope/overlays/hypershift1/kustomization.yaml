@@ -13,6 +13,7 @@ resources:
 - ../../bundles/cert-manager
 - ../../bundles/external-secrets
 - ../../bundles/external-secrets-clustersecretstore
+- ../../bundles/image-registry
 - ../../bundles/nmstate
 - ../../bundles/acm
 - ../../bundles/group-sync-operator
