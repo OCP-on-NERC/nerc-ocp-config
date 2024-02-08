@@ -11,6 +11,7 @@ resources:
 - ../../bundles/external-secrets-clustersecretstore
 - ../../base/core/namespaces/openshift-gitops
 - ../../base/rbac.authorization.k8s.io/clusterroles/allow-edit-rbac
+- ../../base/operators.coreos.com/subscriptions/loki-operator
 - clusterversion.yaml
 - externalsecrets
 - logs-storage
