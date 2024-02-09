@@ -18,6 +18,7 @@ resources:
 - feature/odf
 - certificates
 - machineconfigs
+- nodenetworkconfigurationpolicies
 
 components:
   - ../../components/nerc-oauth-github
