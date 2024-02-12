@@ -1,12 +1,19 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-generatorOptions:
-  disableNameSuffixHash: true
 namespace: vault
+
 configMapGenerator:
-  - files:
+  - name: backup-vault-run
+    options:
+      disableNameSuffixHash: true
+    files:
       - taskrun.yaml
-    name: backup-vault-run
+  - name: vault-backup-config
+    options:
+      disableNameSuffixHash: true
+    envs:
+      - vault-backup-config.env
+
 resources:
   - cronjob.yaml
   - externalsecret.yaml
