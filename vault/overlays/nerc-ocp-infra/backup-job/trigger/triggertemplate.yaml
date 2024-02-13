@@ -19,3 +19,6 @@ spec:
         - name: backup-job
           secret:
             secretName: vault-backup-s3-endpoint
+        - name: backup-scripts
+          configMap:
+            name: backup-scripts

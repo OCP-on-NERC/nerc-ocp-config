@@ -12,31 +12,19 @@ spec:
       mountPath: /snapshots
     - name: backup-job
       mountPath: /backup-job
+    - name: backup-scripts
+      mountPath: /scripts
   steps:
     - name: create-snapshot
       image: docker.io/hashicorp/vault:1.15.5
       workingDir: /workspace
+      env:
+        - name: SNAPSHOT_PATH
+          value: $(workspaces.snapshots.path)
       script: |
         #!/bin/sh
-        set -eu
+        exec sh /scripts/create-snapshot.sh
 
-        snapshot_pvc_path=$(workspaces.snapshots.path)
-        snapshot_file_path=$(date +"snapshot-%F_T%H-%M-%S.snap")
-
-        # Set vault addr to the current leader
-        export VAULT_ADDR="http://nerc-vault-active:8200"
-        # Grab jwt token from the backup-job serviceaccount, and make the vault token request using k8s login method
-        export VAULT_TOKEN=$(vault write -field=token auth/kubernetes/backup/login role=nerc-vault-backup jwt=$(cat /run/secrets/kubernetes.io/serviceaccount/token))
-
-        vault operator raft snapshot save "${snapshot_pvc_path}/${snapshot_file_path}"
-        echo "Backup Snapshot saved at ${snapshot_pvc_path}/$snapshot_file_path"
-
-        echo Listing current snapshots in backedup PVC
-        echo --------------------------------------------
-        ls -lha ${snapshot_pvc_path}
-        echo --------------------------------------------
-
-        echo "Done!"
     - name: backup-snapshot-to-s3
       image: docker.io/minio/mc:RELEASE.2024-02-09T22-18-24Z
       workingDir: /workspace
@@ -45,56 +33,22 @@ spec:
             name: vault-backup-s3-endpoint
         - configMapRef:
             name: vault-backup-config
+      env:
+        - name: SNAPSHOT_PATH
+          value: $(workspaces.snapshots.path)
       script: |
-        #!/bin/bash
-        set -eu
+        #!/bin/sh
+        exec bash /scripts/backup-to-s3.sh
 
-        : "${S3_RETENTION:=10d}"
-        : "${PVC_RETENTION:=2d}"
-
-        snapshot_pvc_path=$(workspaces.snapshots.path)
-
-        echo "Setting up mc connection to S3 Bucket"
-        mc alias set store "${ENDPOINT}" "${ACCESS_KEY_ID}" "${SECRET_ACCESS_KEY}" --api S3v4
-
-        echo "Syncing contents of ${snapshot_pvc_path}/ to Bucket ${BUCKET} that are newer than ${S3_RETENTION}"
-        mc mirror "${snapshot_pvc_path}/" "store/${BUCKET}/vault/" --newer-than "${S3_RETENTION}"
-
-        echo "Removing files from Bucket ${BUCKET} that are older than ${S3_RETENTION}"
-
-        mc rm -r --force --older-than "${S3_RETENTION}" "store/${BUCKET}/vault"
-
-        echo "Listing remote snapshots in ${BUCKET}/vault"
-
-        echo --------------------------------------------
-        mc ls store/${BUCKET}/vault/
-        echo --------------------------------------------
-
-        echo "Removing files from PVC that are older than ${PVC_RETENTION} in path ${snapshot_pvc_path}"
-        mc rm -r --force --older-than "${PVC_RETENTION}" "${snapshot_pvc_path}/"
-
-        echo "Listing local snapshots in ${snapshot_pvc_path}"
-
-        echo --------------------------------------------
-        ls ${snapshot_pvc_path} -lha
-        echo --------------------------------------------
-
-        echo "Done!"
     - name: cleanup-old-taskruns
       image: image-registry.openshift-image-registry.svc:5000/openshift/cli
       workingDir: /workspace
       envFrom:
         - configMapRef:
             name: vault-backup-config
+      env:
+        - name: TASK_NAME
+          value: $(context.task.name)
       script: |
-        #!/bin/bash
-        set -eu
-
-        : "${TASKRUN_RETENTION:=10}"
-
-        oc get taskrun -l "tekton.dev/task=$(context.task.name)" --sort-by=.metadata.creationTimestamp -o name | head -n -"${TASKRUN_RETENTION}" |
-        while read -r TASK_TO_REMOVE; do
-          test -n "${TASK_TO_REMOVE}" || continue;
-          echo "Deleting taskrun ${TASK_TO_REMOVE}"
-          oc delete "${TASK_TO_REMOVE}"
-        done
+        #!/bin/sh
+        exec bash /scripts/cleanup-taskruns.sh
