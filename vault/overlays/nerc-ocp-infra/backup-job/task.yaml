@@ -12,95 +12,43 @@ spec:
       mountPath: /snapshots
     - name: backup-job
       mountPath: /backup-job
+    - name: backup-scripts
+      mountPath: /scripts
   steps:
     - name: create-snapshot
-      image: quay.io/operate-first/opf-toolbox:v0.8.0
+      image: docker.io/hashicorp/vault:1.15.5
       workingDir: /workspace
+      env:
+        - name: SNAPSHOT_PATH
+          value: $(workspaces.snapshots.path)
       script: |
         #!/bin/sh
-        set -e
+        exec sh /scripts/create-snapshot.sh
 
-        echo 'Logging into nerc-vault-0 to retrieve leader'
-        # Set vault addr to the nerc-vault service address
-        export VAULT_ADDR="http://nerc-vault:8200"
-        # Grab jwt token from the backup-job serviceaccount, and make the vault token request using k8s login method
-        export VAULT_TOKEN=$(vault write -field=token auth/kubernetes/backup/login role=backup jwt=$(cat /run/secrets/kubernetes.io/serviceaccount/token))
-
-        oc exec -i nerc-vault-0 -- vault operator raft list-peers --format=json > /tmp/peers.json
-        leader=$(yq e '.data.config.servers.[] | select(.leader == "true") | .address' -P /tmp/peers.json | cut -d '.' -f1)
-
-        echo retrieved leader: ${leader}
-        echo Creating Snapshot in leader pod ${leader}...
-
-        export snapshot_file_path=$(date +"snapshot-%F_T%H-%M-%S.snap")
-        oc exec -i $leader -- vault operator raft snapshot save /tmp/backup_job_snapshot.snap
-
-        echo Snapshot created in Vault Leader pod. Moving snapshot from pod to backup PVC.
-
-        snapshot_pvc_path=$(workspaces.snapshots.path)
-        oc cp $(context.taskRun.namespace)/$leader:/tmp/backup_job_snapshot.snap ${snapshot_pvc_path}/${snapshot_file_path}
-        oc exec -i $leader -- rm /tmp/backup_job_snapshot.snap
-
-        echo Backup Snapshot saved at ${snapshot_pvc_path}/$snapshot_file_path
-        echo Listing current snapshots in backedup PVC
-
-        echo --------------------------------------------
-        ls -lha ${snapshot_pvc_path}
-        echo --------------------------------------------
-
-        echo "Done!"
     - name: backup-snapshot-to-s3
-      image: quay.io/operate-first/mc:RELEASE.2022-06-17T02-52-50Z
+      image: docker.io/minio/mc:RELEASE.2024-02-09T22-18-24Z
       workingDir: /workspace
       envFrom:
         - secretRef:
             name: vault-backup-s3-endpoint
+        - configMapRef:
+            name: vault-backup-config
+      env:
+        - name: SNAPSHOT_PATH
+          value: $(workspaces.snapshots.path)
       script: |
         #!/bin/sh
-        set -e
+        exec bash /scripts/backup-to-s3.sh
 
-        S3Retention="10d"
-        PVCRetention="2d"
-        snapshot_pvc_path=$(workspaces.snapshots.path)
-
-        echo Setting up mc connection to S3 Bucket
-        mc alias set store ${ENDPOINT} ${ACCESS_KEY_ID} ${SECRET_ACCESS_KEY} --api S3v4
-
-        echo Syncing contents of ${snapshot_pvc_path}/ to Bucket ${BUCKET} that are newer than ${S3Retention}
-        mc mirror ${snapshot_pvc_path}/ store/${BUCKET}/vault/ --newer-than ${S3Retention}
-
-        echo Removing files from Bucket ${BUCKET} that are older than ${S3Retention}
-
-        mc rm -r --force --older-than ${S3Retention} store/${BUCKET}/vault
-
-        echo Printing contents of Bucket ${BUCKET}/vault
-
-        echo --------------------------------------------
-        mc ls store/${BUCKET}/vault/
-        echo --------------------------------------------
-
-        echo Removing files from PVC that are older than ${PVCRetention} in path ${snapshot_pvc_path}
-        mc rm -r --force --older-than ${PVCRetention} ${snapshot_pvc_path}/
-
-        echo Printing contents of PVC
-
-        echo --------------------------------------------
-        ls ${snapshot_pvc_path} -lha
-        echo --------------------------------------------
-
-        echo "Done!"
     - name: cleanup-old-taskruns
-      image: quay.io/operate-first/opf-toolbox:v0.8.0
+      image: image-registry.openshift-image-registry.svc:5000/openshift/cli
       workingDir: /workspace
+      envFrom:
+        - configMapRef:
+            name: vault-backup-config
+      env:
+        - name: TASK_NAME
+          value: $(context.task.name)
       script: |
         #!/bin/sh
-        set -e
-        NUM_TO_KEEP="10"
-        while read -r TASK; do
-          while read -r TASK_TO_REMOVE; do
-            test -n "${TASK_TO_REMOVE}" || continue;
-            oc delete ${TASK_TO_REMOVE} \
-                && echo "$(date -Is) TaskRun ${TASK_TO_REMOVE} deleted." \
-                || echo "$(date -Is) Unable to delete TaskRun ${TASK_TO_REMOVE}.";
-          done < <(oc get taskrun -l tekton.dev/task=${TASK} --sort-by=.metadata.creationTimestamp -o name | head -n -${NUM_TO_KEEP});
-        done < <(oc get taskrun -o go-template='{{range .items}}{{index .metadata.labels "tekton.dev/task"}}{{"\n"}}{{end}}' | uniq);
+        exec bash /scripts/cleanup-taskruns.sh
