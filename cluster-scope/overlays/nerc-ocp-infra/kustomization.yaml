@@ -31,6 +31,7 @@ resources:
 - redhatcop.redhat.io/odf-node-patcher.yaml
 - grafana-dashboards
 - persistentvolumeclaims
+- nerc-logs-metrics-open-cluster-management-cluster-manager-admin.yaml
 
 components:
   - ../../components/nerc-oauth-github
