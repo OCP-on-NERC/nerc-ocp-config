@@ -5,9 +5,6 @@ namespace: openshift-storage
 commonLabels:
   nerc.mghpcc.org/feature: odf
 
-components:
-  - ../../../../components/nerc-secret-store
-
 resources:
   - ../../../../bundles/odf-external
   - externalsecrets/rook-ceph-external-cluster-details.yaml
@@ -15,4 +12,3 @@ resources:
 
 patches:
   - path: storageclasses/ocs-external-storagecluster-ceph-rbd_patch.yaml
-  - path: secretstores/secretstore-patch.yaml
