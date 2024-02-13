@@ -1,0 +1,19 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: trigger-backup-job
+spec:
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1
+  schedule: "0 1,13 * * *"
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          name: trigger-backup-job
+        spec:
+          containers:
+            - name: submit-backup-job
+              image: image-registry.openshift-image-registry.svc:5000/openshift/cli
+              command: ["curl", "-X", "POST", "--data", "{}", "el-backup-vault-listener:8080"]
+          restartPolicy: Never

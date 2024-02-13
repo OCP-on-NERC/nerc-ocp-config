@@ -3,11 +3,6 @@ kind: Kustomization
 namespace: vault
 
 configMapGenerator:
-  - name: backup-vault-run
-    options:
-      disableNameSuffixHash: true
-    files:
-      - taskrun.yaml
   - name: vault-backup-config
     options:
       disableNameSuffixHash: true
@@ -15,9 +10,9 @@ configMapGenerator:
       - vault-backup-config.env
 
 resources:
-  - cronjob.yaml
   - externalsecret.yaml
   - pvc.yaml
   - rolebinding.yaml
   - sa.yaml
   - task.yaml
+  - trigger

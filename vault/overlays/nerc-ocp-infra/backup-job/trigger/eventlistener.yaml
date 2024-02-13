@@ -1,0 +1,10 @@
+apiVersion: triggers.tekton.dev/v1beta1
+kind: EventListener
+metadata:
+  name: backup-vault-listener
+spec:
+  serviceAccountName: backup-job
+  triggers:
+    - name: backup-vault-trigger
+      template:
+        ref: backup-vault-template
