@@ -10,17 +10,14 @@ resources:
 - ../../base/rbac.authorization.k8s.io/clusterrolebindings/self-provisioners
 - ../../bundles/cert-manager
 - ../../bundles/openshift-operators-redhat
-- ../../bundles/cluster-admin-rbac
 - ../../bundles/external-secrets
 - ../../bundles/nmstate
 - ../../bundles/console
 - ../../bundles/image-registry
 - ../../bundles/logging
 - ../../bundles/group-sync-operator
+- ../../bundles/nerc-ops-rbac
 - ../../base/operator.openshift.io/networks/cluster
-- clusterrolebindings/nerc-ops-cluster-reader.yaml
-- clusterrolebindings/nerc-ops-sudoers.yaml
-- clusterrolebindings/nerc-ops-portforward.yaml
 - groupsyncs
 - machineconfigs
 
