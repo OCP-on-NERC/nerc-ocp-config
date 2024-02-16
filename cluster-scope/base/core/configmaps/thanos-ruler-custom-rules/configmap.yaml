@@ -183,6 +183,21 @@ data:
           labels:
             severity: warning
 
+      - name: opelimits
+        rules:
+
+        - alert: CustomOpeLimitsCpu
+          annotations:
+            summary: "{{ $labels.cluster }} container CPU usage above 80%"
+            description: |
+              <https://grafana-open-cluster-management-observability.apps.nerc-ocp-infra.rc.fas.harvard.edu/explore?orgId=1&left=%5B%22now-3h%22,%22now%22,%22Observatorium%22,%7B%22exemplar%22:true,%22expr%22:%22sum(avg_over_time(node_namespace_pod_container:container_cpu_usage_seconds_total:sum_rate%5B1h%5D))%20by%20(cluster,%20namespace,%20pod)%20%2F%20avg(kube_pod_container_resource_limits%7Bresource%3D%5C%22cpu%5C%22%7D)%20by%20(cluster,%20namespace,%20pod)%20%3E%200.80%22%7D%5D|Click here to see these metrics in Observability Monitoring>
+              CPU usage is at {{ $value | humanizePercentage }} in namespace {{ $labels.namespace }}, cluster {{ $labels.cluster }}.
+          expr: sum(avg_over_time(kube_resourcequota{cluster="nerc-ocp-prod",namespace="rhods-notebooks",resource="limits.cpu",type="used"}[10m:5m])) / sum(avg_over_time(kube_resourcequota{cluster="nerc-ocp-prod",namespace="rhods-notebooks",resource="limits.cpu",type="hard"}[10m:5m])) > 0.80
+          for: 10m
+          labels:
+            severity: warning
+            cpu: limit
+
 # Prometheus generates a metric called up that indicates whether a scrape was successful.
 # A value of “1” is scrape indicates success, “0” failure.
 # The up metric is useful for debugging and alerting for targets that are down or having issues.
