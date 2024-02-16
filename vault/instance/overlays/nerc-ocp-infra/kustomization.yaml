@@ -1,0 +1,17 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+commonLabels:
+  app.kubernetes.io/name: vault
+
+resources:
+- ../../base
+- vault-compat-route.yaml
+
+patches:
+- patch: |
+    apiVersion: route.openshift.io/v1
+    kind: Route
+    metadata:
+      name: vault
+    spec:
+      host: vault.apps.nerc-ocp-infra.rc.fas.harvard.edu

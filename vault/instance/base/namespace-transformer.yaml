@@ -1,0 +1,4 @@
+namespace:
+  - kind: Vault
+    path: spec/unsealConfig/kubernetes/secretNamespace
+    create: false
