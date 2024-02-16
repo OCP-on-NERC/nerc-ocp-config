@@ -1,0 +1,10 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: vault-operator
+
+resources:
+  - namespace.yaml
+  - vault-scc.yaml
+  - allow-vault-scc.yaml
+  - vault-operator.yaml
+  - vaults.banzaicloud.com-view.yaml
