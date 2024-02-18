@@ -1,0 +1,15 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- ../../base
+
+patches:
+  - patch: |
+      apiVersion: external-secrets.io/v1beta1
+      kind: ExternalSecret
+      metadata:
+        name: vault-backup-s3-endpoint
+      spec:
+        dataFrom:
+          - extract:
+              key: nerc/nerc-ocp-infra/vault/vault-backup-s3-endpoint
