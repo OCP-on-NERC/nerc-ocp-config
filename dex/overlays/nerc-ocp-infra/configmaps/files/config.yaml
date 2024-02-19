@@ -19,6 +19,8 @@ staticClients:
   - id: vault
     name: Vault
     redirectURIs:
+      - https://vault.apps.nerc-ocp-infra.rc.fas.harvard.edu/oidc/callback
+      - https://vault.apps.nerc-ocp-infra.rc.fas.harvard.edu/ui/vault/auth/oidc/oidc/callback
       - https://vault-ui-vault.apps.nerc-ocp-infra.rc.fas.harvard.edu/oidc/callback
       - https://vault-ui-vault.apps.nerc-ocp-infra.rc.fas.harvard.edu/ui/vault/auth/oidc/oidc/callback
     secretEnv: VAULT_SECRET
