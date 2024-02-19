@@ -1,7 +1,0 @@
-apiVersion: kustomize.config.k8s.io/v1beta1
-kind: Kustomization
-commonLabels:
-  nerc.mghpcc.org/bundle: vault
-resources:
-- ../../base/core/namespaces/vault
-- ../../base/rbac.authorization.k8s.io/clusterrolebindings/vault-server-binding

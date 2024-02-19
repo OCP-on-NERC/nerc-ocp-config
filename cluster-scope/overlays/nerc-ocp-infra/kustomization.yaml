@@ -9,7 +9,6 @@ resources:
 - ../../bundles/acm
 - ../../bundles/acm-observability
 - ../../bundles/hostpath-provisioner
-- ../../bundles/vault
 - ../../bundles/patch-operator
 - ../../bundles/odf-external
 - ../../bundles/external-secrets-clustersecretstore
