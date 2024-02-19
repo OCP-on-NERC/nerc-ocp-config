@@ -1,0 +1,16 @@
+# Grant entities access to the `vault` scc. Requires an appropriate
+# ClusterRoleBinding for the service account under which a vault instance
+# is running.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: allow-vault-scc
+rules:
+- apiGroups:
+  - security.openshift.io
+  resourceNames:
+  - vault
+  resources:
+  - securitycontextconstraints
+  verbs:
+  - use

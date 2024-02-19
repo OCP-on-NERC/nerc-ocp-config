@@ -1,0 +1,15 @@
+# Continue to service the old route so that we don't need to update
+# all of our SecretStore manifests.
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: vault-compat
+spec:
+  host: vault-ui-vault.apps.nerc-ocp-infra.rc.fas.harvard.edu
+  port:
+    targetPort: api-port
+  tls:
+    termination: edge
+  to:
+    kind: Service
+    name: vault-ingress
