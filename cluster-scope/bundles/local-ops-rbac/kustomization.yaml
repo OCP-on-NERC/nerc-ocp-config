@@ -1,9 +1,9 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 commonLabels:
-  nerc.mghpcc.org/bundle: nerc-ops-rbac
+  nerc.mghpcc.org/bundle: local-ops-rbac
 
-namePrefix: nerc-
+namePrefix: local-
 
 resources:
   - ../ops-rbac
@@ -15,30 +15,18 @@ patches:
       - op: remove
         path: /metadata/labels/nerc.mghpcc.org~1aggregate-to-ops
       - op: add
-        path: /metadata/labels/nerc.mghpcc.org~1aggregate-to-nerc-ops
+        path: /metadata/labels/nerc.mghpcc.org~1aggregate-to-local-ops
         value: "true"
   - patch: |
       apiVersion: rbac.authorization.k8s.io/v1
       kind: ClusterRole
       metadata:
-        labels:
-          nerc.mghpcc.org/bundle: nerc-ops-rbac
         name: ops
       aggregationRule:
         clusterRoleSelectors:
         - matchLabels:
-            nerc.mghpcc.org/aggregate-to-nerc-ops: "true"
+            nerc.mghpcc.org/aggregate-to-local-ops: "true"
         - matchLabels:
             rbac.authorization.k8s.io/aggregate-to-cluster-reader: "true"
         - matchLabels:
             rbac.authorization.k8s.io/aggregate-to-view: "true"
-  - target:
-      kind: ClusterRoleBinding
-      name: ops
-    patch: |
-      - op: replace
-        path: /subjects
-        value:
-          - apiGroup: rbac.authorization.k8s.io
-            kind: Group
-            name: nerc-ops

@@ -1,0 +1,16 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    nerc.mghpcc.org/aggregate-to-ops: "true"
+    nerc.mghpcc.org/bundle: ops-rbac
+  name: ops-secrets-reader
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - secrets
+    verbs:
+      - list
+      - get
+      - watch

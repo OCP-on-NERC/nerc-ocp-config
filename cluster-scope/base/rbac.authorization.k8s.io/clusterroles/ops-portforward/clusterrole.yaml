@@ -1,0 +1,14 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    nerc.mghpcc.org/aggregate-to-ops: "true"
+    nerc.mghpcc.org/bundle: ops-rbac
+  name: ops-portforward
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - pods/portforward
+    verbs:
+      - '*'

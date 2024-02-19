@@ -1,0 +1,14 @@
+aggregationRule:
+  clusterRoleSelectors:
+    - matchLabels:
+        nerc.mghpcc.org/aggregate-to-ops: "true"
+    - matchLabels:
+        rbac.authorization.k8s.io/aggregate-to-cluster-reader: "true"
+    - matchLabels:
+        rbac.authorization.k8s.io/aggregate-to-view: "true"
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    nerc.mghpcc.org/bundle: ops-rbac
+  name: ops

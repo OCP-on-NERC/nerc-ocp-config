@@ -1,0 +1,14 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  labels:
+    nerc.mghpcc.org/bundle: ops-rbac
+  name: ops
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: ops
+subjects:
+  - apiGroup: rbac.authorization.k8s.io
+    kind: Group
+    name: ops
