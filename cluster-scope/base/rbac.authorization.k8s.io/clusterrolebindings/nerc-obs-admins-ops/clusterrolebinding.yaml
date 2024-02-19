@@ -1,11 +1,11 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: nerc-obs-admins-sudoer
+  name: nerc-obs-admins-ops
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: sudoer
+  name: nerc-ops
 subjects:
   - apiGroup: rbac.authorization.k8s.io
     kind: Group
