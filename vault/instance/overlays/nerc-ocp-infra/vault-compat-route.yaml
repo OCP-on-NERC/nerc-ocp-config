@@ -10,6 +10,7 @@ spec:
     targetPort: api-port
   tls:
     termination: edge
+    insecureEdgeTerminationPolicy: Redirect
   to:
     kind: Service
     name: vault-ingress

@@ -4,7 +4,7 @@ set -eu
 snapshot_file_name=$(date +"snapshot-%F_T%H-%M-%S.snap")
 
 # Set vault addr to the current leader
-VAULT_ADDR="http://nerc-vault-active:8200"
+VAULT_ADDR="http://vault:8200"
 export VAULT_ADDR
 
 # Grab jwt token from the backup-job serviceaccount, and make the vault token request using k8s login method
