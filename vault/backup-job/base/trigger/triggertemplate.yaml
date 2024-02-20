@@ -22,3 +22,6 @@ spec:
         - name: backup-scripts
           configMap:
             name: backup-scripts
+        - name: vault-tls
+          secret:
+            secretName: vault-tls

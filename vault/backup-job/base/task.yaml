@@ -8,6 +8,8 @@ spec:
       - name: "HOME"
         value: "/tekton/home"
   workspaces:
+    - name: vault-tls
+      mountPath: /vault/tls
     - name: snapshots
       mountPath: /snapshots
     - name: backup-job
@@ -19,6 +21,10 @@ spec:
       image: docker.io/hashicorp/vault:1.15.5
       workingDir: /workspace
       env:
+        - name: VAULT_CACERT
+          value: /vault/tls/ca.crt
+        - name: VAULT_ADDR
+          value: https://vault:8200
         - name: SNAPSHOT_PATH
           value: $(workspaces.snapshots.path)
       script: |
