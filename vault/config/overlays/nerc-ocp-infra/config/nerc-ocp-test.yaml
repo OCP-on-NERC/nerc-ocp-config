@@ -1,0 +1,30 @@
+auth:
+- type: kubernetes
+  path: kubernetes/nerc-ocp-test
+  config:
+    kubernetes_ca_cert: "${ file `certs/nerc-test-api.crt` }"
+    kubernetes_host: https://api.nerc-ocp-test.rc.fas.harvard.edu:6443
+    token_reviewer_jwt: "${ file `creds/nerc-ocp-test-token-reviewer` }"
+  roles:
+  - bound_service_account_names:
+    - vault-secret-reader
+    bound_service_account_namespaces:
+    - openshift-storage
+    - group-sync-operator
+    - openshift-config
+    - openshift-ingress
+    - openshift-logging
+    - openshift-ingress-operator
+    - openshift-logging
+    - koku-metrics-operator
+    - curator-system
+    name: secret-reader
+    policies:
+    - nerc-common-reader
+    - nerc-ocp-test-reader
+policies:
+- name: nerc-ocp-test-reader
+  rules: |
+    path "nerc/data/nerc-ocp-test/*" {
+      capabilities = ["read"]
+    }

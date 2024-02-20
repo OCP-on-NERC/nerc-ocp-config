@@ -1,0 +1,18 @@
+auth:
+- type: kubernetes
+  path: kubernetes/nerc-ocp-infra
+  roles:
+  - bound_service_account_names:
+    - vault-secret-reader
+    bound_service_account_namespaces:
+    - external-secrets-operator
+    name: secret-reader
+    policies:
+    - nerc-common-reader
+    - nerc-ocp-infra-reader
+policies:
+- name: nerc-ocp-infra-reader
+  rules: |
+    path "nerc/data/nerc-ocp-infra/*" {
+      capabilities = ["read"]
+    }

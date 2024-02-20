@@ -1,0 +1,16 @@
+policies:
+- name: nerc-common-reader
+  rules: |
+    path "nerc/data/common/*" {
+      capabilities = ["read"]
+    }
+- name: nerc-all-writer
+  rules: |
+    path "nerc/*" {
+      capabilities = ["create", "read", "update", "delete", "list", "sudo"]
+    }
+- name: nerc-all-reader
+  rules: |
+    path "nerc/*" {
+      capabilities = ["read", "list"]
+    }

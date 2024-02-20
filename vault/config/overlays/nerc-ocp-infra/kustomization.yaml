@@ -1,0 +1,30 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: vault
+commonLabels:
+  app: vault-config
+
+resources:
+- job.yaml
+
+generatorOptions:
+  disableNameSuffixHash: true
+
+configMapGenerator:
+- name: ca-certs
+  files:
+  - certs/letsencrypt.crt
+  - certs/nerc-test-api.crt
+
+- name: vault-config
+  files:
+  - config/backup-job.yaml
+  - config/groups.yaml
+  - config/hypershift1.yaml
+  - config/nerc-ocp-infra.yaml
+  - config/nerc-ocp-obs.yaml
+  - config/nerc-ocp-prod.yaml
+  - config/nerc-ocp-test.yaml
+  - config/oidc.yaml
+  - config/policies.yaml
+  - config/secrets.yaml

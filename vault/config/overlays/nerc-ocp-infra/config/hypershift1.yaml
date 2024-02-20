@@ -1,0 +1,22 @@
+auth:
+- type: kubernetes
+  path: kubernetes/hypershift1
+  config:
+    kubernetes_ca_cert: "${ file `certs/letsencrypt.crt` }"
+    kubernetes_host: https://api.hypershift1.int.massopen.cloud:6443
+    token_reviewer_jwt: "${ file `creds/hypershift1-token-reviewer` }"
+  roles:
+  - bound_service_account_names:
+    - vault-secret-reader
+    bound_service_account_namespaces:
+    - external-secrets-operator
+    name: secret-reader
+    policies:
+    - nerc-common-reader
+    - hypershift1-reader
+policies:
+- name: hypershift1-reader
+  rules: |
+    path "nerc/data/hypershift1/*" {
+      capabilities = ["read"]
+    }
