@@ -15,3 +15,14 @@ patches:
       name: vault
     spec:
       host: vault.apps.nerc-ocp-infra.rc.fas.harvard.edu
+
+- patch: |
+    apiVersion: vault.banzaicloud.com/v1alpha1
+    kind: Vault
+    metadata:
+      name: vault
+    spec:
+      # The vault operator will create a secret with the generated
+      # ca.crt in the following namespaces.
+      caNamespaces:
+        - "external-secrets-operator"

@@ -3,10 +3,6 @@ set -eu
 
 snapshot_file_name=$(date +"snapshot-%F_T%H-%M-%S.snap")
 
-# Set vault addr to the current leader
-VAULT_ADDR="http://vault:8200"
-export VAULT_ADDR
-
 # Grab jwt token from the backup-job serviceaccount, and make the vault token request using k8s login method
 VAULT_TOKEN=$(vault write -field=token auth/kubernetes/backup/login role=nerc-vault-backup jwt="$(cat /run/secrets/kubernetes.io/serviceaccount/token)")
 export VAULT_TOKEN
