@@ -1,0 +1,28 @@
+auth:
+- type: kubernetes
+  path: kubernetes/nerc-ocp-prod
+  config:
+    kubernetes_ca_cert: "${ file `certs/letsencrypt.crt` }"
+    kubernetes_host: https://api.shift.nerc.mghpcc.org:6443
+    token_reviewer_jwt: "${ file `creds/nerc-ocp-prod-token-reviewer` }"
+  roles:
+  - bound_service_account_names:
+    - vault-secret-reader
+    bound_service_account_namespaces:
+    - acct-mgt
+    - openshift-storage
+    - group-sync-operator
+    - openshift-config
+    - openshift-ingress
+    - openshift-logging
+    - openshift-ingress-operator
+    name: secret-reader
+    policies:
+    - nerc-common-reader
+    - nerc-ocp-prod-reader
+policies:
+- name: nerc-ocp-prod-reader
+  rules: |
+    path "nerc/data/nerc-ocp-prod/*" {
+      capabilities = ["read"]
+    }

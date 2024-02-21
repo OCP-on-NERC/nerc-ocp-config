@@ -1,0 +1,22 @@
+auth:
+- type: kubernetes
+  path: kubernetes/nerc-ocp-obs
+  config:
+    kubernetes_ca_cert: "${ file `certs/letsencrypt.crt` }"
+    kubernetes_host: https://api.obs.nerc.mghpcc.org:6443
+    token_reviewer_jwt: "${ file `creds/nerc-ocp-obs-token-reviewer` }"
+  roles:
+  - bound_service_account_names:
+    - vault-secret-reader
+    bound_service_account_namespaces:
+    - external-secrets-operator
+    name: secret-reader
+    policies:
+    - nerc-common-reader
+    - nerc-ocp-obs-reader
+policies:
+- name: nerc-ocp-obs-reader
+  rules: |
+    path "nerc/data/nerc-ocp-obs/*" {
+      capabilities = ["read"]
+    }

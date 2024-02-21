@@ -1,0 +1,9 @@
+groups:
+- name: nerc-ops
+  policies:
+  - nerc-all-writer
+  type: external
+group-aliases:
+- group: nerc-ops
+  mountpath: oidc
+  name: nerc-ops
