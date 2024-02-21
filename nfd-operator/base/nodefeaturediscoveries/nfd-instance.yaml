@@ -9,7 +9,7 @@ spec:
     image: registry.redhat.io/openshift4/ose-node-feature-discovery:v4.11
     imagePullPolicy: Always
     servicePort: 0
-  topologyUpdater: false
+  topologyupdater: false
   workerConfig:
     configData: |
       core:
