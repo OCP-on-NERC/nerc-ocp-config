@@ -32,5 +32,8 @@ spec:
       caName: openshift-service-ca.crt
   tenants:
     mode: openshift-logging
+    openshift:
+      adminGroups:
+      - nerc-logs-metrics
   size: 1x.medium
   storageClassName: ocs-external-storagecluster-ceph-rbd
