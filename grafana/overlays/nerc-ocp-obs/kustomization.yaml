@@ -1,0 +1,20 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: grafana
+
+resources:
+  - ../../base
+  - externalsecrets
+  - grafanas
+  - grafanadatasources
+
+patches:
+  - path: patches/grafana-route.yaml
+
+secretGenerator:
+  - name: grafana-serviceaccount-token
+    type: kubernetes.io/service-account-token
+    options:
+      disableNameSuffixHash: true
+      annotations:
+        kubernetes.io/service-account.name: grafana-serviceaccount
