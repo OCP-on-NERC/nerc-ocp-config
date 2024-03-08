@@ -204,7 +204,7 @@ data:
         - alert: Custom6amOpeLimitsCpu
           # A percentage of limit
           expr: (max_over_time(sum(kube_resourcequota{cluster="nerc-ocp-prod",namespace="rhods-notebooks",resource="limits.cpu",type="used"})[10m:5m])/max_over_time(sum(kube_resourcequota{cluster="nerc-ocp-prod",namespace="rhods-notebooks",resource="limits.cpu",type="hard"})[10m:5m])) and (hour()-5+(minute()/60)==6.0)
-          # No 'for' clause when firing immediatley, time is always utc -5 to calculate New York time (summer winter time switch will be wrong by an hour for a week)
+          # No 'for' clause when firing immediately, time is always utc -5 to calculate New York time (summer winter time switch will be wrong by an hour for a week)
           labels:
             severity: info
           annotations:
