@@ -1,0 +1,12 @@
+variant: openshift
+version: 4.10.0
+metadata:
+  name: mlx5-core-udev-rules
+  labels:
+    machineconfiguration.openshift.io/role: worker
+storage:
+  files:
+    - path: /etc/udev/rules.d/90-mlx5_core.rules
+      contents:
+        local: mlx5_core.rules
+      mode: 0644
