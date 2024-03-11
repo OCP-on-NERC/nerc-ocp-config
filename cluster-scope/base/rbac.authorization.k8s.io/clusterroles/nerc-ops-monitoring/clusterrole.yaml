@@ -1,0 +1,15 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    nerc.mghpcc.org/aggregate-to-nerc-ops: "true"
+  name: nerc-ops-monitoring
+rules:
+  - apiGroups:
+      - "monitoring.coreos.com"
+    resources:
+      - "*"
+    verbs:
+      - list
+      - get
+      - watch
