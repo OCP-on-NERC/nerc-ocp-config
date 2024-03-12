@@ -1,2 +1,4 @@
 SUBSYSTEM=="net",DRIVERS=="mlx5_core",KERNELS=="0000:06:00.0",ACTION=="add",NAME="nic1"
 SUBSYSTEM=="net",DRIVERS=="mlx5_core",KERNELS=="0000:06:00.1",ACTION=="add",NAME="nic2"
+SUBSYSTEM=="net",DRIVERS=="mlx5_core",KERNELS=="0000:65:00.0",ACTION=="add",NAME="nic1"
+SUBSYSTEM=="net",DRIVERS=="mlx5_core",KERNELS=="0000:65:00.1",ACTION=="add",NAME="nic2"
