@@ -16,6 +16,7 @@ auth:
     - openshift-ingress
     - openshift-logging
     - openshift-ingress-operator
+    - ece440spring2024-619f12
     name: secret-reader
     policies:
     - nerc-common-reader
