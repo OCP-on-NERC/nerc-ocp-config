@@ -6,3 +6,4 @@ resources:
 - openshift-ingress
 - openshift-logging
 - group-sync-operator
+- ece440spring2024-619f12
