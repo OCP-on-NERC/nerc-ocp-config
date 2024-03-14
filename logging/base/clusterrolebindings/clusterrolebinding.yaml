@@ -1,9 +1,8 @@
 ---
-kind: RoleBinding
+kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: logging-application-view-binding-nerc-logs-metrics
-  namespace: openshift-logging
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
@@ -14,11 +13,10 @@ subjects:
     name: nerc-logs-metrics
 
 ---
-kind: RoleBinding
+kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: logging-infrastructure-view-binding-nerc-logs-metrics
-  namespace: openshift-logging
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
@@ -29,11 +27,10 @@ subjects:
     name: nerc-logs-metrics
 
 ---
-kind: RoleBinding
+kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: logging-audit-view-binding-nerc-logs-metrics
-  namespace: openshift-logging
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
