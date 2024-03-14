@@ -13,10 +13,10 @@ resources:
 - ../../bundles/odf-external
 - ../../bundles/external-secrets-clustersecretstore
 - ../../bundles/multicluster-engine-operator
+- ../../bundles/grafana
 - ../../base/core/namespaces/dex
 - ../../base/core/namespaces/nerc-ocp-prod
 - ../../base/core/namespaces/nerc-ocp-obs
-- ../../base/core/namespaces/grafana
 - ../../base/operators.coreos.com/subscriptions/openshift-pipelines-operator
 - ../../base/operators.coreos.com/subscriptions/loki-operator
 - clusterversion.yaml
