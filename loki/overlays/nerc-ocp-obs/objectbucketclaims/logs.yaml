@@ -7,3 +7,10 @@ spec:
   generateBucketName: logs-obc
   # Change this later with the loki-bucket-storage
   storageClassName: logs-bucket-storage
+  additionalConfig:
+    replicationPolicy: |+
+      {
+        "rules": [
+          { "rule_id": "logs-mirroring-rule", "destination_bucket": "logsarchive-obc-928a6f6f-7b86-4b0c-976b-345a529bb994" }
+        ]
+      }
