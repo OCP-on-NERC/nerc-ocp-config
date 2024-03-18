@@ -1,0 +1,11 @@
+apiVersion: nvidia.com/v1
+kind: ClusterPolicy
+metadata:
+  name: gpu-cluster-policy
+spec:
+  mig:
+    strategy: mixed
+  migManager:
+    config:
+      default: all-disabled
+      name: test-mig-parted-config
