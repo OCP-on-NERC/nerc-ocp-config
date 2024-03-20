@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: test-mig-parted-config
+data:
+  config.yaml: |
+    version: v1
+    mig-configs:
+      # This config disables mig on all GPUs
+      all-disabled:
+        - devices: all
+          mig-enabled: false
+
+      # This is the geometry we tested in single MIG mode
+      # A100-40GB, A800-40GB
+      all-1g.5gb:
+        - devices: all
+          mig-enabled: true
+          mig-devices:
+            "1g.5gb": 7
+
+      all-balanced-test
+        - devices: all
+          mig-enabled: true
+          mig-devices:
+            "1g.5gb": 2
+            "2g.10gb": 1
+            "3g.20gb": 1
