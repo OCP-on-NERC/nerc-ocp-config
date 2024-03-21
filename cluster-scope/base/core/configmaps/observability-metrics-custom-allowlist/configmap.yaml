@@ -22,5 +22,5 @@ data:
       - __name__=~"(ipmi_.*)"
       - __name__=~"(ceph_.*)"
       - __name__=~"(log_.*)"
-      - __name__=~"gpu_operator_.*"
-      - __name__=~"DCGM_FI_.*"
+      - __name__=~"(gpu_operator_.*)"
+      - __name__=~"(DCGM_FI_.*)"
