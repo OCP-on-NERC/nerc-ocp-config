@@ -2,6 +2,7 @@ groups:
 - name: nerc-ops
   policies:
   - nerc-all-writer
+  - pki-nerc-writer
   type: external
 group-aliases:
 - group: nerc-ops
