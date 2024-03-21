@@ -19,7 +19,7 @@ data:
           mig-devices:
             "1g.5gb": 7
 
-      all-balanced-test
+      all-balanced-test:
         - devices: all
           mig-enabled: true
           mig-devices:
