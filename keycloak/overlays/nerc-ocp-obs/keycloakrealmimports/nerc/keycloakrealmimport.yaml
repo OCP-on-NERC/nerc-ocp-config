@@ -1,0 +1,351 @@
+apiVersion: k8s.keycloak.org/v2alpha1
+kind: KeycloakRealmImport
+metadata:
+  name: nerc
+  namespace: keycloak
+  labels:
+    app: keycloak
+    realm: NERC
+spec:
+  keycloakCRName: keycloak
+  realm:
+    id: "NERC"
+    realm: "NERC"
+    enabled: true
+    displayName: "NERC"
+    registrationAllowed: true
+    resetPasswordAllowed: true
+    editUsernameAllowed: true
+    rememberMe: true
+    verifyEmail: true
+    loginWithEmailAllowed: true
+    identityProviders:
+      - displayName: GitHub
+        enabled: true
+        alias: github
+        providerId: github
+        updateProfileFirstLoginMode: on
+        trustEmail: false
+        storeToken: false
+        addReadTokenRoleOnCreate: false
+        authenticateByDefault: false
+        linkOnly: false
+        firstBrokerLoginFlowAlias: "first broker login"
+        config:
+          "syncMode": "IMPORT"
+          "useJwksUrl": "true"
+          
+    groups:
+      - id: nerc-logs-metrics
+        name: nerc-logs-metrics
+      - id: nerc-ops
+        name: nerc-ops
+      - id: nerc-org-admins
+        name: nerc-org-admins
+      - id: nerc-rhods
+        name: nerc-rhods
+      - id: nerc-ai4cloudops
+        name: nerc-ai4cloudops
+    users:
+      - id: computate
+        username: computate
+        groups:
+          - nerc-logs-metrics
+          - nerc-ops
+      - id: schwesig
+        username: schwesig
+        groups:
+          - nerc-logs-metrics
+          - nerc-ops
+      - id: jtriley
+        username: jtriley
+        groups:
+          - nerc-logs-metrics
+          - nerc-ops
+          - nerc-org-admins
+      - id: larsks
+        username: larsks
+        groups:
+          - nerc-logs-metrics
+          - nerc-ops
+          - nerc-org-admins
+          - nerc-rhods
+      - id:  syedmohdqasim
+        username:  syedmohdqasim
+        groups:
+          - nerc-ai4cloudops
+    roles:
+      realm:
+        - id: cluster-prod-view-all
+          name: cluster-prod-view-all
+        - id: cluster-admin
+          name: cluster-admin
+    clientScopes:
+      - id: nerc
+        name: nerc
+        description: A client scope for the nerc client
+        protocol: openid-connect
+        protocolMappers: 
+          - config:
+              access.token.claim: 'true'
+              id.token.claim: 'false'
+              included.client.audience: 'nerc'
+            consentRequired: false
+            id: nerc
+            name: nerc
+            protocol: openid-connect
+            protocolMapper: oidc-audience-mapper
+      - id: nerc-profile
+        name: profile
+        description: "OpenID Connect built-in scope: profile"
+        protocol: openid-connect
+        protocolMappers: 
+          - config:
+              access.token.claim: 'true'
+              claim.name: email_verified
+              id.token.claim: 'true'
+              jsonType.label: boolean
+              user.attribute: emailVerified
+              userinfo.token.claim: 'true'
+            consentRequired: false
+            id: nerc-email-verified
+            name: email verified
+            protocol: openid-connect
+            protocolMapper: oidc-usermodel-property-mapper
+          - config:
+              access.token.claim: 'true'
+              claim.name: preferred_username
+              id.token.claim: 'true'
+              jsonType.label: String
+              user.attribute: username
+              userinfo.token.claim: 'true'
+            consentRequired: false
+            id: nerc-username
+            name: username
+            protocol: openid-connect
+            protocolMapper: oidc-usermodel-property-mapper
+          - config:
+              access.token.claim: 'true'
+              claim.name: groups
+              id.token.claim: 'true'
+              jsonType.label: String
+              multivalued: 'true'
+              user.attribute: foo
+            consentRequired: false
+            id: nerc-groups
+            name: groups
+            protocol: openid-connect
+            protocolMapper: oidc-usermodel-realm-role-mapper
+          - config:
+              access.token.claim: 'true'
+              claim.name: family_name
+              id.token.claim: 'true'
+              jsonType.label: String
+              user.attribute: lastName
+              userinfo.token.claim: 'true'
+            consentRequired: false
+            id: nerc-family-name
+            name: family name
+            protocol: openid-connect
+            protocolMapper: oidc-usermodel-property-mapper
+          - config:
+              access.token.claim: 'true'
+              claim.name: given_name
+              id.token.claim: 'true'
+              jsonType.label: String
+              user.attribute: firstName
+              userinfo.token.claim: 'true'
+            consentRequired: false
+            id: nerc-given-name
+            name: given name
+            protocol: openid-connect
+            protocolMapper: oidc-usermodel-property-mapper
+          - config:
+              access.token.claim: 'true'
+              claim.name: email
+              id.token.claim: 'true'
+              jsonType.label: String
+              user.attribute: email
+              userinfo.token.claim: 'true'
+            consentRequired: false
+            id: nerc-email
+            name: email
+            protocol: openid-connect
+            protocolMapper: oidc-usermodel-property-mapper
+          - config:
+              access.token.claim: 'true'
+              claim.name: middle_name
+              id.token.claim: 'true'
+              jsonType.label: String
+              user.attribute: middleName
+              userinfo.token.claim: 'true'
+            consentRequired: false
+            id: nerc-middle-name
+            name: middle name
+            protocol: openid-connect
+            protocolMapper: oidc-usermodel-attribute-mapper
+          - config:
+              access.token.claim: 'true'
+              claim.name: locale
+              id.token.claim: 'true'
+              jsonType.label: String
+              user.attribute: locale
+              userinfo.token.claim: 'true'
+            consentRequired: false
+            id: nerc-locale
+            name: locale
+            protocol: openid-connect
+            protocolMapper: oidc-usermodel-attribute-mapper
+          - config:
+              access.token.claim: 'true'
+              claim.name: nickname
+              id.token.claim: 'true'
+              jsonType.label: String
+              user.attribute: nickname
+              userinfo.token.claim: 'true'
+            consentRequired: false
+            id: nerc-nickname
+            name: nickname
+            protocol: openid-connect
+            protocolMapper: oidc-usermodel-attribute-mapper
+          - config:
+              access.token.claim: 'true'
+              claim.name: updated_at
+              id.token.claim: 'true'
+              jsonType.label: long
+              user.attribute: updatedAt
+              userinfo.token.claim: 'true'
+            consentRequired: false
+            id: nerc-updated-at
+            name: updated at
+            protocol: openid-connect
+            protocolMapper: oidc-usermodel-attribute-mapper
+          - config:
+              access.token.claim: 'true'
+              id.token.claim: 'true'
+              userinfo.token.claim: 'true'
+            consentRequired: false
+            id: nerc-full-name
+            name: full name
+            protocol: openid-connect
+            protocolMapper: oidc-full-name-mapper
+          - config:
+              access.token.claim: 'true'
+              claim.name: profile
+              id.token.claim: 'true'
+              jsonType.label: String
+              user.attribute: profile
+              userinfo.token.claim: 'true'
+            consentRequired: false
+            id: nerc-profile
+            name: profile
+            protocol: openid-connect
+            protocolMapper: oidc-usermodel-attribute-mapper
+          - config:
+              access.token.claim: 'true'
+              claim.name: resource_access.${client_id}.roles
+              jsonType.label: String
+              multivalued: 'true'
+              user.attribute: foo
+            consentRequired: false
+            id: nerc-client-roles
+            name: client roles
+            protocol: openid-connect
+            protocolMapper: oidc-usermodel-client-role-mapper
+          - config:
+              access.token.claim: 'true'
+              claim.name: zoneinfo
+              id.token.claim: 'true'
+              jsonType.label: String
+              user.attribute: zoneinfo
+              userinfo.token.claim: 'true'
+            consentRequired: false
+            id: nerc-zoneinfo
+            name: zoneinfo
+            protocol: openid-connect
+            protocolMapper: oidc-usermodel-attribute-mapper
+          - config:
+              access.token.claim: 'true'
+              claim.name: realm_access.roles
+              jsonType.label: String
+              multivalued: 'true'
+              user.attribute: foo
+            consentRequired: false
+            id: nerc-realm-roles
+            name: realm roles
+            protocol: openid-connect
+            protocolMapper: oidc-usermodel-realm-role-mapper
+    defaultDefaultClientScopes:
+      - nerc
+    clients:
+      - id: ai4cloudops
+        clientId: ai4cloudops
+        standardFlowEnabled: true
+        serviceAccountsEnabled: true
+        authorizationServicesEnabled: true
+        frontchannelLogout: true
+        protocol: openid-connect
+        redirectUris:
+          - http://localhost:12080/logout
+          - http://localhost:12080/callback
+        defaultClientScopes:
+          - profile
+          - ai4cloudops
+        authorizationSettings:
+          decisionStrategy: AFFIRMATIVE
+          resources:
+            - name: cluster
+              displayName: cluster
+              scopes:
+
+                - id: cluster-all
+                  name: all clusters
+                  displayName: all clusters
+                - id: cluster-nerc-ocp-infra
+                  name: nerc-ocp-infra
+                  displayName: nerc-ocp-infra cluster
+                - id: cluster-nerc-ocp-obs
+                  name: nerc-ocp-obs
+                  displayName: nerc-ocp-obs cluster
+                - id: cluster-nerc-ocp-prod
+                  name: nerc-ocp-prod
+                  displayName: nerc-ocp-prod cluster
+                - id: cluster-nerc-ocp-test
+                  name: nerc-ocp-test
+                  displayName: nerc-ocp-test cluster
+
+            - name: namespace
+              displayName: namespace
+              scopes:
+                - id: namespace-all
+                  name: all namespaces
+                  displayName: all namespaces
+                - id: namespace-rhods-notebooks
+                  name: rhods-notebooks
+                  displayName: rhods-notebooks namespace
+          policies:
+            - id: client-ai4cloudops
+              name: client-ai4cloudops
+              logic: POSITIVE
+              decisionStrategy: UNANIMOUS
+              type: client
+              config:
+                clients: "[\"ai4cloudops\"]"
+            - id: group-nerc-ai4cloudops
+              name: group-nerc-ai4cloudops
+              logic: POSITIVE
+              decisionStrategy: UNANIMOUS
+              type: group
+              config:
+                groups: "[\"nerc-ai4cloudops\"]"
+            - id: group-nerc-ops
+              name: group-nerc-ops
+              logic: POSITIVE
+              decisionStrategy: UNANIMOUS
+              type: group
+              config:
+                groups: "[\"nerc-ops\"]"
+
+  instanceSelector:
+    matchLabels:
+      app: keycloak

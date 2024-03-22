@@ -1,0 +1,57 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: keycloak-playbooks
+  namespace: keycloak
+data:
+  apply-keycloak-permissions.yaml: |
+    - name: Configure Keycloak Fine-Grained Resource Permissions
+      hosts: localhost
+      connection: local
+      gather_facts: false
+      tasks:
+        - name: Manage resource-based Keycloak authorization permissions
+          community.general.keycloak_authz_permission:
+            name: "{{ item.PERMISSION_NAME }}"
+            state: present
+            description: >-
+              Grant the {{ item.PERMISSION_POLICY }} policy access to 
+              all {{ item.PERMISSION_RESOURCE }} 
+              in the {{PERMISSION_REALM }} {{ item.PERMISSION_CLIENT }} client.
+            permission_type: resource
+            policies:
+              - "{{ item.PERMISSION_POLICY }}"
+            resources:
+              - "{{ item.PERMISSION_RESOURCE }}"
+            realm: "{{ PERMISSION_REALM }}"
+            client_id: "{{ item.PERMISSION_CLIENT }}"
+            auth_keycloak_url: https://keycloak.apps-crc.testing
+            auth_username: "{{ ADMIN_USERNAME }}"
+            auth_password: "{{ ADMIN_PASSWORD }}"
+            auth_realm: master
+            validate_certs: False
+          loop: "{{ RESOURCE_BASED_PERMISSIONS }}"
+
+        - name: Manage scope-based Keycloak authorization permissions
+          community.general.keycloak_authz_permission:
+            name: "{{ item.PERMISSION_NAME }}"
+            state: present
+            description: >-
+              Grant the {{ item.PERMISSION_POLICY }} policy access to 
+              {{ item.PERMISSION_SCOPE }} {{ item.PERMISSION_RESOURCE }} 
+              in the {{PERMISSION_REALM }} {{ item.PERMISSION_CLIENT }} client.
+            permission_type: scope
+            policies:
+              - "{{ item.PERMISSION_POLICY }}"
+            resources:
+              - "{{ item.PERMISSION_RESOURCE }}"
+            scopes:
+              - "{{ item.PERMISSION_SCOPE }}"
+            realm: "{{ PERMISSION_REALM }}"
+            client_id: "{{ item.PERMISSION_CLIENT }}"
+            auth_keycloak_url: https://keycloak.apps-crc.testing
+            auth_username: "{{ ADMIN_USERNAME }}"
+            auth_password: "{{ ADMIN_PASSWORD }}"
+            auth_realm: master
+            validate_certs: False
+          loop: "{{ SCOPE_BASED_PERMISSIONS }}"

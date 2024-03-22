@@ -1,0 +1,58 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: keycloak-permissions
+  namespace: keycloak
+  annotations:
+    argocd.argoproj.io/hook: PostSync
+    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
+spec:
+  backoffLimit: 0
+  template:
+    spec:
+      restartPolicy: Never
+      volumes:
+        - name: keycloak-playbooks
+          configMap:
+            name: keycloak-playbooks
+        - name: keycloak-permissions
+          configMap:
+            name: keycloak-permissions
+        - name: home
+          emptyDir: {}
+      containers:
+        - name: keycloak-permissions
+          image: quay.io/nerc-images/keycloak-ansible:latest
+          volumeMounts:
+            - name: keycloak-playbooks
+              mountPath: /opt/keycloak-playbooks
+            - name: keycloak-permissions
+              mountPath: /opt/keycloak-permissions
+            - name: home
+              mountPath: /home/ansible
+          env:
+            - name: VALIDATE_CERTS
+              value: "false"
+            - name: ADMIN_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  key: username
+                  name: keycloak-initial-admin
+            - name: ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: password
+                  name: keycloak-initial-admin
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+          command: ["/bin/bash", "-c", "--"]
+          args:
+            - |
+                ansible-playbook /opt/keycloak-playbooks/apply-keycloak-permissions.yaml \
+                  -e @/opt/keycloak-permissions/keycloak-permissions.yaml \
+                  -e ADMIN_USERNAME="$ADMIN_USERNAME" \
+                  -e ADMIN_PASSWORD="$ADMIN_PASSWORD" \
+                  -e VALIDATE_CERTS="$VALIDATE_CERTS"
+

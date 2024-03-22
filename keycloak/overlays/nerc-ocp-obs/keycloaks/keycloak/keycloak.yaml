@@ -1,0 +1,27 @@
+apiVersion: k8s.keycloak.org/v2alpha1
+kind: Keycloak
+metadata:
+  name: keycloak
+  namespace: keycloak
+  labels:
+    app: keycloak
+spec:
+  instances: 2
+  externalAccess:
+    enabled: true
+  externalDatabase:
+    enabled: true
+  db:
+    vendor: postgres
+    host: postgres-primary
+    port: 5432
+    usernameSecret:
+      name: postgres-pguser-keycloak
+      key: user
+    passwordSecret:
+      name: postgres-pguser-keycloak
+      key: password
+  hostname:
+    hostname: keycloak.apps.obs.nerc.mghpcc.org
+  http:
+    tlsSecret: keycloak-certificate
