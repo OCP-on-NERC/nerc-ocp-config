@@ -19,6 +19,7 @@ resources:
 - machineconfigs/configure-bond0
 - nodenetworkconfigurationpolicies/vlan-2175-nese.yaml
 - secretstores
+- nerc-internal-ca
 
 components:
   - ../../components/nerc-oauth-github
