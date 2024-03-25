@@ -2,7 +2,7 @@ auth:
 - type: kubernetes
   path: kubernetes/nerc-ocp-test
   config:
-    kubernetes_ca_cert: "${ file `certs/nerc-test-api.crt` }"
+    kubernetes_ca_cert: "${ file `certs/nerc-internal-root.crt` }"
     kubernetes_host: https://api.nerc-ocp-test.rc.fas.harvard.edu:6443
     token_reviewer_jwt: "${ file `creds/nerc-ocp-test-token-reviewer` }"
   roles:

@@ -14,7 +14,7 @@ configMapGenerator:
 - name: ca-certs
   files:
   - certs/letsencrypt.crt
-  - certs/nerc-test-api.crt
+  - certs/nerc-internal-root.crt
 
 - name: vault-config
   files:
@@ -28,3 +28,4 @@ configMapGenerator:
   - config/oidc.yaml
   - config/policies.yaml
   - config/secrets.yaml
+  - config/pki-nerc.yaml

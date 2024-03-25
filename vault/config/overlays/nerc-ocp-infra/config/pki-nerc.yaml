@@ -1,0 +1,38 @@
+secrets:
+- type: pki
+  path: pki-nerc-root
+  config:
+    default_lease_ttl: 17520h
+    max_lease_ttl: 43800h
+  configuration:
+    config:
+    - name: auto-tidy
+      enabled: true
+      tidy_cert_store: true
+      tidy_revoked_certs: true
+    - name: urls
+      issuing_certificates: https://vault.apps.nerc-ocp-infra.rc.fas.harvard.edu/v1/pki-nerc-root/ca
+      crl_distribution_points: https://vault.apps.nerc-ocp-infra.rc.fas.harvard.edu/v1/pki-nerc-root/crl
+    root/generate:
+    - name: internal
+      common_name: NERC Internal Root CA
+      create_only: true
+      ttl: 43800h
+    roles:
+    - name: default
+      allowed_domains: nerc.mghpcc.org,rc.fas.harvard.edu
+      allow_subdomains: true
+      generate_lease: false
+      ttl: 17520h
+      max_ttl: 43800h
+policies:
+- name: pki-nerc-reader
+  rules: |
+    path "pki-nerc*" {
+      capabilities = ["list", "read"]
+    }
+- name: pki-nerc-writer
+  rules: |
+    path "pki-nerc*" {
+      capabilities = [ "create", "read", "update", "delete", "list", "sudo" ]
+    }
