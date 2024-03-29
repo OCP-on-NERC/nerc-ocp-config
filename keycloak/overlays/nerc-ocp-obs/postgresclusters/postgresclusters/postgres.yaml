@@ -40,4 +40,3 @@ spec:
         pg_hba:
           - "host keycloak keycloak all md5"
           - "local keycloak keycloak trust"
-        
