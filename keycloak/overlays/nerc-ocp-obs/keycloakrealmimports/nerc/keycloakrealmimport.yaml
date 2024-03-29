@@ -23,7 +23,7 @@ spec:
         enabled: true
         alias: github
         providerId: github
-        updateProfileFirstLoginMode: on
+        updateProfileFirstLoginMode: "on"
         trustEmail: false
         storeToken: false
         addReadTokenRoleOnCreate: false
@@ -33,7 +33,7 @@ spec:
         config:
           "syncMode": "IMPORT"
           "useJwksUrl": "true"
-          
+
     groups:
       - id: nerc-logs-metrics
         name: nerc-logs-metrics
@@ -69,8 +69,8 @@ spec:
           - nerc-ops
           - nerc-org-admins
           - nerc-rhods
-      - id:  syedmohdqasim
-        username:  syedmohdqasim
+      - id: syedmohdqasim
+        username: syedmohdqasim
         groups:
           - nerc-ai4cloudops
     roles:
@@ -84,7 +84,7 @@ spec:
         name: nerc
         description: A client scope for the nerc client
         protocol: openid-connect
-        protocolMappers: 
+        protocolMappers:
           - config:
               access.token.claim: 'true'
               id.token.claim: 'false'
@@ -98,7 +98,7 @@ spec:
         name: profile
         description: "OpenID Connect built-in scope: profile"
         protocol: openid-connect
-        protocolMappers: 
+        protocolMappers:
           - config:
               access.token.claim: 'true'
               claim.name: email_verified

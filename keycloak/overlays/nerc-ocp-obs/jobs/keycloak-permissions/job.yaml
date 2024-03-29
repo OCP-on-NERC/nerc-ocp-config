@@ -54,4 +54,3 @@ spec:
                   -e ADMIN_USERNAME="$ADMIN_USERNAME" \
                   -e ADMIN_PASSWORD="$ADMIN_PASSWORD" \
                   -e VALIDATE_CERTS="$VALIDATE_CERTS"
-

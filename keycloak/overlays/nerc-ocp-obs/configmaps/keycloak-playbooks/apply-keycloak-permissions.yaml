@@ -8,8 +8,8 @@
         name: "{{ item.PERMISSION_NAME }}"
         state: present
         description: >-
-          Grant the {{ item.PERMISSION_POLICY }} policy access to 
-          all {{ item.PERMISSION_RESOURCE }} 
+          Grant the {{ item.PERMISSION_POLICY }} policy access to
+          all {{ item.PERMISSION_RESOURCE }}
           in the {{PERMISSION_REALM }} {{ item.PERMISSION_CLIENT }} client.
         permission_type: resource
         policies:
@@ -22,7 +22,7 @@
         auth_username: "{{ ADMIN_USERNAME }}"
         auth_password: "{{ ADMIN_PASSWORD }}"
         auth_realm: master
-        validate_certs: False
+        validate_certs: false
       loop: "{{ RESOURCE_BASED_PERMISSIONS }}"
 
     - name: Manage scope-based Keycloak authorization permissions
@@ -30,8 +30,8 @@
         name: "{{ item.PERMISSION_NAME }}"
         state: present
         description: >-
-          Grant the {{ item.PERMISSION_POLICY }} policy access to 
-          {{ item.PERMISSION_SCOPE }} {{ item.PERMISSION_RESOURCE }} 
+          Grant the {{ item.PERMISSION_POLICY }} policy access to
+          {{ item.PERMISSION_SCOPE }} {{ item.PERMISSION_RESOURCE }}
           in the {{PERMISSION_REALM }} {{ item.PERMISSION_CLIENT }} client.
         permission_type: scope
         policies:
@@ -46,5 +46,5 @@
         auth_username: "{{ ADMIN_USERNAME }}"
         auth_password: "{{ ADMIN_PASSWORD }}"
         auth_realm: master
-        validate_certs: False
+        validate_certs: false
       loop: "{{ SCOPE_BASED_PERMISSIONS }}"
