@@ -2,7 +2,6 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: keycloak-permissions
-  namespace: keycloak
   annotations:
     argocd.argoproj.io/hook: PostSync
     argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
