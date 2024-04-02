@@ -1,0 +1,58 @@
+apiVersion: postgres-operator.crunchydata.com/v1beta1
+kind: PostgresCluster
+metadata:
+  name: curatordb-cluster
+  namespace: koku-metrics-operator
+spec:
+  port: 5432
+  users:
+    - databases:
+        - curatordb
+      password:
+        type: ASCII
+      options: "SUPERUSER"
+      name: curator
+  standby:
+    enabled: false
+  proxy:
+    pgBouncer:
+      port: 5432
+      service:
+        type: ClusterIP
+      replicas: 1
+  backups:
+    pgbackrest:
+      repos:
+        - volume:
+            volumeClaimSpec:
+              accessModes:
+                - ReadWriteOnce
+              resources:
+                requests:
+                  storage: 10Gi
+          name: repo1
+  service:
+    type: ClusterIP
+  patroni:
+    dynamicConfiguration:
+      postgresql:
+        pg_hba:
+          - postgres-config
+    leaderLeaseDurationSeconds: 30
+    port: 8008
+    switchover:
+      type: Switchover
+      enabled: true
+    syncPeriodSeconds: 10
+  instances:
+    - dataVolumeClaimSpec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 10Gi
+        storageClassName: ocs-external-storagecluster-ceph-rbd
+      replicas: 1
+  postgresVersion: 15
+  imagePullPolicy: IfNotPresent
+  openshift: true
