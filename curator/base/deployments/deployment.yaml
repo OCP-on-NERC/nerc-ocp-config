@@ -71,28 +71,28 @@ spec:
         - name: DATABASE_NAME
           valueFrom:
             secretKeyRef:
-              key: DatabaseName
-              name: postgres-config
+              key: dbname
+              name: curatordb-pguser-curator
         - name: DATABASE_USER
           valueFrom:
             secretKeyRef:
-              key: DatabaseUser
-              name: postgres-config
+              key: user
+              name: curatordb-pguser-curator
         - name: DATABASE_PASSWORD
           valueFrom:
             secretKeyRef:
-              key: DatabasePassword
-              name: postgres-config
+              key: password
+              name: curatordb-pguser-curator
         - name: DATABASE_HOST_NAME
           valueFrom:
             secretKeyRef:
-              key: DatabaseHostName
-              name: postgres-config
+              key: host
+              name: curatordb-pguser-curator
         - name: PORT_NUMBER
           valueFrom:
             secretKeyRef:
-              key: DatabasePort
-              name: postgres-config
+              key: port
+              name: curatordb-pguser-curator
         image: ghcr.io/ocp-on-nerc/curator-operator/curator-manager:latest
         livenessProbe:
           httpGet:

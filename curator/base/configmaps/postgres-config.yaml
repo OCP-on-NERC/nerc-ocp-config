@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-config
+  namespace: koku-metrics-config
+data:
+  pg_hba.conf: |
+    host all all 0.0.0.0/0 md5
