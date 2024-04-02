@@ -1,0 +1,22 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: knative-edit
+  labels:
+    rbac.authorization.k8s.io/aggregate-to-edit: "true"
+rules:
+  - apiGroups:
+      - 'sources.knative.dev/v1'
+      - 'serving.knative.dev/v1'
+      - 'messaging.knative.dev/v1'
+      - 'eventing.knative.dev/v1'
+    resources:
+      - '*'
+    verbs:
+      - create
+      - delete
+      - update
+      - patch
+      - get
+      - watch
+      - list
