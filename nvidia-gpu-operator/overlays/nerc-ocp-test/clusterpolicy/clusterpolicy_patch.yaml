@@ -4,7 +4,7 @@ metadata:
   name: gpu-cluster-policy
 spec:
   mig:
-    strategy: mixed
+    strategy: single
   migManager:
     config:
       default: all-disabled
