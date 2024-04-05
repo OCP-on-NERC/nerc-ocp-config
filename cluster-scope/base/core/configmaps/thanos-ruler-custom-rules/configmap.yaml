@@ -218,8 +218,8 @@ data:
                   }
                 )[10m:5m]
               )
-            ) and (hour()-6+(minute()/60)==6.0)
-          # No 'for' clause when firing immediately, time is always utc -6 to calculate New York time (summer winter time switch will be wrong by an hour)
+            ) and (hour()-4+(minute()/60)==6.0)
+          # No 'for' clause when firing immediately, time is always utc -4 to calculate New York time (summer winter time switch not yet fixed)
           labels:
             severity: info
             environment: production
@@ -247,7 +247,7 @@ data:
                   }
                 )[10m:5m]
               )
-            ) and (hour()-6+(minute()/60)==6.0)
+            ) and (hour()-4+(minute()/60)==6.0)
           labels:
             severity: info
             environment: production
@@ -259,7 +259,7 @@ data:
 
         - alert: Custom6amOpeLimitsMemory
           # C limits.memory percentage of limit
-          expr: (max_over_time(sum(kube_resourcequota{cluster="nerc-ocp-prod",namespace="rhods-notebooks",resource="limits.memory",type="used"})[10m:5m])/max_over_time(sum(kube_resourcequota{cluster="nerc-ocp-prod",namespace="rhods-notebooks",resource="limits.memory",type="hard"})[10m:5m])) and (hour()-6+(minute()/60)==6.0)
+          expr: (max_over_time(sum(kube_resourcequota{cluster="nerc-ocp-prod",namespace="rhods-notebooks",resource="limits.memory",type="used"})[10m:5m])/max_over_time(sum(kube_resourcequota{cluster="nerc-ocp-prod",namespace="rhods-notebooks",resource="limits.memory",type="hard"})[10m:5m])) and (hour()-4+(minute()/60)==6.0)
           labels:
             severity: info
             environment: production
@@ -271,7 +271,7 @@ data:
 
         - alert: Custom6amOpePersistentVolumeClaims
           # D persistentvolumeclaims percentage of limit
-          expr: (max_over_time(sum(kube_resourcequota{cluster="nerc-ocp-prod",namespace="rhods-notebooks",resource="persistentvolumeclaims",type="used"})[10m:5m])/max_over_time(sum(kube_resourcequota{cluster="nerc-ocp-prod",namespace="rhods-notebooks",resource="persistentvolumeclaims",type="hard"})[10m:5m])) and (hour()-6+(minute()/60)==6.0)
+          expr: (max_over_time(sum(kube_resourcequota{cluster="nerc-ocp-prod",namespace="rhods-notebooks",resource="persistentvolumeclaims",type="used"})[10m:5m])/max_over_time(sum(kube_resourcequota{cluster="nerc-ocp-prod",namespace="rhods-notebooks",resource="persistentvolumeclaims",type="hard"})[10m:5m])) and (hour()-4+(minute()/60)==6.0)
           labels:
             severity: info
             environment: production
@@ -283,7 +283,7 @@ data:
 
         - alert: Custom6amOpeRequestsStorage
           # E requests.storage percentage of limit
-          expr: (max_over_time(sum(kube_resourcequota{cluster="nerc-ocp-prod",namespace="rhods-notebooks",resource="requests.storage",type="used"})[10m:5m])/max_over_time(sum(kube_resourcequota{cluster="nerc-ocp-prod",namespace="rhods-notebooks",resource="requests.storage",type="hard"})[10m:5m])) and (hour()-6+(minute()/60)==6.0)
+          expr: (max_over_time(sum(kube_resourcequota{cluster="nerc-ocp-prod",namespace="rhods-notebooks",resource="requests.storage",type="used"})[10m:5m])/max_over_time(sum(kube_resourcequota{cluster="nerc-ocp-prod",namespace="rhods-notebooks",resource="requests.storage",type="hard"})[10m:5m])) and (hour()-4+(minute()/60)==6.0)
           labels:
             severity: info
             environment: production
@@ -295,7 +295,7 @@ data:
 
         - alert: Custom6amOpeKubePodContainerInfo
           # F kube_pod_container_info absolute
-          expr: (max_over_time(count(kube_pod_container_info{cluster="nerc-ocp-prod",namespace="rhods-notebooks"})[10m:5m])) and ((hour()-6+(minute()/60))==6.0)
+          expr: (max_over_time(count(kube_pod_container_info{cluster="nerc-ocp-prod",namespace="rhods-notebooks"})[10m:5m])) and ((hour()-4+(minute()/60))==6.0)
           labels:
             severity: info
             environment: production
@@ -307,7 +307,7 @@ data:
 
         - alert: Custom6amOpeKubePodOwner
           # G kube_pod_owner absolute
-          expr: (max_over_time(count(kube_pod_owner{cluster="nerc-ocp-prod",namespace="rhods-notebooks"})[10m:5m])) and ((hour()-6+(minute()/60))==6.0)
+          expr: (max_over_time(count(kube_pod_owner{cluster="nerc-ocp-prod",namespace="rhods-notebooks"})[10m:5m])) and ((hour()-4+(minute()/60))==6.0)
           labels:
             severity: info
             environment: production
