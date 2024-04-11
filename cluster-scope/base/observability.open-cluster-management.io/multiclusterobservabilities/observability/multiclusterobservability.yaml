@@ -41,3 +41,7 @@ spec:
       replicas: 3
     queryFrontendMemcached:
       replicas: 3
+    retentionConfig:
+      retentionResolutionRaw: 30d   # default is 30d
+      retentionResolution5m: 90d    # default is 180d
+      retentionResolution1h: 180d   # default is 0d
