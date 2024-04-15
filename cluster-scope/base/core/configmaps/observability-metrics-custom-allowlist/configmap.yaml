@@ -24,4 +24,4 @@ data:
       - __name__=~"(log_.*)"
       - __name__=~"(gpu_operator_.*)"
       - __name__=~"(DCGM_FI_.*)"
-      - __name__=~"(argoc_.*)"
+      - __name__=~"(argocd_.*)"
