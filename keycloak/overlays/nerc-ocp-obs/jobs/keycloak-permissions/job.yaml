@@ -32,6 +32,8 @@ spec:
           env:
             - name: VALIDATE_CERTS
               value: "false"
+            - name: AUTH_BASE_URL
+              value: "https://keycloak-service:8443"
             - name: ADMIN_USERNAME
               valueFrom:
                 secretKeyRef:
@@ -53,4 +55,5 @@ spec:
                   -e @/opt/keycloak-permissions/keycloak-permissions.yaml \
                   -e ADMIN_USERNAME="$ADMIN_USERNAME" \
                   -e ADMIN_PASSWORD="$ADMIN_PASSWORD" \
+                  -e AUTH_BASE_URL="$AUTH_BASE_URL" \
                   -e VALIDATE_CERTS="$VALIDATE_CERTS"

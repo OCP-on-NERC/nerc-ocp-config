@@ -18,7 +18,7 @@
           - "{{ item.PERMISSION_RESOURCE }}"
         realm: "{{ PERMISSION_REALM }}"
         client_id: "{{ item.PERMISSION_CLIENT }}"
-        auth_keycloak_url: https://keycloak.apps-crc.testing
+        auth_keycloak_url: "{{ AUTH_BASE_URL }}"
         auth_username: "{{ ADMIN_USERNAME }}"
         auth_password: "{{ ADMIN_PASSWORD }}"
         auth_realm: master
@@ -42,7 +42,7 @@
           - "{{ item.PERMISSION_SCOPE }}"
         realm: "{{ PERMISSION_REALM }}"
         client_id: "{{ item.PERMISSION_CLIENT }}"
-        auth_keycloak_url: https://keycloak.apps-crc.testing
+        auth_keycloak_url: "{{ AUTH_BASE_URL }}"
         auth_username: "{{ ADMIN_USERNAME }}"
         auth_password: "{{ ADMIN_PASSWORD }}"
         auth_realm: master
