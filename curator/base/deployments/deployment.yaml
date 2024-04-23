@@ -72,27 +72,27 @@ spec:
           valueFrom:
             secretKeyRef:
               key: dbname
-              name: curatordb-pguser-curator
+              name: curatordb-cluster-pguser-curator
         - name: DATABASE_USER
           valueFrom:
             secretKeyRef:
               key: user
-              name: curatordb-pguser-curator
+              name: curatordb-cluster-pguser-curator
         - name: DATABASE_PASSWORD
           valueFrom:
             secretKeyRef:
               key: password
-              name: curatordb-pguser-curator
+              name: curatordb-cluster-pguser-curator
         - name: DATABASE_HOST_NAME
           valueFrom:
             secretKeyRef:
               key: host
-              name: curatordb-pguser-curator
+              name: curatordb-cluster-pguser-curator
         - name: PORT_NUMBER
           valueFrom:
             secretKeyRef:
               key: port
-              name: curatordb-pguser-curator
+              name: curatordb-cluster-pguser-curator
         image: ghcr.io/ocp-on-nerc/curator-operator/curator-manager:latest
         livenessProbe:
           httpGet:

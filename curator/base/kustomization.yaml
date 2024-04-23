@@ -4,7 +4,6 @@ namespace: curator-system
 resources:
   - configmaps
   - deployments
-  - externalsecrets
   - postgrescluster
   - pvcs
   - rolebindings
