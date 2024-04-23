@@ -37,7 +37,7 @@ spec:
     dynamicConfiguration:
       postgresql:
         pg_hba:
-          - postgres-config
+        - host      all  all  0.0.0.0/0   md5
     leaderLeaseDurationSeconds: 30
     port: 8008
     switchover:
