@@ -3,8 +3,6 @@ kind: Kustomization
 namespace: keycloak
 
 resources:
-  - configmaps/
-  - jobs/
   - certificates/
   - postgresclusters/
   - keycloaks/

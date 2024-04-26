@@ -292,58 +292,6 @@ spec:
           - ai4cloudops
         authorizationSettings:
           decisionStrategy: AFFIRMATIVE
-          resources:
-            - name: cluster
-              displayName: cluster
-              scopes:
-
-                - id: cluster-all
-                  name: all clusters
-                  displayName: all clusters
-                - id: cluster-nerc-ocp-infra
-                  name: nerc-ocp-infra
-                  displayName: nerc-ocp-infra cluster
-                - id: cluster-nerc-ocp-obs
-                  name: nerc-ocp-obs
-                  displayName: nerc-ocp-obs cluster
-                - id: cluster-nerc-ocp-prod
-                  name: nerc-ocp-prod
-                  displayName: nerc-ocp-prod cluster
-                - id: cluster-nerc-ocp-test
-                  name: nerc-ocp-test
-                  displayName: nerc-ocp-test cluster
-
-            - name: namespace
-              displayName: namespace
-              scopes:
-                - id: namespace-all
-                  name: all namespaces
-                  displayName: all namespaces
-                - id: namespace-rhods-notebooks
-                  name: rhods-notebooks
-                  displayName: rhods-notebooks namespace
-          policies:
-            - id: client-ai4cloudops
-              name: client-ai4cloudops
-              logic: POSITIVE
-              decisionStrategy: UNANIMOUS
-              type: client
-              config:
-                clients: "[\"ai4cloudops\"]"
-            - id: group-nerc-ai4cloudops
-              name: group-nerc-ai4cloudops
-              logic: POSITIVE
-              decisionStrategy: UNANIMOUS
-              type: group
-              config:
-                groups: "[\"nerc-ai4cloudops\"]"
-            - id: group-nerc-ops
-              name: group-nerc-ops
-              logic: POSITIVE
-              decisionStrategy: UNANIMOUS
-              type: group
-              config:
-                groups: "[\"nerc-ops\"]"
 
   instanceSelector:
     matchLabels:
