@@ -6,6 +6,7 @@ commonLabels:
 resources:
 - clusterversion.yaml
 - ../common
+- ../../bundles/ansible-automation-platform-operator
 - ../../bundles/koku-metrics-operator
 - ../../bundles/curator
 - ../../bundles/patch-operator
