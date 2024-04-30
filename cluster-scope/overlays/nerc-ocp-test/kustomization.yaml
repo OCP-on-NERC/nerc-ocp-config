@@ -14,6 +14,9 @@ resources:
 - ../../bundles/rhods-operator
 - ../../bundles/node-feature-discovery
 - ../../bundles/nvidia-gpu-operator
+- ../../bundles/openshift-custom-metrics-autoscaler-operator
+- ../../bundles/openshift-serverless-operator
+- ../../bundles/openshift-opentelemetry-operator
 - feature/odf
 - machineconfigs/disable-net-ifnames
 - machineconfigs/udev-rules
