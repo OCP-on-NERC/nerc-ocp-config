@@ -6,9 +6,9 @@ metadata:
     app: keycloak
     realm: NERC
 spec:
-  validate_certs: false
+  cleanupUndefinedAuthorizations: true
   keycloak:
-    baseUrl: https://keycloak-service.keycloak.svc:8443
+    baseUrl: https://keycloak.apps.obs.nerc.mghpcc.org
     adminSecret:
       name: keycloak-initial-admin
       usernameKey: username

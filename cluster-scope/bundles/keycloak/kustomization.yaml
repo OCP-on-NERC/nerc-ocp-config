@@ -6,3 +6,4 @@ resources:
 - ../../base/core/namespaces/keycloak
 - ../../base/operators.coreos.com/operatorgroups/keycloak
 - ../../base/operators.coreos.com/subscriptions/rhbk-operator
+- ../../base/operators.coreos.com/subscriptions/keycloak-permissions-operator
