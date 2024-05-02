@@ -10,6 +10,8 @@ resources:
 - ../../bundles/nerc-certificate-clusterissuers
 - ../../bundles/external-secrets-clustersecretstore
 - ../../bundles/grafana
+- ../../bundles/crunchy-postgres-operator
+- ../../bundles/keycloak
 - ../../base/core/namespaces/openshift-gitops
 - ../../base/core/namespaces/dex
 - ../../base/rbac.authorization.k8s.io/clusterroles/allow-edit-rbac
