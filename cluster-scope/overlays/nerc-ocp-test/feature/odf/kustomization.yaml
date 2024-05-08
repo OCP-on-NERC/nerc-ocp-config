@@ -16,3 +16,4 @@ resources:
 patches:
   - path: storageclasses/ocs-external-storagecluster-ceph-rbd_patch.yaml
   - path: secretstores/secretstore-patch.yaml
+  - path: subscriptions/subscription-patch.yaml
