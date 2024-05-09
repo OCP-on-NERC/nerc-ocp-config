@@ -16,13 +16,37 @@ spec:
   realm:
     id: NERC
     clients:
-      - id: ai4cloudops
+      - id: nerc
         authorizationSettings:
+          scopes:
+
+            - id: namespace-all
+              name: all namespaces
+              displayName: all namespaces
+            - id: namespace-rhods-notebooks
+              name: rhods-notebooks
+              displayName: rhods-notebooks namespace
+
+            - id: cluster-all
+              name: all clusters
+              displayName: all clusters
+            - id: cluster-nerc-ocp-infra
+              name: nerc-ocp-infra
+              displayName: nerc-ocp-infra cluster
+            - id: cluster-nerc-ocp-obs
+              name: nerc-ocp-obs
+              displayName: nerc-ocp-obs cluster
+            - id: cluster-nerc-ocp-prod
+              name: nerc-ocp-prod
+              displayName: nerc-ocp-prod cluster
+            - id: cluster-nerc-ocp-test
+              name: nerc-ocp-test
+              displayName: nerc-ocp-test cluster
+
           resources:
             - name: cluster
               displayName: cluster
               scopes:
-
                 - id: cluster-all
                   name: all clusters
                   displayName: all clusters
@@ -50,6 +74,16 @@ spec:
                   displayName: rhods-notebooks namespace
 
           policies:
+
+            - id: group-nerc-ops
+              name: group-nerc-ops
+              logic: POSITIVE
+              decisionStrategy: UNANIMOUS
+              type:
+                group:
+                  groups:
+                    - id: nerc-ops
+
             - id: client-ai4cloudops
               name: client-ai4cloudops
               logic: POSITIVE
@@ -66,39 +100,43 @@ spec:
                 group:
                   groups:
                     - id: nerc-ai4cloudops
-            - id: group-nerc-ops
-              name: group-nerc-ops
+
+            - id: client-oct
+              name: client-oct
               logic: POSITIVE
               decisionStrategy: UNANIMOUS
               type:
-                group:
-                  groups:
-                    - id: nerc-ops
+                client:
+                  clients:
+                    - oct
 
           permissions:
+
             - name: group-nerc-ops-cluster-all
-              client: ai4cloudops
               policy: group-nerc-ops
               resource: cluster
             - name: group-nerc-ops-namespace-all
-              client: ai4cloudops
               policy: group-nerc-ops
               resource: namespace
+
             - name: group-nerc-ai4cloudops-namespace-all
-              client: ai4cloudops
               policy: group-nerc-ai4cloudops
               resource: namespace
             - name: client-ai4cloudops-namespace-all
-              client: ai4cloudops
               policy: client-ai4cloudops
               resource: namespace
             - name: group-nerc-ai4cloudops-cluster-nerc-ocp-prod
-              client: ai4cloudops
               policy: group-nerc-ai4cloudops
               resource: cluster
               scope: nerc-ocp-prod
             - name: client-ai4cloudops-cluster-nerc-ocp-prod
-              client: ai4cloudops
               policy: client-ai4cloudops
               resource: cluster
               scope: nerc-ocp-prod
+
+            - name: client-oct-namespace-all
+              policy: client-oct
+              resource: namespace
+            - name: client-oct-cluster-all
+              policy: client-oct
+              resource: cluster

@@ -1,0 +1,12 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: prom-keycloak-proxy
+commonLabels:
+  app: prom-keycloak-proxy
+  deployment: prom-keycloak-proxy
+
+resources:
+  - externalsecrets/
+  - deployments/
+  - services/
+  - routes/

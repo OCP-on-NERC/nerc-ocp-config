@@ -6,10 +6,6 @@ metadata:
     app: keycloak
 spec:
   instances: 2
-  externalAccess:
-    enabled: true
-  externalDatabase:
-    enabled: true
   db:
     vendor: postgres
     host: postgres-primary

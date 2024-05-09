@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: prom-keycloak-proxy
+spec:
+  ports:
+  - name: http
+    protocol: TCP
+    port: 8080
+    targetPort: 8080
+  selector:
+    app: prom-keycloak-proxy
+    deployment: prom-keycloak-proxy
+  sessionAffinity: None
+  type: ClusterIP
