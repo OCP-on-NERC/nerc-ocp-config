@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prom-keycloak-proxy
+  namespace: prom-keycloak-proxy
+spec:
+  replicas: 1
+  revisionHistoryLimit: 0
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      name: prom-keycloak-proxy
+    spec:
+      containers:
+        - name: prom-keycloak-proxy
+          envFrom:
+            - secretRef:
+                name: prom-keycloak-proxy-secrets
+          env:
+            - name: PROXY_AUTH_REALM
+              value: NERC
+            - name: PROXY_AUTH_BASE_URL
+              value: https://keycloak.apps.obs.nerc.mghpcc.org
+            - name: PROXY_AUTH_TLS_VERIFY
+              value: 'true'
+            - name: PROXY_PROMETHEUS_CA_CRT
+              value: /opt/prom-keycloak-proxy-certs/ca.crt
+            - name: PROXY_PROMETHEUS_TLS_CRT
+              value: /opt/prom-keycloak-proxy-certs/tls.crt
+            - name: PROXY_PROMETHEUS_TLS_KEY
+              value: /opt/prom-keycloak-proxy-certs/tls.key
+          image: quay.io/nerc-images/prom-keycloak-proxy:1.0.1
+          imagePullPolicy: Always
+          livenessProbe:
+            exec:
+              command:
+                - /usr/bin/curl
+                - http://localhost:8080
+            failureThreshold: 6
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          ports:
+            - containerPort: 8080
+              name: http
+              protocol: TCP
+          readinessProbe:
+            exec:
+              command:
+                - /usr/bin/curl
+                - http://localhost:8080
+            failureThreshold: 6
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources:
+            limits:
+              memory: 1Gi
+              cpu: '1'
+          volumeMounts:
+            - mountPath: /opt/prom-keycloak-proxy-certs
+              name: prom-keycloak-proxy-certs
+              readOnly: true
+      volumes:
+        - name: prom-keycloak-proxy-certs
+          secret:
+            secretName: prom-keycloak-proxy-certs
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}

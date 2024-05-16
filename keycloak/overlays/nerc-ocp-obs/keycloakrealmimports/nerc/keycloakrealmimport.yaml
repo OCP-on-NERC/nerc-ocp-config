@@ -277,6 +277,19 @@ spec:
     defaultDefaultClientScopes:
       - nerc
     clients:
+      - id: nerc
+        clientId: nerc
+        standardFlowEnabled: true
+        serviceAccountsEnabled: true
+        authorizationServicesEnabled: true
+        frontchannelLogout: true
+        protocol: openid-connect
+        redirectUris: []
+        defaultClientScopes:
+          - profile
+          - ai4cloudops
+        authorizationSettings:
+          decisionStrategy: AFFIRMATIVE
       - id: ai4cloudops
         clientId: ai4cloudops
         standardFlowEnabled: true
@@ -284,15 +297,25 @@ spec:
         authorizationServicesEnabled: true
         frontchannelLogout: true
         protocol: openid-connect
-        redirectUris:
-          - http://localhost:12080/logout
-          - http://localhost:12080/callback
+        redirectUris: []
         defaultClientScopes:
           - profile
           - ai4cloudops
         authorizationSettings:
           decisionStrategy: AFFIRMATIVE
-
+      - id: oct
+        clientId: oct
+        standardFlowEnabled: true
+        serviceAccountsEnabled: true
+        authorizationServicesEnabled: true
+        frontchannelLogout: true
+        protocol: openid-connect
+        redirectUris: []
+        defaultClientScopes:
+          - profile
+          - oct
+        authorizationSettings:
+          decisionStrategy: AFFIRMATIVE
   instanceSelector:
     matchLabels:
       app: keycloak
