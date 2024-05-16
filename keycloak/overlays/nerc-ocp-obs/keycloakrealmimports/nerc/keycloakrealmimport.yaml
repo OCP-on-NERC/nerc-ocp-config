@@ -316,6 +316,3 @@ spec:
           - oct
         authorizationSettings:
           decisionStrategy: AFFIRMATIVE
-  instanceSelector:
-    matchLabels:
-      app: keycloak
