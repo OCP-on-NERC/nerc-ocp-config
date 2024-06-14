@@ -1,12 +1,12 @@
 variant: openshift
 version: 4.10.0
 metadata:
-  name: mellanox-udev-rules
+  name: custom-udev-rules
   labels:
     machineconfiguration.openshift.io/role: master
 storage:
   files:
-    - path: /etc/udev/rules.d/90-mellanox.rules
+    - path: /etc/udev/rules.d/90-custom.rules
       contents:
-        local: mellanox.rules
+        local: custom.rules
       mode: 0644
