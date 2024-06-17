@@ -4,7 +4,7 @@ kind: MachineConfig
 metadata:
   labels:
     machineconfiguration.openshift.io/role: master
-  name: mellanox-udev-rules
+  name: custom-udev-rules
 spec:
   config:
     ignition:
@@ -13,6 +13,6 @@ spec:
       files:
         - contents:
             compression: gzip
-            source: data:;base64,H4sIAAAAAAAC/woOdQqODA5x9bW1VcpLLVHScQnyDHMNCra1VcrNqTCNT84vSlXS8XYN8nP1AQkaGBgYWBmYWRkY6Bko6Tg6h3j6+9naKiWmpCjp+Dn6utoq5WUmGypxUWCuIU5zjZS4AAEAAP//AAlzT7AAAAA=
+            source: data:;base64,H4sIAAAAAAAC/woOdQqODA5x9bW1VcpLLVHScQnyDHMNCra1VcrNqTCNT84vSlXS8XYN8nP1AQkaGBgYWBmYWRkY6Bko6Tg6h3j6+9naKiWmpCjp+Dn6utoq5WUmGypxUWCuIU5zjfCam5RXYVSBaaYhJW7FZyZedwICAAD//6mUX/RYAQAA
           mode: 420
-          path: /etc/udev/rules.d/90-mellanox.rules
+          path: /etc/udev/rules.d/90-custom.rules
