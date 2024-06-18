@@ -38,7 +38,7 @@ spec:
     store:
       replicas: 3
     storeMemcached:
-      connectionLimit: 2048
+      connectionLimit: 4096
       replicas: 3
     queryFrontendMemcached:
       replicas: 3
