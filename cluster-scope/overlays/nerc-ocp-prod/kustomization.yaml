@@ -38,6 +38,7 @@ resources:
 - certificates
 - consolelinks
 - odhdashboardconfigs
+- object-storage
 
 components:
   - ../../components/nerc-oauth-keycloak
