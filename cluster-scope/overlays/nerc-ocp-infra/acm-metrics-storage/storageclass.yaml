@@ -1,0 +1,11 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  annotations:
+    description: Provides Object Bucket Claims (OBCs) for ACM metrics
+  name: acm-metrics-bucket-storage
+parameters:
+  bucketclass: acm-metrics-bucket-class
+provisioner: openshift-storage.noobaa.io/obc
+reclaimPolicy: Delete
+volumeBindingMode: Immediate

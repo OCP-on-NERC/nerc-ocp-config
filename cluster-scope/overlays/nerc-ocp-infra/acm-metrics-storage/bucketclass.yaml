@@ -1,0 +1,10 @@
+apiVersion: noobaa.io/v1alpha1
+kind: BucketClass
+metadata:
+  name: acm-metrics-bucket-class
+  namespace: openshift-storage
+spec:
+  placementPolicy:
+    tiers:
+    - backingStores:
+      - acm-metrics-backing-store
