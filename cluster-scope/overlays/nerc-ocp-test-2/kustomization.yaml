@@ -12,6 +12,7 @@ resources:
 - externalsecrets
 - issuers
 - feature/odf
+- machineconfigs/configure-bond0
 - certificates
 - nodenetworkconfigurationpolicies
 - secretstores
