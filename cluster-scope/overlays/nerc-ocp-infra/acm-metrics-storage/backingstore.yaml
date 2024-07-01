@@ -1,0 +1,13 @@
+apiVersion: noobaa.io/v1alpha1
+kind: BackingStore
+metadata:
+  name: acm-metrics-backing-store
+  namespace: openshift-storage
+spec:
+  pvPool:
+    numVolumes: 1
+    resources:
+      requests:
+        storage: 1Ti
+    storageClass: ocs-external-storagecluster-ceph-rbd
+  type: pv-pool

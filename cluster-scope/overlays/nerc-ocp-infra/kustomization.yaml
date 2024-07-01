@@ -31,6 +31,7 @@ resources:
 - grafana-dashboards
 - persistentvolumeclaims
 - nerc-logs-metrics-open-cluster-management-cluster-manager-admin.yaml
+- acm-metrics-storage
 
 components:
   - ../../components/nerc-oauth-github
