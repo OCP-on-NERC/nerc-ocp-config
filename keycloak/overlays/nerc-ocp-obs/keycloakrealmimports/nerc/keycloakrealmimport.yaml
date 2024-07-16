@@ -45,6 +45,8 @@ spec:
         name: nerc-rhods
       - id: nerc-ai4cloudops
         name: nerc-ai4cloudops
+      - id: nerc-kruizeoptimization
+        name: nerc-kruizeoptimization
     users:
       - id: computate
         username: computate
@@ -314,5 +316,18 @@ spec:
         defaultClientScopes:
           - profile
           - oct
+        authorizationSettings:
+          decisionStrategy: AFFIRMATIVE
+      - id: kruizeoptimization
+        clientId: kruizeoptimization
+        standardFlowEnabled: true
+        serviceAccountsEnabled: true
+        authorizationServicesEnabled: true
+        frontchannelLogout: true
+        protocol: openid-connect
+        redirectUris: []
+        defaultClientScopes:
+          - profile
+          - kruizeoptimization
         authorizationSettings:
           decisionStrategy: AFFIRMATIVE

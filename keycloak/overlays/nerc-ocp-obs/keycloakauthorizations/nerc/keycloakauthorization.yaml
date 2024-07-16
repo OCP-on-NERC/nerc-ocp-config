@@ -72,6 +72,12 @@ spec:
                 - id: namespace-rhods-notebooks
                   name: rhods-notebooks
                   displayName: rhods-notebooks namespace
+                - id: kruizeoptimization-143c8e
+                  name: kruizeoptimization-143c8e
+                  displayName: kruizeoptimization-143c8e namespace
+                - id: kruizeoptimization-5ad5bc
+                  name: kruizeoptimization-5ad5bc
+                  displayName: kruizeoptimization-5ad5bc namespace
 
           policies:
 
@@ -110,6 +116,15 @@ spec:
                   clients:
                     - oct
 
+            - id: client-kruizeoptimization
+              name: client-kruizeoptimization
+              logic: POSITIVE
+              decisionStrategy: UNANIMOUS
+              type:
+                client:
+                  clients:
+                    - kruizeoptimization
+
           permissions:
 
             - name: group-nerc-ops-cluster-all
@@ -140,3 +155,16 @@ spec:
             - name: client-oct-cluster-all
               policy: client-oct
               resource: cluster
+
+            - name: client-kruizeoptimization-cluster-nerc-ocp-prod
+              policy: client-kruizeoptimization
+              resource: cluster
+              scope: nerc-ocp-prod
+            - name: client-kruizeoptimization-namespace-kruizeoptimization-143c8e
+              policy: client-kruizeoptimization
+              resource: namespace
+              scope: kruizeoptimization-143c8e
+            - name: client-kruizeoptimization-namespace-kruizeoptimization-5ad5bc
+              policy: client-kruizeoptimization
+              resource: namespace
+              scope: kruizeoptimization-5ad5bc
