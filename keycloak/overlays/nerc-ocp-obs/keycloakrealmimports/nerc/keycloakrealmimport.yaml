@@ -82,6 +82,13 @@ spec:
         - id: cluster-admin
           name: cluster-admin
     clientScopes:
+      - id: openid
+        name: openid
+        description: The userinfo request will reject access tokens that do not have the openid scope
+        protocol: openid-connect
+        attributes:
+          include.in.token.scope: 'true'
+          display.on.consent.screen: 'true'
       - id: nerc
         name: nerc
         description: A client scope for the nerc client
@@ -288,8 +295,9 @@ spec:
         protocol: openid-connect
         redirectUris: []
         defaultClientScopes:
+          - openid
           - profile
-          - ai4cloudops
+          - nerc
         authorizationSettings:
           decisionStrategy: AFFIRMATIVE
       - id: ai4cloudops
@@ -301,6 +309,7 @@ spec:
         protocol: openid-connect
         redirectUris: []
         defaultClientScopes:
+          - openid
           - profile
           - ai4cloudops
         authorizationSettings:
@@ -314,6 +323,7 @@ spec:
         protocol: openid-connect
         redirectUris: []
         defaultClientScopes:
+          - openid
           - profile
           - oct
         authorizationSettings:
@@ -327,6 +337,7 @@ spec:
         protocol: openid-connect
         redirectUris: []
         defaultClientScopes:
+          - openid
           - profile
           - kruizeoptimization
         authorizationSettings:
