@@ -9,6 +9,7 @@ resources:
 - ../../bundles/patch-operator
 - ../../bundles/clusterissuer-http01
 - ../../base/rbac.authorization.k8s.io/clusterroles/allow-edit-rbac
+- ../../base/rbac.authorization.k8s.io/clusterrolebindings/kruize-admins
 - ../../base/core/namespaces/openshift-gitops
 - externalsecrets
 - issuers
@@ -39,6 +40,9 @@ patches:
       - name: github
         github:
           clientID: Ov23liGZVyeMB2D96Wiq
+          teams:
+            - ocp-on-nerc/nerc-ops
+            - ocp-on-nerc/kruize-admins
 - target:
     kind: ExternalSecret
     name: github-client-secret
