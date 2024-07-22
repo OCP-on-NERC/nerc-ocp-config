@@ -30,7 +30,7 @@ spec:
               value: /opt/prom-keycloak-proxy-certs/tls.crt
             - name: PROXY_PROMETHEUS_TLS_KEY
               value: /opt/prom-keycloak-proxy-certs/tls.key
-          image: quay.io/nerc-images/prom-keycloak-proxy:1.0.1
+          image: quay.io/nerc-images/prom-keycloak-proxy:1.0.2
           imagePullPolicy: Always
           livenessProbe:
             exec:
