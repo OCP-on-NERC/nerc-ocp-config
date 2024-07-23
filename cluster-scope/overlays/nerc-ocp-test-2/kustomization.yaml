@@ -18,6 +18,7 @@ resources:
 - certificates
 - nodenetworkconfigurationpolicies
 - secretstores
+- machineconfigs
 
 components:
   - ../../components/nerc-oauth-github
