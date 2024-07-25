@@ -16,8 +16,8 @@ spec:
     storageClass: gp2
     storeStorageSize: 10Gi
     metricObjectStorage:
-      key: thanos.yaml
-      name: thanos-object-storage
+      key: acm-metrics.yaml
+      name: acm-metrics-object-storage
   advanced:
     rbacQueryProxy:
       replicas: 2
