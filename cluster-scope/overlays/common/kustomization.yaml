@@ -15,10 +15,9 @@ resources:
 - ../../bundles/console
 - ../../bundles/image-registry
 - ../../bundles/logging
-- ../../bundles/group-sync-operator
+- ../../bundles/group-sync-github
 - ../../bundles/nerc-ops-rbac
 - ../../base/operator.openshift.io/networks/cluster
-- groupsyncs
 - machineconfigs
 
 components:
