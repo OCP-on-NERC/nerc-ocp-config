@@ -1,0 +1,5 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- ../group-sync-operator
+- ../../base/redhatcop.redhat.io/groupsyncs/github-ocp-on-nerc
