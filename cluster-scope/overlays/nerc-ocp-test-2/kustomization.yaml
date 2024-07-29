@@ -11,6 +11,7 @@ resources:
 - ../../base/rbac.authorization.k8s.io/clusterroles/allow-edit-rbac
 - ../../base/rbac.authorization.k8s.io/clusterrolebindings/kruize-admins
 - ../../base/rbac.authorization.k8s.io/clusterroles/nerc-ops-manage-olm
+- ../../base/rbac.authorization.k8s.io/clusterroles/kruize-admins
 - ../../base/core/namespaces/openshift-gitops
 - externalsecrets
 - issuers

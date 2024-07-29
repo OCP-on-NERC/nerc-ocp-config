@@ -5,7 +5,7 @@ metadata:
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: nerc-ops
+  name: kruize-admins
 subjects:
   - apiGroup: rbac.authorization.k8s.io
     kind: Group
