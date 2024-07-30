@@ -5,7 +5,7 @@ metadata:
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: kruize-admins
+  name: cluster-admin
 subjects:
   - apiGroup: rbac.authorization.k8s.io
     kind: Group
