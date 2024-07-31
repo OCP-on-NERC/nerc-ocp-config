@@ -1,0 +1,17 @@
+apiVersion: nmstate.io/v1
+kind: NodeNetworkConfigurationPolicy
+metadata:
+  name: eth-nese
+spec:
+  nodeSelector:
+    node-role.kubernetes.io/worker: ""
+  desiredState:
+    interfaces:
+    - name: eno2
+      type: ethernet
+      state: up
+      ipv4:
+        dhcp: true
+        enabled: true
+        auto-routes: true
+      mtu: 9000
