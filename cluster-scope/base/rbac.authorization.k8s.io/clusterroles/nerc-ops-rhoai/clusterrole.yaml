@@ -1,0 +1,16 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    nerc.mghpcc.org/aggregate-to-nerc-ops: "true"
+  name: nerc-ops-rhoai
+rules:
+- apiGroups:
+  - datasciencepipelinesapplications.opendatahub.io
+  - serving.kserve.io
+  resources:
+  - '*'
+  verbs:
+  - list
+  - get
+  - watch
