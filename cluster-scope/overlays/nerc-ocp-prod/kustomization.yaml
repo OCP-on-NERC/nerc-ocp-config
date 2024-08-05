@@ -67,6 +67,7 @@ configMapGenerator:
 
 patches:
 - path: kubeletconfigs/system-reserved-patch.yaml
+- path: subscriptions/rhoai-operator-patch.yaml
 - target:
     kind: SecretStore
   patch: |
