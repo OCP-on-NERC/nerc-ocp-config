@@ -1,0 +1,2 @@
+SUBSYSTEM=="net",DRIVERS=="mlx5_core",KERNELS=="*:00.0",NAME="mlx0"
+SUBSYSTEM=="net",DRIVERS=="mlx5_core",KERNELS=="*:00.1",NAME="mlx1"

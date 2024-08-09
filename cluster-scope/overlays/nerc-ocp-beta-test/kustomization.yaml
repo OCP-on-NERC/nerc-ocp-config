@@ -1,0 +1,78 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+commonLabels:
+  nerc.mghpcc.org/kustomized: "true"
+
+resources:
+- ../common
+- ../../bundles/node-feature-discovery
+- ../../bundles/patch-operator
+- ../../bundles/clusterissuer-http01
+- ../../base/rbac.authorization.k8s.io/clusterroles/allow-edit-rbac
+- ../../base/core/namespaces/openshift-gitops
+- externalsecrets
+- issuers
+- feature/odf
+- machineconfigs
+- certificates
+- secretstores
+- nodenetworkconfigurationpolicies
+
+components:
+  - ../../components/nerc-oauth-github
+
+  # this must come last in order to apply
+  # to all resources.
+  - ../../components/argocd-skip-dryrun
+
+generatorOptions:
+  disableNameSuffixHash: true
+
+patches:
+
+- patch: |
+    apiVersion: config.openshift.io/v1
+    kind: OAuth
+    metadata:
+      name: cluster
+    spec:
+      identityProviders:
+      - name: github
+        github:
+          clientID: Ov23liVTVUlKJYCJjWhF
+- target:
+    kind: ExternalSecret
+    name: github-client-secret
+  patch: |
+    - op: replace
+      path: /spec/data/0/remoteRef/key
+      value: nerc/nerc-ocp-beta-test/openshift-config/github-client-secret
+
+- target:
+    kind: SecretStore
+  patch: |
+    - op: replace
+      path: /spec/provider/vault/auth/kubernetes/mountPath
+      value: kubernetes/nerc-ocp-beta-test
+- target:
+    kind: ExternalSecret
+    name: aws-route53-credentials
+  patch: |
+    - op: replace
+      path: /spec/dataFrom/0/extract/key
+      value: nerc/nerc-ocp-beta-test/aws-route53-credentials
+- target:
+    kind: APIServer
+    name: cluster
+  patch: |
+    - op: replace
+      path: /spec/servingCerts/namedCertificates/0/names/0
+      value: api.ocp-beta-test.nerc.mghpcc.org
+- target:
+    kind: Issuer
+    name: letsencrypt-.*-dns01
+  patch: |
+    - op: replace
+      path: /spec/acme/solvers/0/selector/dnsZones
+      value:
+        - ocp-beta-test.nerc.mghpcc.org
