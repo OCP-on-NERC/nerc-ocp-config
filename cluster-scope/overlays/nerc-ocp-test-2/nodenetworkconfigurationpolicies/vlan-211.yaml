@@ -11,6 +11,9 @@ spec:
       type: vlan
       state: up
       ipv4:
+        # DHCP for this network is currently managed by Neutron, and Neutron is
+        # unable to provide DHCP service to trunked interfaces. We need to manually
+        # manage address assignment here until we move DHCP away from Neutron.
         enabled: true
         dhcp: false
         auto-routes: false
