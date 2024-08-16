@@ -10,3 +10,11 @@ rules:
   verbs:
   - get
   - list
+- apiGroups:
+  - monitoring.coreos.com
+  resources:
+  - prometheuses
+  - prometheuses/api
+  verbs:
+  - get
+  - list
