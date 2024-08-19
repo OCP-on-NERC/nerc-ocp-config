@@ -3,7 +3,7 @@ kind: Subscription
 metadata:
     name: odf-operator
 spec:
-    channel: stable-4.13
+    channel: <PATCH IN CLUSTER OVERLAYS>
     installPlanApproval: Automatic
     name: odf-operator
     source: redhat-operators
