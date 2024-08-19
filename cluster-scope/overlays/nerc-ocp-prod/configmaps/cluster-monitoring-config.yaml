@@ -4,7 +4,7 @@ prometheusK8s:
       storageClassName: ocs-external-storagecluster-ceph-rbd
       resources:
         requests:
-          storage: 100Gi
+          storage: 200Gi
 alertmanagerMain:
   volumeClaimTemplate:
     spec:
