@@ -1,0 +1,12 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: project-robbie-allow-sys-admin
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: nerc-allow-sys-admin
+subjects:
+- kind: ServiceAccount
+  namespace: project-robbie-b4784c
+  name: robbie-job-runner
