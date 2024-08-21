@@ -44,12 +44,8 @@ spec:
       replicas: 3
     retentionConfig:
       blockDuration: 2h               # default is 2h
-      cleanupInterval: 5m             # default is 5m
       deleteDelay: 48h                # default is 48h
       retentionInLocal: 24h           # default is 24h
       retentionResolutionRaw: 90d     # default is 30d
       retentionResolution5m: 360d     # default is 180d
       retentionResolution1h: 0d       # default is 0d - 0d will retain samples of this resolution forever https://thanos.io/tip/components/compact.md/
-      consistencyDelay: 30m
-      compactConcurrency: 6
-      downsampleConcurrency: 6
