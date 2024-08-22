@@ -19,7 +19,6 @@ spec:
     disableSupport: true
     disableTracking: false
     enablement: false
-    modelMetricsNamespace: ""
   groupsConfig:
     adminGroups: rhods-admins
     allowedGroups: system:authenticated
