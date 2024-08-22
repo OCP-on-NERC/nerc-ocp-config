@@ -17,6 +17,15 @@ data:
       - node_network_transmit_errs_total
       - node_network_transmit_packets_total
       - kube_pod_container_info
+      - kube_pod_container_status_restarts_total
+      - kube_pod_info
+      - kube_pod_owner
+      - kube_pod_resource_limits
+      - kube_pod_resource_request
+      - kube_pod_status_container_ready_time
+      - kube_pod_status_initialized_time
+      - kube_pod_status_ready_time
+      - kube_pod_status_unschedulable
       - loki_distributor_bytes_received_total
     matches:
       - __name__=~"(ipmi_.*)"
@@ -25,3 +34,4 @@ data:
       - __name__=~"(gpu_operator_.*)"
       - __name__=~"(DCGM_FI_.*)"
       - __name__=~"(argocd_.*)"
+      - __name__=~"(kube_node_.*)"
