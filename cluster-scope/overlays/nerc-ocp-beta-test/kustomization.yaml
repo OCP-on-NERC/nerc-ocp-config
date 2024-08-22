@@ -5,11 +5,14 @@ commonLabels:
 
 resources:
 - ../common
+
 - ../../bundles/node-feature-discovery
 - ../../bundles/patch-operator
 - ../../bundles/clusterissuer-http01
 - ../../base/rbac.authorization.k8s.io/clusterroles/allow-edit-rbac
 - ../../base/core/namespaces/openshift-gitops
+- ../../base/rbac.authorization.k8s.io/clusterrolebindings/instructlab-admins
+
 - externalsecrets
 - issuers
 - feature/odf
