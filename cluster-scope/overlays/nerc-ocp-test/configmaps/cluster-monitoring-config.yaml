@@ -1,0 +1,15 @@
+prometheusK8s:
+  volumeClaimTemplate:
+    spec:
+      storageClassName: ocs-external-storagecluster-ceph-rbd
+      resources:
+        requests:
+          storage: 100Gi
+alertmanagerMain:
+  enabled: true
+  volumeClaimTemplate:
+    spec:
+      storageClassName: ocs-external-storagecluster-ceph-rbd
+      resources:
+        requests:
+          storage: 20Gi

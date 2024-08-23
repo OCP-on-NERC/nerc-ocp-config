@@ -50,6 +50,10 @@ patches:
       - name: github
         github:
           clientID: Ov23liIYFewHpMri8GO1
+          teams:
+            - ocp-on-nerc/nerc-ops
+            - ocp-on-nerc/nerc-logs-metrics
+            - ocp-on-nerc/nerc-rhods
 - target:
     kind: ExternalSecret
     name: github-client-secret
