@@ -12,9 +12,12 @@ resources:
 - ../../base/core/namespaces/openshift-gitops
 - externalsecrets
 - issuers
+- machineconfigs/disable-net-ifnames.yaml
+- machineconfigs/udev-rules
+- machineconfigs/configure-bond0
+- nodenetworkconfigurationpolicies
 - feature/odf
 - certificates
-- nodenetworkconfigurationpolicies
 - secretstores
 
 components:
