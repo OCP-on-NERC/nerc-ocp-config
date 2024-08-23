@@ -24,6 +24,17 @@ components:
   # to all resources.
   - ../../components/argocd-skip-dryrun
 
+configMapGenerator:
+- name: admin-acks
+  namespace: openshift-config
+  behavior: merge
+  literals:
+    - ack-4.15-kube-1.29-api-removals-in-4.16=true
+- files:
+  - config.yaml=configmaps/cluster-monitoring-config.yaml
+  name: cluster-monitoring-config
+  namespace: openshift-monitoring
+
 generatorOptions:
   disableNameSuffixHash: true
 
