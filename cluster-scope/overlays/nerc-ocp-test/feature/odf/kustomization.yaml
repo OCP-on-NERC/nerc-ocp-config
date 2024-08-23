@@ -2,9 +2,6 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: openshift-storage
 
-commonLabels:
-  nerc.mghpcc.org/feature: odf
-
 components:
   - ../../../../components/nerc-secret-store
 
@@ -15,5 +12,3 @@ resources:
 
 patches:
   - path: storageclasses/ocs-external-storagecluster-ceph-rbd_patch.yaml
-  - path: secretstores/secretstore-patch.yaml
-  - path: subscriptions/subscription-patch.yaml

@@ -1,13 +1,13 @@
 apiVersion: nmstate.io/v1
 kind: NodeNetworkConfigurationPolicy
 metadata:
-  name: vlan-2175-nese
+  name: vlan-2174-nese
 spec:
   nodeSelector:
     node-role.kubernetes.io/worker: ""
   desiredState:
     interfaces:
-    - name: bond0.2175
+    - name: bond0.2174
       type: vlan
       state: up
       ipv4:
@@ -16,5 +16,5 @@ spec:
         auto-routes: true
       vlan:
         base-iface: bond0
-        id: 2175
+        id: 2174
       mtu: 9000

@@ -4,50 +4,31 @@ commonLabels:
   nerc.mghpcc.org/kustomized: "true"
 
 resources:
-- clusterversion.yaml
 - ../common
-- ../../bundles/ansible-automation-platform-operator
-- ../../bundles/koku-metrics-operator
-- ../../bundles/curator
-- ../../bundles/patch-operator
-- externalsecrets/
-- ../../bundles/rhods-operator
 - ../../bundles/node-feature-discovery
-- ../../bundles/nvidia-gpu-operator
-- ../../bundles/openshift-custom-metrics-autoscaler-operator
-- ../../bundles/openshift-serverless-operator
-- ../../bundles/openshift-opentelemetry-operator
+- ../../bundles/patch-operator
+- ../../bundles/clusterissuer-http01
+- ../../base/rbac.authorization.k8s.io/clusterroles/allow-edit-rbac
+- ../../base/core/namespaces/openshift-gitops
+- externalsecrets
+- issuers
 - feature/odf
-- machineconfigs/disable-net-ifnames
-- machineconfigs/udev-rules
-- machineconfigs/configure-bond0
-- nodenetworkconfigurationpolicies/vlan-2175-nese.yaml
+- certificates
+- nodenetworkconfigurationpolicies
 - secretstores
-- nerc-internal-ca
 
 components:
   - ../../components/nerc-oauth-github
 
-configMapGenerator:
-- name: admin-acks
-  namespace: openshift-config
-  behavior: merge
-  literals:
-    - ack-4.11-kube-1.25-api-removals-in-4.12=true
-    - ack-4.12-kube-1.26-api-removals-in-4.13=true
-    - ack-4.13-kube-1.27-api-removals-in-4.14=true
-- files:
-  - config.yaml=configmaps/cluster-monitoring-config.yaml
-  name: cluster-monitoring-config
-  namespace: openshift-monitoring
+  # this must come last in order to apply
+  # to all resources.
+  - ../../components/argocd-skip-dryrun
+
+generatorOptions:
+  disableNameSuffixHash: true
 
 patches:
-- target:
-    kind: SecretStore
-  patch: |
-    - op: replace
-      path: /spec/provider/vault/auth/kubernetes/mountPath
-      value: kubernetes/nerc-ocp-test
+
 - patch: |
     apiVersion: config.openshift.io/v1
     kind: OAuth
@@ -57,11 +38,7 @@ patches:
       identityProviders:
       - name: github
         github:
-          clientID: e87d9a48533084f2aa5f
-          teams:
-            - ocp-on-nerc/nerc-ops
-            - ocp-on-nerc/nerc-logs-metrics
-            - ocp-on-nerc/nerc-rhods
+          clientID: Ov23liIYFewHpMri8GO1
 - target:
     kind: ExternalSecret
     name: github-client-secret
@@ -69,10 +46,24 @@ patches:
     - op: replace
       path: /spec/data/0/remoteRef/key
       value: nerc/nerc-ocp-test/openshift-config/github-client-secret
+
+- target:
+    kind: SecretStore
+  patch: |
+    - op: replace
+      path: /spec/provider/vault/auth/kubernetes/mountPath
+      value: kubernetes/nerc-ocp-test
+- target:
+    kind: ExternalSecret
+    name: aws-route53-credentials
+  patch: |
+    - op: replace
+      path: /spec/dataFrom/0/extract/key
+      value: nerc/nerc-ocp-test/aws-route53-credentials
 - target:
     kind: APIServer
     name: cluster
   patch: |
     - op: replace
       path: /spec/servingCerts/namedCertificates/0/names/0
-      value: api.nerc-ocp-test.rc.fas.harvard.edu
+      value: api.nerc-ocp-test.nerc.mghpcc.org

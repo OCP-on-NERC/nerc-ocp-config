@@ -1,7 +1,0 @@
-apiVersion: kustomize.config.k8s.io/v1beta1
-kind: Kustomization
-resources:
-- machineconfig-i40e.yaml
-- machineconfig-ixgbe.yaml
-- machineconfig-bcm57412.yaml
-- machineconfig-mlx5_core.yaml
