@@ -4,7 +4,7 @@ metadata:
   name: eth-nese
 spec:
   nodeSelector:
-    node-role.kubernetes.io/worker: ""
+    gpu: "false"
   desiredState:
     interfaces:
     - name: mlx1
