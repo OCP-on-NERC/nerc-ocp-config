@@ -8,5 +8,7 @@ spec:
     limits.cpu: '1000'
     limits.ephemeral-storage: 30Gi
     limits.memory: 3000000Mi
+    limits.nvidia.com/gpu: "0"
     persistentvolumeclaims: '600'
     requests.storage: 600Gi
+    requests.nvidia.com/gpu: "0"
