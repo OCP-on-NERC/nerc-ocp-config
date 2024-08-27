@@ -23,3 +23,5 @@ These are tokens for the `eso-vault-auth` serviceAccount configured on each clie
 - `nerc-ocp-obs-token-reviewer`
 - `nerc-ocp-prod-token-reviewer`
 - `nerc-ocp-test-token-reviewer`
+
+You will need to add a new token for each new cluster.
