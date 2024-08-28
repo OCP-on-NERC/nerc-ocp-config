@@ -6,10 +6,6 @@ metadata:
     machineconfiguration.openshift.io/role: master
 storage:
   files:
-    - path: /etc/udev/rules.d/90-mlx5-core.rules
-      contents:
-        local: mlx5_core.rules
-      mode: 0644
     - path: /etc/udev/rules.d/90-bnx2x.rules
       contents:
         local: bnx2x.rules

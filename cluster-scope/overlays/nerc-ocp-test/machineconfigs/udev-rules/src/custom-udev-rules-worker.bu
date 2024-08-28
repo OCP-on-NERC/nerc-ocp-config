@@ -10,7 +10,3 @@ storage:
       contents:
         local: mlx5_core.rules
       mode: 0644
-    - path: /etc/udev/rules.d/90-bnx2x.rules
-      contents:
-        local: bnx2x.rules
-      mode: 0644
