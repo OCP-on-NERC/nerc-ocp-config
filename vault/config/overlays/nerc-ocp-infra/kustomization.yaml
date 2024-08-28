@@ -6,6 +6,7 @@ commonLabels:
 
 resources:
 - job.yaml
+- cronjob.yaml
 
 generatorOptions:
   disableNameSuffixHash: true
