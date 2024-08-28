@@ -2,7 +2,7 @@ apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: default-ingress-certificate
-  namespace: openshift-config
+  namespace: openshift-ingress
 spec:
   issuerRef:
     name: letsencrypt-production-dns01
