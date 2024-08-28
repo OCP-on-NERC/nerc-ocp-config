@@ -39,7 +39,7 @@ resources:
 - clusterversion.yaml
 - certificates
 - consolelinks
-- odhdashboardconfigs
+- rhoai
 - object-storage
 - clusterrolebindings
 
