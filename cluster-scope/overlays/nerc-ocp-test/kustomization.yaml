@@ -87,4 +87,12 @@ patches:
   patch: |
     - op: replace
       path: /spec/servingCerts/namedCertificates/0/names/0
-      value: api.nerc-ocp-test.nerc.mghpcc.org
+      value: api.ocp-test.nerc.mghpcc.org
+- target:
+    kind: Issuer
+    name: letsencrypt-.*-dns01
+  patch: |
+    - op: replace
+      path: /spec/acme/solvers/0/selector/dnsZones
+      value:
+        - ocp-test.nerc.mghpcc.org
