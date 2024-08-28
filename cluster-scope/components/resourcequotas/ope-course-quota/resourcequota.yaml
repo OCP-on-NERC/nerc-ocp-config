@@ -10,5 +10,5 @@ spec:
     limits.memory: 3000000Mi
     limits.nvidia.com/gpu: "0"
     persistentvolumeclaims: '600'
-    requests.storage: 600Gi
+    requests.storage: 10Ti
     requests.nvidia.com/gpu: "0"
