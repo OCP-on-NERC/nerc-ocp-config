@@ -14,7 +14,6 @@ resources:
 - ../../base/core/namespaces/openshift-gitops
 - externalsecrets
 - issuers
-- machineconfigs/disable-net-ifnames.yaml
 - machineconfigs/udev-rules
 - machineconfigs/configure-bond0
 - machineconfigs/hostpath-provisioner-selinux-controller.yaml
