@@ -14,9 +14,7 @@ resources:
 - ../../base/core/namespaces/openshift-gitops
 - externalsecrets
 - issuers
-- machineconfigs/udev-rules
-- machineconfigs/configure-bond0
-- machineconfigs/hostpath-provisioner-selinux-controller.yaml
+- machineconfigs
 - nodenetworkconfigurationpolicies
 - feature/odf
 - certificates
