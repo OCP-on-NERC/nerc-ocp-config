@@ -1,7 +1,7 @@
 apiVersion: image.openshift.io/v1
 kind: ImageStream
 metadata:
-  name: ucsls-F24
+  name: ucsls-f24
   namespace: redhat-ods-applications
   labels:
     opendatahub.io/notebook-image: "true"
