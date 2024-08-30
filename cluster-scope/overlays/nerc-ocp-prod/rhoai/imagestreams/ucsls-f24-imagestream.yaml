@@ -16,7 +16,7 @@ spec:
     - name: latest
       from:
         kind: DockerImage
-        name: 'http://quay.io/opeffort/nerc:beta-base-ope-image_07.31.24_12.45.52'
+        name: 'quay.io/opeffort/nerc:beta-base-ope-image_07.31.24_12.45.52'
       importPolicy:
         scheduled: true
       referencePolicy:
