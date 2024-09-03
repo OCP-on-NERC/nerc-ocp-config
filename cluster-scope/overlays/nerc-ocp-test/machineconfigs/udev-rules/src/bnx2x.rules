@@ -1,0 +1,2 @@
+SUBSYSTEM=="net",DRIVERS=="bnx2x",KERNELS=="0000:01:00.0",ACTION=="add",NAME="nic1"
+SUBSYSTEM=="net",DRIVERS=="bnx2x",KERNELS=="0000:01:00.1",ACTION=="add",NAME="nic2"

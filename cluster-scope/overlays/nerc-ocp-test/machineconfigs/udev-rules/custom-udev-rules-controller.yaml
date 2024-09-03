@@ -4,7 +4,7 @@ kind: MachineConfig
 metadata:
   labels:
     machineconfiguration.openshift.io/role: master
-  name: i40e-udev-rules
+  name: custom-udev-rules-controller
 spec:
   config:
     ignition:
@@ -13,6 +13,6 @@ spec:
       files:
         - contents:
             compression: gzip
-            source: data:;base64,H4sIAAAAAAAC/woOdQqODA5x9bW1VcpLLVHScQnyDHMNCra1Vco0MUhV0vF2DfJz9QHxDQwMDKySjK0MDPQMlHQcnUM8/f1sbZUSU1KUdPwcfV1tlfIykw2VuMgz0hCnkUZKXIAAAAD//1bc0ZymAAAA
+            source: data:;base64,H4sIAAAAAAAC/woOdQqODA5x9bW1VcpLLVHScQnyDHMNCra1VUrKqzCqUNLxdg3yc/UBCRgYGBhYGRhaGRjoGSjpODqHePr72doqJaakKOn4Ofq62irlZSYbKnGRaaYhTjONlLgAAQAA//9tGntmqAAAAA==
           mode: 420
-          path: /etc/udev/rules.d/90-i40e.rules
+          path: /etc/udev/rules.d/90-bnx2x.rules

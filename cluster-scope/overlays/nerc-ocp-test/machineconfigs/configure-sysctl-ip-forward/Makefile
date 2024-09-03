@@ -1,8 +1,7 @@
 MACHINECONFIGS = \
-	custom-udev-rules-controller.yaml \
-	custom-udev-rules-worker.yaml
+	machineconfig.yaml
 
-%.yaml: src/%.bu
+%.yaml: src/%.bu $(wildcard src/*.nmconnection)
 	butane -o $@ -d src $<
 
 all: $(MACHINECONFIGS)

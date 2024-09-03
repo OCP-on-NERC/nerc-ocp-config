@@ -4,7 +4,7 @@ kind: MachineConfig
 metadata:
   labels:
     machineconfiguration.openshift.io/role: worker
-  name: ixgbe-udev-rules
+  name: custom-udev-rules-worker
 spec:
   config:
     ignition:
@@ -13,6 +13,6 @@ spec:
       files:
         - contents:
             compression: gzip
-            source: data:;base64,H4sIAAAAAAAC/woOdQqODA5x9bW1VcpLLVHScQnyDHMNCra1VcqsSE9KVdLxdg3yc/UBCRgYGBhYGRhbGRjoGSjpODqHePr72doqJaakKOn4Ofq62irlZSYbKnGRaaYhTjONlLgAAQAA///PFZrFqAAAAA==
+            source: data:;base64,H4sIAAAAAAAC/woOdQqODA5x9bW1VcpLLVHScQnyDHMNCra1VcrNqTCNT84vSlXS8XYN8nP1AQkaGBgYWBmYWxkY6Bko6Tg6h3j6+9naKiWmpCjp+Dn6utoq5WUmGypxUWCuIU5zjcg018SSNu6FmIvXvYAAAAD//9CsdZdgAQAA
           mode: 420
-          path: /etc/udev/rules.d/90-ixgbe.rules
+          path: /etc/udev/rules.d/90-mlx5-core.rules

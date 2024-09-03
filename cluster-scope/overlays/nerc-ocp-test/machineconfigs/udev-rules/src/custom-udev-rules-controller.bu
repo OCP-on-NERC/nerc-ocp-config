@@ -1,12 +1,12 @@
 variant: openshift
 version: 4.10.0
 metadata:
-  name: i40e-udev-rules
+  name: custom-udev-rules-controller
   labels:
     machineconfiguration.openshift.io/role: master
 storage:
   files:
-    - path: /etc/udev/rules.d/90-i40e.rules
+    - path: /etc/udev/rules.d/90-bnx2x.rules
       contents:
-        local: i40e.rules
+        local: bnx2x.rules
       mode: 0644
