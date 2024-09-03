@@ -5,3 +5,4 @@ resources:
 - openshift-ingress
 - openshift-logging
 - group-sync-operator
+- curator-system
