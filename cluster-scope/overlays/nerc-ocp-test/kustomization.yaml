@@ -4,23 +4,29 @@ commonLabels:
   nerc.mghpcc.org/kustomized: "true"
 
 resources:
+- clusterversion.yaml
 - ../common
-- ../../bundles/hostpath-provisioner
-- ../../bundles/node-feature-discovery
-- ../../bundles/patch-operator
-- ../../bundles/clusterissuer-http01
-- ../../bundles/nvidia-gpu-operator
 - ../../base/rbac.authorization.k8s.io/clusterroles/allow-edit-rbac
 - ../../base/core/namespaces/openshift-gitops
-- ../../bundles/curator
 - externalsecrets
+- secretstores
 - issuers
+- certificates
 - machineconfigs
 - nodenetworkconfigurationpolicies
 - feature/odf
-- certificates
-- secretstores
-- clusterversion.yaml
+- ../../bundles/clusterissuer-http01
+- ../../bundles/hostpath-provisioner
+- ../../bundles/node-feature-discovery
+- ../../bundles/patch-operator
+- ../../bundles/nvidia-gpu-operator
+- ../../bundles/koku-metrics-operator
+- ../../bundles/curator
+- ../../bundles/ansible-automation-platform-operator
+- ../../bundles/rhods-operator
+- ../../bundles/openshift-custom-metrics-autoscaler-operator
+- ../../bundles/openshift-serverless-operator
+- ../../bundles/openshift-opentelemetry-operator
 
 components:
   - ../../components/nerc-oauth-github
