@@ -6,6 +6,8 @@ commonLabels:
 
 resources:
   - ../../../../bundles/rhods-operator
+  - datascienceclusters
+  - odhdashboardconfigs
 
 patches:
   - path: subscriptions/subscription-patch.yaml
