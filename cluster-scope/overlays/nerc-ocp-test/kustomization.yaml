@@ -15,6 +15,7 @@ resources:
 - machineconfigs
 - nodenetworkconfigurationpolicies
 - feature/odf
+- feature/rhoai
 - ../../bundles/clusterissuer-http01
 - ../../bundles/hostpath-provisioner
 - ../../bundles/node-feature-discovery
@@ -23,7 +24,6 @@ resources:
 - ../../bundles/koku-metrics-operator
 - ../../bundles/curator
 - ../../bundles/ansible-automation-platform-operator
-- ../../bundles/rhods-operator
 - ../../bundles/openshift-custom-metrics-autoscaler-operator
 - ../../bundles/openshift-serverless-operator
 - ../../bundles/openshift-opentelemetry-operator
