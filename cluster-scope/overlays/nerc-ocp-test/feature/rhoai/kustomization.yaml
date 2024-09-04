@@ -8,6 +8,7 @@ resources:
   - ../../../../bundles/rhods-operator
   - datascienceclusters
   - odhdashboardconfigs
+  - imagestreams/ucsls-f24-imagestream.yaml
 
 patches:
   - path: subscriptions/subscription-patch.yaml
