@@ -28,6 +28,7 @@ resources:
 - ../../bundles/openshift-serverless-operator
 - ../../bundles/openshift-opentelemetry-operator
 - ../../bundles/openshift-pipelines-operator
+- ../../bundles/virt
 
 components:
   - ../../components/nerc-oauth-github
