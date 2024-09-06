@@ -3,7 +3,6 @@ kind: Kustomization
 commonLabels:
   nerc.mghpcc.org/bundle: openshift-serverless-operator
 resources:
-- ../../base/rbac.authorization.k8s.io/clusterroles/project-monitoring-edit
 - ../../base/rbac.authorization.k8s.io/clusterroles/knative-edit
 - ../../base/core/namespaces/openshift-serverless
 - ../../base/operators.coreos.com/operatorgroups/openshift-serverless
