@@ -6,3 +6,6 @@ resources:
   - ../../base/core/namespaces/openshift-cnv
   - ../../base/operators.coreos.com/operatorgroups/kubevirt-hyperconverged-group
   - ../../base/operators.coreos.com/subscriptions/hco-operatorhub
+  - ../../base/core/configmaps/kubevirt
+  - ../../base/rbac.authorization.k8s.io/roles/kubevirt
+  - ../../base/rbac.authorization.k8s.io/rolebindings/kubevirt

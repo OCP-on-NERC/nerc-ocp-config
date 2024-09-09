@@ -1,0 +1,16 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kubevirt-ui-features
+  namespace: default
+data:
+  autocomputeCPULimitsEnabled: "false"
+  autocomputeCPULimitsPreviewEnabled: "false"
+  automaticSubscriptionActivationKey: ""
+  automaticSubscriptionOrganizationId: ""
+  disabledGuestSystemLogsAccess: "false"
+  kubevirtApiserverProxy: "true"
+  loadBalancerEnabled: "false"
+  nodePortAddress: ""
+  nodePortEnabled: "false"
