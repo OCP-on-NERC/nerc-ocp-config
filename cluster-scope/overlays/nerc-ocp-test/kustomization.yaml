@@ -52,7 +52,7 @@ generatorOptions:
   disableNameSuffixHash: true
 
 patches:
-
+- path: kubeletconfigs/system-reserved-patch.yaml
 - patch: |
     apiVersion: config.openshift.io/v1
     kind: OAuth
