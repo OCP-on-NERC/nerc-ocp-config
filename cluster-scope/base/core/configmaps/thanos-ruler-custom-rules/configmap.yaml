@@ -31,36 +31,6 @@ data:
           labels:
             severity: warning
 
-      - name: memory
-        rules:
-
-        - alert: CustomContainerMemoryUsage
-          annotations:
-            summary: "{{ $labels.cluster }} container Memory usage above 80%"
-            description: |
-              <https://grafana-open-cluster-management-observability.apps.nerc-ocp-infra.rc.fas.harvard.edu/explore?orgId=1&left=%5B%22now-3h%22,%22now%22,%22Observatorium%22,%7B%22exemplar%22:true,%22expr%22:%22(sum(container_memory_working_set_bytes%7Bname!%3D%5C%22%5C%22%7D)%20BY%20(cluster,%20namespace,%20pod,%20container)%20%2F%20sum(kube_pod_container_resource_limits%7Bresource%3D%5C%22memory%5C%22%7D%20%3E%200)%20BY%20(cluster,%20namespace,%20pod,%20container))%20%3E%200.80%22%7D%5D|Click here to see these metrics in Observability Monitoring>
-              Container Memory usage is at {{ $value | humanizePercentage }} in namespace {{ $labels.namespace }}, pod {{ $labels.pod }}, container {{ $labels.container }}"
-          expr: (sum(container_memory_working_set_bytes{name!=""}) BY (cluster, namespace, pod, container) / sum(kube_pod_container_resource_limits{resource="memory"} > 0) BY (cluster, namespace, pod, container)) > 0.80
-          for: 2m
-          labels:
-            severity: warning
-            groupname: memory
-
-      - name: cpu
-        rules:
-
-        - alert: CustomContainerCpuUsage
-          annotations:
-            summary: "{{ $labels.cluster }} container CPU usage above 80%"
-            description: |
-              <https://grafana-open-cluster-management-observability.apps.nerc-ocp-infra.rc.fas.harvard.edu/explore?orgId=1&left=%5B%22now-3h%22,%22now%22,%22Observatorium%22,%7B%22exemplar%22:true,%22expr%22:%22sum(avg_over_time(node_namespace_pod_container:container_cpu_usage_seconds_total:sum_rate%5B1h%5D))%20by%20(cluster,%20namespace,%20pod)%20%2F%20avg(kube_pod_container_resource_limits%7Bresource%3D%5C%22cpu%5C%22%7D)%20by%20(cluster,%20namespace,%20pod)%20%3E%200.80%22%7D%5D|Click here to see these metrics in Observability Monitoring>
-              Container CPU usage is at {{ $value | humanizePercentage }} in namespace {{ $labels.namespace }}, pod {{ $labels.pod }}.
-          expr: sum(avg_over_time(node_namespace_pod_container:container_cpu_usage_seconds_total:sum_rate[1h])) by (cluster, namespace, pod) / avg(kube_pod_container_resource_limits{resource="cpu"}) by (cluster, namespace, pod) > 0.80
-          for: 5m
-          labels:
-            severity: warning
-            cpu: memory
-
       - name: ceph-storage
         rules:
 
