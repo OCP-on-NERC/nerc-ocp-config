@@ -42,7 +42,7 @@ resources:
 - consolelinks
 - rhoai
 - object-storage
-- clusterrolebindings
+- rolebindings
 
 components:
   - ../../components/nerc-oauth-keycloak
