@@ -1,4 +1,4 @@
-# This is a copy of the restricted-v2 SCC with CAP_SYS_ADMIN enabled.
+# This began life as a copy of the restricted-v2 SCC
 allowHostDirVolumePlugin: false
 allowHostIPC: false
 allowHostNetwork: false
@@ -9,6 +9,8 @@ allowPrivilegedContainer: false
 allowedCapabilities:
   - NET_BIND_SERVICE
   - SYS_ADMIN
+  - SETUID
+  - SETGID
 apiVersion: security.openshift.io/v1
 defaultAddCapabilities: null
 fsGroup:
@@ -21,7 +23,7 @@ readOnlyRootFilesystem: false
 requiredDropCapabilities:
   - ALL
 runAsUser:
-  type: MustRunAsRange
+  type: RunAsAny
 seLinuxContext:
   type: MustRunAs
 seccompProfiles:
