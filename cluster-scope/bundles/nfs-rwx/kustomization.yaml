@@ -1,0 +1,16 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+commonLabels:
+  nerc.mghpcc.org/bundle: nfs-rwx
+resources:
+- ../../base/core/namespaces/nfs-rwx
+- ../../base/core/deployments/nfs-rwx
+- ../../base/core/serviceaccounts/nfs-rwx
+- ../../base/core/services/nfs-rwx
+- ../../base/core/statefulsets/nfs-rwx
+- ../../base/rbac.authorization.k8s.io/roles/nfs-rwx
+- ../../base/rbac.authorization.k8s.io/clusterroles/nfs-rwx
+- ../../base/rbac.authorization.k8s.io/clusterrolebindings/nerc-rwx
+- ../../base/rbac.authorization.k8s.io/rolebindings/nfs-rwx
+- ../../base/security.openshift.io/securitycontextconstraints/nfs-rwx
+- ../../base/storage.k8s.io/storageclasses/nfs-rwx

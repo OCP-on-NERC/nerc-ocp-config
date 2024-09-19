@@ -1,0 +1,47 @@
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: nfs-server
+  name: nfs-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nfs-server
+      statefulset: nfs-server
+  template:
+    metadata:
+      labels:
+        app: nfs-server
+        statefulset: nfs-server
+    spec:
+      serviceAccountName: nfs-server
+      containers:
+      - name: nfs-server
+        command:
+        - /usr/local/bin/run_nfs.sh
+        - -G
+        - "0"
+        image: ghcr.io/nerc-project/nerc-nfs-server:main
+        ports:
+          - name: nfs
+            containerPort: 2049
+          - name: mountd
+            containerPort: 20048
+          - name: rpcbind
+            containerPort: 111
+        securityContext:
+          privileged: true
+        volumeMounts:
+          - mountPath: /exports
+            name: nfs-server
+  volumeClaimTemplates:
+  - metadata:
+      name: nfs-server
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      resources:
+        requests:
+          storage: 6Gi
