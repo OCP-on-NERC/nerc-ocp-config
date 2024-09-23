@@ -32,7 +32,7 @@ resources:
 - persistentvolumeclaims
 - nerc-logs-metrics-open-cluster-management-cluster-manager-admin.yaml
 - acm-metrics-storage
-
+- acm-metrics-2ti-storage
 components:
   - ../../components/nerc-oauth-github
 
