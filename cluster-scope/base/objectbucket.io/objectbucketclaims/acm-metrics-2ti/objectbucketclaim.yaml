@@ -1,0 +1,8 @@
+apiVersion: objectbucket.io/v1alpha1
+kind: ObjectBucketClaim
+metadata:
+  name: acm-metrics-2ti
+  namespace: open-cluster-management-observability
+spec:
+  generateBucketName: acm-metrics-2ti
+  storageClassName: acm-metrics-2ti-bucket-storage
