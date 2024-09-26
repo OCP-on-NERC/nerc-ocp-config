@@ -59,6 +59,7 @@ patches:
 - path: machineconfigs/hostpath-provisioner-selinux_patch.yaml
 - path: externalsecrets/open-cluster-management-observability-multiclusterhub-operator-pull-secret_patch.yaml
 - path: externalsecrets/open-cluster-management-observability-acm-metrics-object-storage_patch.yaml
+- path: externalsecrets/open-cluster-management-observability-acm-metrics-2ti-object-storage_patch.yaml
 - path: externalsecrets/open-cluster-management-observability-thanos-object-storage_patch.yaml
 - patch: |
     apiVersion: config.openshift.io/v1

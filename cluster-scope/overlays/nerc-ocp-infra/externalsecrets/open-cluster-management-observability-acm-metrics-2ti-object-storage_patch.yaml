@@ -1,0 +1,23 @@
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: open-cluster-management-observability-acm-metrics-2ti-object-storage
+  namespace: open-cluster-management-observability
+spec:
+  data:
+  - secretKey: bucket
+    remoteRef:
+      key: nerc/nerc-ocp-infra/open-cluster-management-observability/acm-metrics-2ti/object-storage
+      property: bucket
+  - secretKey: endpoint
+    remoteRef:
+      key: nerc/nerc-ocp-infra/open-cluster-management-observability/acm-metrics-2ti/object-storage
+      property: endpoint
+  - secretKey: access_key
+    remoteRef:
+      key: nerc/nerc-ocp-infra/open-cluster-management-observability/acm-metrics-2ti/object-storage
+      property: access_key
+  - secretKey: secret_key
+    remoteRef:
+      key: nerc/nerc-ocp-infra/open-cluster-management-observability/acm-metrics-2ti/object-storage
+      property: secret_key
