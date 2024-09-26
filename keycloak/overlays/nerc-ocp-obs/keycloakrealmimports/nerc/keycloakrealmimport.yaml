@@ -75,6 +75,14 @@ spec:
         username: syedmohdqasim
         groups:
           - nerc-ai4cloudops
+      - id: dheerajodha
+        username: dheerajodha
+        groups:
+          - nerc-logs-metrics
+      - id: rh-csaggin
+        username: rh-csaggin
+        groups:
+          - nerc-logs-metrics
     roles:
       realm:
         - id: cluster-prod-view-all
@@ -283,6 +291,20 @@ spec:
             name: realm roles
             protocol: openid-connect
             protocolMapper: oidc-usermodel-realm-role-mapper
+      - id: ai-telemetry
+        name: ai-telemetry
+        description: A client scope for the ai-telemetry client
+        protocol: openid-connect
+        protocolMappers:
+          - config:
+              access.token.claim: 'true'
+              id.token.claim: 'false'
+              included.client.audience: 'ai-telemetry'
+            consentRequired: false
+            id: ai-telemetry
+            name: ai-telemetry
+            protocol: openid-connect
+            protocolMapper: oidc-audience-mapper
     defaultDefaultClientScopes:
       - nerc
     clients:
@@ -298,6 +320,22 @@ spec:
           - openid
           - profile
           - nerc
+        authorizationSettings:
+          decisionStrategy: AFFIRMATIVE
+      - id: ai-telemetry
+        clientId: ai-telemetry
+        standardFlowEnabled: true
+        serviceAccountsEnabled: true
+        authorizationServicesEnabled: true
+        frontchannelLogout: true
+        protocol: openid-connect
+        redirectUris:
+          - https://ai-telemetry.apps.obs.nerc.mghpcc.org/callback
+          - https://ai-telemetry.apps.obs.nerc.mghpcc.org/logout
+        defaultClientScopes:
+          - openid
+          - profile
+          - ai-telemetry
         authorizationSettings:
           decisionStrategy: AFFIRMATIVE
       - id: ai4cloudops
