@@ -3,12 +3,12 @@ kind: StatefulSet
 metadata:
   name: zookeeper
   annotations:
-      template.alpha.openshift.io/wait-for-ready: "true"
+    template.alpha.openshift.io/wait-for-ready: "true"
   labels:
-      app.kubernetes.io/instance: zookeeper
-      app.kubernetes.io/name: zookeeper
-      app.kubernetes.io/component: zookeeper
-      role: zookeeper
+    app.kubernetes.io/instance: zookeeper
+    app.kubernetes.io/name: zookeeper
+    app.kubernetes.io/component: zookeeper
+    role: zookeeper
 spec:
   replicas: 1
   revisionHistoryLimit: 10
@@ -170,12 +170,3 @@ spec:
         - name: data
           persistentVolumeClaim:
             claimName: zookeeper-data
-#  volumeClaimTemplates:
-#    - metadata:
-#        name: data
-#      spec:
-#        accessModes:
-#          - "ReadWriteOnce"
-#        resources:
-#          requests:
-#            storage: "10Gi"
