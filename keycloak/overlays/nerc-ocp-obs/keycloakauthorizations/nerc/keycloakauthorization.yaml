@@ -26,6 +26,12 @@ spec:
             - id: namespace-rhods-notebooks
               name: rhods-notebooks
               displayName: rhods-notebooks namespace
+            - id: namespace-kruizeoptimization-143c8e
+              name: kruizeoptimization-143c8e
+              displayName: kruizeoptimization-143c8e namespace
+            - id: namespace-kruizeoptimization-5ad5bc
+              name: kruizeoptimization-5ad5bc
+              displayName: kruizeoptimization-5ad5bc namespace
 
             - id: cluster-all
               name: all clusters
