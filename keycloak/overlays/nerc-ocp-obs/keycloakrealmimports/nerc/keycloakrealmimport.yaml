@@ -47,6 +47,8 @@ spec:
         name: nerc-ai4cloudops
       - id: nerc-kruizeoptimization
         name: nerc-kruizeoptimization
+      - id: ai-telemetry
+        name: ai-telemetry
     users:
       - id: computate
         username: computate
