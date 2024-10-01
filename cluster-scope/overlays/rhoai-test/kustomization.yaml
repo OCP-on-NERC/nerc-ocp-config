@@ -37,7 +37,7 @@ patches:
       identityProviders:
       - name: mss-keycloak
         openID:
-          clientID:
+          clientID: rhoai-test
 
 
 - patch: |
