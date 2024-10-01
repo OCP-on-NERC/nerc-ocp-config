@@ -4,5 +4,6 @@ commonLabels:
   nerc.mghpcc.org/bundle: nerc-certificate-clusterissuer
 
 resources:
+- ../../base/external-secrets.io/externalsecrets/clusterissuer-dns01
 - ../../cert-manager.io/clusterissuers/letsencrypt-production-dns01
 - ../../cert-manager.io/clusterissuers/letsencrypt-staging-dns01
