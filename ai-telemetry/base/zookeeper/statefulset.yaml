@@ -10,7 +10,7 @@ metadata:
     app.kubernetes.io/component: zookeeper
     role: zookeeper
 spec:
-  replicas: 1
+  replicas: 3
   revisionHistoryLimit: 10
   podManagementPolicy: Parallel
   selector:
@@ -47,7 +47,7 @@ spec:
         fsGroupChangePolicy: Always
       containers:
         - name: zookeeper
-          image: docker.io/bitnami/zookeeper:3.9.2-debian-12-r12
+          image: docker.io/bitnami/zookeeper:3.9.2-debian-12-r15
           imagePullPolicy: "IfNotPresent"
           securityContext:
             allowPrivilegeEscalation: false
@@ -63,9 +63,9 @@ spec:
             - /scripts/setup.sh
           resources:
             limits:
-              cpu: 375m
+              cpu: '1'
               ephemeral-storage: 2Gi
-              memory: 384Mi
+              memory: 1Gi
             requests:
               cpu: 250m
               ephemeral-storage: 50Mi
@@ -100,7 +100,7 @@ spec:
             - name: ZOO_MAX_SESSION_TIMEOUT
               value: "40000"
             - name: ZOO_SERVERS
-              value: zookeeper-0.zookeeper-headless.ai-telemetry.svc.cluster.local:2888:3888::1
+              value: zookeeper-0.zookeeper-headless.zookeeper.svc.cluster.local:2888:3888::1 zookeeper-1.zookeeper-headless.zookeeper.svc.cluster.local:2888:3888::2 zookeeper-2.zookeeper-headless.zookeeper.svc.cluster.local:2888:3888::3
             - name: ZOO_ENABLE_AUTH
               value: "no"
             - name: ZOO_ENABLE_QUORUM_AUTH
@@ -121,6 +121,10 @@ spec:
           ports:
             - name: client
               containerPort: 2181
+            - name: follower
+              containerPort: 2888
+            - name: election
+              containerPort: 3888
             - name: http-admin
               containerPort: 8080
           livenessProbe:
@@ -167,6 +171,12 @@ spec:
           configMap:
             name: zookeeper-scripts
             defaultMode: 493
-        - name: data
-          persistentVolumeClaim:
-            claimName: zookeeper-data
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes:
+          - "ReadWriteOnce"
+        resources:
+          requests:
+            storage: "10Gi"
