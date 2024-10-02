@@ -10,7 +10,7 @@ metadata:
     app.kubernetes.io/component: zookeeper
     role: zookeeper
 spec:
-  replicas: 1
+  replicas: 3
   revisionHistoryLimit: 10
   podManagementPolicy: Parallel
   selector:
@@ -63,9 +63,9 @@ spec:
             - /scripts/setup.sh
           resources:
             limits:
-              cpu: 375m
+              cpu: '1'
               ephemeral-storage: 2Gi
-              memory: 384Mi
+              memory: 1Gi
             requests:
               cpu: 250m
               ephemeral-storage: 50Mi
@@ -167,6 +167,12 @@ spec:
           configMap:
             name: zookeeper-scripts
             defaultMode: 493
-        - name: data
-          persistentVolumeClaim:
-            claimName: zookeeper-data
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes:
+          - "ReadWriteOnce"
+        resources:
+          requests:
+            storage: "10Gi"
