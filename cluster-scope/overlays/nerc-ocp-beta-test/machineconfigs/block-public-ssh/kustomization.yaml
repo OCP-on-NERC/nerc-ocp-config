@@ -1,6 +1,5 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-- configure-sysctl-ip-forward/
-- udev-rules/
-- block-public-ssh/
+- machineconfig-controller.yaml
+- machineconfig-worker.yaml
