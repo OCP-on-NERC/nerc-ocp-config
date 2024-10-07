@@ -31,7 +31,6 @@ resources:
 - grafana-dashboards
 - persistentvolumeclaims
 - nerc-logs-metrics-open-cluster-management-cluster-manager-admin.yaml
-- acm-metrics-storage
 - acm-metrics-2ti-storage
 components:
   - ../../components/nerc-oauth-github
@@ -58,7 +57,6 @@ patches:
 - path: clustersecretstores/nerc-cluster-secrets_patch.yaml
 - path: machineconfigs/hostpath-provisioner-selinux_patch.yaml
 - path: externalsecrets/open-cluster-management-observability-multiclusterhub-operator-pull-secret_patch.yaml
-- path: externalsecrets/open-cluster-management-observability-acm-metrics-object-storage_patch.yaml
 - path: externalsecrets/open-cluster-management-observability-acm-metrics-2ti-object-storage_patch.yaml
 - path: externalsecrets/open-cluster-management-observability-thanos-object-storage_patch.yaml
 - patch: |
