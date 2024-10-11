@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: autopilot
+  name: autopilot-healthchecks
+  namespace: autopilot
+  annotations:
+    null
+spec:
+  ports:
+    - port: 3333
+      protocol: TCP
+      name: healthcheck
+  selector:
+    app: autopilot
