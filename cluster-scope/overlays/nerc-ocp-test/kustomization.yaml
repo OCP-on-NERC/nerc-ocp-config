@@ -17,6 +17,7 @@ resources:
 - feature/odf
 - feature/rhoai
 - ../../bundles/clusterissuer-http01
+- ../../bundles/gatekeeper-operator
 - ../../bundles/hostpath-provisioner
 - ../../bundles/node-feature-discovery
 - ../../bundles/patch-operator
