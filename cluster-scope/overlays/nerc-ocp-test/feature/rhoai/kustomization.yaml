@@ -9,6 +9,7 @@ resources:
   - datascienceclusters
   - odhdashboardconfigs
   - imagestreams/ucsls-f24-imagestream.yaml
+  - acceleratorprofiles
 
 patches:
   - path: subscriptions/subscription-patch.yaml
