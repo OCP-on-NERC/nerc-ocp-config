@@ -27,6 +27,9 @@ data:
       - kube_pod_status_ready_time
       - kube_pod_status_unschedulable
       - loki_distributor_bytes_received_total
+      - autopilot_health_checks
+      - autopilot_health_report_total
+      - scrape_series_added
     matches:
       - __name__=~"(ipmi_.*)"
       - __name__=~"(ceph_.*)"
