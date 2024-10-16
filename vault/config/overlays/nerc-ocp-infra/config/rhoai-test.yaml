@@ -1,0 +1,26 @@
+auth:
+- type: kubernetes
+  path: kubernetes/nerc-ocp-rhoai-test
+  config:
+    kubernetes_ca_cert: "${ file `certs/letsencrypt.crt` }"
+    kubernetes_host: https://api.rhoai-test.nerc.mghpcc.org:6443
+    token_reviewer_jwt: "${ file `creds/nerc-ocp-rhoai-test-token-reviewer` }"
+  roles:
+  - bound_service_account_names:
+    - vault-secret-reader
+    bound_service_account_namespaces:
+    - openshift-storage
+    - group-sync-operator
+    - openshift-config
+    - openshift-ingress
+    - openshift-logging
+    name: secret-reader
+    policies:
+    - nerc-common-reader
+    - nerc-ocp-rhoai-test-reader
+policies:
+- name: nerc-ocp-rhoai-test-reader
+  rules: |
+    path "nerc/data/nerc-ocp-rhoai-test/*" {
+      capabilities = ["read"]
+    }
