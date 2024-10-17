@@ -3,3 +3,12 @@ kind: Kustomization
 
 resources:
 - ../../base
+
+patches:
+- target:
+    kind: ExternalSecret
+    name: openshift-logging-lokistack-gateway-bearer-token
+  patch: |
+    - op: replace
+      path: /spec/dataFrom/0/extract/key
+      value: nerc/nerc-ocp-obs/lokistack-gateway-bearer-token

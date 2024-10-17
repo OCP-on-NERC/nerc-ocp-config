@@ -3,3 +3,4 @@ kind: Kustomization
 resources:
 - configure-sysctl-ip-forward/
 - udev-rules/
+- block-public-ssh/

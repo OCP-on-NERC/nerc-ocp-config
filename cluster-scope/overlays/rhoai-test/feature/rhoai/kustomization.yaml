@@ -1,0 +1,13 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+commonLabels:
+  nerc.mghpcc.org/feature: rhoai
+
+resources:
+  - ../../../../bundles/rhods-operator
+  - datascienceclusters
+  - odhdashboardconfigs
+
+patches:
+  - path: subscriptions/subscription-patch.yaml

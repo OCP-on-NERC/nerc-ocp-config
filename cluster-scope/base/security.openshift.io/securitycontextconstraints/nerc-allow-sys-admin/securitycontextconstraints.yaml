@@ -11,10 +11,11 @@ allowedCapabilities:
   - SYS_ADMIN
   - SETUID
   - SETGID
+  - CHOWN
 apiVersion: security.openshift.io/v1
 defaultAddCapabilities: null
 fsGroup:
-  type: MustRunAs
+  type: RunAsAny
 kind: SecurityContextConstraints
 metadata:
   name: nerc-allow-sys-admin
