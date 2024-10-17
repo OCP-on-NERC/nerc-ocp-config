@@ -1,0 +1,20 @@
+apiVersion: kustomize.config.k8s.io/v1alpha1
+kind: Component
+
+resources:
+  - ../../base/external-secrets.io/externalsecrets/oauth-htpasswd
+
+patches:
+  - patch: |
+      apiVersion: config.openshift.io/v1
+      kind: OAuth
+      metadata:
+        name: cluster
+      spec:
+        identityProviders:
+          - name: local-login-htpasswd
+            mappingMethod: claim
+            type: HTPasswd
+            htpasswd:
+              fileData:
+                name: oauth-htpasswd
