@@ -33,6 +33,7 @@ resources:
 
 components:
   - ../../components/nerc-oauth-github
+  - ../../components/nerc-oauth-htpasswd
 
   # this must come last in order to apply
   # to all resources.
@@ -75,6 +76,13 @@ patches:
     - op: replace
       path: /spec/data/0/remoteRef/key
       value: nerc/nerc-ocp-test/openshift-config/github-client-secret
+- target:
+    kind: ExternalSecret
+    name: oauth-htpasswd
+  patch: |
+    - op: replace
+      path: /spec/data/0/remoteRef/key
+      value: nerc/nerc-ocp-test/openshift-config/oauth-htpasswd
 
 - target:
     kind: SecretStore
