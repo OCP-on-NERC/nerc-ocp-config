@@ -10,7 +10,7 @@ spec:
       version: 3.2.0
     systemd:
       units:
-        - name: block-public-ssh
+        - name: block-public-ssh.service
           enabled: true
           contents: |
             [Unit]
