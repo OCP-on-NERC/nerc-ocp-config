@@ -1,0 +1,379 @@
+apiVersion: integreatly.org/v1alpha1
+kind: GrafanaDashboard
+metadata:
+  name: ope-metrics
+  namespace: grafana
+  labels:
+    app: grafana
+spec:
+  customFolderName: OPE
+  json: |
+    {
+      "annotations": {
+        "list": [
+          {
+            "builtIn": 1,
+            "datasource": "-- Grafana --",
+            "enable": true,
+            "hide": true,
+            "iconColor": "rgba(0, 211, 255, 1)",
+            "name": "Annotations & Alerts",
+            "type": "dashboard"
+          }
+        ]
+      },
+      "editable": true,
+      "gnetId": null,
+      "graphTooltip": 0,
+      "id": 3,
+      "links": [],
+      "panels": [
+        {
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": null,
+          "decimals": 0,
+          "fieldConfig": {
+            "defaults": {},
+            "overrides": []
+          },
+          "fill": 1,
+          "fillGradient": 1,
+          "gridPos": {
+            "h": 15,
+            "w": 24,
+            "x": 0,
+            "y": 0
+          },
+          "hiddenSeries": false,
+          "id": 3,
+          "legend": {
+            "alignAsTable": true,
+            "avg": false,
+            "current": true,
+            "max": true,
+            "min": false,
+            "rightSide": false,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 1,
+          "nullPointMode": "null",
+          "options": {
+            "alertThreshold": true
+          },
+          "percentage": false,
+          "pluginVersion": "7.5.17",
+          "pointradius": 2,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "exemplar": true,
+              "expr": "sum(avg_over_time(kube_resourcequota{cluster=\"nerc-ocp-prod\",namespace=\"rhods-notebooks\",resource=\"limits.cpu\",type=\"used\"}[10m:5m])) / sum(avg_over_time(kube_resourcequota{cluster=\"nerc-ocp-prod\",namespace=\"rhods-notebooks\",resource=\"limits.cpu\",type=\"hard\"}[10m:5m])) * 100",
+              "interval": "",
+              "legendFormat": "cpu in % of limits",
+              "refId": "cpu in % of limits"
+            },
+            {
+              "exemplar": true,
+              "expr": "sum(avg_over_time(kube_resourcequota{cluster=\"nerc-ocp-prod\",namespace=\"rhods-notebooks\",resource=\"limits.ephemeral-storage\",type=\"used\"}[10m:5m])) / sum(avg_over_time(kube_resourcequota{cluster=\"nerc-ocp-prod\",namespace=\"rhods-notebooks\",resource=\"limits.ephemeral-storage\",type=\"hard\"}[10m:5m])) * 100",
+              "hide": false,
+              "interval": "",
+              "legendFormat": "ephemeral-storage in % of limits",
+              "refId": "ephemeral-storage in % of limits"
+            },
+            {
+              "exemplar": true,
+              "expr": "sum(avg_over_time(kube_resourcequota{cluster=\"nerc-ocp-prod\",namespace=\"rhods-notebooks\",resource=\"limits.memory\",type=\"used\"}[10m:5m])) / sum(avg_over_time(kube_resourcequota{cluster=\"nerc-ocp-prod\",namespace=\"rhods-notebooks\",resource=\"limits.memory\",type=\"hard\"}[10m:5m])) * 100",
+              "hide": false,
+              "interval": "",
+              "legendFormat": "memory in % of limits",
+              "refId": "memory in % of limits"
+            },
+            {
+              "exemplar": true,
+              "expr": "sum(avg_over_time(kube_resourcequota{cluster=\"nerc-ocp-prod\",namespace=\"rhods-notebooks\",resource=\"persistentvolumeclaims\",type=\"used\"}[10m:5m])) / sum(avg_over_time(kube_resourcequota{cluster=\"nerc-ocp-prod\",namespace=\"rhods-notebooks\",resource=\"persistentvolumeclaims\",type=\"hard\"}[10m:5m])) * 100",
+              "hide": false,
+              "interval": "",
+              "legendFormat": "persistentvolumeclaims  in % of limits",
+              "refId": "persistentvolumeclaims  in % of limits"
+            },
+            {
+              "exemplar": true,
+              "expr": "sum(avg_over_time(kube_resourcequota{cluster=\"nerc-ocp-prod\",namespace=\"rhods-notebooks\",resource=\"requests.storage\",type=\"used\"}[10m:5m])) / sum(avg_over_time(kube_resourcequota{cluster=\"nerc-ocp-prod\",namespace=\"rhods-notebooks\",resource=\"requests.storage\",type=\"hard\"}[10m:5m])) * 100",
+              "hide": false,
+              "interval": "",
+              "legendFormat": "requests.storage in % of limits",
+              "refId": "requests.storage in % of limits"
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeRegions": [],
+          "timeShift": null,
+          "title": "used in % of limits",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "decimals": null,
+              "format": "short",
+              "label": "",
+              "logBase": 1,
+              "max": "100",
+              "min": "0",
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ],
+          "yaxis": {
+            "align": false,
+            "alignLevel": null
+          }
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": null,
+          "fieldConfig": {
+            "defaults": {},
+            "overrides": []
+          },
+          "fill": 1,
+          "fillGradient": 1,
+          "gridPos": {
+            "h": 9,
+            "w": 24,
+            "x": 0,
+            "y": 15
+          },
+          "hiddenSeries": false,
+          "id": 4,
+          "legend": {
+            "alignAsTable": true,
+            "avg": false,
+            "current": true,
+            "max": true,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 1,
+          "nullPointMode": "null",
+          "options": {
+            "alertThreshold": true
+          },
+          "percentage": false,
+          "pluginVersion": "7.5.17",
+          "pointradius": 2,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "exemplar": true,
+              "expr": "count(kube_pod_container_info{cluster=\"nerc-ocp-prod\",namespace=\"rhods-notebooks\"})",
+              "hide": false,
+              "interval": "",
+              "legendFormat": "container",
+              "refId": "container"
+            },
+            {
+              "exemplar": true,
+              "expr": "count(kube_pod_owner{cluster=\"nerc-ocp-prod\",namespace=\"rhods-notebooks\"})",
+              "hide": false,
+              "interval": "",
+              "legendFormat": "pod owner",
+              "refId": "pod owner"
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeRegions": [],
+          "timeShift": null,
+          "title": "pods-owner and container",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "decimals": null,
+              "format": "short",
+              "label": "",
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ],
+          "yaxis": {
+            "align": false,
+            "alignLevel": null
+          }
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": null,
+          "fieldConfig": {
+            "defaults": {},
+            "overrides": []
+          },
+          "fill": 1,
+          "fillGradient": 1,
+          "gridPos": {
+            "h": 9,
+            "w": 24,
+            "x": 0,
+            "y": 24
+          },
+          "hiddenSeries": false,
+          "id": 5,
+          "legend": {
+            "alignAsTable": true,
+            "avg": false,
+            "current": true,
+            "max": true,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 1,
+          "nullPointMode": "null",
+          "options": {
+            "alertThreshold": true
+          },
+          "percentage": false,
+          "pluginVersion": "7.5.17",
+          "pointradius": 2,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "exemplar": true,
+              "expr": "count(kube_pod_container_info{cluster=\"nerc-ocp-prod\",namespace=\"rhods-notebooks\"}) / count(kube_pod_owner{cluster=\"nerc-ocp-prod\",namespace=\"rhods-notebooks\"})",
+              "hide": false,
+              "interval": "",
+              "legendFormat": "container",
+              "refId": "container"
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeRegions": [],
+          "timeShift": null,
+          "title": "container per pods-owner",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "decimals": null,
+              "format": "short",
+              "label": "",
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ],
+          "yaxis": {
+            "align": false,
+            "alignLevel": null
+          }
+        }
+      ],
+      "schemaVersion": 27,
+      "style": "dark",
+      "tags": [],
+      "templating": {
+        "list": []
+      },
+      "time": {
+        "from": "now-24h",
+        "to": "now"
+      },
+      "timepicker": {},
+      "timezone": "",
+      "title": "OPE metrics",
+      "uid": "Tt9n0xmHz",
+      "version": 10
+    }
