@@ -13,6 +13,7 @@ resources:
 - ../../bundles/crunchy-postgres-operator
 - ../../bundles/keycloak
 - ../../bundles/prom-keycloak-proxy
+- ../../bundles/zookeeper
 - ../../base/core/namespaces/openshift-gitops
 - ../../base/core/namespaces/dex
 - ../../base/rbac.authorization.k8s.io/clusterroles/allow-edit-rbac
