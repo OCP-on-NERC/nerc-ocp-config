@@ -14,6 +14,7 @@ resources:
 - ../../bundles/keycloak
 - ../../bundles/prom-keycloak-proxy
 - ../../bundles/zookeeper
+- ../../bundles/solr
 - ../../base/core/namespaces/openshift-gitops
 - ../../base/core/namespaces/dex
 - ../../base/rbac.authorization.k8s.io/clusterroles/allow-edit-rbac
