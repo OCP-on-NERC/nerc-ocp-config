@@ -13,7 +13,7 @@ spec:
       files:
         - contents:
             compression: gzip
-            source: data:;base64,H4sIAAAAAAAC/woOdQqODA5x9bW1VcpLLVHScQnyDHMNCra1VcrNqTCNT84vSlXS8XYN8nP1AQkaGBgYWBmYWxkY6Bko6Tg6h3j6+9naKiWmpCjp+Dn6utoq5WUmGypxUWCuIU5zjcg018SSNu6FmIvXvYAAAAD//9CsdZdgAQAA
+            source: data:;base64,H4sIAAAAAAAC/woOdQqODA5x9bW1VcpLLVHScQnyDHMNCra1VcrNqTCNT84vSlXS8XYN8nP1AQkaGBgYWBmYWxkY6Bko6Tg6h3j6+9naKiWmpCjp+Dn6utoq5WUmGypxUWCuIU5zjcg018SSNu6FmEt995qZ0sa9EHPxuhcQAAD///2wC9YQAgAA
           mode: 420
           path: /etc/udev/rules.d/90-mlx5-core.rules
         - contents:
