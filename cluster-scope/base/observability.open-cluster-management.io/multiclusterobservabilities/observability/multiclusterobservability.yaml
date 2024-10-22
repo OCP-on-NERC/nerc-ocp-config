@@ -16,8 +16,8 @@ spec:
     storageClass: gp2
     storeStorageSize: 10Gi
     metricObjectStorage:
-      key: acm-metrics.yaml
-      name: acm-metrics-object-storage
+      key: acm-metrics-2ti.yaml
+      name: acm-metrics-2ti-object-storage
   advanced:
     rbacQueryProxy:
       replicas: 2

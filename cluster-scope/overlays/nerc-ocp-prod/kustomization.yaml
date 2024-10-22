@@ -27,6 +27,7 @@ resources:
 - ../../base/rbac.authorization.k8s.io/clusterroles/project-monitoring-edit
 - ../../base/rbac.authorization.k8s.io/clusterroles/nerc-allow-sys-admin
 - ../../base/security.openshift.io/securitycontextconstraints/nerc-allow-sys-admin
+- ../../base/rbac.authorization.k8s.io/clusterroles/nerc-node-reader
 - feature/odf
 - feature/custom-routes
 - ../../base/core/namespaces/openshift-gitops
@@ -43,6 +44,7 @@ resources:
 - rhoai
 - object-storage
 - rolebindings
+- clusterrolebindings
 
 components:
   - ../../components/nerc-oauth-keycloak

@@ -3,9 +3,8 @@ kind: Kustomization
 resources:
   - ../../base/core/namespaces/open-cluster-management-observability
   - ../../base/objectbucket.io/objectbucketclaims/observability
-  - ../../base/objectbucket.io/objectbucketclaims/acm-metrics
   - ../../base/objectbucket.io/objectbucketclaims/acm-metrics-2ti
-  - ../../base/external-secrets.io/externalsecrets/open-cluster-management-observability-acm-metrics-object-storage
+  - ../../base/external-secrets.io/externalsecrets/open-cluster-management-observability-acm-metrics-2ti-object-storage
   - ../../base/external-secrets.io/externalsecrets/open-cluster-management-observability-thanos-object-storage
   - ../../base/external-secrets.io/externalsecrets/open-cluster-management-observability-multiclusterhub-operator-pull-secret
   - ../../base/external-secrets.io/externalsecrets/open-cluster-management-observability-alertmanager-config

@@ -3,3 +3,4 @@ kind: Kustomization
 resources:
 - odhdashboardconfigs/odh-dashboard-config.yaml
 - imagestreams/ucsls-f24-imagestream.yaml
+- imagestreams/oauth-proxy.yaml

@@ -17,6 +17,7 @@ auth:
     - openshift-logging
     - openshift-ingress-operator
     - ece440spring2024-619f12
+    - rhods-notebooks
     name: secret-reader
     policies:
     - nerc-common-reader

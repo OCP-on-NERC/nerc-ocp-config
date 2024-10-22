@@ -1,5 +1,16 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-namespace: project-robbie-b4784c
 resources:
 - project-robbie-allow-sys-admin.yaml
+
+transformers:
+- |-
+  apiVersion: builtin
+  kind: NamespaceTransformer
+  metadata:
+    name: notImportantHere
+    namespace: project-robbie-b4784c
+  setRoleBindingSubjects: allServiceAccounts
+  fieldSpecs:
+  - path: metadata/namespace
+    create: true
