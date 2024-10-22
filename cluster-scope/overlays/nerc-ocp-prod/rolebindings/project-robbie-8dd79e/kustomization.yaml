@@ -9,7 +9,7 @@ transformers:
   kind: NamespaceTransformer
   metadata:
     name: notImportantHere
-    namespace: project-robbie-b4784c
+    namespace: project-robbie-8dd79e
   setRoleBindingSubjects: allServiceAccounts
   fieldSpecs:
   - path: metadata/namespace
