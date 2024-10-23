@@ -78,10 +78,10 @@ spec:
                 - id: namespace-rhods-notebooks
                   name: rhods-notebooks
                   displayName: rhods-notebooks namespace
-                - id: kruizeoptimization-143c8e
+                - id: namespace-kruizeoptimization-143c8e
                   name: kruizeoptimization-143c8e
                   displayName: kruizeoptimization-143c8e namespace
-                - id: kruizeoptimization-5ad5bc
+                - id: namespace-kruizeoptimization-5ad5bc
                   name: kruizeoptimization-5ad5bc
                   displayName: kruizeoptimization-5ad5bc namespace
 
