@@ -51,6 +51,7 @@ components:
   - ../../components/nerc-oauth-keycloak
   - ../../components/nerc-oauth-github
   - ../../components/resourcequotas/ope-course-quota
+  - ../../components/nerc-oauth-htpasswd
 
   # this must come last in order to apply
   # to all resources.
@@ -122,6 +123,13 @@ patches:
     - op: replace
       path: /spec/data/0/remoteRef/key
       value: nerc/nerc-ocp-prod/openshift-config/github-client-secret
+- target:
+    kind: ExternalSecret
+    name: oauth-htpasswd
+  patch: |
+    - op: replace
+      path: /spec/data/0/remoteRef/key
+      value: nerc/nerc-ocp-prod/openshift-config/oauth-htpasswd
 - target:
     kind: APIServer
     name: cluster
