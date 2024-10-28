@@ -1,0 +1,25 @@
+apiVersion: user.openshift.io/v1
+kind: Group
+metadata:
+  name: ai4dd-demo
+users:
+  - ai4dd-demo-1
+  - ai4dd-demo-2
+  - ai4dd-demo-3
+  - ai4dd-demo-4
+  - ai4dd-demo-5
+  - ai4dd-demo-6
+  - ai4dd-demo-7
+  - ai4dd-demo-8
+  - ai4dd-demo-9
+  - ai4dd-demo-10
+  - ai4dd-demo-11
+  - ai4dd-demo-12
+  - ai4dd-demo-13
+  - ai4dd-demo-14
+  - ai4dd-demo-15
+  - ai4dd-demo-16
+  - ai4dd-demo-17
+  - ai4dd-demo-18
+  - ai4dd-demo-19
+  - ai4dd-demo-20

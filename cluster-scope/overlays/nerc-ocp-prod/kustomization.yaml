@@ -46,6 +46,7 @@ resources:
 - object-storage
 - rolebindings
 - clusterrolebindings
+- groups
 
 components:
   - ../../components/nerc-oauth-keycloak
