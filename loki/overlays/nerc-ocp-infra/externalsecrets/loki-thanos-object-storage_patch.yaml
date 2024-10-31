@@ -1,9 +1,0 @@
-apiVersion: external-secrets.io/v1beta1
-kind: ExternalSecret
-metadata:
-  name: loki-thanos-object-storage
-  namespace: openshift-logging
-spec:
-  dataFrom:
-    - extract:
-        key: nerc/nerc-ocp-infra/loki-thanos-object-storage
