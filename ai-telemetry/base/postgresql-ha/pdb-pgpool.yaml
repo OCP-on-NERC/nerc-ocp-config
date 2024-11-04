@@ -1,0 +1,15 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: postgresql-ha-pgpool
+  labels:
+    app.kubernetes.io/instance: postgresql-ha
+    app.kubernetes.io/name: postgresql-ha
+    app.kubernetes.io/component: pgpool
+spec:
+  maxUnavailable: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: postgresql-ha
+      app.kubernetes.io/name: postgresql-ha
+      app.kubernetes.io/component: pgpool

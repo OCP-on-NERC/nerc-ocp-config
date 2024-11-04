@@ -3,3 +3,5 @@ kind: Kustomization
 
 resources:
   - solr-secret.yaml
+  - postgresql-ha-secret.yaml
+  - postgresql-ha-pgpool-secret.yaml

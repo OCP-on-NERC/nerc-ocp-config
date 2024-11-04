@@ -1,0 +1,16 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: postgresql-ha
+resources:
+- configmap.yaml
+- deployment.yaml
+- networkpolicy-pgpool.yaml
+- networkpolicy.yaml
+- pdb-pgpool.yaml
+- pdb-witness.yaml
+- pdb.yaml
+- service-headless.yaml
+- service-pgpool.yaml
+- service.yaml
+- serviceaccount.yaml
+- statefulset.yaml
