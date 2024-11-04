@@ -9,5 +9,5 @@ spec:
     resources:
       requests:
         storage: 2Ti
-    storageClass: acm-metrics-2ti-bucket-storage
+    storageClass: ocs-external-storagecluster-ceph-rbd
   type: pv-pool
