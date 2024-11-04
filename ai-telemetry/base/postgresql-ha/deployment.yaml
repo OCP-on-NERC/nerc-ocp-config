@@ -1,0 +1,143 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgresql-ha-pgpool
+  labels:
+    app.kubernetes.io/instance: postgresql-ha
+    app.kubernetes.io/name: postgresql-ha
+    app.kubernetes.io/component: pgpool
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: postgresql-ha
+      app.kubernetes.io/name: postgresql-ha
+      app.kubernetes.io/component: pgpool
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/instance: postgresql-ha
+        app.kubernetes.io/name: postgresql-ha
+        app.kubernetes.io/component: pgpool
+    spec:
+      automountServiceAccountToken: false
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    app.kubernetes.io/instance: postgresql-ha
+                    app.kubernetes.io/name: postgresql-ha
+                    app.kubernetes.io/component: pgpool
+                topologyKey: kubernetes.io/hostname
+              weight: 1
+      serviceAccountName: postgresql-ha
+      # Auxiliary vars to populate environment variables
+      containers:
+        - name: pgpool
+          image: docker.io/bitnami/pgpool:4.5.4-debian-12-r2
+          imagePullPolicy: "IfNotPresent"
+          env:
+            - name: BITNAMI_DEBUG
+              value: "false"
+            - name: PGPOOL_BACKEND_NODES
+              value: 0:postgresql-ha-postgresql-0.postgresql-ha-postgresql-headless:5432,1:postgresql-ha-postgresql-1.postgresql-ha-postgresql-headless:5432,2:postgresql-ha-postgresql-2.postgresql-ha-postgresql-headless:5432,
+            - name: PGPOOL_SR_CHECK_USER
+              value: "repmgr"
+            - name: PGPOOL_SR_CHECK_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgresql-ha-postgresql
+                  key: repmgr-password
+            - name: PGPOOL_SR_CHECK_DATABASE
+              value: "postgres"
+            - name: PGPOOL_ENABLE_LDAP
+              value: "no"
+            - name: PGPOOL_POSTGRES_USERNAME
+              value: "postgres"
+            - name: PGPOOL_POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgresql-ha-postgresql
+                  key: password
+            - name: PGPOOL_ADMIN_USERNAME
+              value: "admin"
+            - name: PGPOOL_ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgresql-ha-pgpool
+                  key: admin-password
+            - name: PGPOOL_AUTHENTICATION_METHOD
+              value: "scram-sha-256"
+            - name: PGPOOL_ENABLE_LOAD_BALANCING
+              value: "yes"
+            - name: PGPOOL_DISABLE_LOAD_BALANCE_ON_WRITE
+              value: "transaction"
+            - name: PGPOOL_ENABLE_LOG_CONNECTIONS
+              value: "no"
+            - name: PGPOOL_ENABLE_LOG_HOSTNAME
+              value: "yes"
+            - name: PGPOOL_ENABLE_LOG_PER_NODE_STATEMENT
+              value: "no"
+            - name: PGPOOL_RESERVED_CONNECTIONS
+              value: '1'
+            - name: PGPOOL_CHILD_LIFE_TIME
+              value: ""
+            - name: PGPOOL_ENABLE_TLS
+              value: "no"
+            - name: PGPOOL_HEALTH_CHECK_PSQL_TIMEOUT
+              value: "6"
+          envFrom:
+          ports:
+            - name: postgresql
+              containerPort: 5432
+              protocol: TCP
+          livenessProbe:
+            failureThreshold: 5
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+            exec:
+              command:
+                - /opt/bitnami/scripts/pgpool/healthcheck.sh
+          readinessProbe:
+            failureThreshold: 5
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 5
+            exec:
+              command:
+                - bash
+                - -ec
+                - 'PGPASSWORD=$PGPOOL_POSTGRES_PASSWORD psql -U "postgres" -d "postgres" -h /opt/bitnami/pgpool/tmp -tA -c "SELECT 1" >/dev/null'
+          resources:
+            limits:
+              cpu: 1
+              ephemeral-storage: 2Gi
+              memory: 1Gi
+            requests:
+              cpu: 500m
+              ephemeral-storage: 100Mi
+              memory: 100Mi
+          volumeMounts:
+            - name: empty-dir
+              mountPath: /tmp
+              subPath: tmp-dir
+            - name: empty-dir
+              mountPath: /opt/bitnami/pgpool/etc
+              subPath: app-etc-dir
+            - name: empty-dir
+              mountPath: /opt/bitnami/pgpool/conf
+              subPath: app-conf-dir
+            - name: empty-dir
+              mountPath: /opt/bitnami/pgpool/tmp
+              subPath: app-tmp-dir
+            - name: empty-dir
+              mountPath: /opt/bitnami/pgpool/logs
+              subPath: app-logs-dir
+      volumes:
+        - name: empty-dir
+          emptyDir: {}
