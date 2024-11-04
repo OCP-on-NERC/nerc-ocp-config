@@ -1,0 +1,17 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: postgresql-ha-postgresql-witness
+  labels:
+    app.kubernetes.io/instance: postgresql-ha
+    app.kubernetes.io/name: postgresql-ha
+    app.kubernetes.io/component: postgresql
+    role: witness
+spec:
+  maxUnavailable: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: postgresql-ha
+      app.kubernetes.io/name: postgresql-ha
+      app.kubernetes.io/component: postgresql
+      role: witness

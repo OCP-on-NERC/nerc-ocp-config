@@ -5,3 +5,5 @@ resources:
 
 patches:
   - path: externalsecrets/solr-externalsecret.yaml
+  - path: externalsecrets/postgresql-ha-pgpool-externalsecret.yaml
+  - path: externalsecrets/postgresql-ha-externalsecret.yaml

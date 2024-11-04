@@ -1,0 +1,23 @@
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: postgresql-ha-pgpool
+  labels:
+    app.kubernetes.io/instance: postgresql-ha
+    app.kubernetes.io/name: postgresql-ha
+    app.kubernetes.io/component: pgpool
+    role: data
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/instance: postgresql-ha
+      app.kubernetes.io/name: postgresql-ha
+      app.kubernetes.io/component: pgpool
+  policyTypes:
+    - Ingress
+    - Egress
+  egress:
+    - {}
+  ingress:
+    - ports:
+        - port: 5432
