@@ -12,6 +12,7 @@ resources:
 - ../../bundles/patch-operator
 - ../../bundles/external-secrets-clustersecretstore
 - ../../bundles/multicluster-engine-operator
+- ../../bundles/minio
 - ../../bundles/grafana
 - ../../base/core/namespaces/dex
 - ../../base/core/namespaces/nerc-ocp-prod

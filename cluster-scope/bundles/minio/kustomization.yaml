@@ -1,0 +1,8 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+commonLabels:
+  nerc.mghpcc.org/bundle: minio
+resources:
+- ../../base/core/namespaces/minio-operator
+- ../../base/operators.coreos.com/operatorgroups/minio-operator
+- ../../base/operators.coreos.com/subscriptions/minio-operator

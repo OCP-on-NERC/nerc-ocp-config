@@ -9,6 +9,7 @@ resources:
 - ../../bundles/clusterissuer-http01
 - ../../bundles/nerc-certificate-clusterissuers
 - ../../bundles/external-secrets-clustersecretstore
+- ../../bundles/minio
 - ../../bundles/grafana
 - ../../bundles/crunchy-postgres-operator
 - ../../bundles/keycloak
