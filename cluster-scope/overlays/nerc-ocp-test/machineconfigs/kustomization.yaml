@@ -5,3 +5,4 @@ resources:
   - configure-bond0
   - configure-sysctl-ip-forward
   - hostpath-provisioner-selinux-controller.yaml
+  - pci-passthrough
