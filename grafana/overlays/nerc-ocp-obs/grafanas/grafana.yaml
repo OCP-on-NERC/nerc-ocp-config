@@ -29,7 +29,6 @@ spec:
         'Deny'
       role_attribute_strict: true
       client_id: grafana
-  version: 11.3.0
   dashboardLabelSelector:
   - matchExpressions:
     - key: app
