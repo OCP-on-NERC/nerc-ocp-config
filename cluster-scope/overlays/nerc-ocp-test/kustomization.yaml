@@ -56,6 +56,7 @@ generatorOptions:
 
 patches:
 - path: kubeletconfigs/system-reserved-patch.yaml
+- path: subscriptions/rhoai-operator-patch.yaml
 - patch: |
     apiVersion: config.openshift.io/v1
     kind: OAuth
