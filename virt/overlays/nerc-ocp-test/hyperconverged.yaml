@@ -8,5 +8,5 @@ spec:
     pciHostDevices:
     - pciDeviceSelector: "10DE:1DB6"
       resourceName: "nvidia.com/GV100GL_Tesla_V100"
-    - pciDeviceSelector: "10DE:144E"
+    - pciDeviceSelector: "10DE:20B0"
       resourceName: "nvidia.com/A100_SXM4_40GB"
