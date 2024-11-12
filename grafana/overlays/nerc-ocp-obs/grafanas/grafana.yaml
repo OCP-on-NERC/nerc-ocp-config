@@ -1,37 +1,46 @@
-apiVersion: integreatly.org/v1alpha1
+apiVersion: grafana.integreatly.org/v1beta1
 kind: Grafana
 metadata:
   name: grafana
   namespace: grafana
+  labels:
+    dashboards: grafana
+    folders: grafana
 spec:
-  deployment:
-    envFrom:
-      - secretRef:
-          name: oauth-client-secret
-      - secretRef:
-          name: grafana-serviceaccount-token
-      - configMapRef:
-          name: openshift-service-ca.crt
   config:
     server:
-      root_url: https://grafana.apps.obs.nerc.mghpcc.org
+      root_url: 'https://grafana.apps.obs.nerc.mghpcc.org'
+    auth:
+      disable_login_form: 'false'
     auth.generic_oauth:
-      enabled: true
-      scopes: openid email groups profile
-      email_attribute_path: name
-      api_url: https://dex-dex.apps.obs.nerc.mghpcc.org/userinfo
-      auth_url: https://dex-dex.apps.obs.nerc.mghpcc.org/auth
-      token_url: https://dex-dex.apps.obs.nerc.mghpcc.org/token
+      enabled: 'true'
+      client_secret: '${GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET}'
+      token_url: 'https://dex-dex.apps.obs.nerc.mghpcc.org/token'
+      api_url: 'https://dex-dex.apps.obs.nerc.mghpcc.org/userinfo'
+      name: OAuth
+      email_attribute_path: email
+      client_id: grafana
       role_attribute_path: >-
         contains(groups[*], 'cluster-admins') && 'Admin' ||
         contains(groups[*], 'nerc-ops')  && 'Admin' ||
         contains(groups[*], 'nerc-logs-metrics')  && 'Admin' ||
         'Deny'
-      role_attribute_strict: true
-      client_id: grafana
-  dashboardLabelSelector:
-  - matchExpressions:
-    - key: app
-      operator: In
-      values:
-      - grafana
+      auth_url: 'https://dex-dex.apps.obs.nerc.mghpcc.org/auth'
+      scopes: openid email groups profile
+    log:
+      mode: console
+  deployment:
+    spec:
+      template:
+        spec:
+          containers:
+            - image: 'grafana/grafana:11.3.0'
+              name: grafana
+              envFrom:
+                - secretRef:
+                    name: oauth-client-secret
+                - secretRef:
+                    name: grafana-sa-token
+                - configMapRef:
+                    name: openshift-service-ca.crt
+  version: 11.3.0
