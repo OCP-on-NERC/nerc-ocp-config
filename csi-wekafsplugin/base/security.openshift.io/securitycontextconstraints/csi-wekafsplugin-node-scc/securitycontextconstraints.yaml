@@ -1,0 +1,25 @@
+# Source: csi-wekafsplugin/templates/nodeserver-security-context-constraint.yaml
+kind: SecurityContextConstraints
+apiVersion: security.openshift.io/v1
+metadata:
+  name: csi-wekafsplugin-node-scc
+allowHostIPC: false
+allowHostPID: false
+allowPrivilegedContainer: true
+allowHostDirVolumePlugin: true
+allowHostNetwork: true
+allowedVolumeTypes:
+  - hostPath
+  - secret
+readOnlyRootFilesystem: false
+allowHostPorts: true
+runAsUser:
+  type: RunAsAny
+seLinuxContext:
+  type: RunAsAny
+fsGroup:
+  type: RunAsAny
+supplementalGroups:
+  type: RunAsAny
+users:
+  - system:serviceaccount:csi-wekafsplugin:csi-wekafsplugin-node
