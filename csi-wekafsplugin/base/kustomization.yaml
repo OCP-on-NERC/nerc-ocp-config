@@ -1,0 +1,20 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: csi-wekafsplugin
+resources:
+  - core/namespaces/csi-wekafsplugin
+  - core/serviceaccounts/csi-wekafsplugin-node
+  - core/serviceaccounts/csi-wekafsplugin-controller
+  - storage.k8s.io/csidrivers/csi.weka.io
+  - security.openshift.io/securitycontextconstraints/csi-wekafsplugin-node-scc
+  - security.openshift.io/securitycontextconstraints/csi-wekafsplugin-controller-scc
+  - rbac.authorization.k8s.io/clusterrolebindings/csi-wekafsplugin-node
+  - rbac.authorization.k8s.io/clusterrolebindings/csi-wekafsplugin-controller
+  - rbac.authorization.k8s.io/clusterroles/csi-wekafsplugin-node
+  - rbac.authorization.k8s.io/clusterroles/csi-wekafsplugin-controller
+  - rbac.authorization.k8s.io/rolebindings/csi-wekafsplugin-controller
+  - rbac.authorization.k8s.io/roles/csi-wekafsplugin-controller
+  - machineconfiguration.openshift.io/machineconfigs/50-csi-wekafs-selinux-policy-worker
+  - apps/daemonsets/csi-wekafsplugin-node
+  - apps/deployments/csi-wekafsplugin-controller
