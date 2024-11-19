@@ -19,6 +19,7 @@ auth:
     - openshift-logging
     - koku-metrics-operator
     - curator-system
+    - csi-wekafsplugin
     name: secret-reader
     policies:
     - nerc-common-reader
