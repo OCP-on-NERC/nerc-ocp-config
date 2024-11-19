@@ -7,6 +7,7 @@ resources:
   - core/serviceaccounts/csi-wekafsplugin-node
   - core/serviceaccounts/csi-wekafsplugin-controller
   - storage.k8s.io/csidrivers/csi.weka.io
+  - storage.k8s.io/storageclasses/storageclass-wekafs-dir-api
   - security.openshift.io/securitycontextconstraints/csi-wekafsplugin-node-scc
   - security.openshift.io/securitycontextconstraints/csi-wekafsplugin-controller-scc
   - rbac.authorization.k8s.io/clusterrolebindings/csi-wekafsplugin-node
