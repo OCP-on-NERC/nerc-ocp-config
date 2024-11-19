@@ -8,9 +8,6 @@ allowHostPID: false
 allowPrivilegedContainer: true
 allowHostDirVolumePlugin: true
 allowHostNetwork: true
-allowedVolumeTypes:
-  - hostPath
-  - secret
 readOnlyRootFilesystem: false
 allowHostPorts: true
 runAsUser:
@@ -23,3 +20,5 @@ supplementalGroups:
   type: RunAsAny
 users:
   - system:serviceaccount:csi-wekafsplugin:csi-wekafsplugin-controller
+volumes:
+  - '*'
