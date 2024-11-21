@@ -38,7 +38,7 @@ spec:
     repoConfig:
       configMapName: ""
     upgradePolicy:
-      autoUpgrade: true
+      autoUpgrade: false
       drain:
         deleteEmptyDir: false
         enable: false
