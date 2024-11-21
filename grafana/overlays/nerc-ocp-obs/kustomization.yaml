@@ -8,6 +8,7 @@ resources:
   - grafanas
   - grafanadatasources
   - grafanadashboards
+  - grafanafolder
 
 patches:
   - path: patches/grafana-route.yaml
