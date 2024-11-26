@@ -1,0 +1,46 @@
+issuer: https://dex-dex.apps.ocp-test.nerc.mghpcc.org
+
+storage:
+  type: memory
+
+web:
+  http: "0.0.0.0:5556"
+
+grpc:
+  addr: "0.0.0.0:5557"
+
+telemetry:
+  http: "0.0.0.0:5558"
+
+oauth2:
+  skipApprovalScreen: true
+
+staticClients:
+  - id: grafana
+    name: Grafana
+    redirectURIs:
+      - https://grafana.apps.ocp-test.nerc.mghpcc.org/login/generic_oauth
+    secretEnv: GRAFANA_SECRET
+  - id: minio
+    name: MinIO
+    redirectURIs:
+      - https://minio-console-minio.apps.ocp-test.nerc.mghpcc.org/oauth_callback
+      - https://minio-minio.apps.ocp-test.nerc.mghpcc.org/oauth_callback
+    secretEnv: MINIO_IDENTITY_OPENID_CLIENT_SECRET
+  - id: ai-telemetry
+    name: AI Telemetry
+    redirectURIs:
+      - https://keycloak.apps.obs.nerc.mghpcc.org/realms/NERC/broker/OpenShift/endpoint
+    secretEnv: AI_TELEMETRY_AUTH_SECRET
+
+connectors:
+  - type: openshift
+    id: openshift
+    name: OpenShift
+    config:
+      issuer: https://kubernetes.default.svc
+      clientID: system:serviceaccount:dex:dex
+      clientSecret: $OPENSHIFT_CLIENT_SECRET
+      redirectURI: https://dex-dex.apps.ocp-test.nerc.mghpcc.org/callback
+      groups:
+        - system:authenticated
