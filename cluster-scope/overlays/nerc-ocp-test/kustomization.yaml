@@ -31,6 +31,7 @@ resources:
 - ../../bundles/openshift-pipelines-operator
 - ../../bundles/virt
 - ../../bundles/autopilot
+- ../../bundles/minio
 
 components:
   - ../../components/nerc-oauth-github
