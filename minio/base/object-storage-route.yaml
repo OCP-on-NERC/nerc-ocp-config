@@ -1,0 +1,13 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: minio
+spec:
+  port:
+    targetPort: object-storage
+  to:
+    kind: "Service"
+    name: minio
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
