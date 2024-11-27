@@ -3,7 +3,7 @@ auth:
   path: kubernetes/hypershift1
   config:
     kubernetes_ca_cert: "${ file `certs/letsencrypt.crt` }"
-    kubernetes_host: https://api.hypershift1.int.massopen.cloud:6443
+    kubernetes_host: https://api.hypershift1.nerc.mghpcc.org:6443
     token_reviewer_jwt: "${ file `creds/hypershift1-token-reviewer` }"
   roles:
   - bound_service_account_names:
