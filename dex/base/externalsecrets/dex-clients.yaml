@@ -4,8 +4,8 @@ metadata:
   name: dex-clients
 spec:
   secretStoreRef:
-    name: nerc-cluster-secrets
-    kind: ClusterSecretStore
+    name: nerc-secret-store
+    kind: SecretStore
   refreshInterval: "1h"
   target:
     name: dex-clients

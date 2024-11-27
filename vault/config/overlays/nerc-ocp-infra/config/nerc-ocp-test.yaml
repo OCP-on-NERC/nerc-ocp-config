@@ -21,6 +21,7 @@ auth:
     - curator-system
     - csi-wekafsplugin
     - dex
+    - minio
     name: secret-reader
     policies:
     - nerc-common-reader
