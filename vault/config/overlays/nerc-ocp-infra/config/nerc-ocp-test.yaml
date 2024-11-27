@@ -20,6 +20,7 @@ auth:
     - koku-metrics-operator
     - curator-system
     - csi-wekafsplugin
+    - dex
     name: secret-reader
     policies:
     - nerc-common-reader
