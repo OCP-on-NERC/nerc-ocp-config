@@ -1,0 +1,15 @@
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: minio-bucket
+  namespace: danni-ilab
+spec:
+  refreshInterval: "1h"
+  secretStoreRef:
+    name: nerc-secret-store
+    kind: SecretStore
+  target:
+    name: minio-bucket
+  dataFrom:
+    - extract:
+        key: nerc/nerc-ocp-test/minio/projects/danni-ilab

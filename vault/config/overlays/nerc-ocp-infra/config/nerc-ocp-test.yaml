@@ -22,6 +22,7 @@ auth:
     - csi-wekafsplugin
     - dex
     - minio
+    - danni-ilab
     name: secret-reader
     policies:
     - nerc-common-reader
