@@ -3,3 +3,5 @@ kind: Kustomization
 namespace: nvidia-gpu-operator
 resources:
   - ../../base
+patches:
+  - path: clusterpolicy/clusterpolicy_patch.yaml
