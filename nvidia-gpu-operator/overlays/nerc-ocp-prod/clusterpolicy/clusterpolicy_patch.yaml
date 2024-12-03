@@ -1,0 +1,9 @@
+apiVersion: nvidia.com/v1
+kind: ClusterPolicy
+metadata:
+  name: gpu-cluster-policy
+spec:
+  driver:
+    image: driver
+    repository: nvcr.io/nvidia
+    version: 550.127.05
