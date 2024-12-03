@@ -11,3 +11,4 @@ configMapGenerator:
 
 patches:
   - path: externalsecrets/patch-minio-admin-credentials.yaml
+  - path: persistentvolumeclaims/patch-pvc.yaml
