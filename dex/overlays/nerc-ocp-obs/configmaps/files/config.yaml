@@ -21,6 +21,17 @@ staticClients:
     redirectURIs:
       - https://grafana.apps.obs.nerc.mghpcc.org/login/generic_oauth
     secretEnv: GRAFANA_SECRET
+  - id: minio
+    name: MinIO
+    redirectURIs:
+      - https://minio-console-minio.apps.obs.nerc.mghpcc.org/oauth_callback
+      - https://minio-minio.apps.obs.nerc.mghpcc.org/oauth_callback
+    secretEnv: MINIO_IDENTITY_OPENID_CLIENT_SECRET
+  - id: ai-telemetry
+    name: AI Telemetry
+    redirectURIs:
+      - https://keycloak.apps.obs.nerc.mghpcc.org/realms/NERC/broker/OpenShift/endpoint
+    secretEnv: AI_TELEMETRY_AUTH_SECRET
 
 connectors:
   - type: openshift
