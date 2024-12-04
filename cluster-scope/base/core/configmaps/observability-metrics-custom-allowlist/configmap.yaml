@@ -7,7 +7,6 @@ data:
   metrics_list.yaml: |
     names:
       - kube_persistentvolumeclaim_resource_requests_storage_bytes
-      - kube_pod_spec_volumes_persistentvolumeclaims_info
       - kube_persistentvolumeclaim_info
       - kube_storageclass_info
       - kubelet_volume_stats_used_bytes
@@ -49,3 +48,4 @@ data:
       - __name__=~"(argocd_.*)"
       - __name__=~"(kube_node_.*)"
       - __name__=~"(kube_pod_.*)"
+      - __name__=~"(mco_.*)"
