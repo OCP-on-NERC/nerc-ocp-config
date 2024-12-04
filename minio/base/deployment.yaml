@@ -16,7 +16,7 @@ spec:
         - configMapRef:
             name: minio-config
             optional: true
-        image: docker.io/minio/minio:RELEASE.2024-11-07T00-52-20Z
+        image: quay.io/minio/minio:RELEASE.2024-11-07T00-52-20Z
         ports:
         - containerPort: 9000
           name: object-storage

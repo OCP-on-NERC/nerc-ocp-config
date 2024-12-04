@@ -3,6 +3,9 @@ kind: ExternalSecret
 metadata:
   name: dex-clients
 spec:
+  secretStoreRef:
+    name: nerc-cluster-secrets
+    kind: ClusterSecretStore
   dataFrom:
     - extract:
         key: nerc-ocp-infra/dex/dex-clients
