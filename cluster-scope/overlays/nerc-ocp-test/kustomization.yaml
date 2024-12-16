@@ -17,6 +17,7 @@ resources:
 - nodenetworkconfigurationpolicies
 - feature/odf
 - feature/rhoai
+- rbac
 - ../../bundles/clusterissuer-http01
 - ../../bundles/gatekeeper-operator
 - ../../bundles/hostpath-provisioner
@@ -73,6 +74,7 @@ patches:
             - ocp-on-nerc/nerc-ops
             - ocp-on-nerc/nerc-logs-metrics
             - ocp-on-nerc/nerc-rhods
+            - ocp-on-nerc/nerc-test-people
 - target:
     kind: ExternalSecret
     name: github-client-secret
