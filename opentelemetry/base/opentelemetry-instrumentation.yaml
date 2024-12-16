@@ -1,0 +1,19 @@
+apiVersion: opentelemetry.io/v1alpha1
+kind: Instrumentation
+metadata:
+  name: java-instrumentation
+spec:
+  env:
+    - name: OTEL_EXPORTER_OTLP_TIMEOUT
+      value: "20"
+  exporter:
+    endpoint: http://opentelemetry-collector.opentelemetry.svc.cluster.local:4317
+  propagators:
+    - ottrace
+  sampler:
+    type: parentbased_traceidratio
+    argument: "0.25"
+  java:
+    env:
+    - name: OTEL_JAVAAGENT_DEBUG
+      value: "true"
