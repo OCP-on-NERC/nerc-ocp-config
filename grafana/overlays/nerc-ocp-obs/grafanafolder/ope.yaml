@@ -1,0 +1,19 @@
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaFolder
+metadata:
+  name: ope
+  namespace: grafana
+spec:
+  title: "OPE"
+  instanceSelector:
+    matchLabels:
+      dashboards: "grafana"
+  permissions: |
+    {
+      "items": [
+        {
+          "role": "Admin",
+          "permission": 4
+        }
+      ]
+    }
