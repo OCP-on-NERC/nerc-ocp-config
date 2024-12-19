@@ -3,6 +3,3 @@ kind: Kustomization
 namespace: openshift-cnv
 resources:
   - ../../base
-
-patches:
-- path: hyperconverged.yaml
