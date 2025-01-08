@@ -5,6 +5,7 @@ metadata:
   namespace: opentelemetry
 spec:
   mode: deployment
+  managementState: managed
   observability:
     metrics:
       enableMetrics: true
