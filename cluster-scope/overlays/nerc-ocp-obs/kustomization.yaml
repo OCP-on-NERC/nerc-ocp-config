@@ -15,6 +15,7 @@ resources:
 - ../../bundles/prom-keycloak-proxy
 - ../../bundles/zookeeper
 - ../../bundles/solr
+- ../../bundles/postgres
 - ../../bundles/minio
 - ../../bundles/opentelemetry
 - ../../base/core/namespaces/openshift-gitops
