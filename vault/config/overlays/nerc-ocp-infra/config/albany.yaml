@@ -1,0 +1,26 @@
+auth:
+- type: kubernetes
+  path: kubernetes/albany
+  config:
+    kubernetes_ca_cert: "${ file `certs/letsencrypt.crt` }"
+    kubernetes_host: https://api.albany.nerc.mghpcc.org:6443
+    token_reviewer_jwt: "${ file `creds/albany-token-reviewer` }"
+  roles:
+  - bound_service_account_names:
+    - vault-secret-reader
+    bound_service_account_namespaces:
+    - openshift-storage
+    - group-sync-operator
+    - openshift-config
+    - openshift-ingress
+    - openshift-logging
+    name: secret-reader
+    policies:
+    - nerc-common-reader
+    - albany-reader
+policies:
+- name: albany-reader
+  rules: |
+    path "nerc/data/albany/*" {
+      capabilities = ["read"]
+    }
