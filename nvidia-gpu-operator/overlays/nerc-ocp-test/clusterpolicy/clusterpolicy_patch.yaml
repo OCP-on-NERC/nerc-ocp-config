@@ -9,8 +9,3 @@ spec:
     config:
       default: all-disabled
       name: test-mig-parted-config
-  toolkit:
-    enabled: true
-    env:
-      - name: ACCEPT_NVIDIA_VISIBLE_DEVICES_ENVVAR_WHEN_UNPRIVILEGED
-        value: 'false'
