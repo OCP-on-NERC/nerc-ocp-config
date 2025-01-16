@@ -12,12 +12,24 @@ spec:
     tls:
       enabled: true
   template:
+    compactor:
+      replicas: 3
     gateway:
+      component:
+        replicas: 3
       enabled: false
     distributor:
+      component:
+        replicas: 3
       tls:
         enabled: true
+    ingester:
+      replicas: 3
+    querier:
+      replicas: 3
     queryFrontend:
+      component:
+        replicas: 3
       jaegerQuery:
         enabled: true
         monitorTab:
