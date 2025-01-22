@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dns
+  labels:
+    app: dns
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dns
+      deployment: dns
+  template:
+    metadata:
+      labels:
+        app: dns
+        deployment: dns
+    spec:
+      containers:
+      - name: coredns-openshift
+        image: quay.io/openshift/origin-coredns:4.16
+        command: ["/usr/bin/coredns"]
+        args: ["-dns.port", "8053", "-conf", "/etc/coredns/Corefile"]
+        securityContext:
+          allowPrivilegeEscalation: false
+          seccompProfile:
+            type: RuntimeDefault
+          capabilities:
+            drop:
+            - ALL
+          runAsNonRoot: true
+        volumeMounts:
+        - mountPath: /etc/coredns
+          name: dns-config
+      volumes:
+      - configMap:
+          defaultMode: 420
+          name: dns-config
+        name: dns-config
