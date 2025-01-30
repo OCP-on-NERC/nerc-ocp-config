@@ -114,6 +114,15 @@ spec:
                   clients:
                     - ai-telemetry
 
+            - id: client-ai-telemetry-sa
+              name: client-ai-telemetry-sa
+              logic: POSITIVE
+              decisionStrategy: UNANIMOUS
+              type:
+                client:
+                  clients:
+                    - ai-telemetry-sa
+
             - id: client-ai4cloudops
               name: client-ai4cloudops
               logic: POSITIVE
@@ -163,6 +172,13 @@ spec:
               resource: cluster
             - name: group-ai-telemetry-namespace-all
               policy: group-ai-telemetry
+              resource: namespace
+
+            - name: client-ai-telemetry-sa-cluster-all
+              policy: client-ai-telemetry-sa
+              resource: cluster
+            - name: client-ai-telemetry-sa-namespace-all
+              policy: client-ai-telemetry-sa
               resource: namespace
 
             - name: group-nerc-ai4cloudops-namespace-all
