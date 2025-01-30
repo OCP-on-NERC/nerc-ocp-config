@@ -1,0 +1,21 @@
+apiVersion: v1
+data:
+  CSI_ENABLE_CSIADDONS: "true"
+  CSI_LOG_LEVEL: "5"
+  CSI_PLUGIN_TOLERATIONS: |2-
+
+    - key: node.ocs.openshift.io/storage
+      operator: Equal
+      value: "true"
+      effect: NoSchedule
+  CSI_PROVISIONER_TOLERATIONS: |2-
+
+    - key: node.ocs.openshift.io/storage
+      operator: Equal
+      value: "true"
+      effect: NoSchedule
+  ROOK_CSI_ENABLE_CEPHFS: "false"
+kind: ConfigMap
+metadata:
+  name: rook-ceph-operator-config
+  namespace: openshift-storage
