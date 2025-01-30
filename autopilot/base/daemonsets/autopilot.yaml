@@ -11,51 +11,45 @@ spec:
       app: autopilot
   template:
     metadata:
-      annotations:
-        null
       labels:
         app: autopilot
     spec:
+      tolerations:
+        - effect: NoSchedule
+          key: nvidia.com/gpu.product
+          operator: Equal
+          value: NVIDIA-A100-SXM4-40GB
+        - effect: NoSchedule
+          key: nvidia.com/gpu.product
+          operator: Equal
+          value: Tesla-V100-PCIE-32GB
       nodeSelector:
         nvidia.com/gpu.present: 'true'
       serviceAccountName: autopilot
+      securityContext: {}
       initContainers:
         - args:
-          - |
-            until [ -f /usr/bin/nvidia-smi ]; do echo waiting for nvidia device plug-in to be setup; sleep 5 && exit -1; done
+          - until [ -f /usr/bin/nvidia-smi ]; do echo waiting for nvidia device plug-in to be setup; sleep 5 && exit -1; done
           command:
           - sh
           - -c
-          image: quay.io/autopilot/autopilot:v1.9.0
+          image: quay.io/autopilot/autopilot:v2.1.0
           imagePullPolicy: Always
           name: device-plugin-validation
-          securityContext:
-            allowPrivilegeEscalation: false
-            capabilities:
-              drop:
-              - ALL
-            runAsNonRoot: true
       containers:
-        - image: quay.io/autopilot/autopilot:v1.9.0
+        - image: quay.io/autopilot/autopilot:v2.1.0
           command:
-          - sh
-          - -c
-          - |
-            iperf3 -s -p 6310 -D
-            /usr/local/bin/autopilot --port 3333 --loglevel=2 --bw 4 --w 1 --invasive-check-timer 4
+            - sh
+            - -c
+            - |
+              /usr/local/bin/autopilot --port 3333 --loglevel=2 --bw 4 --w 1 --invasive-check-timer 4
           imagePullPolicy: Always
           name: autopilot
-          securityContext:
-            allowPrivilegeEscalation: false
-            capabilities:
-              drop:
-              - ALL
-            runAsNonRoot: true
           env:
             - name: PERIODIC_CHECKS
               value: pciebw,remapped,dcgm,ping,gpupower
             - name: PVC_TEST_STORAGE_CLASS
-              value:
+              value: ''
             - name: "NODE_NAME"
               valueFrom:
                 fieldRef:
@@ -91,8 +85,6 @@ spec:
                 - nvidia-smi
           resources:
             limits:
-              nvidia.com/gpu: 0
+              nvidia.com/gpu: '0'
             requests:
-              nvidia.com/gpu: 0
-          volumeMounts: []
-      volumes: []
+              nvidia.com/gpu: '0'
