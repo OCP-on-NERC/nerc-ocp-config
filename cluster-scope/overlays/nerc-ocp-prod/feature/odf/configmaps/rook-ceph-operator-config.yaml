@@ -8,11 +8,27 @@ data:
       operator: Equal
       value: "true"
       effect: NoSchedule
+    - key: nvidia.com/gpu.product
+      operator: Equal
+      value: "Tesla-V100-PCIE-32GB"
+      effect: NoSchedule
+    - key: nvidia.com/gpu.product
+      operator: Equal
+      value: "NVIDIA-A100-SXM4-40GB"
+      effect: NoSchedule
   CSI_PROVISIONER_TOLERATIONS: |2-
 
     - key: node.ocs.openshift.io/storage
       operator: Equal
       value: "true"
+      effect: NoSchedule
+    - key: nvidia.com/gpu.product
+      operator: Equal
+      value: "Tesla-V100-PCIE-32GB"
+      effect: NoSchedule
+    - key: nvidia.com/gpu.product
+      operator: Equal
+      value: "NVIDIA-A100-SXM4-40GB"
       effect: NoSchedule
   ROOK_CSI_ENABLE_CEPHFS: "false"
 kind: ConfigMap
