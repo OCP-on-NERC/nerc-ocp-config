@@ -36,6 +36,8 @@ spec:
           image: quay.io/autopilot/autopilot:v2.1.0
           imagePullPolicy: Always
           name: device-plugin-validation
+          securityContext:
+            privileged: true
       containers:
         - image: quay.io/autopilot/autopilot:v2.1.0
           command:
@@ -88,3 +90,5 @@ spec:
               nvidia.com/gpu: '0'
             requests:
               nvidia.com/gpu: '0'
+          securityContext:
+            privileged: true
