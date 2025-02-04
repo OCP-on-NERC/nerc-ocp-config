@@ -9,4 +9,3 @@ spec:
   name: mongodb-operator
   source: community-operators
   sourceNamespace: openshift-marketplace
-  startingCSV: mongodb-operator.v0.3.0
