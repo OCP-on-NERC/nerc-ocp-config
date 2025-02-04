@@ -1,0 +1,12 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: mongodb-operator
+  namespace: openshift-operators
+spec:
+  Channel: alpha
+  installPlanApproval: Automatic
+  name: mongodb-operator
+  source: community-operators
+  sourceNamespace: openshift-marketplace
+  startingCSV: mongodb-operator.v0.3.0
