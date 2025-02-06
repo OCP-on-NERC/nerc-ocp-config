@@ -4,7 +4,7 @@ metadata:
   name: mongodb-operator
   namespace: openshift-operators
 spec:
-  Channel: alpha
+  channel: alpha
   installPlanApproval: Automatic
   name: mongodb-operator
   source: community-operators
