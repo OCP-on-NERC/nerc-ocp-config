@@ -3,6 +3,7 @@ kind: Service
 metadata:
   labels:
     app: autopilot
+    service: autopilot-readinessprobe
   name: autopilot-readinessprobe
   namespace: autopilot
 spec:
