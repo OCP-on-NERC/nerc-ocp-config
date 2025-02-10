@@ -1,0 +1,8 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: observability-metrics-custom-allowlist
+data:
+  uwl_metrics_list.yaml: |
+    matches:
+      - __name__=~"(snmp_.*)"
