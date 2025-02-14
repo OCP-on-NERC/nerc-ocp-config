@@ -35,6 +35,7 @@ resources:
 - ../../bundles/autopilot
 - ../../bundles/minio
 - ../../bundles/mongodb-operator
+- ../../bundles/xdmod-reader
 
 components:
   - ../../components/nerc-oauth-github
