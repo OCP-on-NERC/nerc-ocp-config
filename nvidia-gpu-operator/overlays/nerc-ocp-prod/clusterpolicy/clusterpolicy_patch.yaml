@@ -3,12 +3,6 @@ kind: ClusterPolicy
 metadata:
   name: gpu-cluster-policy
 spec:
-  mig:
-    strategy: single
-  migManager:
-    config:
-      default: all-disabled
-      name: test-mig-parted-config
   daemonsets:
     tolerations:
     - effect: NoSchedule

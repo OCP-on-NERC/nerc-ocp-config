@@ -3,15 +3,13 @@ kind: Service
 metadata:
   labels:
     app: autopilot
-    service: autopilot-healthchecks
-  name: autopilot-healthchecks
+    service: autopilot-readinessprobe
+  name: autopilot-readinessprobe
   namespace: autopilot
-  annotations:
-    null
 spec:
   ports:
-    - port: 3333
+    - port: 8080
       protocol: TCP
-      name: healthcheck
+      name: readinessprobe
   selector:
     app: autopilot

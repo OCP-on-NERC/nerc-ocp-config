@@ -32,3 +32,4 @@ configMapGenerator:
   - config/policies.yaml
   - config/secrets.yaml
   - config/pki-nerc.yaml
+  - config/albany.yaml

@@ -1,11 +1,11 @@
 apiVersion: operators.coreos.com/v1alpha1
 kind: Subscription
 metadata:
-  name: rhbk-operator
-  namespace: keycloak
+  name: mongodb-operator
+  namespace: openshift-operators
 spec:
-  channel: stable-v26
+  channel: alpha
   installPlanApproval: Automatic
-  name: rhbk-operator
-  source: redhat-operators
+  name: mongodb-operator
+  source: community-operators
   sourceNamespace: openshift-marketplace

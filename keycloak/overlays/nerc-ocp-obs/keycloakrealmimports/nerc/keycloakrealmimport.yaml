@@ -307,6 +307,20 @@ spec:
             name: ai-telemetry
             protocol: openid-connect
             protocolMapper: oidc-audience-mapper
+      - id: ai-telemetry-sa
+        name: ai-telemetry-sa
+        description: A client scope for the ai-telemetry-sa client
+        protocol: openid-connect
+        protocolMappers:
+          - config:
+              access.token.claim: 'true'
+              id.token.claim: 'false'
+              included.client.audience: 'ai-telemetry-sa'
+            consentRequired: false
+            id: ai-telemetry-sa
+            name: ai-telemetry-sa
+            protocol: openid-connect
+            protocolMapper: oidc-audience-mapper
     defaultDefaultClientScopes:
       - nerc
     clients:
@@ -338,6 +352,19 @@ spec:
           - openid
           - profile
           - ai-telemetry
+        authorizationSettings:
+          decisionStrategy: AFFIRMATIVE
+      - id: ai-telemetry-sa
+        clientId: ai-telemetry-sa
+        standardFlowEnabled: true
+        serviceAccountsEnabled: true
+        authorizationServicesEnabled: true
+        frontchannelLogout: true
+        protocol: openid-connect
+        defaultClientScopes:
+          - openid
+          - profile
+          - ai-telemetry-sa
         authorizationSettings:
           decisionStrategy: AFFIRMATIVE
       - id: ai4cloudops

@@ -3,4 +3,4 @@ kind: Kustomization
 resources:
 - autopilot-metrics-service.yaml
 - autopilot-healthchecks.yaml
-- autopilot.yaml
+- autopilot-readinessprobe.yaml

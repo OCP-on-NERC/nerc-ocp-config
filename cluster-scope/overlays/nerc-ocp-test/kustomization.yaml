@@ -34,6 +34,8 @@ resources:
 - ../../bundles/virt
 - ../../bundles/autopilot
 - ../../bundles/minio
+- ../../bundles/mongodb-operator
+- ../../bundles/xdmod-reader
 
 components:
   - ../../components/nerc-oauth-github
@@ -125,3 +127,11 @@ patches:
     - op: add
       path: /spec/plugins/-
       value: kubevirt-plugin
+- target:
+    kind: Console
+    name: cluster
+  patch: |
+    - op: add
+      path: /spec
+      value:
+        managementState: Managed
