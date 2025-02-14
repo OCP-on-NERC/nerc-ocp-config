@@ -7,3 +7,4 @@ resources:
 - ../../base/core/serviceaccounts/xdmod-reader
 - ../../base/rbac.authorization.k8s.io/clusterrolebindings/xdmod-reader-permissions/
 - ../../base/rbac.authorization.k8s.io/clusterroles/xdmod-permissions/
+- ../../base/core/secrets/xdmod-reader
