@@ -13,3 +13,4 @@ resources:
 - ../../base/rbac.authorization.k8s.io/clusterroles/nerc-ops-monitoring
 - ../../base/rbac.authorization.k8s.io/clusterroles/nerc-ops-machineconfig
 - ../../base/rbac.authorization.k8s.io/clusterroles/nerc-ops-rhoai
+- ../../base/rbac.authorization.k8s.io/clusterroles/nerc-ops-operators
