@@ -10,3 +10,10 @@ resources:
   - serviceaccount-prometheus-snmp-exporter.yaml
   - servicemonitor-prometheus-snmp-exporter-vlan-935-moc-swmon.yaml
   - configmap-observability-metrics-custom-allowlist.yaml
+
+configMapGenerator:
+- name: snmp-generator-config
+  options:
+    disableNameSuffixHash: true
+  files:
+  - files/generator.yml
