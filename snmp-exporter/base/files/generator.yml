@@ -5,6 +5,10 @@ auths:
     version: 2
 
 modules:
+  snmpv2_mib:
+    walk: [system, snmp]
+  network_mib:
+    walk: [tcp, udp]
   if_mib:
     walk: [sysUpTime, interfaces, ifXTable]
     lookups:

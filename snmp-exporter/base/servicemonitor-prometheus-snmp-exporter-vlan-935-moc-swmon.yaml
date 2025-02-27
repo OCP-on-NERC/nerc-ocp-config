@@ -21,6 +21,8 @@ spec:
     scrapeTimeout: 30s
     params:
       module:
+        - snmpv2_mib
+        - network_mib
         - if_mib
         - ip_mib
         - cisco_device
@@ -29,6 +31,11 @@ spec:
       target:
       - 10.82.3.41
     metricRelabelings:
+      - sourceLabels: [__name__]
+        targetLabel: __name__
+        regex: '(.*)'
+        action: replace
+        replacement: network_switch_${1}
       - sourceLabels: [instance]
         targetLabel: instance
         replacement: 10.82.3.41
@@ -69,6 +76,8 @@ spec:
     scrapeTimeout: 30s
     params:
       module:
+        - snmpv2_mib
+        - network_mib
         - if_mib
         - ip_mib
         - cisco_device
@@ -77,6 +86,11 @@ spec:
       target:
       - 10.82.3.42
     metricRelabelings:
+      - sourceLabels: [__name__]
+        targetLabel: __name__
+        regex: '(.*)'
+        action: replace
+        replacement: network_switch_${1}
       - sourceLabels: [instance]
         targetLabel: instance
         replacement: 10.82.3.42
@@ -84,6 +98,61 @@ spec:
       - sourceLabels: [target]
         targetLabel: target
         replacement: 10-82-3-42
+        action: replace
+    relabelings:
+      - sourceLabels:
+        - __param_target
+        targetLabel: instance
+  jobLabel: "prometheus-snmp-exporter"
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: prometheus-snmp-exporter
+      app.kubernetes.io/instance: prometheus-snmp-exporter
+---
+# Source: prometheus-snmp-exporter/templates/servicemonitor.yaml
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: prometheus-snmp-exporter-10-82-3-21
+  labels:
+    helm.sh/chart: prometheus-snmp-exporter-6.0.0
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/component: metrics
+    app.kubernetes.io/part-of: prometheus-snmp-exporter
+    app.kubernetes.io/name: prometheus-snmp-exporter
+    app.kubernetes.io/instance: prometheus-snmp-exporter
+    app.kubernetes.io/version: "v0.27.0"
+    prometheus: "kube-prometheus"
+spec:
+  endpoints:
+  - port: http
+    honorLabels: true
+    path: /snmp
+    scrapeTimeout: 30s
+    params:
+      module:
+        - snmpv2_mib
+        - network_mib
+        - if_mib
+        - ip_mib
+        - dell
+        - dell_network
+      auth: [public_v2]
+      target:
+      - 10.82.3.21
+    metricRelabelings:
+      - sourceLabels: [__name__]
+        targetLabel: __name__
+        regex: '(.*)'
+        action: replace
+        replacement: network_switch_${1}
+      - sourceLabels: [instance]
+        targetLabel: instance
+        replacement: 10.82.3.21
+        action: replace
+      - sourceLabels: [target]
+        targetLabel: target
+        replacement: 10-82-3-21
         action: replace
     relabelings:
       - sourceLabels:
