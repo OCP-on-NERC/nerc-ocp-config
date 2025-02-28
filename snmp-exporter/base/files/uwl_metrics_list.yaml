@@ -1,0 +1,2 @@
+matches:
+  - __name__=~"(network_switch_.*)"
