@@ -22,10 +22,8 @@ spec:
     params:
       module:
         - system
-        - snmpv2_mib
-        - network_mib
-        - if_mib
-        - ip_mib
+        - layer2
+        - layer3
         - cisco_device
         - cisco_fc_fe
       auth: [public_v2]
@@ -80,10 +78,8 @@ spec:
     params:
       module:
         - system
-        - snmpv2_mib
-        - network_mib
-        - if_mib
-        - ip_mib
+        - layer2
+        - layer3
         - cisco_device
         - cisco_fc_fe
       auth: [public_v2]
@@ -138,10 +134,8 @@ spec:
     params:
       module:
         - system
-        - snmpv2_mib
-        - network_mib
-        - if_mib
-        - ip_mib
+        - layer2
+        - layer3
         - dell
         - dell_network
       auth: [public_v2]

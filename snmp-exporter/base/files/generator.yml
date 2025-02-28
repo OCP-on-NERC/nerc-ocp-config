@@ -7,40 +7,39 @@ auths:
 modules:
   system:
     walk:
-      - sysUpTime
       - SNMPv2-MIB::system
+      - SNMPv2-MIB::snmp
     overrides:
       sysName:
         type: DisplayString
-  snmpv2_mib:
-    walk: [snmp]
-  network_mib:
-    walk: [tcp, udp]
-  if_mib:
-    walk: [interfaces, ifXTable]
+  layer3:
+    walk:
+      - TCP-MIB::tcp
+      - UDP-MIB::udp
+      - IP-MIB::ipv4InterfaceTable
+  layer2:
+    walk:
+      - IF-MIB::ifTable
+      - IF-MIB::ifXTable
     lookups:
-      - source_indexes: [ifIndex]
+      - source_indexes:
+          - ifIndex
         lookup: ifAlias
-      - source_indexes: [ifIndex]
-        # Uis OID to avoid conflict with PaloAlto PAN-COMMON-MIB.
-        lookup: 1.3.6.1.2.1.2.2.1.2   # ifDescr
-      - source_indexes: [ifIndex]
-        # Use OID to avoid conflict with Netscaler NS-ROOT-MIB.
-        lookup: 1.3.6.1.2.1.31.1.1.1.1  # ifName
+      - source_indexes:
+          - ifIndex
+        lookup: IF-MIB::ifDescr
+      - source_indexes:
+          - ifIndex
+        lookup: IF-MIB::ifName
     overrides:
       ifAlias:
-        ignore: true  # Lookup metric
+        ignore: true
       ifDescr:
-        ignore: true  # Lookup metric
+        ignore: true
       ifName:
-        ignore: true  # Lookup metric
+        ignore: true
       ifType:
         type: EnumAsInfo
-
-  # Default IP-MIB with ipv4InterfaceTable for example.
-  ip_mib:
-    walk: [ipv4InterfaceTable]
-
   cisco_device:
     walk:
       - CISCO-PROCESS-MIB::cpmProcessTimeCreated
@@ -51,17 +50,23 @@ modules:
       - CISCO-MEMORY-POOL-MIB::ciscoMemoryPoolType
       - CISCO-MEMORY-POOL-MIB::ciscoMemoryPoolName
     lookups:
-      - source_indexes: [entPhysicalIndex]
+      - source_indexes:
+          - entPhysicalIndex
         lookup: CISCO-ENTITY-SENSOR-MIB::entSensorScale
-      - source_indexes: [entPhysicalIndex]
+      - source_indexes:
+          - entPhysicalIndex
         lookup: CISCO-ENTITY-SENSOR-MIB::entSensorType
-      - source_indexes: [entPhysicalIndex]
+      - source_indexes:
+          - entPhysicalIndex
         lookup: ENTITY-MIB::entPhysicalName
-      - source_indexes: [ciscoMemoryPoolType]
+      - source_indexes:
+          - ciscoMemoryPoolType
         lookup: ciscoMemoryPoolName
-      - source_indexes: [cempMemPoolIndex]
+      - source_indexes:
+          - cempMemPoolIndex
         lookup: cempMemPoolType
-      - source_indexes: [cempMemPoolIndex]
+      - source_indexes:
+          - cempMemPoolIndex
         lookup: cempMemPoolName
     overrides:
       entSensorScale:
@@ -84,7 +89,6 @@ modules:
         ignore: true
       cempMemPoolName:
         type: DisplayString
-
   cisco_fc_fe:
     walk:
       - CISCO-FC-FE-MIB::fcIfInvalidCrcs
@@ -96,21 +100,16 @@ modules:
       - CISCO-FC-FE-MIB::fcIfTxWaitCount
       - CISCO-FC-FE-MIB::fcIfCurrRxBbCredit
       - CISCO-FC-FE-MIB::fcIfCurrTxBbCredit
-
-  # Dell OpenManage MIBs
   dell:
     walk:
-      - 1.3.6.1.4.1.674.10892.5.2   # statusGroup
-      - 1.3.6.1.4.1.674.10892.5.4   # systemDetailsGroup
-      - 1.3.6.1.4.1.674.10892.5.5   # storageDetailsGroup
-
-  # Dell network (Force10)
+      - 1.3.6.1.4.1.674.10892.5.2
+      - 1.3.6.1.4.1.674.10892.5.4
+      - 1.3.6.1.4.1.674.10892.5.5
   dell_network:
     walk:
       - DELL-NETWORKING-CHASSIS-MIB::dellNetCpuUtilTable
       - DELL-NETWORKING-CHASSIS-MIB::dellNetPowerSupplyTable
       - DELL-NETWORKING-CHASSIS-MIB::dellNetSwModuleTable
-      # DELL-NETWORKING-CHASSIS-MIB::dellNetFlashStorageTable
     overrides:
       dellNetPowerSupplyIndex:
         ignore: true
