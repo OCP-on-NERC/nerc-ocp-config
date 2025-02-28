@@ -21,6 +21,7 @@ spec:
     scrapeTimeout: 30s
     params:
       module:
+        - system
         - snmpv2_mib
         - network_mib
         - if_mib
@@ -44,6 +45,8 @@ spec:
         targetLabel: target
         replacement: 10-82-3-41
         action: replace
+      - targetLabel: vendor
+        replacement: "cisco"
     relabelings:
       - sourceLabels:
         - __param_target
@@ -76,6 +79,7 @@ spec:
     scrapeTimeout: 30s
     params:
       module:
+        - system
         - snmpv2_mib
         - network_mib
         - if_mib
@@ -99,6 +103,8 @@ spec:
         targetLabel: target
         replacement: 10-82-3-42
         action: replace
+      - targetLabel: vendor
+        replacement: "cisco"
     relabelings:
       - sourceLabels:
         - __param_target
@@ -131,6 +137,7 @@ spec:
     scrapeTimeout: 30s
     params:
       module:
+        - system
         - snmpv2_mib
         - network_mib
         - if_mib
@@ -154,6 +161,8 @@ spec:
         targetLabel: target
         replacement: 10-82-3-21
         action: replace
+      - targetLabel: vendor
+        replacement: "dell"
     relabelings:
       - sourceLabels:
         - __param_target

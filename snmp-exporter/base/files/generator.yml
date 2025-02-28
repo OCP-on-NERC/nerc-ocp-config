@@ -5,12 +5,19 @@ auths:
     version: 2
 
 modules:
+  system:
+    walk:
+      - sysUpTime
+      - SNMPv2-MIB::system
+    overrides:
+      sysName:
+        type: DisplayString
   snmpv2_mib:
-    walk: [system, snmp]
+    walk: [snmp]
   network_mib:
     walk: [tcp, udp]
   if_mib:
-    walk: [sysUpTime, interfaces, ifXTable]
+    walk: [interfaces, ifXTable]
     lookups:
       - source_indexes: [ifIndex]
         lookup: ifAlias
