@@ -9,9 +9,6 @@ modules:
     walk:
       - SNMPv2-MIB::system
       - SNMPv2-MIB::snmp
-    overrides:
-      sysName:
-        type: DisplayString
   layer3:
     walk:
       - TCP-MIB::tcp
