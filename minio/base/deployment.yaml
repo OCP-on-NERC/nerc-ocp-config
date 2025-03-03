@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: minio
+spec:
+  strategy:
+    type: Recreate
+  replicas: 1
+  template:
+    spec:
+      containers:
+      - name: minio
+        envFrom:
+        - secretRef:
+            name: minio-admin-credentials
+        - configMapRef:
+            name: minio-config
+            optional: true
+        image: quay.io/minio/minio:RELEASE.2024-11-07T00-52-20Z
+        ports:
+        - containerPort: 9000
+          name: object-storage
+        - containerPort: 8080
+          name: console
+        args:
+        - server
+        - --console-address
+        - ":8080"
+        - /data
+        volumeMounts:
+        - name: minio-data
+          mountPath: /data
+        livenessProbe:
+          initialDelaySeconds: 60
+          periodSeconds: 10
+          timeoutSeconds: 5
+          successThreshold: 1
+          failureThreshold: 1
+          httpGet:
+            scheme: HTTP
+            path: /minio/health/live
+            port: 9000
+      volumes:
+      - name: minio-data
+        persistentVolumeClaim:
+          claimName: minio-data

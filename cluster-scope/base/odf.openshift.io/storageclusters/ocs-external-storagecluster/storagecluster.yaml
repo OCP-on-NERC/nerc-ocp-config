@@ -5,3 +5,4 @@ metadata:
 spec:
   externalStorage:
     enable: true
+  enableCephTools: true

@@ -7,9 +7,9 @@ spec:
   limits:
     global:
       ingestion:
-        ingestionBurstSize: 10
-        ingestionRate: 10
-        perStreamRateLimit: 10
+        ingestionBurstSize: 20
+        ingestionRate: 20
+        perStreamRateLimit: 20
         perStreamRateLimitBurst: 20
       retention:
         days: 90
@@ -28,8 +28,6 @@ spec:
     secret:
       name: thanos-object-storage
       type: s3
-    tls:
-      caName: openshift-service-ca.crt
   tenants:
     mode: openshift-logging
     openshift:

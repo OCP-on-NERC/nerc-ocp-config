@@ -8,6 +8,7 @@ resources:
 - ../common
 - ../../base/rbac.authorization.k8s.io/clusterroles/allow-edit-rbac
 - ../../base/core/namespaces/openshift-gitops
+- ../../base/core/namespaces/dex
 - externalsecrets
 - secretstores
 - issuers
@@ -16,6 +17,7 @@ resources:
 - nodenetworkconfigurationpolicies
 - feature/odf
 - feature/rhoai
+- rbac
 - ../../bundles/clusterissuer-http01
 - ../../bundles/gatekeeper-operator
 - ../../bundles/hostpath-provisioner
@@ -31,6 +33,9 @@ resources:
 - ../../bundles/openshift-pipelines-operator
 - ../../bundles/virt
 - ../../bundles/autopilot
+- ../../bundles/minio
+- ../../bundles/mongodb-operator
+- ../../bundles/xdmod-reader
 
 components:
   - ../../components/nerc-oauth-github
@@ -56,6 +61,7 @@ generatorOptions:
 
 patches:
 - path: kubeletconfigs/system-reserved-patch.yaml
+- path: subscriptions/rhoai-operator-patch.yaml
 - patch: |
     apiVersion: config.openshift.io/v1
     kind: OAuth
@@ -70,6 +76,7 @@ patches:
             - ocp-on-nerc/nerc-ops
             - ocp-on-nerc/nerc-logs-metrics
             - ocp-on-nerc/nerc-rhods
+            - ocp-on-nerc/nerc-test-people
 - target:
     kind: ExternalSecret
     name: github-client-secret
@@ -120,3 +127,11 @@ patches:
     - op: add
       path: /spec/plugins/-
       value: kubevirt-plugin
+- target:
+    kind: Console
+    name: cluster
+  patch: |
+    - op: add
+      path: /spec
+      value:
+        managementState: Managed

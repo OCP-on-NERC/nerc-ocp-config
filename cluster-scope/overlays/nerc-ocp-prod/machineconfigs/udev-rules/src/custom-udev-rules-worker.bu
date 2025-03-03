@@ -18,3 +18,7 @@ storage:
       contents:
         local: bnxt_en.rules
       mode: 0644
+    - path: /etc/udev/rules.d/90-ixgbe.rules
+      contents:
+        local: ixgbe.rules
+      mode: 0644

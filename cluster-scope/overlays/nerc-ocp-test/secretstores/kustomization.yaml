@@ -6,3 +6,6 @@ resources:
 - openshift-logging
 - group-sync-operator
 - curator-system
+- dex
+- minio
+- danni-ilab

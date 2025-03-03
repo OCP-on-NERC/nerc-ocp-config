@@ -1,3 +1,4 @@
+enableUserWorkload: true
 prometheusK8s:
   volumeClaimTemplate:
     spec:

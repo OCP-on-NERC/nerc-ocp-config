@@ -23,6 +23,9 @@ spec:
       default: ""
       name: ""
     enabled: true
+    env:
+    - name: DEVICE_LIST_STRATEGY
+      value: volume-mounts
   driver:
     certConfig:
       name: ""
@@ -35,7 +38,7 @@ spec:
     repoConfig:
       configMapName: ""
     upgradePolicy:
-      autoUpgrade: true
+      autoUpgrade: false
       drain:
         deleteEmptyDir: false
         enable: false
@@ -76,6 +79,11 @@ spec:
   toolkit:
     enabled: true
     installDir: /usr/local/nvidia
+    env:
+    - name: ACCEPT_NVIDIA_VISIBLE_DEVICES_AS_VOLUME_MOUNTS
+      value: "true"
+    - name: ACCEPT_NVIDIA_VISIBLE_DEVICES_ENVVAR_WHEN_UNPRIVILEGED
+      value: 'false'
   validator:
     plugin:
       env:

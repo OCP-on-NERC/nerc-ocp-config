@@ -3,6 +3,7 @@ kind: Service
 metadata:
   labels:
     app: autopilot
+    service: autopilot-metrics-service
   name: autopilot-metrics-service
   namespace: autopilot
 spec:

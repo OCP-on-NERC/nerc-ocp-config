@@ -24,6 +24,7 @@ resources:
 - ../../bundles/curator
 - ../../bundles/koku-metrics-operator
 - ../../bundles/autopilot
+- ../../bundles/mongodb-operator
 - ../../base/rbac.authorization.k8s.io/clusterroles/allow-edit-rbac
 - ../../base/rbac.authorization.k8s.io/clusterroles/project-monitoring-edit
 - ../../base/rbac.authorization.k8s.io/clusterroles/nerc-allow-sys-admin
@@ -138,3 +139,10 @@ patches:
     - op: replace
       path: /spec/servingCerts/namedCertificates/0/names/0
       value: api.shift.nerc.mghpcc.org
+- target:
+    kind: PersistentVolumeClaim
+    name: image-registry-storage
+  patch: |
+    - op: replace
+      path: /spec/resources/requests/storage
+      value: 750Gi

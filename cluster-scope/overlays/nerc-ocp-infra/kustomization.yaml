@@ -26,12 +26,10 @@ resources:
 - machineconfigs/configure-bond0
 - nodenetworkconfigurationpolicies/vlan-2177-nese.yaml
 - externalsecrets
-- metrics-bucket-storage
 - redhatcop.redhat.io/odf-node-patcher.yaml
 - grafana-dashboards
 - persistentvolumeclaims
 - nerc-logs-metrics-open-cluster-management-cluster-manager-admin.yaml
-- acm-metrics-2ti-storage
 components:
   - ../../components/nerc-oauth-github
 
