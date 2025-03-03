@@ -95,17 +95,6 @@ modules:
         ignore: true
       cempMemPoolName:
         type: DisplayString
-  cisco_fc_fe:
-    walk:
-      - CISCO-FC-FE-MIB::fcIfInvalidCrcs
-      - CISCO-FC-FE-MIB::fcIfFramesDiscard
-      - CISCO-FC-FE-MIB::fcIfInvalidTxWords
-      - CISCO-FC-FE-MIB::fcHCIfBBCreditTransistionToZero
-      - CISCO-FC-FE-MIB::fcHCIfBBCreditTransistionFromZero
-      - CISCO-FC-FE-MIB::fcIfTxWtAvgBBCreditTransitionToZero
-      - CISCO-FC-FE-MIB::fcIfTxWaitCount
-      - CISCO-FC-FE-MIB::fcIfCurrRxBbCredit
-      - CISCO-FC-FE-MIB::fcIfCurrTxBbCredit
   dell_network:
     walk:
       - Dell-Vendor-MIB::envMonFanStatusTable
