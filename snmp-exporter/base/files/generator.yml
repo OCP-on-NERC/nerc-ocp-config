@@ -46,6 +46,12 @@ modules:
       - CISCO-MEMORY-POOL-MIB::ciscoMemoryPoolFree
       - CISCO-MEMORY-POOL-MIB::ciscoMemoryPoolType
       - CISCO-MEMORY-POOL-MIB::ciscoMemoryPoolName
+      - CISCO-ENTITY-FRU-CONTROL-MIB::cefcFRUPowerSupplyGroupTable
+      - CISCO-ENTITY-FRU-CONTROL-MIB::cefcFRUPowerStatusTable
+      - CISCO-ENTITY-FRU-CONTROL-MIB::cefcFRUPowerSupplyValueTable
+      - CISCO-ENTITY-FRU-CONTROL-MIB::cefcFRUPowerSupplyValueTable
+      - CISCO-ENTITY-FRU-CONTROL-MIB::cefcFanTrayStatusTable
+      - CISCO-ENTITY-FRU-CONTROL-MIB::cefcFanTable
     lookups:
       - source_indexes:
           - entPhysicalIndex
@@ -65,6 +71,9 @@ modules:
       - source_indexes:
           - cempMemPoolIndex
         lookup: cempMemPoolName
+      - source_indexes:
+          - entPhysicalIndex
+        lookup: ENTITY-MIB::entPhysicalName
     overrides:
       entSensorScale:
         ignore: true
@@ -86,19 +95,10 @@ modules:
         ignore: true
       cempMemPoolName:
         type: DisplayString
-  cisco_fc_fe:
-    walk:
-      - CISCO-FC-FE-MIB::fcIfInvalidCrcs
-      - CISCO-FC-FE-MIB::fcIfFramesDiscard
-      - CISCO-FC-FE-MIB::fcIfInvalidTxWords
-      - CISCO-FC-FE-MIB::fcHCIfBBCreditTransistionToZero
-      - CISCO-FC-FE-MIB::fcHCIfBBCreditTransistionFromZero
-      - CISCO-FC-FE-MIB::fcIfTxWtAvgBBCreditTransitionToZero
-      - CISCO-FC-FE-MIB::fcIfTxWaitCount
-      - CISCO-FC-FE-MIB::fcIfCurrRxBbCredit
-      - CISCO-FC-FE-MIB::fcIfCurrTxBbCredit
   dell_network:
     walk:
+      - Dell-Vendor-MIB::envMonFanStatusTable
+      - Dell-Vendor-MIB::envMonSupplyStatusTable
       - DELL-NETWORKING-CHASSIS-MIB::dellNetCpuUtilTable
       - DELL-NETWORKING-CHASSIS-MIB::dellNetPowerSupplyTable
       - DELL-NETWORKING-CHASSIS-MIB::dellNetSwModuleTable
@@ -111,3 +111,22 @@ modules:
         type: EnumAsInfo
       dellNetProcessorDeviceType:
         type: EnumAsInfo
+      envMonFanStatusIndex:
+        ignore: true
+      envMonFanStatusDescr:
+        ignore: true
+      dellNetIfDescr:
+        type: DisplayString
+    lookups:
+      - source_indexes:
+          - envMonFanStatusIndex
+        lookup: envMonFanStatusDescr
+      - source_indexes:
+          - envMonSupplyStatusIndex
+        lookup: envMonSupplyStatusDescr
+      - source_indexes:
+        - ifIndex
+        lookup: dellNetIfDescr
+      - source_indexes:
+        - ifIndex
+        lookup: dellNetIfAdminStatus
