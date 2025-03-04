@@ -3,3 +3,4 @@ kind: Kustomization
 resources:
   - ope-metrics.yaml
   - cluster-health-metrics-ocp-test.yaml
+  - nvidia-dcgm-exporter-dashboard.yaml
