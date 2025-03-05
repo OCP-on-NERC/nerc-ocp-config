@@ -1,0 +1,132 @@
+auths:
+  public_v1:
+    version: 1
+  public_v2:
+    version: 2
+
+modules:
+  system:
+    walk:
+      - SNMPv2-MIB::system
+      - SNMPv2-MIB::snmp
+  layer3:
+    walk:
+      - TCP-MIB::tcp
+      - UDP-MIB::udp
+      - IP-MIB::ipv4InterfaceTable
+  layer2:
+    walk:
+      - IF-MIB::ifTable
+      - IF-MIB::ifXTable
+    lookups:
+      - source_indexes:
+          - ifIndex
+        lookup: ifAlias
+      - source_indexes:
+          - ifIndex
+        lookup: IF-MIB::ifDescr
+      - source_indexes:
+          - ifIndex
+        lookup: IF-MIB::ifName
+    overrides:
+      ifAlias:
+        ignore: true
+      ifDescr:
+        ignore: true
+      ifName:
+        ignore: true
+      ifType:
+        type: EnumAsInfo
+  cisco_device:
+    walk:
+      - CISCO-PROCESS-MIB::cpmProcessTimeCreated
+      - CISCO-PROCESS-MIB::cpmCPUTotal1minRev
+      - CISCO-PROCESS-MIB::cpmCPUTotal5minRev
+      - CISCO-MEMORY-POOL-MIB::ciscoMemoryPoolUsed
+      - CISCO-MEMORY-POOL-MIB::ciscoMemoryPoolFree
+      - CISCO-MEMORY-POOL-MIB::ciscoMemoryPoolType
+      - CISCO-MEMORY-POOL-MIB::ciscoMemoryPoolName
+      - CISCO-ENTITY-FRU-CONTROL-MIB::cefcFRUPowerSupplyGroupTable
+      - CISCO-ENTITY-FRU-CONTROL-MIB::cefcFRUPowerStatusTable
+      - CISCO-ENTITY-FRU-CONTROL-MIB::cefcFRUPowerSupplyValueTable
+      - CISCO-ENTITY-FRU-CONTROL-MIB::cefcFRUPowerSupplyValueTable
+      - CISCO-ENTITY-FRU-CONTROL-MIB::cefcFanTrayStatusTable
+      - CISCO-ENTITY-FRU-CONTROL-MIB::cefcFanTable
+    lookups:
+      - source_indexes:
+          - entPhysicalIndex
+        lookup: CISCO-ENTITY-SENSOR-MIB::entSensorScale
+      - source_indexes:
+          - entPhysicalIndex
+        lookup: CISCO-ENTITY-SENSOR-MIB::entSensorType
+      - source_indexes:
+          - entPhysicalIndex
+        lookup: ENTITY-MIB::entPhysicalName
+      - source_indexes:
+          - ciscoMemoryPoolType
+        lookup: ciscoMemoryPoolName
+      - source_indexes:
+          - cempMemPoolIndex
+        lookup: cempMemPoolType
+      - source_indexes:
+          - cempMemPoolIndex
+        lookup: cempMemPoolName
+      - source_indexes:
+          - entPhysicalIndex
+        lookup: ENTITY-MIB::entPhysicalName
+    overrides:
+      entSensorScale:
+        ignore: true
+      entSensorType:
+        ignore: true
+      entSensorValueTimeStamp:
+        ignore: true
+      entSensorValueUpdateRate:
+        ignore: true
+      entSensorMeasuredEntity:
+        ignore: true
+      ciscoMemoryPoolType:
+        type: EnumAsInfo
+        ignore: true
+      cefcFRUPowerOperStatus:
+        type: EnumAsStateSet
+      ciscoMemoryPoolName:
+        type: DisplayString
+        ignore: true
+      cempMemPoolName:
+        type: DisplayString
+  dell_network:
+    walk:
+      - Dell-Vendor-MIB::envMonFanStatusTable
+      - Dell-Vendor-MIB::envMonSupplyStatusTable
+      - DELL-NETWORKING-CHASSIS-MIB::dellNetCpuUtilTable
+      - DELL-NETWORKING-CHASSIS-MIB::dellNetPowerSupplyTable
+      - DELL-NETWORKING-CHASSIS-MIB::dellNetSwModuleTable
+    overrides:
+      dellNetPowerSupplyIndex:
+        ignore: true
+      dellNetFanDeviceType:
+        type: EnumAsInfo
+      dellNetPowerDeviceType:
+        type: EnumAsInfo
+      dellNetProcessorDeviceType:
+        type: EnumAsInfo
+      envMonFanStatusIndex:
+        ignore: true
+      envMonFanStatusDescr:
+        ignore: true
+      dellNetIfDescr:
+        type: DisplayString
+    lookups:
+      - source_indexes:
+          - envMonFanStatusIndex
+        lookup: envMonFanStatusDescr
+      - source_indexes:
+          - envMonSupplyStatusIndex
+        lookup: envMonSupplyStatusDescr
+      - source_indexes:
+        - ifIndex
+        lookup: dellNetIfDescr
+      - source_indexes:
+        - ifIndex
+        lookup: dellNetIfAdminStatus
