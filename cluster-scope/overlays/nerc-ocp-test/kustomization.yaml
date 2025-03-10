@@ -25,6 +25,7 @@ resources:
 - ../../bundles/patch-operator
 - ../../bundles/nvidia-gpu-operator
 - ../../bundles/koku-metrics-operator
+- ../../bundles/kubernetes-image-puller-operator
 - ../../bundles/curator
 - ../../bundles/ansible-automation-platform-operator
 - ../../bundles/openshift-custom-metrics-autoscaler-operator
