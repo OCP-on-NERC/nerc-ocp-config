@@ -1,0 +1,10 @@
+apiVersion: hco.kubevirt.io/v1beta1
+kind: HyperConverged
+metadata:
+  name: kubevirt-hyperconverged
+  namespace: openshift-cnv
+spec:
+  permittedHostDevices:
+    pciHostDevices:
+    - pciDeviceSelector: "10DE:2330"
+      resourceName: "nvidia.com/H100_SXM5_80GB"
