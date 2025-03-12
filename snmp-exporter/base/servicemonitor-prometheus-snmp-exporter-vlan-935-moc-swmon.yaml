@@ -10,7 +10,6 @@ metadata:
     app.kubernetes.io/component: metrics
     app.kubernetes.io/part-of: prometheus-snmp-exporter
     app.kubernetes.io/name: prometheus-snmp-exporter
-    app.kubernetes.io/instance: prometheus-snmp-exporter
     app.kubernetes.io/version: "v0.27.0"
     prometheus: "kube-prometheus"
 spec:
@@ -25,7 +24,6 @@ spec:
         - layer2
         - layer3
         - cisco_device
-        - cisco_fc_fe
       auth: [public_v2]
       target:
       - 10.82.3.41
@@ -53,7 +51,6 @@ spec:
   selector:
     matchLabels:
       app.kubernetes.io/name: prometheus-snmp-exporter
-      app.kubernetes.io/instance: prometheus-snmp-exporter
 ---
 # Source: prometheus-snmp-exporter/templates/servicemonitor.yaml
 apiVersion: monitoring.coreos.com/v1
@@ -66,7 +63,6 @@ metadata:
     app.kubernetes.io/component: metrics
     app.kubernetes.io/part-of: prometheus-snmp-exporter
     app.kubernetes.io/name: prometheus-snmp-exporter
-    app.kubernetes.io/instance: prometheus-snmp-exporter
     app.kubernetes.io/version: "v0.27.0"
     prometheus: "kube-prometheus"
 spec:
@@ -81,7 +77,6 @@ spec:
         - layer2
         - layer3
         - cisco_device
-        - cisco_fc_fe
       auth: [public_v2]
       target:
       - 10.82.3.42
@@ -109,7 +104,6 @@ spec:
   selector:
     matchLabels:
       app.kubernetes.io/name: prometheus-snmp-exporter
-      app.kubernetes.io/instance: prometheus-snmp-exporter
 ---
 # Source: prometheus-snmp-exporter/templates/servicemonitor.yaml
 apiVersion: monitoring.coreos.com/v1
@@ -122,7 +116,6 @@ metadata:
     app.kubernetes.io/component: metrics
     app.kubernetes.io/part-of: prometheus-snmp-exporter
     app.kubernetes.io/name: prometheus-snmp-exporter
-    app.kubernetes.io/instance: prometheus-snmp-exporter
     app.kubernetes.io/version: "v0.27.0"
     prometheus: "kube-prometheus"
 spec:
@@ -136,7 +129,6 @@ spec:
         - system
         - layer2
         - layer3
-        - dell
         - dell_network
       auth: [public_v2]
       target:
@@ -165,4 +157,3 @@ spec:
   selector:
     matchLabels:
       app.kubernetes.io/name: prometheus-snmp-exporter
-      app.kubernetes.io/instance: prometheus-snmp-exporter
