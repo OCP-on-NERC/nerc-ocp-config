@@ -10,14 +10,12 @@ metadata:
     app.kubernetes.io/component: metrics
     app.kubernetes.io/part-of: prometheus-snmp-exporter
     app.kubernetes.io/name: prometheus-snmp-exporter
-    app.kubernetes.io/instance: prometheus-snmp-exporter
     app.kubernetes.io/version: "v0.27.0"
 spec:
   replicas: 1
   selector:
     matchLabels:
       app.kubernetes.io/name: prometheus-snmp-exporter
-      app.kubernetes.io/instance: prometheus-snmp-exporter
   strategy:
     rollingUpdate:
       maxSurge: 1
@@ -31,7 +29,6 @@ spec:
         app.kubernetes.io/component: metrics
         app.kubernetes.io/part-of: prometheus-snmp-exporter
         app.kubernetes.io/name: prometheus-snmp-exporter
-        app.kubernetes.io/instance: prometheus-snmp-exporter
         app.kubernetes.io/version: "v0.27.0"
       annotations: {}
     spec:
