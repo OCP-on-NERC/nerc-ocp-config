@@ -4,3 +4,4 @@ kind: Kustomization
 resources:
   - a100-acceleratorprofile.yaml
   - v100-acceleratorprofile.yaml
+  - h100-acceleratorprofile.yaml
