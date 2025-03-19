@@ -4,7 +4,7 @@ metadata:
   name: rhbk-operator
   namespace: keycloak
 spec:
-  channel: stable-v24
+  channel: stable-v26
   installPlanApproval: Automatic
   name: rhbk-operator
   source: redhat-operators

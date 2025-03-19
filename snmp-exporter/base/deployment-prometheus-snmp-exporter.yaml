@@ -1,0 +1,77 @@
+---
+# Source: prometheus-snmp-exporter/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prometheus-snmp-exporter
+  labels:
+    helm.sh/chart: prometheus-snmp-exporter-6.0.0
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/component: metrics
+    app.kubernetes.io/part-of: prometheus-snmp-exporter
+    app.kubernetes.io/name: prometheus-snmp-exporter
+    app.kubernetes.io/version: "v0.27.0"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: prometheus-snmp-exporter
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        helm.sh/chart: prometheus-snmp-exporter-6.0.0
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/component: metrics
+        app.kubernetes.io/part-of: prometheus-snmp-exporter
+        app.kubernetes.io/name: prometheus-snmp-exporter
+        app.kubernetes.io/version: "v0.27.0"
+      annotations: {}
+    spec:
+      restartPolicy: Always
+      serviceAccountName: prometheus-snmp-exporter
+      initContainers:
+        - name: generate-config
+          image: "ghcr.io/ocp-on-nerc/snmp-config-generator:latest"
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: generator-config-src
+              mountPath: /src
+            - name: generator-config-compiled
+              mountPath: /output
+          args:
+            - generate
+            - --mibs-dir=/mibs
+            - --generator-path=/src/generator.yml
+            - --output-path=/output/snmp.yml
+      containers:
+        - name: snmp-exporter
+          image: "quay.io/prometheus/snmp-exporter:v0.28.0"
+          imagePullPolicy: IfNotPresent
+          securityContext: {}
+          args:
+          resources: {}
+          ports:
+            - containerPort: 9116
+              name: http
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+          volumeMounts:
+            - name: generator-config-compiled
+              mountPath: /etc/snmp_exporter
+      volumes:
+        - name: generator-config-src
+          configMap:
+            name: snmp-generator-config
+        - name: generator-config-compiled
+          emptyDir: {}
