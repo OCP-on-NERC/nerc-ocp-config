@@ -2,19 +2,10 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: dns
-  labels:
-    app: dns
+  namespace: custom-dns
 spec:
   replicas: 1
-  selector:
-    matchLabels:
-      app: dns
-      deployment: dns
   template:
-    metadata:
-      labels:
-        app: dns
-        deployment: dns
     spec:
       containers:
       - name: coredns-openshift
