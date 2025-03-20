@@ -42,7 +42,7 @@ spec:
         replacement: 10-82-3-41
         action: replace
       - targetLabel: vendor
-        replacement: "cisco"
+        replacement: "Cisco"
     relabelings:
       - sourceLabels:
         - __param_target
@@ -95,7 +95,7 @@ spec:
         replacement: 10-82-3-42
         action: replace
       - targetLabel: vendor
-        replacement: "cisco"
+        replacement: "Cisco"
     relabelings:
       - sourceLabels:
         - __param_target
@@ -148,7 +148,7 @@ spec:
         replacement: 10-82-3-21
         action: replace
       - targetLabel: vendor
-        replacement: "dell"
+        replacement: "Dell"
     relabelings:
       - sourceLabels:
         - __param_target
