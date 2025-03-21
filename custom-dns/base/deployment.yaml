@@ -20,6 +20,13 @@ spec:
             drop:
             - ALL
           runAsNonRoot: true
+        ports:
+        - name: dns-tcp
+          containerPort: 8053
+          protocol: TCP
+        - name: dns-udp
+          containerPort: 8053
+          protocol: UDP
         volumeMounts:
         - mountPath: /etc/coredns
           name: dns-config

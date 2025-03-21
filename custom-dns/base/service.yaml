@@ -5,14 +5,14 @@ metadata:
   namespace: custom-dns
 spec:
   ports:
-  - name: 8053-tcp
+  - name: dns-tcp
     port: 8053
     protocol: TCP
-    targetPort: 8053
-  - name: 8053-udp
+    targetPort: dns-tcp
+  - name: dns-udp
     port: 8053
     protocol: UDP
-    targetPort: 8053
+    targetPort: dns-udp
   selector:
     app: dns
     deployment: dns
