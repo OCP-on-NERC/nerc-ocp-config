@@ -1,0 +1,13 @@
+apiVersion: operator.openshift.io/v1
+kind: DNS
+metadata:
+  name: default
+spec:
+  servers:
+  - name: nerc-ocp-infra
+    zones:
+    - nerc-ocp-infra.rc.fas.harvard.edu
+    forwardPlugin:
+      policy: Random
+      upstreams:
+      - <service-ip>:8053
