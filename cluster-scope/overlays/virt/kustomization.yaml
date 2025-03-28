@@ -19,6 +19,7 @@ resources:
 
 components:
   - ../../components/nerc-oauth-keycloak
+  - ../../components/nerc-oauth-github
 
   # this must come last in order to apply
   # to all resources.
@@ -26,7 +27,7 @@ components:
 
 generatorOptions:
   disableNameSuffixHash: true
-  
+
 patches:
 - patch: |
     apiVersion: config.openshift.io/v1
@@ -41,12 +42,27 @@ patches:
 - target:
     kind: ExternalSecret
     name: oauths-clientsecret-nerc
-patch: |
-  - op: replace
-    path: /spec/data/0/remoteRef/key
-    value: nerc/virt/openshift-config/oauths-clientsecret-nerc
-
- 
+  patch: |
+    - op: replace
+      path: /spec/data/0/remoteRef/key
+      value: nerc/virt/openshift-config/oauths-clientsecret-nerc
+- patch: |
+    apiVersion: config.openshift.io/v1
+    kind: OAuth
+    metadata:
+      name: cluster
+    spec:
+      identityProviders:
+      - name: github
+        github:
+          clientID: Ov23liw6D35035eEiLjS
+- target:
+    kind: ExternalSecret
+    name: github-client-secret
+  patch: |
+    - op: replace
+      path: /spec/data/0/remoteRef/key
+      value: nerc/virt/openshift-config/github-client-secret
 - target:
     kind: SecretStore
   patch: |
