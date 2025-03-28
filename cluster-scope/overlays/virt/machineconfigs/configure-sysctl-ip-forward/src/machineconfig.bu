@@ -1,0 +1,12 @@
+variant: openshift
+version: 4.15.0
+metadata:
+  name: configure-sysctl-ip-forward
+  labels:
+    machineconfiguration.openshift.io/role: worker
+storage:
+  files:
+    - path: /etc/sysctl.d/ip_forward.conf
+      mode: 0644
+      contents:
+        local: ip_forward.conf
