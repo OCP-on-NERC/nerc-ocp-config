@@ -78,6 +78,7 @@ patches:
             - ocp-on-nerc/nerc-logs-metrics
             - ocp-on-nerc/nerc-rhods
             - ocp-on-nerc/nerc-test-people
+            - ocp-on-nerc/griot-grits
 - target:
     kind: ExternalSecret
     name: github-client-secret
