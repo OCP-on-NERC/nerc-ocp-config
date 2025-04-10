@@ -16,6 +16,10 @@ data:
       operator: Equal
       value: "NVIDIA-A100-SXM4-40GB"
       effect: NoSchedule
+    - key: nvidia.com/gpu.product
+      operator: Equal
+      value: "NVIDIA-H100-80GB-HBM3"
+      effect: NoSchedule
   CSI_PROVISIONER_TOLERATIONS: |2-
 
     - key: node.ocs.openshift.io/storage
@@ -29,6 +33,10 @@ data:
     - key: nvidia.com/gpu.product
       operator: Equal
       value: "NVIDIA-A100-SXM4-40GB"
+      effect: NoSchedule
+    - key: nvidia.com/gpu.product
+      operator: Equal
+      value: "NVIDIA-H100-80GB-HBM3"
       effect: NoSchedule
 kind: ConfigMap
 metadata:
