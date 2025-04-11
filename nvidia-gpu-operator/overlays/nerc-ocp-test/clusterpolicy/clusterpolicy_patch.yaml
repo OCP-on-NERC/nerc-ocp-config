@@ -19,3 +19,7 @@ spec:
       key: nvidia.com/gpu.product
       operator: Equal
       value: Tesla-V100-PCIE-32GB
+    - effect: NoSchedule
+      key: nvidia.com/gpu.product
+      operator: Equal
+      value: NVIDIA-H100-80GB-HBM3
