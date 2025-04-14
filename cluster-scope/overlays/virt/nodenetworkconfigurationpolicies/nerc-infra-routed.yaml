@@ -15,4 +15,4 @@ spec:
       vlan:
         base-iface: mlx1
         id: 2076
-      mtu: 1500
+      mtu: 9000
