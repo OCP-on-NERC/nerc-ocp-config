@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: console-alias
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-production-dns01
+    route.openshift.io/termination: reencrypt
+spec:
+  ingressClassName: openshift-default
+  tls:
+  - hosts:
+      - console.apps.hypershift2.nerc.mghpcc.org
+    secretName: console-alias-certificate
+  rules:
+  - host: console.apps.hypershift2.nerc.mghpcc.org
+    http:
+      paths:
+      - backend:
+          service:
+            name: console
+            port:
+              name: https
+        path: /
+        pathType: Prefix
