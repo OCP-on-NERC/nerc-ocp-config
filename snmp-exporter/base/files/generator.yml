@@ -130,3 +130,18 @@ modules:
       - source_indexes:
         - ifIndex
         lookup: dellNetIfAdminStatus
+  pdus:
+    walk:
+      - VERTIV-V5-MIB::v5
+      - VERTIV-V5-MIB::imd
+      - VERTIV-V5-MIB::deviceInfo
+      - VERTIV-V5-MIB::pdu
+      - VERTIV-V5-MIB::cooling
+      - VERTIV-V5-MIB::vrc
+      - VERTIV-V5-MIB::trap
+      - VERTIV-V5-MIB::trapPrefix
+      - VERTIV-V5-MIB::trapObj
+      - VERTIV-V5-MIB::common
+      - VERTIV-V5-MIB::identity
+      - VERTIV-ONEVIEW-MIB::oneview
+      - VERTIV-ONEVIEW-MIB::groups
