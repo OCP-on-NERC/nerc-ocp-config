@@ -1,0 +1,10 @@
+apiVersion: metallb.io/v1beta1
+kind: L2Advertisement
+metadata:
+  name: default
+spec:
+  ipAddressPools:
+  - default
+  nodeSelectors:
+  - matchLabels:
+      node-role.kubernetse.io/worker: ""
