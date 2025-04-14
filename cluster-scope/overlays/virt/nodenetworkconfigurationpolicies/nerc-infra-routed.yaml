@@ -1,0 +1,18 @@
+apiVersion: nmstate.io/v1
+kind: NodeNetworkConfigurationPolicy
+metadata:
+  name: nerc-infra-routed
+spec:
+  desiredState:
+    interfaces:
+    - name: nerc-infra
+      type: vlan
+      state: up
+      ipv4:
+        enabled: true
+        dhcp: true
+        auto-routes: true
+      vlan:
+        base-iface: mlx1
+        id: 2076
+      mtu: 1500
