@@ -1,0 +1,12 @@
+variant: openshift
+version: 4.16.0
+metadata:
+  name: custom-udev-rules-controller
+  labels:
+    machineconfiguration.openshift.io/role: master
+storage:
+  files:
+    - path: /etc/udev/rules.d/99-mlx-controller.rules
+      contents:
+        local: 99-mlx-controller.rules
+      mode: 0644
