@@ -1,0 +1,53 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+commonLabels:
+  nerc.mghpcc.org/kustomized: "true"
+
+resources:
+- ../common
+- ../../bundles/node-feature-discovery
+- ../../bundles/patch-operator
+- ../../bundles/clusterissuer-http01
+- ../../base/rbac.authorization.k8s.io/clusterroles/allow-edit-rbac
+- ../../base/core/namespaces/openshift-gitops
+- externalsecrets
+- issuers
+- feature/odf
+- machineconfigs
+- certificates
+- secretstores
+
+components:
+  - ../../components/nerc-oauth-github
+
+  # this must come last in order to apply
+  # to all resources.
+  - ../../components/argocd-skip-dryrun
+
+generatorOptions:
+  disableNameSuffixHash: true
+
+patches:
+
+- target:
+    kind: ExternalSecret
+    name: aws-route53-credentials
+  patch: |
+    - op: replace
+      path: /spec/dataFrom/0/extract/key
+      value: nerc/dublin/aws-route53-credentials
+- target:
+    kind: APIServer
+    name: cluster
+  patch: |
+    - op: replace
+      path: /spec/servingCerts/namedCertificates/0/names/0
+      value: api.dublin.nerc.mghpcc.org
+- target:
+    kind: Issuer
+    name: letsencrypt-.*-dns01
+  patch: |
+    - op: replace
+      path: /spec/acme/solvers/0/selector/dnsZones
+      value:
+        - dublin.nerc.mghpcc.org
