@@ -1,2 +1,3 @@
 matches:
   - __name__=~"(network_switch_.*)"
+  - __name__=~"(pdu_.*)"

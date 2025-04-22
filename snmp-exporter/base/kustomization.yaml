@@ -11,6 +11,7 @@ resources:
   - service-prometheus-snmp-exporter.yaml
   - serviceaccount-prometheus-snmp-exporter.yaml
   - servicemonitor-prometheus-snmp-exporter-vlan-935-moc-swmon.yaml
+  - servicemonitor-prometheus-snmp-exporter-pdus.yaml
 
 configMapGenerator:
 - name: snmp-generator-config
