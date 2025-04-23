@@ -14,4 +14,4 @@ parameters:
   csi.storage.k8s.io/provisioner-secret-namespace: openshift-storage
   imageFeatures: layering
   imageFormat: "2"
-  pool: moc-rbd-openshift-test
+  pool: nerc_ocp_virt_1_rbd
