@@ -8,6 +8,9 @@ resources:
 - ../../bundles/node-feature-discovery
 - ../../bundles/patch-operator
 - ../../bundles/clusterissuer-http01
+- ../../bundles/nmstate
+- ../../bundles/node-feature-discovery
+- ../../bundles/nvidia-gpu-operator
 - ../../base/rbac.authorization.k8s.io/clusterroles/allow-edit-rbac
 - ../../base/core/namespaces/openshift-gitops
 - externalsecrets
