@@ -11,6 +11,8 @@ resources:
 - ../../bundles/solr-helm-repo
 - ../../bundles/ansible-automation-platform-operator
 - ../../bundles/openshift-serverless-operator
+- ../../bundles/authorino-operator
+- ../../bundles/servicemesh-operator
 - ../../bundles/amq-broker-rhel8-operator
 - ../../bundles/crunchy-postgres-operator
 - ../../bundles/amq-streams-operator

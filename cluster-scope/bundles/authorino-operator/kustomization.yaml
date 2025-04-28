@@ -1,0 +1,6 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+commonLabels:
+  nerc.mghpcc.org/bundle: authorino-operator
+resources:
+- ../../base/operators.coreos.com/subscriptions/authorino-operator
