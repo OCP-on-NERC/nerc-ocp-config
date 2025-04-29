@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# Run this script from inside a cluster overlay directory. E.g.:
+#
+#     cd cluster-scope/overlays/nerc-ocp-test
+#     bash $(git rev-parse --show-toplevel)/scripts/cluster-bootstrap.sh
+
 if ! [ -f bootstrap/kustomization.yaml ]; then
   echo "missing bootstrap configuration"
   exit 1
@@ -40,4 +45,7 @@ for stage in {1..5}; do
     echo "nothing to do"
     ;;
   esac
+
+  echo "Press RETURN to continue"
+  read -r _
 done
