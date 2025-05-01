@@ -14,4 +14,4 @@ parameters:
   csi.storage.k8s.io/provisioner-secret-namespace: openshift-storage
   imageFeatures: layering,deep-flatten,exclusive-lock,object-map,fast-diff
   imageFormat: "2"
-  pool: provisioner-moc-rbd-rhoai-test
+  pool: nerc_ocp_hypershift2_1_rbd
