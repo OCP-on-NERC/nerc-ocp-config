@@ -1,0 +1,19 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: nagios:monitoring
+rules:
+- apiGroups:
+    - ""
+  resources:
+    - nodes
+  verbs:
+    - list
+- apiGroups:
+    - "nmstate.io"
+    - "config.openshift.io"
+    - "machineconfiguration.openshift.io"
+  resources:
+    - "*"
+  verbs:
+    - list
