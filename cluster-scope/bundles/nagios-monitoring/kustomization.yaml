@@ -1,0 +1,10 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+commonLabels:
+  nerc.mghpcc.org/bundle: nagios-monitoring
+resources:
+- ../../base/core/namespaces/nagios
+- ../../base/core/serviceaccounts/nagios-monitor
+- ../../base/rbac.authorization.k8s.io/clusterrolebindings/nagios-monitoring
+- ../../base/rbac.authorization.k8s.io/clusterroles/nagios-monitoring
+- ../../base/core/secrets/nagios-monitor

@@ -37,6 +37,7 @@ resources:
 - ../../bundles/minio
 - ../../bundles/mongodb-operator
 - ../../bundles/xdmod-reader
+- ../../bundles/nagios-monitoring
 
 components:
   - ../../components/nerc-oauth-github
