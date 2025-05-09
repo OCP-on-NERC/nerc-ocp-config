@@ -2,3 +2,7 @@ SUBSYSTEM=="net",DRIVERS=="mlx5_core",KERNELS=="0000:06:00.0",ACTION=="add",NAME
 SUBSYSTEM=="net",DRIVERS=="mlx5_core",KERNELS=="0000:06:00.1",ACTION=="add",NAME="nic2"
 SUBSYSTEM=="net",DRIVERS=="mlx5_core",KERNELS=="0000:65:00.0",ACTION=="add",NAME="nic1"
 SUBSYSTEM=="net",DRIVERS=="mlx5_core",KERNELS=="0000:65:00.1",ACTION=="add",NAME="nic2"
+SUBSYSTEM=="net",DRIVERS=="mlx5_core",KERNELS=="0000:c3:00.0",ACTION=="add",NAME="nic1"
+SUBSYSTEM=="net",DRIVERS=="mlx5_core",KERNELS=="0000:a3:00.0",ACTION=="add",NAME="nic2"
+SUBSYSTEM=="net",DRIVERS=="mlx5_core",KERNELS=="0000:23:00.0",ACTION=="add",NAME="nic3"
+SUBSYSTEM=="net",DRIVERS=="mlx5_core",KERNELS=="0000:03:00.0",ACTION=="add",NAME="nic4"
