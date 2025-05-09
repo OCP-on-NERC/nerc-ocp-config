@@ -13,6 +13,7 @@ resources:
 - ../../bundles/external-secrets-clustersecretstore
 - ../../bundles/multicluster-engine-operator
 - ../../bundles/grafana
+- ../../bundles/nagios-monitoring
 - ../../base/core/namespaces/dex
 - ../../base/core/namespaces/nerc-ocp-prod
 - ../../base/core/namespaces/nerc-ocp-obs
