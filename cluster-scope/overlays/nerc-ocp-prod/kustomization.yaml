@@ -28,6 +28,7 @@ resources:
 - ../../bundles/autopilot
 - ../../bundles/mongodb-operator
 - ../../bundles/elasticsearch-eck-operator
+- ../../bundles/nagios-monitoring
 - ../../base/rbac.authorization.k8s.io/clusterroles/allow-edit-rbac
 - ../../base/rbac.authorization.k8s.io/clusterroles/project-monitoring-edit
 - ../../base/rbac.authorization.k8s.io/clusterroles/nerc-allow-sys-admin
