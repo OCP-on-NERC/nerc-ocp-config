@@ -10,6 +10,7 @@ resources:
   - odhdashboardconfigs
   - imagestreams/ucsls-f24-imagestream.yaml
   - acceleratorprofiles
+  - configmaps
 
 patches:
   - path: subscriptions/subscription-patch.yaml

@@ -5,13 +5,11 @@ metadata:
   namespace: opentelemetry
 spec:
   mode: deployment
+  managementState: managed
   observability:
     metrics:
-      enableMetrics: true
+      enableMetrics: false
   config: |
-    connectors:
-      spanmetrics:
-        metrics_flush_interval: 15s
     receivers:
       otlp:
         protocols:
@@ -57,8 +55,4 @@ spec:
         traces:
           receivers: [otlp, jaeger]
           processors: [memory_limiter, batch]
-          exporters: [otlp, spanmetrics]
-        metrics:
-          receivers: [otlp, spanmetrics]
-          processors: [memory_limiter, batch]
-          exporters: [otlp, prometheus]
+          exporters: [otlp]

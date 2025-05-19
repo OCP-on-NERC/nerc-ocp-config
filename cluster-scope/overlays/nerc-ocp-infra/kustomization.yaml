@@ -13,6 +13,7 @@ resources:
 - ../../bundles/external-secrets-clustersecretstore
 - ../../bundles/multicluster-engine-operator
 - ../../bundles/grafana
+- ../../bundles/nagios-monitoring
 - ../../base/core/namespaces/dex
 - ../../base/core/namespaces/nerc-ocp-prod
 - ../../base/core/namespaces/nerc-ocp-obs
@@ -30,7 +31,6 @@ resources:
 - grafana-dashboards
 - persistentvolumeclaims
 - nerc-logs-metrics-open-cluster-management-cluster-manager-admin.yaml
-- acm-metrics-2ti-storage
 components:
   - ../../components/nerc-oauth-github
 

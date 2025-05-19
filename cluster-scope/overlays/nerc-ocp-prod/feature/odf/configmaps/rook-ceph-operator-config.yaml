@@ -1,0 +1,45 @@
+apiVersion: v1
+data:
+  CSI_ENABLE_CSIADDONS: "true"
+  CSI_LOG_LEVEL: "5"
+  CSI_PLUGIN_TOLERATIONS: |2-
+
+    - key: node.ocs.openshift.io/storage
+      operator: Equal
+      value: "true"
+      effect: NoSchedule
+    - key: nvidia.com/gpu.product
+      operator: Equal
+      value: "Tesla-V100-PCIE-32GB"
+      effect: NoSchedule
+    - key: nvidia.com/gpu.product
+      operator: Equal
+      value: "NVIDIA-A100-SXM4-40GB"
+      effect: NoSchedule
+    - key: nvidia.com/gpu.product
+      operator: Equal
+      value: "NVIDIA-H100-80GB-HBM3"
+      effect: NoSchedule
+  CSI_PROVISIONER_TOLERATIONS: |2-
+
+    - key: node.ocs.openshift.io/storage
+      operator: Equal
+      value: "true"
+      effect: NoSchedule
+    - key: nvidia.com/gpu.product
+      operator: Equal
+      value: "Tesla-V100-PCIE-32GB"
+      effect: NoSchedule
+    - key: nvidia.com/gpu.product
+      operator: Equal
+      value: "NVIDIA-A100-SXM4-40GB"
+      effect: NoSchedule
+    - key: nvidia.com/gpu.product
+      operator: Equal
+      value: "NVIDIA-H100-80GB-HBM3"
+      effect: NoSchedule
+  ROOK_CSI_ENABLE_CEPHFS: "false"
+kind: ConfigMap
+metadata:
+  name: rook-ceph-operator-config
+  namespace: openshift-storage

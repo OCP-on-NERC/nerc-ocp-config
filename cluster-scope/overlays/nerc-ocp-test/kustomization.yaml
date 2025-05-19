@@ -26,6 +26,7 @@ resources:
 - ../../bundles/patch-operator
 - ../../bundles/nvidia-gpu-operator
 - ../../bundles/koku-metrics-operator
+- ../../bundles/kubernetes-image-puller-operator
 - ../../bundles/curator
 - ../../bundles/ansible-automation-platform-operator
 - ../../bundles/openshift-custom-metrics-autoscaler-operator
@@ -35,6 +36,9 @@ resources:
 - ../../bundles/virt
 - ../../bundles/autopilot
 - ../../bundles/minio
+- ../../bundles/mongodb-operator
+- ../../bundles/xdmod-reader
+- ../../bundles/nagios-monitoring
 
 components:
   - ../../components/nerc-oauth-github
@@ -76,6 +80,7 @@ patches:
             - ocp-on-nerc/nerc-logs-metrics
             - ocp-on-nerc/nerc-rhods
             - ocp-on-nerc/nerc-test-people
+            - ocp-on-nerc/griot-grits
 - target:
     kind: ExternalSecret
     name: github-client-secret
@@ -126,3 +131,11 @@ patches:
     - op: add
       path: /spec/plugins/-
       value: kubevirt-plugin
+- target:
+    kind: Console
+    name: cluster
+  patch: |
+    - op: add
+      path: /spec
+      value:
+        managementState: Managed

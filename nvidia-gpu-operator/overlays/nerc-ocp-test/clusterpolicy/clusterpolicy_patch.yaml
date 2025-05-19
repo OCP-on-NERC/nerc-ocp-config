@@ -9,10 +9,17 @@ spec:
     config:
       default: all-disabled
       name: test-mig-parted-config
-  toolkit:
-    enabled: true
-    env:
-      - name: ACCEPT_NVIDIA_VISIBLE_DEVICES_ENVVAR_WHEN_UNPRIVILEGED
-        value: 'false'
-      - name: ACCEPT_NVIDIA_VISIBLE_DEVICES_AS_VOLUME_MOUNTS
-        value: "true"
+  daemonsets:
+    tolerations:
+    - effect: NoSchedule
+      key: nvidia.com/gpu.product
+      operator: Equal
+      value: NVIDIA-A100-SXM4-40GB
+    - effect: NoSchedule
+      key: nvidia.com/gpu.product
+      operator: Equal
+      value: Tesla-V100-PCIE-32GB
+    - effect: NoSchedule
+      key: nvidia.com/gpu.product
+      operator: Equal
+      value: NVIDIA-H100-80GB-HBM3

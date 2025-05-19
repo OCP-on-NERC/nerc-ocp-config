@@ -82,6 +82,8 @@ spec:
     env:
     - name: ACCEPT_NVIDIA_VISIBLE_DEVICES_AS_VOLUME_MOUNTS
       value: "true"
+    - name: ACCEPT_NVIDIA_VISIBLE_DEVICES_ENVVAR_WHEN_UNPRIVILEGED
+      value: 'false'
   validator:
     plugin:
       env:

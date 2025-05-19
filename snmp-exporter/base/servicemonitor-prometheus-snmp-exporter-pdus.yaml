@@ -1,0 +1,492 @@
+---
+# Source: prometheus-snmp-exporter/templates/servicemonitor.yaml
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: prometheus-snmp-exporter-pdu-10-82-2-94
+  labels:
+    helm.sh/chart: prometheus-snmp-exporter-6.0.0
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/component: metrics
+    app.kubernetes.io/part-of: prometheus-snmp-exporter
+    app.kubernetes.io/name: prometheus-snmp-exporter
+    app.kubernetes.io/version: "v0.27.0"
+    prometheus: "kube-prometheus"
+spec:
+  endpoints:
+  - port: http
+    honorLabels: true
+    path: /snmp
+    scrapeTimeout: 30s
+    params:
+      module:
+        - system
+        - pdus
+      auth: [public_v2]
+      target:
+      - 10.82.2.94
+    metricRelabelings:
+      - sourceLabels: [__name__]
+        targetLabel: __name__
+        regex: '(.*)'
+        action: replace
+        replacement: pdu_${1}
+    relabelings:
+      - sourceLabels:
+        - __param_target
+        targetLabel: instance
+  jobLabel: "prometheus-snmp-exporter"
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: prometheus-snmp-exporter
+---
+# Source: prometheus-snmp-exporter/templates/servicemonitor.yaml
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: prometheus-snmp-exporter-pdu-10-82-2-95
+  labels:
+    helm.sh/chart: prometheus-snmp-exporter-6.0.0
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/component: metrics
+    app.kubernetes.io/part-of: prometheus-snmp-exporter
+    app.kubernetes.io/name: prometheus-snmp-exporter
+    app.kubernetes.io/version: "v0.27.0"
+    prometheus: "kube-prometheus"
+spec:
+  endpoints:
+  - port: http
+    honorLabels: true
+    path: /snmp
+    scrapeTimeout: 30s
+    params:
+      module:
+        - system
+        - pdus
+      auth: [public_v2]
+      target:
+      - 10.82.2.95
+    metricRelabelings:
+      - sourceLabels: [__name__]
+        targetLabel: __name__
+        regex: '(.*)'
+        action: replace
+        replacement: pdu_${1}
+    relabelings:
+      - sourceLabels:
+        - __param_target
+        targetLabel: instance
+  jobLabel: "prometheus-snmp-exporter"
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: prometheus-snmp-exporter
+---
+# Source: prometheus-snmp-exporter/templates/servicemonitor.yaml
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: prometheus-snmp-exporter-pdu-10-82-2-96
+  labels:
+    helm.sh/chart: prometheus-snmp-exporter-6.0.0
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/component: metrics
+    app.kubernetes.io/part-of: prometheus-snmp-exporter
+    app.kubernetes.io/name: prometheus-snmp-exporter
+    app.kubernetes.io/version: "v0.27.0"
+    prometheus: "kube-prometheus"
+spec:
+  endpoints:
+  - port: http
+    honorLabels: true
+    path: /snmp
+    scrapeTimeout: 30s
+    params:
+      module:
+        - system
+        - pdus
+      auth: [public_v2]
+      target:
+      - 10.82.2.96
+    metricRelabelings:
+      - sourceLabels: [__name__]
+        targetLabel: __name__
+        regex: '(.*)'
+        action: replace
+        replacement: pdu_${1}
+    relabelings:
+      - sourceLabels:
+        - __param_target
+        targetLabel: instance
+  jobLabel: "prometheus-snmp-exporter"
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: prometheus-snmp-exporter
+---
+# Source: prometheus-snmp-exporter/templates/servicemonitor.yaml
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: prometheus-snmp-exporter-pdu-10-82-2-97
+  labels:
+    helm.sh/chart: prometheus-snmp-exporter-6.0.0
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/component: metrics
+    app.kubernetes.io/part-of: prometheus-snmp-exporter
+    app.kubernetes.io/name: prometheus-snmp-exporter
+    app.kubernetes.io/version: "v0.27.0"
+    prometheus: "kube-prometheus"
+spec:
+  endpoints:
+  - port: http
+    honorLabels: true
+    path: /snmp
+    scrapeTimeout: 30s
+    params:
+      module:
+        - system
+        - pdus
+      auth: [public_v2]
+      target:
+      - 10.82.2.97
+    metricRelabelings:
+      - sourceLabels: [__name__]
+        targetLabel: __name__
+        regex: '(.*)'
+        action: replace
+        replacement: pdu_${1}
+    relabelings:
+      - sourceLabels:
+        - __param_target
+        targetLabel: instance
+  jobLabel: "prometheus-snmp-exporter"
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: prometheus-snmp-exporter
+---
+# Source: prometheus-snmp-exporter/templates/servicemonitor.yaml
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: prometheus-snmp-exporter-pdu-10-82-2-98
+  labels:
+    helm.sh/chart: prometheus-snmp-exporter-6.0.0
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/component: metrics
+    app.kubernetes.io/part-of: prometheus-snmp-exporter
+    app.kubernetes.io/name: prometheus-snmp-exporter
+    app.kubernetes.io/version: "v0.27.0"
+    prometheus: "kube-prometheus"
+spec:
+  endpoints:
+  - port: http
+    honorLabels: true
+    path: /snmp
+    scrapeTimeout: 30s
+    params:
+      module:
+        - system
+        - pdus
+      auth: [public_v2]
+      target:
+      - 10.82.2.98
+    metricRelabelings:
+      - sourceLabels: [__name__]
+        targetLabel: __name__
+        regex: '(.*)'
+        action: replace
+        replacement: pdu_${1}
+    relabelings:
+      - sourceLabels:
+        - __param_target
+        targetLabel: instance
+  jobLabel: "prometheus-snmp-exporter"
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: prometheus-snmp-exporter
+---
+# Source: prometheus-snmp-exporter/templates/servicemonitor.yaml
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: prometheus-snmp-exporter-pdu-10-82-2-99
+  labels:
+    helm.sh/chart: prometheus-snmp-exporter-6.0.0
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/component: metrics
+    app.kubernetes.io/part-of: prometheus-snmp-exporter
+    app.kubernetes.io/name: prometheus-snmp-exporter
+    app.kubernetes.io/version: "v0.27.0"
+    prometheus: "kube-prometheus"
+spec:
+  endpoints:
+  - port: http
+    honorLabels: true
+    path: /snmp
+    scrapeTimeout: 30s
+    params:
+      module:
+        - system
+        - pdus
+      auth: [public_v2]
+      target:
+      - 10.82.2.99
+    metricRelabelings:
+      - sourceLabels: [__name__]
+        targetLabel: __name__
+        regex: '(.*)'
+        action: replace
+        replacement: pdu_${1}
+    relabelings:
+      - sourceLabels:
+        - __param_target
+        targetLabel: instance
+  jobLabel: "prometheus-snmp-exporter"
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: prometheus-snmp-exporter
+---
+# Source: prometheus-snmp-exporter/templates/servicemonitor.yaml
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: prometheus-snmp-exporter-pdu-10-82-2-104
+  labels:
+    helm.sh/chart: prometheus-snmp-exporter-6.0.0
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/component: metrics
+    app.kubernetes.io/part-of: prometheus-snmp-exporter
+    app.kubernetes.io/name: prometheus-snmp-exporter
+    app.kubernetes.io/version: "v0.27.0"
+    prometheus: "kube-prometheus"
+spec:
+  endpoints:
+  - port: http
+    honorLabels: true
+    path: /snmp
+    scrapeTimeout: 30s
+    params:
+      module:
+        - system
+        - pdus
+      auth: [public_v2]
+      target:
+      - 10.82.2.104
+    metricRelabelings:
+      - sourceLabels: [__name__]
+        targetLabel: __name__
+        regex: '(.*)'
+        action: replace
+        replacement: pdu_${1}
+    relabelings:
+      - sourceLabels:
+        - __param_target
+        targetLabel: instance
+  jobLabel: "prometheus-snmp-exporter"
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: prometheus-snmp-exporter
+---
+# Source: prometheus-snmp-exporter/templates/servicemonitor.yaml
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: prometheus-snmp-exporter-pdu-10-82-2-105
+  labels:
+    helm.sh/chart: prometheus-snmp-exporter-6.0.0
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/component: metrics
+    app.kubernetes.io/part-of: prometheus-snmp-exporter
+    app.kubernetes.io/name: prometheus-snmp-exporter
+    app.kubernetes.io/version: "v0.27.0"
+    prometheus: "kube-prometheus"
+spec:
+  endpoints:
+  - port: http
+    honorLabels: true
+    path: /snmp
+    scrapeTimeout: 30s
+    params:
+      module:
+        - system
+        - pdus
+      auth: [public_v2]
+      target:
+      - 10.82.2.105
+    metricRelabelings:
+      - sourceLabels: [__name__]
+        targetLabel: __name__
+        regex: '(.*)'
+        action: replace
+        replacement: pdu_${1}
+    relabelings:
+      - sourceLabels:
+        - __param_target
+        targetLabel: instance
+  jobLabel: "prometheus-snmp-exporter"
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: prometheus-snmp-exporter
+---
+# Source: prometheus-snmp-exporter/templates/servicemonitor.yaml
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: prometheus-snmp-exporter-pdu-10-82-2-106
+  labels:
+    helm.sh/chart: prometheus-snmp-exporter-6.0.0
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/component: metrics
+    app.kubernetes.io/part-of: prometheus-snmp-exporter
+    app.kubernetes.io/name: prometheus-snmp-exporter
+    app.kubernetes.io/version: "v0.27.0"
+    prometheus: "kube-prometheus"
+spec:
+  endpoints:
+  - port: http
+    honorLabels: true
+    path: /snmp
+    scrapeTimeout: 30s
+    params:
+      module:
+        - system
+        - pdus
+      auth: [public_v2]
+      target:
+      - 10.82.2.106
+    metricRelabelings:
+      - sourceLabels: [__name__]
+        targetLabel: __name__
+        regex: '(.*)'
+        action: replace
+        replacement: pdu_${1}
+    relabelings:
+      - sourceLabels:
+        - __param_target
+        targetLabel: instance
+  jobLabel: "prometheus-snmp-exporter"
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: prometheus-snmp-exporter
+---
+# Source: prometheus-snmp-exporter/templates/servicemonitor.yaml
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: prometheus-snmp-exporter-pdu-10-82-2-107
+  labels:
+    helm.sh/chart: prometheus-snmp-exporter-6.0.0
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/component: metrics
+    app.kubernetes.io/part-of: prometheus-snmp-exporter
+    app.kubernetes.io/name: prometheus-snmp-exporter
+    app.kubernetes.io/version: "v0.27.0"
+    prometheus: "kube-prometheus"
+spec:
+  endpoints:
+  - port: http
+    honorLabels: true
+    path: /snmp
+    scrapeTimeout: 30s
+    params:
+      module:
+        - system
+        - pdus
+      auth: [public_v2]
+      target:
+      - 10.82.2.107
+    metricRelabelings:
+      - sourceLabels: [__name__]
+        targetLabel: __name__
+        regex: '(.*)'
+        action: replace
+        replacement: pdu_${1}
+    relabelings:
+      - sourceLabels:
+        - __param_target
+        targetLabel: instance
+  jobLabel: "prometheus-snmp-exporter"
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: prometheus-snmp-exporter
+---
+# Source: prometheus-snmp-exporter/templates/servicemonitor.yaml
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: prometheus-snmp-exporter-pdu-10-82-2-108
+  labels:
+    helm.sh/chart: prometheus-snmp-exporter-6.0.0
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/component: metrics
+    app.kubernetes.io/part-of: prometheus-snmp-exporter
+    app.kubernetes.io/name: prometheus-snmp-exporter
+    app.kubernetes.io/version: "v0.27.0"
+    prometheus: "kube-prometheus"
+spec:
+  endpoints:
+  - port: http
+    honorLabels: true
+    path: /snmp
+    scrapeTimeout: 30s
+    params:
+      module:
+        - system
+        - pdus
+      auth: [public_v2]
+      target:
+      - 10.82.2.108
+    metricRelabelings:
+      - sourceLabels: [__name__]
+        targetLabel: __name__
+        regex: '(.*)'
+        action: replace
+        replacement: pdu_${1}
+    relabelings:
+      - sourceLabels:
+        - __param_target
+        targetLabel: instance
+  jobLabel: "prometheus-snmp-exporter"
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: prometheus-snmp-exporter
+---
+# Source: prometheus-snmp-exporter/templates/servicemonitor.yaml
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: prometheus-snmp-exporter-pdu-10-82-2-109
+  labels:
+    helm.sh/chart: prometheus-snmp-exporter-6.0.0
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/component: metrics
+    app.kubernetes.io/part-of: prometheus-snmp-exporter
+    app.kubernetes.io/name: prometheus-snmp-exporter
+    app.kubernetes.io/version: "v0.27.0"
+    prometheus: "kube-prometheus"
+spec:
+  endpoints:
+  - port: http
+    honorLabels: true
+    path: /snmp
+    scrapeTimeout: 30s
+    params:
+      module:
+        - system
+        - pdus
+      auth: [public_v2]
+      target:
+      - 10.82.2.109
+    metricRelabelings:
+      - sourceLabels: [__name__]
+        targetLabel: __name__
+        regex: '(.*)'
+        action: replace
+        replacement: pdu_${1}
+    relabelings:
+      - sourceLabels:
+        - __param_target
+        targetLabel: instance
+  jobLabel: "prometheus-snmp-exporter"
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: prometheus-snmp-exporter

@@ -1,0 +1,1 @@
+SUBSYSTEM=="net",ENV{ID_VENDOR_ID}=="0x15b3",ENV{ID_MODEL_ID}=="0x1015",NAME="mlx%n"

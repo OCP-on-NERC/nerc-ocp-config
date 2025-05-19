@@ -11,6 +11,8 @@ resources:
 - ../../bundles/solr-helm-repo
 - ../../bundles/ansible-automation-platform-operator
 - ../../bundles/openshift-serverless-operator
+- ../../bundles/authorino-operator
+- ../../bundles/servicemesh-operator
 - ../../bundles/amq-broker-rhel8-operator
 - ../../bundles/crunchy-postgres-operator
 - ../../bundles/amq-streams-operator
@@ -24,6 +26,9 @@ resources:
 - ../../bundles/curator
 - ../../bundles/koku-metrics-operator
 - ../../bundles/autopilot
+- ../../bundles/mongodb-operator
+- ../../bundles/elasticsearch-eck-operator
+- ../../bundles/nagios-monitoring
 - ../../base/rbac.authorization.k8s.io/clusterroles/allow-edit-rbac
 - ../../base/rbac.authorization.k8s.io/clusterroles/project-monitoring-edit
 - ../../base/rbac.authorization.k8s.io/clusterroles/nerc-allow-sys-admin
