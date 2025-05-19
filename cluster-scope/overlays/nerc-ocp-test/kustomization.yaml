@@ -18,6 +18,7 @@ resources:
 - feature/odf
 - feature/rhoai
 - rbac
+- virt-patches
 - ../../bundles/clusterissuer-http01
 - ../../bundles/gatekeeper-operator
 - ../../bundles/hostpath-provisioner
