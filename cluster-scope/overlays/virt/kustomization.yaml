@@ -8,6 +8,7 @@ resources:
 - ../../bundles/node-feature-discovery
 - ../../bundles/patch-operator
 - ../../bundles/clusterissuer-http01
+- ../../bundles/virt
 - ../../base/rbac.authorization.k8s.io/clusterroles/allow-edit-rbac
 - ../../base/core/namespaces/openshift-gitops
 - externalsecrets
@@ -17,6 +18,7 @@ resources:
 - nodenetworkconfigurationpolicies
 - certificates
 - secretstores
+- vrit-patches
 
 components:
   - ../../components/nerc-oauth-keycloak
