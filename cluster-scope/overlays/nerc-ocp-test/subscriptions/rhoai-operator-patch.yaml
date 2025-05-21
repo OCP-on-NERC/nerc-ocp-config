@@ -4,4 +4,4 @@ metadata:
   name: rhods-operator
   namespace: redhat-ods-operator
 spec:
-  startingCSV: rhods-operator.2.13.1
+  startingCSV: rhods-operator.2.19.0
