@@ -3,4 +3,4 @@ kind: Kustomization
 resources:
 - configure-sysctl-ip-forward/
 - udev-rules/
-- pci-passthrough
+- pci-passthrough/
