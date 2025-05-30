@@ -138,6 +138,5 @@ patches:
     name: cluster
   patch: |
     - op: add
-      path: /spec
-      value:
-        managementState: Managed
+      path: /spec/managementState
+      value: Managed
