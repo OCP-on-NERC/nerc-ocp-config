@@ -1,0 +1,24 @@
+- name: ceph-storage
+  rules:
+
+  - alert: CustomCephStorageFillingUp
+    annotations:
+      summary: "{{ $labels.cluster }} Ceph Storage is filling up"
+      description: |
+        <https://grafana-open-cluster-management-observability.apps.nerc-ocp-infra.rc.fas.harvard.edu/explore?orgId=1&left=%5B%22now-3h%22,%22now%22,%22Observatorium%22,%7B%22exemplar%22:true,%22expr%22:%22(ceph_pool_raw_used_bytes%7Bpool%3D~%5C%22(nerc_ocp_prod_.*)%7C(nerc_ocp_infra_.*)%5C%22%7D)%20%2F%20on%20(cluster,%20namespace,%20pool)%20(ceph_pool_quota_max_bytes%7Bpool%3D~%5C%22(nerc_ocp_prod_.*)%7C(nerc_ocp_infra_.*)%5C%22%7D)%20%3E%200.80%22%7D%5D|Click here to see these metrics in Observability Monitoring>
+        The {{ $labels.cluster }} {{ $labels.pool }} pool Ceph Storage is {{ $value | humanizePercentage }} full.
+    expr: (ceph_pool_raw_used_bytes{pool=~"(nerc_ocp_prod_.*)|(nerc_ocp_infra_.*)"}) / on (cluster, namespace, pool) (ceph_pool_quota_max_bytes{pool=~"(nerc_ocp_prod_.*)|(nerc_ocp_infra_.*)"}) > 0.80
+    for: 1m
+    labels:
+      severity: warning
+
+  - alert: CustomCephStorageFillingUpPredicted
+    annotations:
+      summary: "{{ $labels.cluster }} Ceph Storage is filling up and is predicted to run out of space in 90 days"
+      description: |
+        <https://grafana-open-cluster-management-observability.apps.nerc-ocp-infra.rc.fas.harvard.edu/explore?orgId=1&left=%5B%22now-1h%22,%22now%22,%22Observatorium%22,%7B%22exemplar%22:true,%22expr%22:%22ceph_pool_quota_max_bytes%7Bpool%3D~%5C%22(nerc_ocp_prod_.*)%7C(nerc_ocp_infra_.*)%5C%22%7D%20-%20on%20(cluster,%20namespace,%20pool,%20pod)%20predict_linear(ceph_pool_used_bytes%7Bpool%3D~%5C%22(nerc_ocp_prod_.*)%7C(nerc_ocp_infra_.*)%5C%22%7D%5B90d%5D,%2090%20*%2024%20*%2060%20*%2060)%20%3C%3D%200%22%7D%5D|Click here to see these metrics in Observability Monitoring>
+        The {{ $labels.cluster }} {{ $labels.pool }} pool Ceph Storage is predicted to run out of space in 90 days
+    expr: ceph_pool_quota_max_bytes{pool=~"(nerc_ocp_prod_.*)|(nerc_ocp_infra_.*)"} - on (cluster, namespace, pool, pod) predict_linear(ceph_pool_used_bytes{pool=~"(nerc_ocp_prod_.*)|(nerc_ocp_infra_.*)"}[90d], 90 * 24 * 60 * 60) <= 0
+    for: 1h
+    labels:
+      severity: warning

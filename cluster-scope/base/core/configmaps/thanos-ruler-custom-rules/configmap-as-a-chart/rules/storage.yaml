@@ -1,0 +1,24 @@
+- name: openshift-storage
+  rules:
+
+  - alert: CustomStoragePersistentVolumeFillingUp
+    annotations:
+      summary: "{{ $labels.cluster }} PersistentVolume is filling up"
+      description: |
+        <https://grafana-open-cluster-management-observability.apps.nerc-ocp-infra.rc.fas.harvard.edu/explore?orgId=1&left=%5B%22now-3h%22,%22now%22,%22Observatorium%22,%7B%22exemplar%22:true,%22expr%22:%22kubelet_volume_stats_available_bytes%7Bpersistentvolumeclaim!~%5C%22wal-logging-loki-ingester-.*%5C%22%7D%2Fkubelet_volume_stats_capacity_bytes%20%3C%200.10%22%7D%5D|Click here to see these metrics in Observability Monitoring>
+        The PersistentVolume claimed by {{ $labels.persistentvolumeclaim }} in Namespace {{ $labels.namespace }} is only {{ $value | humanizePercentage }} free.
+    expr: kubelet_volume_stats_available_bytes{persistentvolumeclaim!~"wal-logging-loki-ingester-.*"}/kubelet_volume_stats_capacity_bytes < 0.10
+    for: 1m
+    labels:
+      severity: critical
+
+  - alert: CustomStoragePersistentVolumeFillingUpPredicted
+    annotations:
+      summary: "{{ $labels.cluster }} PersistentVolume is filling up and is predicted to run out of space in 6h"
+      description: |
+        <https://grafana-open-cluster-management-observability.apps.nerc-ocp-infra.rc.fas.harvard.edu/explore?orgId=1&left=%5B%22now-3h%22,%22now%22,%22Observatorium%22,%7B%22exemplar%22:true,%22expr%22:%22(kubelet_volume_stats_available_bytes%7Bpersistentvolumeclaim!~%5C%22wal-logging-loki-ingester-.*%5C%22%7D%2Fkubelet_volume_stats_capacity_bytes)%20%3C%200.10%20and%20(predict_linear(kubelet_volume_stats_available_bytes%5B6h%5D,%204%20*%2024%20*%203600))%20%3C%200%22%7D%5D|Click here to see these metrics in Observability Monitoring>
+        The PersistentVolume claimed by {{ $labels.persistentvolumeclaim }} in Namespace {{ $labels.namespace }} is only {{ $value | humanizePercentage }} free.
+    expr: (kubelet_volume_stats_available_bytes{persistentvolumeclaim!~"wal-logging-loki-ingester-.*"}/kubelet_volume_stats_capacity_bytes) < 0.10 and (predict_linear(kubelet_volume_stats_available_bytes[6h], 4 * 24 * 3600)) < 0
+    for: 1h
+    labels:
+      severity: warning
