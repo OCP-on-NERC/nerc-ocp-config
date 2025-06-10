@@ -143,3 +143,10 @@ patches:
     - op: replace
       path: /spec/resources/requests/storage
       value: 750Gi
+- target:
+    kind: Subscription
+    name: odf-operator
+  patch: |
+    - op: replace
+      path: /spec/channel
+      value: stable-4.16
