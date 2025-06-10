@@ -5,6 +5,7 @@ resources:
 - ../../base/openapi
 - ../../base/core/configmaps/admin-acks/
 - ../../base/machineconfiguration.openshift.io/kubeletconfigs/system-reserved
+- ../../base/machineconfiguration.openshift.io/machineconfigs/sysctl-ip-forward/
 - ../../base/config.openshift.io/oauths/cluster
 - ../../base/rbac.authorization.k8s.io/clusterroles/node-labeler/
 - ../../base/rbac.authorization.k8s.io/clusterrolebindings/self-provisioners
