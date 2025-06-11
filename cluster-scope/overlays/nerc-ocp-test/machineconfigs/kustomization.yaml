@@ -3,5 +3,4 @@ kind: Kustomization
 resources:
   - udev-rules
   - configure-bond0
-  - configure-sysctl-ip-forward
   - hostpath-provisioner-selinux-controller.yaml
