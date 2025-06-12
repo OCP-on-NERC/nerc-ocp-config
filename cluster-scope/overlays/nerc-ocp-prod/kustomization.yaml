@@ -150,3 +150,10 @@ patches:
     - op: replace
       path: /spec/channel
       value: stable-4.17
+- target:
+    kind: Subscription
+    name: cluster-logging
+  patch: |
+    - op: replace
+      path: /spec/channel
+      value: stable-6.2
