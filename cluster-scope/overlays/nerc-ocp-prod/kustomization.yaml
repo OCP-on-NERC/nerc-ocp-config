@@ -157,3 +157,13 @@ patches:
     - op: replace
       path: /spec/channel
       value: stable-6.2
+- target:
+    kind: Subscription
+    name: rhods-operator
+  patch: |
+    - op: replace
+      path: /spec/channel
+      value: stable-2.19
+    - op: replace
+      path: /spec/startingCSV
+      value: rhods-operator.2.19.0
