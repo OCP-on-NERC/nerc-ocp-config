@@ -1,0 +1,33 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - approvalrequests.scale.spectrum.ibm.com.yaml
+  - asyncreplications.scale.spectrum.ibm.com.yaml
+  - cachevolumeoperations.scale.spectrum.ibm.com.yaml
+  - cachevolumes.scale.spectrum.ibm.com.yaml
+  - callhomes.scale.spectrum.ibm.com.yaml
+  - clusterinterconnects.scale.spectrum.ibm.com.yaml
+  - clusters.scale.spectrum.ibm.com.yaml
+  - compressionjobs.scale.spectrum.ibm.com.yaml
+  - consistencygroups.scale.spectrum.ibm.com.yaml
+  - csiscaleoperators.csi.ibm.com.yaml
+  - daemons.scale.spectrum.ibm.com.yaml
+  - diskjobs.scale.spectrum.ibm.com.yaml
+  - dnsconfigs.scale.spectrum.ibm.com.yaml
+  - dnss.scale.spectrum.ibm.com.yaml
+  - encryptionconfigs.scale.spectrum.ibm.com.yaml
+  - filesystems.scale.spectrum.ibm.com.yaml
+  - grafanabridges.scale.spectrum.ibm.com.yaml
+  - guis.scale.spectrum.ibm.com.yaml
+  - localdisks.scale.spectrum.ibm.com.yaml
+  - pmcollectors.scale.spectrum.ibm.com.yaml
+  - recoverygroups.scale.spectrum.ibm.com.yaml
+  - regionaldrexports.scale.spectrum.ibm.com.yaml
+  - regionaldrs.scale.spectrum.ibm.com.yaml
+  - remoteclusters.scale.spectrum.ibm.com.yaml
+  - restripefsjobs.scale.spectrum.ibm.com.yaml
+  - stretchclusterinitnodes.scale.spectrum.ibm.com.yaml
+  - stretchclusters.scale.spectrum.ibm.com.yaml
+  - stretchclustertiebreakers.scale.spectrum.ibm.com.yaml
+  - upgradeapprovals.scale.spectrum.ibm.com.yaml
+  - volumes.scale.spectrum.ibm.com.yaml

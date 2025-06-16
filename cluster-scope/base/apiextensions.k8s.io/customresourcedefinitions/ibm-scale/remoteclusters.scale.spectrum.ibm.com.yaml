@@ -1,0 +1,237 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.14.0
+  labels:
+    app.kubernetes.io/instance: ibm-spectrum-scale
+    app.kubernetes.io/name: operator
+  name: remoteclusters.scale.spectrum.ibm.com
+spec:
+  group: scale.spectrum.ibm.com
+  names:
+    categories:
+    - scale
+    kind: RemoteCluster
+    listKind: RemoteClusterList
+    plural: remoteclusters
+    shortNames:
+    - remotegpfs
+    singular: remotecluster
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.guiVersion
+      name: GUI Version
+      type: string
+    - jsonPath: .status.conditions[?(@.type=="Ready")].status
+      name: Ready
+      type: string
+    - jsonPath: .status.conditions[?(@.type=="Available")].status
+      name: Available
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: Age
+      type: date
+    name: v1beta1
+    schema:
+      openAPIV3Schema:
+        description: RemoteCluster is the Schema for the remoteclusters API
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: spec defines the desired state of RemoteCluster
+            properties:
+              contactNodes:
+                description: |-
+                  This property is optional and provides a list of nodes from the storage cluster to
+                  be used as the remote cluster contact nodes. The names must be the daemon node
+                  names. If not specified, the operator uses all quorum nodes detected from the storage cluster.
+                  If the contact node names are not resolvable in local cluster, configure the 'hostAliases' with node name
+                  and IP in Cluster CR.
+                items:
+                  type: string
+                type: array
+              gui:
+                description: It specifies the details for the IBM Spectrum Scale Remote
+                  Cluster GUI.
+                properties:
+                  cacert:
+                    description: It specifies the name of the RootCA ConfigMap.
+                    type: string
+                  csiSecretName:
+                    description: |-
+                      It references the secret that contains the username and password of
+                      the CSI admin user in the ibm-spectrum-scale-csi namespace.
+                      This option is mandatory if the storage cluster version is older than 5.2.3.
+                      If the storage cluster is version 5.2.3, this option is no longer used.
+                    type: string
+                  host:
+                    description: |-
+                      host references a REST API endpoint on the remote cluster. This must be resolvable by DNS.
+                      This field is DEPRECATED and will be removed in a future release. Use field 'hosts' instead.
+                    type: string
+                  hosts:
+                    description: |-
+                      hosts references one or more REST API endpoints on the remote cluster. Up to 3 endpoints can be specified.
+                      The hosts must be resolvable by DNS.
+                    items:
+                      type: string
+                    maxItems: 3
+                    type: array
+                  insecureSkipVerify:
+                    description: |-
+                      insecureSkipVerify controls whether a client verifies the server's certificate
+                      chain and host name. If set true, TLS is susceptible to machine-in-the-middle attacks.
+                    type: boolean
+                  passwordRotation:
+                    description: |-
+                      passwordRotation allows to configure automatic password rotation of the container operator and CSI admin GUI users.
+                      Automatic password rotation is disabled if this section is not specified.
+                    properties:
+                      passwordChangeInterval:
+                        default: "80"
+                        description: 'passwordChangeInterval allows the configuration
+                          in days for the operator to change the user passwords on
+                          the storage cluster. Specify the value surrounded by double
+                          quotes (like passwordChangeInterval: "30"). The default
+                          value is 80 days.'
+                        type: string
+                    type: object
+                  port:
+                    default: 443
+                    description: It specifies the port of the Remote Cluster.
+                    type: integer
+                  scheme:
+                    default: https
+                    description: The default value is 'https'. No other value is supported.
+                    enum:
+                    - https
+                    type: string
+                  secretName:
+                    description: |-
+                      secretName references the secret that contains the username and password of the container operator user
+                      that exists in remote cluster GUI. The secret must be created in the ibm-spectrum-scale namespace.
+                      Refer to the documentation for more details.
+                    type: string
+                required:
+                - secretName
+                type: object
+            required:
+            - gui
+            type: object
+          status:
+            description: status defines the observed state of RemoteCluster
+            properties:
+              conditions:
+                items:
+                  description: "Condition contains details for one aspect of the current
+                    state of this API Resource.\n---\nThis struct is intended for
+                    direct use as an array at the field path .status.conditions.  For
+                    example,\n\n\n\ttype FooStatus struct{\n\t    // Represents the
+                    observations of a foo's current state.\n\t    // Known .status.conditions.type
+                    are: \"Available\", \"Progressing\", and \"Degraded\"\n\t    //
+                    +patchMergeKey=type\n\t    // +patchStrategy=merge\n\t    // +listType=map\n\t
+                    \   // +listMapKey=type\n\t    Conditions []metav1.Condition `json:\"conditions,omitempty\"
+                    patchStrategy:\"merge\" patchMergeKey:\"type\" protobuf:\"bytes,1,rep,name=conditions\"`\n\n\n\t
+                    \   // other fields\n\t}"
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        lastTransitionTime is the last time the condition transitioned from one status to another.
+                        This should be when the underlying condition changed.  If that is not known, then using the time when the API field changed is acceptable.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        message is a human readable message indicating details about the transition.
+                        This may be an empty string.
+                      maxLength: 32768
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        observedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      minimum: 0
+                      type: integer
+                    reason:
+                      description: |-
+                        reason contains a programmatic identifier indicating the reason for the condition's last transition.
+                        Producers of specific condition types may define expected values and meanings for this field,
+                        and whether the values are considered a guaranteed API.
+                        The value should be a CamelCase string.
+                        This field may not be empty.
+                      maxLength: 1024
+                      minLength: 1
+                      pattern: ^[A-Za-z]([A-Za-z0-9_,:]*[A-Za-z0-9_])?$
+                      type: string
+                    status:
+                      description: status of the condition, one of True, False, Unknown.
+                      enum:
+                      - "True"
+                      - "False"
+                      - Unknown
+                      type: string
+                    type:
+                      description: |-
+                        type of condition in CamelCase or in foo.example.com/CamelCase.
+                        ---
+                        Many .condition.type values are consistent across resources like Available, but because arbitrary conditions can be
+                        useful (see .node.status.conditions), the ability to deconflict is important.
+                        The regex it matches is (dns1123SubdomainFmt/)?(qualifiedNameFmt)
+                      maxLength: 316
+                      pattern: ^([a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*/)?(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])$
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - message
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+              guiVersion:
+                description: guiVersion specifies the REST API GUI version.
+                type: string
+              lastPasswordChange:
+                description: lastPasswordChange indicates when the passwords for the
+                  remote storage users was last changed by the operator. This field
+                  is only present if the automatic password rotation function is enabled.
+                type: string
+              localKeySHADigest:
+                description: |-
+                  localKeySHADigest is the digest of the public access key that must be used by the remote cluster in order to communicate with the local cluster in a remote filesystem mount relationship.
+                  The new key is displayed if there are two keys.
+                type: string
+              remoteKeySHADigest:
+                description: |-
+                  remoteKeySHADigest is the digest of the public access key that is used by local cluster in order to communicate with the remote cluster in a remote filesystem mount relationship.
+                  The new key is displayed if there are two keys.
+                type: string
+            required:
+            - localKeySHADigest
+            - remoteKeySHADigest
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
