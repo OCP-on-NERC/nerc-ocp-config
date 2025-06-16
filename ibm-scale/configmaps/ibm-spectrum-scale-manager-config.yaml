@@ -1,0 +1,28 @@
+apiVersion: v1
+data:
+  controller_manager_config.yaml: |
+    apiVersion: scale.spectrum.ibm.com/v1alpha1
+    kind: ClusterManagerConfig
+    images:
+      coreECE: cp.icr.io/cp/gpfs/erasure-code/ibm-spectrum-scale-daemon@sha256:8b8647956d6b1f95a2fc35e5bd2f79881a1dd4a2ea263fa91fcfa1f8863346dd
+      coreDME: cp.icr.io/cp/gpfs/data-management/ibm-spectrum-scale-daemon@sha256:4a2a68de2758585aad3642b9072779e863332def99ee97162fd96069e89377e1
+      coreDAE: cp.icr.io/cp/gpfs/data-access/ibm-spectrum-scale-daemon@sha256:0cd0d308fb0659b7e2e9bec1351b168408b23f3856799e408764fcfa7fe61bd2
+      coreInit: cp.icr.io/cp/gpfs/ibm-spectrum-scale-core-init@sha256:d22e6fd244befcc74d6caea61862a4dd69a94956b6a4d42f7e753371f19d71bd
+      gui: cp.icr.io/cp/gpfs/ibm-spectrum-scale-gui@sha256:179fd0f462c15f303c7a006b1a8ad71f01cd4215bcac99ac46722e37a56dba93
+      postgres: cp.icr.io/cp/gpfs/postgres@sha256:0bcc5bbbb2aa9c9b4c6505845918c7eb55d783cf5c1f434fac33012579fb149d
+      logs: cp.icr.io/cp/gpfs/ibm-spectrum-scale-logs@sha256:ef767949384ffdf4f2067496051961a7b2c75e52d9255991ce0152072bfb9d2d
+      pmcollector: cp.icr.io/cp/gpfs/ibm-spectrum-scale-pmcollector@sha256:f4c3d343e92a9931830b2693bc274136a14f6f497e7da92c199a957b9c0a0c7a
+      sysmon: cp.icr.io/cp/gpfs/ibm-spectrum-scale-monitor@sha256:9543dfe369c3d1d4bd93f7c7743f990ae652e9bc2256a0ba6ed1d03e6924afd0
+      grafanaBridge: cp.icr.io/cp/gpfs/ibm-spectrum-scale-grafana-bridge@sha256:b05cf7a8f6e1be3aa576f237075757fb318c9d3174f54410dbc17365176ce121
+      coreDNS: cp.icr.io/cp/gpfs/ibm-spectrum-scale-coredns@sha256:6a317b23fee629c0b07eb95d34ab7593bb38d41bffc5d1cd4cb2870539c66cd4
+      mustGather: icr.io/cpopen/ibm-spectrum-scale-must-gather@sha256:4ce047b7b8f81652fd6c2c0a6682d92c08b5e99e1f31dcdde196e01267f58cc9
+      ganesha: cp.icr.io/cp/gpfs/ibm-spectrum-scale-ganesha@sha256:054e9e382241ec3bc2a6cab30f1a045b74674492b25afd1110896b4060d1ab6f
+      stunnel: cp.icr.io/cp/gpfs/ibm-spectrum-scale-stunnel@sha256:a2c94c1357fe27ef5070d8ea7ba39e9524243d925ffaf3af6300238b565de44b
+      pmsensors: cp.icr.io/cp/gpfs/ibm-spectrum-scale-pmsensors@sha256:c9270e17334eba8fd77733282bb78866fa7266e87d86bcb19146a116d4e83483
+kind: ConfigMap
+metadata:
+  labels:
+    app.kubernetes.io/instance: ibm-spectrum-scale
+    app.kubernetes.io/name: operator
+  name: ibm-spectrum-scale-manager-config
+  namespace: ibm-spectrum-scale-operator

@@ -1,0 +1,11 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - serviceaccounts/ibm-spectrum-scale-csi-operator-sa.yaml
+  - serviceaccounts/ibm-spectrum-scale-dns-sa.yaml
+  - serviceaccounts/ibm-spectrum-scale-operator-sa.yaml
+  - serviceaccounts/ibm-spectrum-scale-regional-dr-sa.yaml
+  - serviceaccounts/ibm-spectrum-scale-core-sa.yaml
+  - serviceaccounts/ibm-spectrum-scale-default-sa.yaml
+  - serviceaccounts/ibm-spectrum-scale-gui-sa.yaml
+  - serviceaccounts/ibm-spectrum-scale-pmcollector-sa.yaml
