@@ -13,6 +13,3 @@ spec:
     port: 8053
     protocol: UDP
     targetPort: dns-udp
-  selector:
-    app: dns
-    deployment: dns
