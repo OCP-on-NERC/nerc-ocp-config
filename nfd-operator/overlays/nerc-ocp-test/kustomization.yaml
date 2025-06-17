@@ -2,11 +2,3 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ../../base
-patches:
-  - target:
-      kind: NodeFeatureDiscovery
-      name: nfd-instance
-    patch: |
-      - op: replace
-        path: /spec/operand/image
-        value: registry.redhat.io/openshift4/ose-node-feature-discovery-rhel9:v4.17
