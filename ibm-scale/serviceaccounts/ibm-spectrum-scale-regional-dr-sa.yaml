@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  labels:
+    app.kubernetes.io/instance: ibm-spectrum-scale
+    app.kubernetes.io/name: operator
+  name: ibm-spectrum-scale-regional-dr
+  namespace: ibm-spectrum-scale-operator

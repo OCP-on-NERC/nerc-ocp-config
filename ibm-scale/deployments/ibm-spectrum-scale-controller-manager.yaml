@@ -1,0 +1,133 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/instance: ibm-spectrum-scale
+    app.kubernetes.io/name: operator
+    app.kubernetes.io/version: v5.2.3.0
+    control-plane: controller-manager
+  name: ibm-spectrum-scale-controller-manager
+  namespace: ibm-spectrum-scale-operator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: ibm-spectrum-scale
+      app.kubernetes.io/name: operator
+      control-plane: controller-manager
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/instance: ibm-spectrum-scale
+        app.kubernetes.io/name: operator
+        app.kubernetes.io/version: v5.2.3.0
+        control-plane: controller-manager
+    spec:
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - preference:
+              matchExpressions:
+              - key: node-role.kubernetes.io/control-plane
+                operator: Exists
+            weight: 10
+          - preference:
+              matchExpressions:
+              - key: scale.spectrum.ibm.com/controller-manager
+                operator: Exists
+            weight: 100
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/os
+                operator: In
+                values:
+                - linux
+              - key: kubernetes.io/arch
+                operator: In
+                values:
+                - amd64
+                - ppc64le
+                - s390x
+      containers:
+      - args:
+        - --config=/config/controller_manager_config.yaml
+        - --zap-log-level=1
+        command:
+        - /manager
+        env:
+        - name: GOVMOMI_HOME
+          value: /tmp
+        - name: GOMEMLIMIT
+          valueFrom:
+            resourceFieldRef:
+              resource: limits.memory
+        image: icr.io/cpopen/ibm-spectrum-scale-operator@sha256:d2f9ebc3bb196ad85b931f2dabdce13aed2e6598227b8fc2434d6df9f840f696
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 8081
+          initialDelaySeconds: 15
+          periodSeconds: 20
+        name: manager
+        ports:
+        - containerPort: 9443
+          name: webhook-server
+          protocol: TCP
+        readinessProbe:
+          httpGet:
+            path: /readyz
+            port: 8081
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        resources:
+          limits:
+            cpu: 1500m
+            memory: 400Mi
+          requests:
+            cpu: 500m
+            memory: 200Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          privileged: false
+          readOnlyRootFilesystem: true
+          runAsNonRoot: true
+          seccompProfile:
+            type: RuntimeDefault
+        volumeMounts:
+        - mountPath: /tmp/k8s-webhook-server/serving-certs
+          name: cert
+          readOnly: true
+        - mountPath: /config
+          name: manager-config
+        - mountPath: /etc/ssl/service
+          name: cabundle
+      serviceAccountName: ibm-spectrum-scale-operator
+      terminationGracePeriodSeconds: 10
+      tolerations:
+      - effect: NoSchedule
+        key: node-role.kubernetes.io/control-plane
+        operator: Exists
+      topologySpreadConstraints:
+      - labelSelector:
+          matchLabels:
+            app.kubernetes.io/instance: ibm-spectrum-scale
+            app.kubernetes.io/name: operator
+        maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: DoNotSchedule
+      volumes:
+      - name: cert
+        secret:
+          defaultMode: 420
+          secretName: ibm-spectrum-scale-webhook-service-cert
+      - configMap:
+          name: ibm-spectrum-scale-manager-config
+        name: manager-config
+      - configMap:
+          name: ibm-spectrum-scale-cabundle
+          optional: true
+        name: cabundle
