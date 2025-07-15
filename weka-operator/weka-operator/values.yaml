@@ -1,0 +1,166 @@
+---
+# Default values for weka-operator.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# Prefix for all resources created by the operator
+prefix: "weka-operator"
+
+image:
+  repository: quay.io/weka.io/weka-operator
+  # Override only, default equals to the chart version
+  tag: ""
+
+imagePullSecret: quay-io-robot-secret
+deployController: true
+# -- experimental: enables custtom HTTP API endpoint as alternative to K8s API
+enableClusterApi: false
+# -- enable leader election for controller manager. Enabling this will ensure there is only one active controller manager.
+enableLeaderElection: true
+# -- custom endpoint to send OTLP traces to (insecure, GRPC).
+# If left empty, traces are sent to stdout in json format.
+otelExporterOtlpEndpoint: ""
+# -- version of weka-operator
+version: ""
+# logging settings
+logging:
+  level: 0
+  timeOnly: true
+# -- can be overridden with any other basic linux image
+maintenanceImage: quay.io/weka.io/busybox
+# -- if required, you can specify a pull secret for that image
+# maintenanceImagePullSecret: ""
+# -- used by various operations that are not in context of wekacluster/wekacontainer, for example: GC of persistent storage/removal of tobmstones
+wekahome:
+  endpoint: https://api.home.weka.io
+  # -- allow insecure TLS connection to the wekahome endpoint (no server certificate validation)
+  allowInsecureTLS: false
+  # -- name of the secret specifying CA certificate chain. It is assumed that every target namespace will have such secret
+  cacertSecret: ""
+  enableStats: true
+
+reconcileTimeout: 30m
+kubeExecTimeout: 5m
+
+# -- maximum number of workers for each reconciler (for each resource type)
+maxWorkers:
+  wekaCluster: 5
+  wekaContainer: 50
+  wekaClient: 5
+  wekaManualOperation: 5
+  wekaPolicy: 5
+
+wekaAllocZombieDeleteAfter: 5m
+
+operatorMetricsBindAddress: "127.0.0.1:8080"
+nodeAgentMetricsBindAddress: ":8090"
+healthProbeBindAddress: ":8081"
+
+ocpCompatibility:
+  driverToolkitSecretName:
+  driverToolkitImageBaseUrl: quay.io/openshift-release-dev/ocp-v4.0-art-dev
+  # -- automatically create Tuned profile for the cluster nodes to apply hugepages configuration.
+  # -- WARNING: do not enable this feature if you are already using custom Tuned profiles for setting hugepages
+  hugepageConfiguration:
+    # -- if enabled, the operator will configure hugepages for the OCP nodes
+    enabled: false
+    # -- on which nodes to configure hugepages
+    machineConfigNodeLabel: "worker"
+    # -- hugepage size
+    hugepageSize: "2M"
+    # -- hugepage count
+    hugepagesCount: 4000
+    nodeSelector:
+      matchLabels:
+        - node-role.kubernetes.io/worker: ""
+
+gkeCompatibility:
+  gkeServiceAccountSecret: ""
+  # -- automatically configure hugepages for the GKE nodes
+  hugepageConfiguration:
+    # -- if enabled, the operator will configure hugepages for the GKE nodes (WARNING: will reboot nodes forcefully!)
+    enabled: false
+    # -- hugepage size
+    hugepageSize: "2M"
+    # -- hugepage count
+    hugepageCount: 4000
+  # -- if enabled, the operator will disable driver signing enforcement on the GKE nodes (WARNING: will reboot nodes forcefully!)
+  disableDriverSigning: false
+
+manager:
+  resources:
+    limits:
+      cpu: 1000m
+      memory: 4096Mi
+    requests:
+      cpu: 250m
+      memory: 64Mi
+  nodeSelector: {}
+  tolerations: []
+  labels: {}
+
+debugSleep: 3
+
+tolerations: []
+# -- if true, pods will not tolerate unhealthy nodes (unschedulable and not-ready)
+skipUnhealthyToleration: false
+# -- if true, client pods will not tolerate NoSchedule taints
+skipClientNoScheduleToleration: false
+# -- if true, auxiliary pods (discovery, sign-drives, etc.) will not tolerate NoSchedule taints
+skipAuxNoScheduleToleration: false
+deploymentIdentifier: ""
+
+# -- if true, the operator will consider nodes that are gone as totally gone (not in the cluster anymore)
+# the operator will delete backend wekacontainers from the nodes that are not part of the k8s cluster anymore
+cleanupRemovedNodes: false
+# -- if true, the operator will delete backend wekacontainers from the nodes that do not match node selectors
+cleanupOnNodeSelectorMismatch: false
+# -- if true, the operator will delete client wekacontainers from the nodes that do not match node selectors
+cleanupClientsOnNodeSelectorMismatch: false
+# -- if true, the operator will delete any wekacontainers from the nodes that do not tolerate taints
+cleanupContainersOnTolerationsMismatch: false
+# -- if true, the operator will enforce deactivation on pod removal
+evictContainerOnDeletion: false
+skipClientsTolerationValidation: false
+
+signDrivesImage: quay.io/weka.io/weka-sign-tool:v0.1.1-pciutils
+
+nodeAgent:
+  resources:
+    limits:
+      cpu: 1000m
+      memory: 1024Mi
+    requests:
+      cpu: 50m
+      memory: 64Mi
+  tolerations: []
+  nodeSelector: {}
+  # default set for generic OSes, can be overridden /root/k8s-weka for openshift, /mnt/stateful_partition/k8s-weka for google container OS
+  persistencePaths: /opt/k8s-weka
+
+metrics:
+  clusters:
+    enabled: true
+    pollingRate: 60s
+  containers:
+    enabled: true
+    pollingRate: 60s
+    requestsTimeouts:
+      register: 3s
+      getContainerInfo: 10s
+
+localDataStorageClass: ""
+localDataPvc: ""
+upgrade:
+  computeThresholdPercent: 90
+  driveThresholdPercent: 90
+  maxDeactivatingContainersPercent: 10
+podMonitor:
+  enabled: true
+
+# DNS policy configuration
+dnsPolicy:
+  # dns policy for the pods without hostNetwork: true
+  k8sNetwork: ""
+  # dns policy for the pods with hostNetwork: true
+  hostNetwork: ""
