@@ -1,0 +1,7 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ibm-spectrum-scale-csi-operator.yaml
+  - ibm-spectrum-scale-privileged.yaml
+  - ibm-spectrum-scale-operator.yaml
+  - ibm-spectrum-scale-regional-dr.yaml

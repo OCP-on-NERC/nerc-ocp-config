@@ -1,0 +1,6 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ibm-spectrum-scale-leader-election-role.yaml
+  - ibm-spectrum-scale-sysmon.yaml
+  - ibm-spectrum-scale-regional-dr.yaml
