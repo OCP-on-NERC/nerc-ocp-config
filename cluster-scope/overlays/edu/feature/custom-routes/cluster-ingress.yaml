@@ -1,0 +1,13 @@
+apiVersion: config.openshift.io/v1
+kind: Ingress
+metadata:
+  name: cluster
+spec:
+  domain: apps.edu.nerc.mghpcc.org
+  componentRoutes:
+    - name: console
+      namespace: openshift-console
+      hostname: console.apps.edu.nerc.mghpcc.org
+    - name: downloads
+      namespace: openshift-console
+      hostname: downloads.apps.edu.nerc.mghpcc.org
