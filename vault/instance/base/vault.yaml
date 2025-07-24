@@ -5,8 +5,13 @@ metadata:
   labels:
     app.kubernetes.io/name: vault
 spec:
+  vaultEnvsConfig:
+  - name: SKIP_CHOWN
+    value: "1"
+  - name: SKIP_SETCAP
+    value: "1"
   size: 3
-  image: hashicorp/vault:1.15.5
+  image: hashicorp/vault:1.20.0
 
   serviceAccount: vault
   serviceType: ClusterIP
@@ -36,6 +41,7 @@ spec:
       secretNamespace: default
 
   config:
+    disable_mlock: true
     storage:
       raft:
         path: "/vault/data"
