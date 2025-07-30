@@ -39,7 +39,7 @@ resources:
 - externalsecrets
 - secretstores
 - issuers
-# - machineconfigs specific to machines used for cluster
+- machineconfigs
 # - nodenetworkconfigurationpolicies (need to be added)
 # - clusterversion.yaml
 - certificates
