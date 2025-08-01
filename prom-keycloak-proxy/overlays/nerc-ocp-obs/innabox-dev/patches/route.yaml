@@ -1,0 +1,9 @@
+- op: replace
+  path: /metadata/name
+  value: prom-keycloak-proxy-innabox-dev
+- op: replace
+  path: /spec/host
+  value: metrics-innabox-dev.apps.obs.nerc.mghpcc.org
+- op: replace
+  path: /spec/to/name
+  value: prom-keycloak-proxy-innabox-dev
