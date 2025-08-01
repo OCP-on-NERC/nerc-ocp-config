@@ -1,0 +1,12 @@
+- op: replace
+  path: /metadata/name
+  value: prom-keycloak-proxy-open-sovereign-ai-cloud
+- op: replace
+  path: /spec/template/spec/containers/0/env/0/value
+  value: open-sovereign-ai-cloud
+- op: replace
+  path: /spec/template/spec/containers/0/envFrom/0/secretRef/name
+  value: prom-keycloak-proxy-open-sovereign-ai-cloud-secrets
+- op: replace
+  path: /spec/template/spec/volumes/0/secret/secretName
+  value: prom-keycloak-proxy-open-sovereign-ai-cloud-certs

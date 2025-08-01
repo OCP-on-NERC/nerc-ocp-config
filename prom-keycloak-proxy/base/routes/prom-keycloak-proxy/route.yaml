@@ -1,12 +1,12 @@
 kind: Route
 apiVersion: route.openshift.io/v1
 metadata:
-  name: prom-keycloak-proxy
+  name: REPLACE_IN_OVERLAY
 spec:
-  host: metrics.apps.obs.nerc.mghpcc.org
+  host: REPLACE_IN_OVERLAY
   to:
     kind: Service
-    name: prom-keycloak-proxy
+    name: REPLACE_IN_OVERLAY
     weight: 100
   port:
     targetPort: http

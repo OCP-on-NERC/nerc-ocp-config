@@ -1,0 +1,12 @@
+- op: replace
+  path: /metadata/name
+  value: prom-keycloak-proxy-innabox-dev
+- op: replace
+  path: /spec/template/spec/containers/0/env/0/value
+  value: innabox-dev
+- op: replace
+  path: /spec/template/spec/containers/0/envFrom/0/secretRef/name
+  value: prom-keycloak-proxy-innabox-dev-secrets
+- op: replace
+  path: /spec/template/spec/volumes/0/secret/secretName
+  value: prom-keycloak-proxy-innabox-dev-certs
