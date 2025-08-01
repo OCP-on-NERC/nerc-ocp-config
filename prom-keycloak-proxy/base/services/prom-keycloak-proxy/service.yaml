@@ -10,6 +10,6 @@ spec:
     targetPort: 8080
   selector:
     app: prom-keycloak-proxy
-    deployment: prom-keycloak-proxy
+    deployment: REPLACE_IN_OVERLAY
   sessionAffinity: None
   type: ClusterIP
