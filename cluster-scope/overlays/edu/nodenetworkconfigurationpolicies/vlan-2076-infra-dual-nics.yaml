@@ -1,0 +1,20 @@
+apiVersion: nmstate.io/v1
+kind: NodeNetworkConfigurationPolicy
+metadata:
+  name: vlan-2076-infra-dual-nics
+spec:
+  nodeSelector:
+    esi.massopen.cloud/nics: "2"
+  desiredState:
+    interfaces:
+    - name: nic2.2076
+      type: vlan
+      state: up
+      ipv4:
+        enabled: true
+        dhcp: true
+        auto-routes: true
+      vlan:
+        base-iface: nic2
+        id: 2076
+      mtu: 1500

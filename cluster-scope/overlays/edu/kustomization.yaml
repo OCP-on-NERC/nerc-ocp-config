@@ -40,7 +40,7 @@ resources:
 - secretstores
 - issuers
 - machineconfigs
-# - nodenetworkconfigurationpolicies (need to be added)
+- nodenetworkconfigurationpolicies
 - clusterversion.yaml
 - certificates
 - consolelinks
