@@ -1,0 +1,26 @@
+apiVersion: lvm.topolvm.io/v1alpha1
+kind: LVMCluster
+metadata:
+  name: local-storage-vg1
+  namespace: openshift-storage
+spec:
+  storage:
+    deviceClasses:
+    - name: vg1
+      fstype: ext4
+      default: true
+      nodeSelector:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: nerc.mghpcc.org/local-storage
+            operator: Exists
+      deviceSelector:
+        paths:
+        - /dev/disk/by-path/pci-0000:43:00.0-scsi-0:0:1:0
+        forceWipeDevicesAndDestroyAllData: false
+      thinPoolConfig:
+        name: pool0
+        sizePercent: 90
+        overprovisionRatio: 10
+        chunkSize: 128Ki
+        chunkSizeCalculationPolicy: Static

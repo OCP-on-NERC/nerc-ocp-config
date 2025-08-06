@@ -15,6 +15,7 @@ resources:
 - externalsecrets
 - dns
 - metallb-config
+- lvmcluster
 
 - ../../bundles/external-secrets-clustersecretstore
 - ../../bundles/metallb
