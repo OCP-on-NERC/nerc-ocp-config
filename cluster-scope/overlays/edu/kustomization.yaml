@@ -41,7 +41,7 @@ resources:
 - issuers
 - machineconfigs
 # - nodenetworkconfigurationpolicies (need to be added)
-# - clusterversion.yaml
+- clusterversion.yaml
 - certificates
 - consolelinks
 - rhoai
