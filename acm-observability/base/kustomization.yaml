@@ -1,0 +1,12 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+labels:
+  - pairs:
+      nerc.mghpcc.org/kustomized: "true"
+      app.kubernetes.io/component: acm-observability
+    includeSelectors: true
+
+resources:
+  - core/configmaps/observability-metrics-custom-allowlist/
+  - external-secrets.io/externalsecrets/acm-metrics/
+  - observability.open-cluster-management.io/multiclusterobservabilities/observability/
