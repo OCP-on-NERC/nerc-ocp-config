@@ -15,4 +15,6 @@ spec:
       vlan:
         base-iface: mlx1
         id: 2076
-      mtu: 9000
+      mtu: 1500
+  nodeSelector:
+    node-role.kubernetes.io/worker: ""
