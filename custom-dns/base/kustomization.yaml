@@ -2,8 +2,26 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 commonLabels:
   app: custom-dns
+namespace: custom-dns
+
 resources:
 - namespace.yaml
-- configmap.yaml
+- sa.yaml
+- clusterrole.yaml
+- clusterrolebinding.yaml
 - deployment.yaml
 - service.yaml
+- job-patch-dns-operator.yaml
+
+configMapGenerator:
+- name: patch-scripts
+  options:
+    disableNameSuffixHash: true
+  files:
+  - files/patch-dns-operator.sh
+- name: dns-config
+  options:
+    disableNameSuffixHash: true
+  files:
+  - files/Corefile
+  - files/nerc-ocp-infra.rc.fas.harvard.edu
