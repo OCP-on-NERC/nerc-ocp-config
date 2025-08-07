@@ -100,7 +100,7 @@ patches:
   patch: |
     - op: replace
       path: /spec/channel
-      value: stable-4.17
+      value: stable-4.18
 - target:
     kind: Subscription
     name: acm
@@ -108,14 +108,14 @@ patches:
   patch: |
     - op: replace
       path: /spec/channel
-      value: release-2.12
+      value: release-2.13
 - target:
     kind: Subscription
     name: openshift-gitops-operator
   patch: |
     - op: replace
       path: /spec/channel
-      value: gitops-1.15
+      value: gitops-1.17
 
 # per: https://docs.openshift.com/container-platform/4.17/hosted_control_planes/hcp-deploy/hcp-deploy-virt.html
 - target:
