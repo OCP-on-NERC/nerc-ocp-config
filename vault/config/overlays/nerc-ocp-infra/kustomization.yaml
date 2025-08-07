@@ -25,6 +25,7 @@ configMapGenerator:
   - config/nerc-ocp-infra.yaml
   - config/nerc-ocp-obs.yaml
   - config/nerc-ocp-prod.yaml
+  - config/nerc-ocp-edu.yaml
   - config/nerc-ocp-test.yaml
   - config/nerc-ocp-beta-test.yaml
   - config/rhoai-test.yaml
