@@ -53,7 +53,7 @@ patches:
       identityProviders:
       - name: github
         github:
-          clientID: <>
+          clientID: Ov23liFL7hFi2qkzUlIQ
 - target:
     kind: ExternalSecret
     name: github-client-secret
