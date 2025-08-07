@@ -1,0 +1,28 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: patch-dns-operator
+  annotations:
+    argocd.argoproj.io/hook: PostSync
+    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
+spec:
+  backoffLimit: 0
+  ttlSecondsAfterFinished: 86400
+
+  template:
+    spec:
+      restartPolicy: Never
+      serviceAccountName: custom-dns
+      volumes:
+      - name: patch-scripts
+        configMap:
+          name: patch-scripts
+      containers:
+      - name: patch-dns-operator
+        image: quay.io/openshift/origin-cli:4.18
+        volumeMounts:
+        - name: patch-scripts
+          mountPath: /scripts
+        command:
+        - /bin/bash
+        - /scripts/patch-dns-operator.sh
