@@ -136,3 +136,11 @@ patches:
     - op: add
       path: /spec/defaultNetwork/ovnKubernetesConfig/gatewayConfig/ipForwarding
       value: Global
+
+# delete sysctl ip-forward patch (this is handled via the network.operator config)
+- patch: |
+    apiVersion: machineconfiguration.openshift.io/v1
+    kind: MachineConfig
+    metadata:
+      name: configure-sysctl-ip-forward
+    $patch: delete
