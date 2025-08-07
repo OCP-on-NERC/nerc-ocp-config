@@ -127,3 +127,12 @@ patches:
       path: /spec/routeAdmission
       value:
         wildcardPolicy: WildcardsAllowed
+
+- target:
+    kind: Network
+    group: operator.openshift.io
+    name: cluster
+  patch: |
+    - op: add
+      path: /spec/defaultNetwork/ovnKubernetesConfig/gatewayConfig/ipForwarding
+      value: Global
