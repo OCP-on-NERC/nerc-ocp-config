@@ -6,6 +6,6 @@ helmCharts:
   - name: vault-operator
     namespace: vault-operator
     repo: oci://ghcr.io/bank-vaults/helm-charts
-    version: 1.22.2
+    version: 1.22.6
     includeCRDs: true
     releaseName: vault-operator

@@ -3,5 +3,3 @@ kind: ManagedClusterSet
 metadata:
   name: argocd-managed
 spec:
-  clusterSelector:
-    selectorType: LegacyClusterSetLabel
