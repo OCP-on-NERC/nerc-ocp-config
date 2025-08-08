@@ -97,7 +97,7 @@ patches:
       identityProviders:
       - name: github
         github:
-          clientID: <UPDATE>
+          clientID: Ov23liod1RxViSyoQ5FW
 - target:
     kind: ExternalSecret
     name: oauths-clientsecret-nerc
