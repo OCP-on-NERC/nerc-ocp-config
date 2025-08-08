@@ -22,6 +22,7 @@ resources:
 - ../../bundles/virt
 - ../../bundles/acm-cim
 - ../../bundles/openshift-gitops
+- ../../bundles/ansible-automation-platform-operator
 
 components:
   - ../../components/nerc-oauth-github
@@ -143,3 +144,12 @@ patches:
     metadata:
       name: configure-sysctl-ip-forward
     $patch: delete
+
+- target:
+    kind: Subscription
+    name: ansible-automation-platform-operator
+    namespace: aap
+  patch: |
+    - op: replace
+      path: /spec/channel
+      value: stable-2.5
