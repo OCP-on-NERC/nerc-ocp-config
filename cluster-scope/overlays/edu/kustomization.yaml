@@ -157,6 +157,13 @@ patches:
       path: /spec/channel
       value: v25.3
 - target:
+    kind: Subscription
+    name: ansible-automation-platform-operator
+  patch: |
+    - op: replace
+      path: /spec/channel
+      value: stable-2.5-cluster-scoped
+- target:
     kind: Issuer
     name: letsencrypt-.*-dns01
   patch: |
