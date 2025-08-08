@@ -131,12 +131,5 @@ patches:
     name: cluster
   patch: |
     - op: add
-      path: /spec/plugins/-
-      value: kubevirt-plugin
-- target:
-    kind: Console
-    name: cluster
-  patch: |
-    - op: add
       path: /spec/managementState
       value: Managed

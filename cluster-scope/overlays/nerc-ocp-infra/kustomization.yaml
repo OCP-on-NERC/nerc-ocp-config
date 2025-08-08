@@ -93,17 +93,3 @@ patches:
     - op: replace
       path: /spec/servingCerts/namedCertificates/0/names/0
       value: api.nerc-ocp-infra.rc.fas.harvard.edu
-- target:
-    kind: Console
-    name: cluster
-  patch: |
-    - op: add
-      path: /spec/plugins/-
-      value: acm
-- target:
-    kind: Console
-    name: cluster
-  patch: |
-    - op: add
-      path: /spec/plugins/-
-      value: mce
