@@ -13,7 +13,6 @@ resources:
 - nodenetworkconfigurationpolicies
 - feature/odf
 - externalsecrets
-- dns
 - metallb-config
 - lvmcluster
 
