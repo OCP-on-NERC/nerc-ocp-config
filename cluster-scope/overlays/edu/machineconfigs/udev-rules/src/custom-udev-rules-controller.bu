@@ -1,0 +1,12 @@
+variant: openshift
+version: 4.10.0
+metadata:
+  name: custom-udev-rules-controller
+  labels:
+    machineconfiguration.openshift.io/role: master
+storage:
+  files:
+    - path: /etc/udev/rules.d/90-bnx2x.rules
+      contents:
+        local: bnx2x.rules
+      mode: 0644

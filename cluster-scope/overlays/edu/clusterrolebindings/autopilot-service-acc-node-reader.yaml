@@ -1,0 +1,12 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: autopilot-service-acc-node-reader
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: nerc-node-reader
+subjects:
+  - kind: ServiceAccount
+    name: autopilot-service-acc
+    namespace: autopilot-dashboard-f3dc9e
