@@ -1,0 +1,51 @@
+apiVersion: observability.open-cluster-management.io/v1beta2
+kind: MultiClusterObservability
+metadata:
+  name: observability
+spec:
+  # See: https://access.redhat.com/documentation/en-us/red_hat_advanced_cluster_management_for_kubernetes/2.5/html/apis/apis#rhacm-docs_apis_multiclusterobservability_jsonmulticlusterobservability
+  enableDownsampling: true
+  observabilityAddonSpec:
+    enableMetrics: true
+    interval: 300
+  storageConfig:
+    alertmanagerStorageSize: 1Gi
+    compactStorageSize: 100Gi
+    receiveStorageSize: 100Gi
+    ruleStorageSize: 1Gi
+    storageClass: gp2
+    storeStorageSize: 10Gi
+    metricObjectStorage:
+      key: config.yaml
+      name: acm-metrics
+  advanced:
+    rbacQueryProxy:
+      replicas: 2
+    grafana:
+      replicas: 2
+    alertmanager:
+      replicas: 3
+    observatoriumAPI:
+      replicas: 2
+    queryFrontend:
+      replicas: 2
+    query:
+      replicas: 2
+    receive:
+      replicas: 3
+    rule:
+      replicas: 3
+    store:
+      replicas: 3
+    storeMemcached:
+      connectionLimit: 4096
+      replicas: 3
+    queryFrontendMemcached:
+      replicas: 3
+    retentionConfig:
+      blockDuration: 2h               # default is 2h
+      deleteDelay: 48h                # default is 48h
+      retentionInLocal: 24h           # default is 24h
+      retentionResolutionRaw: 90d     # default is 30d
+      retentionResolution5m: 360d     # default is 180d
+      retentionResolution1h: 0d       # default is 0d - 0d will retain samples of this resolution forever https://thanos.io/tip/components/compact.md/

@@ -1,13 +1,9 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+labels:
+  - pairs:
+      nerc.mghpcc.org/kustomized: "true"
+      nerc.mghpcc.org/bundle: acm-observability
+    includeSelectors: true
 resources:
   - ../../base/core/namespaces/open-cluster-management-observability
-  - ../../base/objectbucket.io/objectbucketclaims/observability
-  - ../../base/objectbucket.io/objectbucketclaims/acm-metrics-2ti
-  - ../../base/external-secrets.io/externalsecrets/open-cluster-management-observability-acm-metrics-2ti-object-storage
-  - ../../base/external-secrets.io/externalsecrets/open-cluster-management-observability-thanos-object-storage
-  - ../../base/external-secrets.io/externalsecrets/open-cluster-management-observability-multiclusterhub-operator-pull-secret
-  - ../../base/external-secrets.io/externalsecrets/open-cluster-management-observability-alertmanager-config
-  - ../../base/core/configmaps/thanos-ruler-custom-rules/
-  - ../../base/core/configmaps/observability-metrics-custom-allowlist/
-  - ../../base/observability.open-cluster-management.io/multiclusterobservabilities/observability
