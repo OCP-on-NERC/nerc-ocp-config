@@ -1,0 +1,22 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- ../../base
+
+patches:
+- target:
+    kind: InfraEnv
+    name: hardware-inventory
+  patch: |
+    - op: replace
+      path: /spec/sshAuthorizedKey
+      value: |-
+        ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJw3PLQmEv+2d9+yxSXIc+LgF+OerNWtjj/YSutTgjVR
+
+- target:
+    kind: ExternalSecret
+    name: pull-secret
+  patch: |
+    - op: replace
+      path: /spec/data/0/remoteRef/key
+      value: nerc/hypershift2/hardware-inventory/pull-secret
