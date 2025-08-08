@@ -2,6 +2,10 @@ allowVolumeExpansion: true
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
+  annotations:
+    description: Provides RWO Filesystem volumes, and RWO and RWX Block volumes
+    storageclass.kubernetes.io/is-default-class: "true"
+    reclaimspace.csiaddons.openshift.io/schedule: '@weekly'
   name: ocs-external-storagecluster-ceph-rbd
 parameters:
   clusterID: openshift-storage
@@ -12,6 +16,9 @@ parameters:
   csi.storage.k8s.io/node-stage-secret-namespace: openshift-storage
   csi.storage.k8s.io/provisioner-secret-name: rook-csi-rbd-provisioner
   csi.storage.k8s.io/provisioner-secret-namespace: openshift-storage
-  imageFeatures: layering
+  imageFeatures: layering,deep-flatten,exclusive-lock,object-map,fast-diff
   imageFormat: "2"
-  pool: <Remove>
+  pool: nerc_ocp_edu_1_rbd
+provisioner: openshift-storage.rbd.csi.ceph.com
+reclaimPolicy: Delete
+volumeBindingMode: Immediate
