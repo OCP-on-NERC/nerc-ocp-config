@@ -13,7 +13,6 @@ resources:
 - nodenetworkconfigurationpolicies
 - feature/odf
 - externalsecrets
-- dns
 - metallb-config
 - lvmcluster
 
@@ -23,6 +22,7 @@ resources:
 - ../../bundles/virt
 - ../../bundles/acm-cim
 - ../../bundles/openshift-gitops
+- ../../bundles/ansible-automation-platform-operator
 
 components:
   - ../../components/nerc-oauth-github
@@ -53,7 +53,7 @@ patches:
       identityProviders:
       - name: github
         github:
-          clientID: <>
+          clientID: Ov23liFL7hFi2qkzUlIQ
 - target:
     kind: ExternalSecret
     name: github-client-secret
@@ -100,7 +100,7 @@ patches:
   patch: |
     - op: replace
       path: /spec/channel
-      value: stable-4.17
+      value: stable-4.18
 - target:
     kind: Subscription
     name: acm
@@ -108,14 +108,14 @@ patches:
   patch: |
     - op: replace
       path: /spec/channel
-      value: release-2.12
+      value: release-2.13
 - target:
     kind: Subscription
     name: openshift-gitops-operator
   patch: |
     - op: replace
       path: /spec/channel
-      value: gitops-1.15
+      value: gitops-1.17
 
 # per: https://docs.openshift.com/container-platform/4.17/hosted_control_planes/hcp-deploy/hcp-deploy-virt.html
 - target:
@@ -136,3 +136,20 @@ patches:
     - op: add
       path: /spec/defaultNetwork/ovnKubernetesConfig/gatewayConfig/ipForwarding
       value: Global
+
+# delete sysctl ip-forward patch (this is handled via the network.operator config)
+- patch: |
+    apiVersion: machineconfiguration.openshift.io/v1
+    kind: MachineConfig
+    metadata:
+      name: configure-sysctl-ip-forward
+    $patch: delete
+
+- target:
+    kind: Subscription
+    name: ansible-automation-platform-operator
+    namespace: aap
+  patch: |
+    - op: replace
+      path: /spec/channel
+      value: stable-2.5

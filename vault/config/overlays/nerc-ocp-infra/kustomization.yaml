@@ -22,6 +22,7 @@ configMapGenerator:
   - config/backup-job.yaml
   - config/groups.yaml
   - config/hypershift1.yaml
+  - config/hypershift2.yaml
   - config/nerc-ocp-infra.yaml
   - config/nerc-ocp-obs.yaml
   - config/nerc-ocp-prod.yaml

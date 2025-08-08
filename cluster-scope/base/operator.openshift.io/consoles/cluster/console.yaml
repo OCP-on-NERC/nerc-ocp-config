@@ -3,9 +3,6 @@ kind: Console
 metadata:
   name: cluster
 spec:
-  plugins:
-    - odf-console
-    - logging-view-plugin
   customization:
     customLogoFile:
       name: nerc-logo

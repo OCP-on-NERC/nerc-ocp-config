@@ -7,4 +7,4 @@ spec:
   - default
   nodeSelectors:
   - matchLabels:
-      node-role.kubernetse.io/worker: ""
+      node-role.kubernetes.io/worker: ""

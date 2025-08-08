@@ -1,0 +1,22 @@
+auth:
+- type: kubernetes
+  path: kubernetes/hypershift2
+  config:
+    kubernetes_ca_cert: "${ file `certs/letsencrypt.crt` }"
+    kubernetes_host: https://api.hypershift2.nerc.mghpcc.org:6443
+    token_reviewer_jwt: "${ file `creds/hypershift2-token-reviewer` }"
+  roles:
+  - bound_service_account_names:
+    - vault-secret-reader
+    bound_service_account_namespaces:
+    - external-secrets-operator
+    name: secret-reader
+    policies:
+    - nerc-common-reader
+    - hypershift2-reader
+policies:
+- name: hypershift2-reader
+  rules: |
+    path "nerc/data/hypershift2/*" {
+      capabilities = ["read"]
+    }

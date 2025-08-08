@@ -1,0 +1,18 @@
+apiVersion: agent-install.openshift.io/v1beta1
+kind: InfraEnv
+metadata:
+  labels:
+    agentclusterinstalls.extensions.hive.openshift.io/location: MGHPCC
+    networkType: dhcp
+  name: hardware-inventory
+spec:
+  agentLabels:
+    agentclusterinstalls.extensions.hive.openshift.io/location: MGHPCC
+  cpuArchitecture: x86_64
+  ipxeScriptType: DiscoveryImageAlways
+  nmStateConfigLabelSelector:
+    matchLabels:
+      infraenvs.agent-install.openshift.io: hardware-inventory
+  pullSecretRef:
+    name: pull-secret
+  sshAuthorizedKey: REPLACE_IN_OVERLAY
