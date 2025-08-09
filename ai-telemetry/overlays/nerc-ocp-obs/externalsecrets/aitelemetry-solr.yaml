@@ -1,0 +1,8 @@
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: aitelemetry-solr
+spec:
+  dataFrom:
+    - extract:
+        key: nerc/nerc-ocp-obs/ai-telemetry/aitelemetry-solr
