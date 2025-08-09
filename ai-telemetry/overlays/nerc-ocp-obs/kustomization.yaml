@@ -5,3 +5,10 @@ resources:
 
 patches:
   - path: externalsecrets/solr-externalsecret.yaml
+  - path: externalsecrets/aitelemetry-auth.yaml
+  - path: externalsecrets/aitelemetry-database.yaml
+  - path: externalsecrets/aitelemetry-site.yaml
+  - path: externalsecrets/aitelemetry-solr.yaml
+  - path: externalsecrets/aitelemetry-zookeeper.yaml
+  - path: externalsecrets/aitelemetry-worker.yaml
+  - path: routes/aitelemetry-site.yaml
