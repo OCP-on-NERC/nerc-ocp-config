@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: aitelemetry-site
+spec:
+  ports:
+    - name: http
+      port: 10210
+      protocol: TCP
+      targetPort: 10210
+    - name: cluster
+      port: 10211
+      protocol: TCP
+      targetPort: 10211
+  selector:
+    deployment: aitelemetry-site
+    app: aitelemetry
+  sessionAffinity: None
+  type: ClusterIP
