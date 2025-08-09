@@ -1,0 +1,9 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+labels:
+  - pairs:
+      deployment: aitelemetry-worker
+      app.kubernetes.io/instance: aitelemetry-worker
+    includeSelectors: true
+resources:
+  - externalsecret-worker.yaml
