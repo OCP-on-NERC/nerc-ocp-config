@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aitelemetry-worker
+spec:
+  replicas: 1
+  revisionHistoryLimit: 0
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    spec:
+      containers:
+        - name: aitelemetry
+          image: 'quay.io/computate/ai-telemetry:computate'
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 10210
+              name: http
+              protocol: TCP
+            - containerPort: 10211
+              name: cluster
+              protocol: TCP
+          livenessProbe:
+            initialDelaySeconds: 20
+            periodSeconds: 10
+            successThreshold: 1
+            tcpSocket:
+              port: 'http'
+            timeoutSeconds: 10
+            failureThreshold: 10
+          readinessProbe:
+            initialDelaySeconds: 20
+            periodSeconds: 10
+            successThreshold: 1
+            tcpSocket:
+              port: 'http'
+            timeoutSeconds: 10
+            failureThreshold: 10
+          resources:
+            requests:
+              cpu: '500m'
+              memory: '500Mi'
+            limits:
+              cpu: '1'
+              memory: '2Gi'
+          env:
+            - name: CLUSTER_HOST_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+          envFrom:
+            - secretRef:
+                name: aitelemetry-solr
+            - secretRef:
+                name: aitelemetry-database
+            - secretRef:
+                name: aitelemetry-auth
+            - secretRef:
+                name: aitelemetry-worker
