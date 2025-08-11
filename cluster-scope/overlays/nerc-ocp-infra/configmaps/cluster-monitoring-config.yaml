@@ -7,7 +7,7 @@ prometheusK8s:
     pathPrefix: /
     scheme: https
     staticConfigs:
-    - alertmanager-open-cluster-management-observability.apps.nerc-ocp-infra.rc.fas.harvard.edu
+    - alertmanager-open-cluster-management-observability.apps.infra.nerc.mghpcc.org
     tlsConfig:
       ca:
         key: service-ca.crt

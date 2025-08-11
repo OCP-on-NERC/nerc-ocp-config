@@ -94,4 +94,4 @@ patches:
   patch: |
     - op: replace
       path: /spec/servingCerts/namedCertificates/0/names/0
-      value: api.nerc-ocp-infra.rc.fas.harvard.edu
+      value: api.infra.nerc.mghpcc.org
