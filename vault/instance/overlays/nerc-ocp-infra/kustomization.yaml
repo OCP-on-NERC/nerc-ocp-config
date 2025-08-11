@@ -27,3 +27,13 @@ patches:
       # ca.crt in the following namespaces.
       caNamespaces:
         - "external-secrets-operator"
+      vaultInitContainers:
+        - name: fix-permissions
+          volumeMounts:
+          - name: vault-config
+            mountPath: /vault/config
+          image: ghcr.io/bank-vaults/bank-vaults:v1.31.4
+          command:
+          - chmod
+          - g+rw
+          - /vault/config/vault.json
