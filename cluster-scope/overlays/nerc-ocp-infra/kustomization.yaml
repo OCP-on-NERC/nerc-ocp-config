@@ -21,6 +21,7 @@ resources:
 - ../../base/operators.coreos.com/subscriptions/loki-operator
 - issuers
 - certificates
+- feature/custom-routes
 - feature/odf
 - clusterversion.yaml
 - machineconfigs/disable-net-ifnames.yaml
