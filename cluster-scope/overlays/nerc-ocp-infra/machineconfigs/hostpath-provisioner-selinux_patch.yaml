@@ -1,6 +1,0 @@
-apiVersion: machineconfiguration.openshift.io/v1
-kind: MachineConfig
-metadata:
-  name: hostpath-provisioner-selinux
-  labels:
-    machineconfiguration.openshift.io/role: master

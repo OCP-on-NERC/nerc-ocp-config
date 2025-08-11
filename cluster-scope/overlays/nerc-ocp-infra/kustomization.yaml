@@ -56,7 +56,6 @@ patches:
 - path: consoles.operator.openshift.io/cluster_patch.yaml
 - path: storageclasses/ocs-external-storagecluster-ceph-rbd_patch.yaml
 - path: clustersecretstores/nerc-cluster-secrets_patch.yaml
-- path: machineconfigs/hostpath-provisioner-selinux_patch.yaml
 - path: externalsecrets/open-cluster-management-observability-multiclusterhub-operator-pull-secret_patch.yaml
 - path: externalsecrets/open-cluster-management-observability-acm-metrics-2ti-object-storage_patch.yaml
 - path: externalsecrets/open-cluster-management-observability-thanos-object-storage_patch.yaml
