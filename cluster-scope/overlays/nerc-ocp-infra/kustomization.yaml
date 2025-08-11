@@ -115,3 +115,10 @@ patches:
     - op: replace
       path: /spec/channel
       value: stable-5.8
+- target:
+    kind: Issuer
+  patch: |
+    - op: replace
+      path: /spec/acme/solvers/0/selector/dnsZones
+      value:
+        - infra.nerc.mghpcc.org
