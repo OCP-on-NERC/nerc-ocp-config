@@ -4,11 +4,11 @@ auth:
     default_role: ocp-user
     oidc_client_id: vault
     oidc_client_secret: "${ file `creds/dex-client-secret` }"
-    oidc_discovery_url: https://dex-dex.apps.nerc-ocp-infra.rc.fas.harvard.edu
+    oidc_discovery_url: https://dex-dex.apps.infra.nerc.mghpcc.org
   roles:
   - allowed_redirect_uris:
-    - https://vault.apps.nerc-ocp-infra.rc.fas.harvard.edu/ui/vault/auth/oidc/oidc/callback
-    - https://vault-ui-vault.apps.nerc-ocp-infra.rc.fas.harvard.edu/ui/vault/auth/oidc/oidc/callback
+    - https://vault.apps.infra.nerc.mghpcc.org/ui/vault/auth/oidc/oidc/callback
+    - https://vault-ui-vault.apps.infra.nerc.mghpcc.org/ui/vault/auth/oidc/oidc/callback
     groups_claim: groups
     name: ocp-user
     oidc_scopes:
