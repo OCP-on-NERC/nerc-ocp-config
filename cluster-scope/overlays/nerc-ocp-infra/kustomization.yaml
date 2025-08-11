@@ -19,6 +19,8 @@ resources:
 - ../../base/core/namespaces/nerc-ocp-obs
 - ../../base/operators.coreos.com/subscriptions/openshift-pipelines-operator
 - ../../base/operators.coreos.com/subscriptions/loki-operator
+- issuers
+- certificates
 - feature/odf
 - clusterversion.yaml
 - machineconfigs/disable-net-ifnames.yaml
