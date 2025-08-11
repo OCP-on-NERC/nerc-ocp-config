@@ -153,3 +153,14 @@ patches:
     - op: replace
       path: /spec/channel
       value: stable-2.5
+
+# enable http/2 in ingresscontroller
+# (https://www.redhat.com/en/blog/grpc-or-http/2-ingress-connectivity-in-openshift)
+- patch: |
+    apiVersion: operator.openshift.io/v1
+    kind: IngressController
+    metadata:
+      namespace: openshift-ingress-operator
+      name: default
+      annotations:
+        ingress.operator.openshift.io/default-enable-http2: 'true'
