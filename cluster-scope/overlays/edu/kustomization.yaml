@@ -43,7 +43,7 @@ resources:
 - certificates
 - consolelinks
 - rhoai
-- object-storage
+# - object-storage
 - clusterrolebindings
 
 components:
@@ -134,7 +134,7 @@ patches:
 - target:
     kind: Subscription
     name: cluster-logging
-  patch: | # Updated the version from 6.2 -> 6.3
+  patch: |
     - op: replace
       path: /spec/channel
       value: stable-6.3
