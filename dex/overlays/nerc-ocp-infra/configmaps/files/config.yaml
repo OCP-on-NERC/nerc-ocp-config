@@ -1,4 +1,4 @@
-issuer: https://dex-dex.apps.nerc-ocp-infra.rc.fas.harvard.edu
+issuer: https://dex-dex.apps.infra.nerc.mghpcc.org
 
 storage:
   type: memory
@@ -19,16 +19,16 @@ staticClients:
   - id: vault
     name: Vault
     redirectURIs:
-      - https://vault.apps.nerc-ocp-infra.rc.fas.harvard.edu/oidc/callback
-      - https://vault.apps.nerc-ocp-infra.rc.fas.harvard.edu/ui/vault/auth/oidc/oidc/callback
-      - https://vault-ui-vault.apps.nerc-ocp-infra.rc.fas.harvard.edu/oidc/callback
-      - https://vault-ui-vault.apps.nerc-ocp-infra.rc.fas.harvard.edu/ui/vault/auth/oidc/oidc/callback
+      - https://vault.apps.infra.nerc.mghpcc.org/oidc/callback
+      - https://vault.apps.infra.nerc.mghpcc.org/ui/vault/auth/oidc/oidc/callback
+      - https://vault-ui-vault.apps.infra.nerc.mghpcc.org/oidc/callback
+      - https://vault-ui-vault.apps.infra.nerc.mghpcc.org/ui/vault/auth/oidc/oidc/callback
     secretEnv: VAULT_SECRET
   - id: grafana
     name: Grafana
     redirectURIs:
-      - https://logging-grafana.apps.nerc-ocp-infra.rc.fas.harvard.edu/login/generic_oauth
-      - https://grafana.apps.nerc-ocp-infra.rc.fas.harvard.edu/login/generic_oauth
+      - https://logging-grafana.apps.infra.nerc.mghpcc.org/login/generic_oauth
+      - https://grafana.apps.infra.nerc.mghpcc.org/login/generic_oauth
     secretEnv: GRAFANA_SECRET
 
 connectors:
@@ -39,6 +39,6 @@ connectors:
       issuer: https://kubernetes.default.svc
       clientID: system:serviceaccount:dex:dex
       clientSecret: $OPENSHIFT_CLIENT_SECRET
-      redirectURI: https://dex-dex.apps.nerc-ocp-infra.rc.fas.harvard.edu/callback
+      redirectURI: https://dex-dex.apps.infra.nerc.mghpcc.org/callback
       groups:
         - system:authenticated

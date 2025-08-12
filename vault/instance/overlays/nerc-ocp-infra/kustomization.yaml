@@ -1,5 +1,6 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+namespace: vault
 commonLabels:
   app.kubernetes.io/name: vault
 
@@ -14,7 +15,7 @@ patches:
     metadata:
       name: vault
     spec:
-      host: vault.apps.nerc-ocp-infra.rc.fas.harvard.edu
+      host: vault.apps.infra.nerc.mghpcc.org
 
 - patch: |
     apiVersion: vault.banzaicloud.com/v1alpha1
@@ -26,3 +27,13 @@ patches:
       # ca.crt in the following namespaces.
       caNamespaces:
         - "external-secrets-operator"
+      vaultInitContainers:
+        - name: fix-permissions
+          volumeMounts:
+          - name: vault-config
+            mountPath: /vault/config
+          image: ghcr.io/bank-vaults/bank-vaults:v1.31.4
+          command:
+          - chmod
+          - g+rw
+          - /vault/config/vault.json

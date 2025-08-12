@@ -498,6 +498,8 @@ spec:
                 type: array
               config:
                 x-kubernetes-preserve-unknown-fields: true
+              configPath:
+                type: string
               credentialsConfig:
                 properties:
                   env:
@@ -11508,7 +11510,7 @@ metadata:
     app.kubernetes.io/instance: vault-operator
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: vault-operator
-    helm.sh/chart: vault-operator-1.22.2
+    helm.sh/chart: vault-operator-1.22.6
   name: vault-operator
   namespace: vault-operator
 ---
@@ -11516,7 +11518,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   labels:
-    helm.sh/chart: vault-operator-1.22.2
+    helm.sh/chart: vault-operator-1.22.6
   name: vault-operator
 rules:
 - apiGroups:
@@ -11597,7 +11599,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   labels:
-    helm.sh/chart: vault-operator-1.22.2
+    helm.sh/chart: vault-operator-1.22.6
   name: vault-operator
 roleRef:
   apiGroup: rbac.authorization.k8s.io
@@ -11615,7 +11617,7 @@ metadata:
     app.kubernetes.io/instance: vault-operator
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: vault-operator
-    helm.sh/chart: vault-operator-1.22.2
+    helm.sh/chart: vault-operator-1.22.6
   name: vault-operator
   namespace: vault-operator
 spec:
@@ -11638,7 +11640,7 @@ metadata:
     app.kubernetes.io/instance: vault-operator
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: vault-operator
-    helm.sh/chart: vault-operator-1.22.2
+    helm.sh/chart: vault-operator-1.22.6
   name: vault-operator
   namespace: vault-operator
 spec:
@@ -11651,7 +11653,6 @@ spec:
   template:
     metadata:
       labels:
-        app.kubernetes.io/instance: vault-operator
         app.kubernetes.io/name: vault-operator
     spec:
       affinity: {}
@@ -11672,8 +11673,8 @@ spec:
         - name: OPERATOR_LOG_LEVEL
           value: debug
         - name: BANK_VAULTS_IMAGE
-          value: ghcr.io/bank-vaults/bank-vaults:v1.31.1
-        image: ghcr.io/bank-vaults/vault-operator:v1.22.2
+          value: ghcr.io/bank-vaults/bank-vaults:v1.31.4
+        image: ghcr.io/bank-vaults/vault-operator:v1.22.6
         imagePullPolicy: IfNotPresent
         livenessProbe:
           httpGet:
