@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: acct-mgt-serviceaccount-token
+  annotations:
+    kubernetes.io/service-account.name: acct-mgt-serviceaccount
+type: kubernetes.io/service-account-token
