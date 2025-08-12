@@ -23,6 +23,7 @@ resources:
 - ../../bundles/acm-cim
 - ../../bundles/openshift-gitops
 - ../../bundles/ansible-automation-platform-operator
+- ../../bundles/acm-observability
 
 components:
   - ../../components/nerc-oauth-github
