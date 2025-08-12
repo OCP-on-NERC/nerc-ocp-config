@@ -1,0 +1,22 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: custom-dns-patching
+rules:
+- apiGroups:
+  - "operator.openshift.io"
+  resources:
+  - dnses
+  verbs:
+  - watch
+  - list
+  - get
+  - update
+  - patch
+- apiGroups:
+  - ""
+  resources:
+  - services
+  verbs:
+  - list
+  - get
