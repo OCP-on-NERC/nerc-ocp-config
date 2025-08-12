@@ -23,4 +23,4 @@ spec:
         tlsClientCert: "${GF_AUTH_GENERIC_TLSCLIENTCERT}"
         tlsClientKey: "${GF_AUTH_GENERIC_TLSCLIENTKEY}"
       type: prometheus
-      url: 'https://observatorium-api-open-cluster-management-observability.apps.nerc-ocp-infra.rc.fas.harvard.edu/api/metrics/v1/default'
+      url: 'https://observatorium-api-open-cluster-management-observability.apps.infra.nerc.mghpcc.org/api/metrics/v1/default'

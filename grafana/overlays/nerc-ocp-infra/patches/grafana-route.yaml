@@ -4,4 +4,4 @@ metadata:
   name: grafana
   namespace: grafana
 spec:
-  host: grafana.apps.nerc-ocp-infra.rc.fas.harvard.edu
+  host: grafana.apps.infra.nerc.mghpcc.org

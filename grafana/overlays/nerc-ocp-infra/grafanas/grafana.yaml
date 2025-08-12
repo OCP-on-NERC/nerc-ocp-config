@@ -14,14 +14,14 @@ spec:
           name: openshift-service-ca.crt
   config:
     server:
-      root_url: https://grafana.apps.nerc-ocp-infra.rc.fas.harvard.edu
+      root_url: https://grafana.apps.infra.nerc.mghpcc.org
     auth.generic_oauth:
       enabled: true
       scopes: openid email groups profile
       email_attribute_path: name
-      api_url: https://dex-dex.apps.nerc-ocp-infra.rc.fas.harvard.edu/userinfo
-      auth_url: https://dex-dex.apps.nerc-ocp-infra.rc.fas.harvard.edu/auth
-      token_url: https://dex-dex.apps.nerc-ocp-infra.rc.fas.harvard.edu/token
+      api_url: https://dex-dex.apps.infra.nerc.mghpcc.org/userinfo
+      auth_url: https://dex-dex.apps.infra.nerc.mghpcc.org/auth
+      token_url: https://dex-dex.apps.infra.nerc.mghpcc.org/token
       role_attribute_path: >-
         contains(groups[*], 'cluster-admins') && 'Admin' ||
         contains(groups[*], 'nerc-org-admins')  && 'Admin' ||
