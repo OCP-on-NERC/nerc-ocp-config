@@ -50,7 +50,6 @@ resources:
 - rhoai
 - object-storage
 - rolebindings
-- clusterrolebindings
 - groups
 
 components:
