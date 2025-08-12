@@ -1,0 +1,23 @@
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  name: ucsls-f24
+  namespace: redhat-ods-applications
+  labels:
+    opendatahub.io/notebook-image: "true"
+  annotations:
+    opendatahub.io/notebook-image-url: "http://quay.io/opeffort/nerc:beta-base-ope-image_07.31.24_12.45.52"
+    opendatahub.io/notebook-image-name: "ucsls-F24"
+    opendatahub.io/notebook-image-desc: "ucsls-F24"
+spec:
+  lookupPolicy:
+    local: true
+  tags:
+    - name: latest
+      from:
+        kind: DockerImage
+        name: 'quay.io/opeffort/nerc:beta-base-ope-image_07.31.24_12.45.52'
+      importPolicy:
+        scheduled: true
+      referencePolicy:
+        type: Source

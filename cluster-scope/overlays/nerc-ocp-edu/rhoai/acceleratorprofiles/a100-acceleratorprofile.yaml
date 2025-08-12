@@ -1,0 +1,14 @@
+apiVersion: dashboard.opendatahub.io/v1
+kind: AcceleratorProfile
+metadata:
+  name: nvidia-a100-gpu
+  namespace: redhat-ods-applications
+spec:
+  displayName: NVIDIA A100 GPU
+  enabled: true
+  identifier: nvidia.com/gpu
+  tolerations:
+    - effect: NoSchedule
+      key: nvidia.com/gpu.product
+      operator: Equal
+      value: NVIDIA-A100-SXM4-40GB

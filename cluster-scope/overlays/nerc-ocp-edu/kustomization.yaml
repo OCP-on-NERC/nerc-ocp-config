@@ -7,7 +7,6 @@ resources:
 - ../common
 - ../../bundles/acct-mgt
 - ../../bundles/patch-operator
-- ../../bundles/xdmod-reader
 - ../../bundles/solr-helm-repo
 - ../../bundles/ansible-automation-platform-operator
 - ../../bundles/openshift-serverless-operator
@@ -23,11 +22,9 @@ resources:
 - ../../bundles/nvidia-gpu-operator
 - ../../bundles/openshift-custom-metrics-autoscaler-operator
 - ../../bundles/clusterissuer-http01
-- ../../bundles/curator
 - ../../bundles/koku-metrics-operator
 - ../../bundles/autopilot
 - ../../bundles/mongodb-operator
-- ../../bundles/elasticsearch-eck-operator
 - ../../bundles/nagios-monitoring
 - ../../base/rbac.authorization.k8s.io/clusterroles/allow-edit-rbac
 - ../../base/rbac.authorization.k8s.io/clusterroles/project-monitoring-edit
@@ -40,17 +37,14 @@ resources:
 - externalsecrets
 - secretstores
 - issuers
-- machineconfigs/disable-net-ifnames
-- machineconfigs/udev-rules
-- machineconfigs/configure-bond0
+- machineconfigs
 - nodenetworkconfigurationpolicies
 - clusterversion.yaml
 - certificates
 - consolelinks
 - rhoai
-- object-storage
-- rolebindings
-- groups
+# - object-storage
+- clusterrolebindings
 
 components:
   - ../../components/nerc-oauth-keycloak
@@ -68,11 +62,7 @@ configMapGenerator:
 - name: admin-acks
   namespace: openshift-config
   behavior: merge
-  literals:
-    - ack-4.11-kube-1.25-api-removals-in-4.12=true
-    - ack-4.12-kube-1.26-api-removals-in-4.13=true
-    - ack-4.13-kube-1.27-api-removals-in-4.14=true
-    - ack-4.15-kube-1.29-api-removals-in-4.16=true
+  # literals:
 - files:
   - config.yaml=configmaps/cluster-monitoring-config.yaml
   name: cluster-monitoring-config
@@ -80,13 +70,12 @@ configMapGenerator:
 
 patches:
 - path: kubeletconfigs/system-reserved-patch.yaml
-- path: subscriptions/rhoai-operator-patch.yaml
 - target:
     kind: SecretStore
   patch: |
     - op: replace
       path: /spec/provider/vault/auth/kubernetes/mountPath
-      value: kubernetes/nerc-ocp-prod
+      value: kubernetes/nerc-ocp-edu
 - patch: |
     apiVersion: config.openshift.io/v1
     kind: OAuth
@@ -96,7 +85,7 @@ patches:
       identityProviders:
       - name: mss-keycloak
         openID:
-          clientID: ocp-prod
+          clientID: ocp-edu
 - patch: |
     apiVersion: config.openshift.io/v1
     kind: OAuth
@@ -106,35 +95,35 @@ patches:
       identityProviders:
       - name: github
         github:
-          clientID: 771ea98004d436c6e529
+          clientID: Ov23liod1RxViSyoQ5FW
 - target:
     kind: ExternalSecret
     name: oauths-clientsecret-nerc
   patch: |
     - op: replace
       path: /spec/data/0/remoteRef/key
-      value: nerc/nerc-ocp-prod/openshift-config/oauths-clientsecret-nerc
+      value: nerc/nerc-ocp-edu/openshift-config/oauths-clientsecret-nerc
 - target:
     kind: ExternalSecret
     name: aws-route53-credentials
   patch: |
     - op: replace
       path: /spec/dataFrom/0/extract/key
-      value: nerc/nerc-ocp-prod/aws-route53-credentials
+      value: nerc/nerc-ocp-edu/aws-route53-credentials
 - target:
     kind: ExternalSecret
     name: github-client-secret
   patch: |
     - op: replace
       path: /spec/data/0/remoteRef/key
-      value: nerc/nerc-ocp-prod/openshift-config/github-client-secret
+      value: nerc/nerc-ocp-edu/openshift-config/github-client-secret
 - target:
     kind: APIServer
     name: cluster
   patch: |
     - op: replace
       path: /spec/servingCerts/namedCertificates/0/names/0
-      value: api.shift.nerc.mghpcc.org
+      value: api.edu.nerc.mghpcc.org
 - target:
     kind: PersistentVolumeClaim
     name: image-registry-storage
@@ -148,7 +137,7 @@ patches:
   patch: |
     - op: replace
       path: /spec/channel
-      value: stable-6.2
+      value: stable-6.3
 - target:
     kind: Subscription
     name: rhods-operator
@@ -158,7 +147,7 @@ patches:
       value: stable-2.19
     - op: replace
       path: /spec/startingCSV
-      value: rhods-operator.2.19.0
+      value: rhods-operator.2.19.2
 - target:
     kind: Subscription
     name: gpu-operator-certified
@@ -166,3 +155,18 @@ patches:
     - op: replace
       path: /spec/channel
       value: v25.3
+- target:
+    kind: Subscription
+    name: ansible-automation-platform-operator
+  patch: |
+    - op: replace
+      path: /spec/channel
+      value: stable-2.5-cluster-scoped
+- target:
+    kind: Issuer
+    name: letsencrypt-.*-dns01
+  patch: |
+    - op: replace
+      path: /spec/acme/solvers/0/selector/dnsZones
+      value:
+        - edu.nerc.mghpcc.org
