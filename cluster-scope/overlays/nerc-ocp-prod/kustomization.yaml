@@ -145,13 +145,6 @@ patches:
       value: 750Gi
 - target:
     kind: Subscription
-    name: odf-operator
-  patch: |
-    - op: replace
-      path: /spec/channel
-      value: stable-4.17
-- target:
-    kind: Subscription
     name: cluster-logging
   patch: |
     - op: replace
