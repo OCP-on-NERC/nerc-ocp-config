@@ -288,6 +288,19 @@ data:
             description: |
               info: kube_pod_owner: {{ $value }} pod owners
 
+      - name: machine-config
+        rules:
+        - alert: CustomBlockedMachineConfigUpdate
+          annotations:
+            summary: "{{ $labels.cluster }} Machine Config Pool {{ $labels.pool }} stuck updating for >30min"
+            description: |
+              <https://grafana-open-cluster-management-observability.apps.infra.nerc.mghpcc.org/explore?orgId=1&left=%5B%22now-3h%22,%22now%22,%22Observatorium%22,%7B%22exemplar%22:true,%22expr%22:%22(mco_machine_count%20-%20mco_updated_machine_count)%20%3E%200%20and%20mco_unavailable_machine_count%20%3E%200%22%7D%5D|Click here to see these metrics in Observability Monitoring>
+              Machine Config Pool {{ $labels.pool }} in cluster {{ $labels.cluster }} has been updating for more than 30 minutes. This could indicate a stuck update that might require manual intervention.
+          expr: ((mco_machine_count - mco_updated_machine_count) > 0 and mco_unavailable_machine_count > 0) > 0
+          for: 30m
+          labels:
+            severity: critical
+
       - name: IBM autopilot
         rules:
         - alert: LowPCIeBandwidth
