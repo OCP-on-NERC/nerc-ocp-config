@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gpu-product-taint
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gpu-product-taint
+  template:
+    metadata:
+      labels:
+        app: gpu-product-taint
+    spec:
+      serviceAccountName: gpu-product-taint-sa
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: app
+                    operator: In
+                    values:
+                      - gpu-product-taint
+              topologyKey: kubernetes.io/hostname
+      containers:
+      - name: gpu-taint
+        image: image-registry.openshift-image-registry.svc:5000/openshift/tools:latest
+        command: ["/bin/bash", "/script/taint.sh"]
+        volumeMounts:
+          - name: script-volume
+            mountPath: /script
+      restartPolicy: Always
+      volumes:
+        - name: script-volume
+          configMap:
+            name: gpu-product-taint-script
+            defaultMode: 0755
