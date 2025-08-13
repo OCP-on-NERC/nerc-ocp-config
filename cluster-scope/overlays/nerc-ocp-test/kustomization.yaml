@@ -42,6 +42,7 @@ resources:
 - ../../bundles/authorino-operator
 - ../../bundles/servicemesh-operator
 - ../../bundles/cluster-observability-operator
+- ../../bundles/gpu-taint-management
 
 components:
   - ../../components/nerc-oauth-github
