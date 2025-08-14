@@ -1,0 +1,9 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- ../../base
+
+patches:
+  - path: externalsecrets/openshift-logging-lokistack-gateway-bearer-token_patch.yaml
+  - path: clusterlogforwarders/instance_patch.yaml
