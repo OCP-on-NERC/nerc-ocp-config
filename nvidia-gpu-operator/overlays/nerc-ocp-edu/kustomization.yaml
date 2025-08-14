@@ -1,0 +1,8 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: nvidia-gpu-operator
+resources:
+  - ../../base
+  - configmaps/nvidia-kernel-module-params.yaml
+patches:
+  - path: clusterpolicy/clusterpolicy_patch.yaml
