@@ -1,0 +1,42 @@
+apiVersion: operator.knative.dev/v1beta1
+kind: KnativeServing
+metadata:
+  name: knative-serving
+  namespace: knative-serving
+spec:
+  config:
+    features:
+      kubernetes.podspec-affinity: enabled
+      kubernetes.podspec-nodeselector: enabled
+      kubernetes.podspec-persistent-volume-claim: enabled
+      kubernetes.podspec-persistent-volume-write: enabled
+      kubernetes.podspec-tolerations: enabled
+    istio:
+      local-gateway.knative-serving.knative-local-gateway: knative-local-gateway.istio-system.svc.cluster.local
+  controller-custom-certs:
+    name: ""
+    type: ""
+  high-availability:
+    replicas: 3
+  ingress:
+    contour:
+      enabled: false
+    istio:
+      enabled: true
+    kourier:
+      enabled: false
+  workloads:
+  - annotations:
+      sidecar.istio.io/inject: "true"
+      sidecar.istio.io/rewriteAppHTTPProbers: "true"
+    name: activator
+  - annotations:
+      sidecar.istio.io/inject: "true"
+      sidecar.istio.io/rewriteAppHTTPProbers: "true"
+    name: autoscaler
+  - env:
+    - container: controller
+      envVars:
+      - name: ENABLE_SECRET_INFORMER_FILTERING_BY_CERT_UID
+        value: "true"
+    name: net-istio-controller
