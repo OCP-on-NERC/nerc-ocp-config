@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  creationTimestamp: "2025-08-13T19:23:25Z"
+  name: nvidia-kernel-module-params
+  namespace: nvidia-gpu-operator
+data:
+  nvidia.conf: |
+    NVreg_RestrictProfilingToAdminUsers=0

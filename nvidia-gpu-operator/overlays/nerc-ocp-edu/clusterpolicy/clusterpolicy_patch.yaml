@@ -1,0 +1,22 @@
+apiVersion: nvidia.com/v1
+kind: ClusterPolicy
+metadata:
+  name: gpu-cluster-policy
+spec:
+  daemonsets:
+    tolerations:
+    - effect: NoSchedule
+      key: nvidia.com/gpu.product
+      operator: Equal
+      value: NVIDIA-A100-SXM4-40GB
+    - effect: NoSchedule
+      key: nvidia.com/gpu.product
+      operator: Equal
+      value: Tesla-V100-PCIE-32GB
+    - effect: NoSchedule
+      key: nvidia.com/gpu.product
+      operator: Equal
+      value: NVIDIA-H100-80GB-HBM3
+  driver:
+    kernelModuleConfig:
+      name: nvidia-kernel-module-params
