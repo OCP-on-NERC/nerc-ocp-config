@@ -1,0 +1,32 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+labels:
+  - pairs:
+      app: prom-keycloak-proxy
+      deployment: prom-keycloak-proxy-innabox-dev
+    includeSelectors: true
+
+resources:
+  - ../../../base
+
+patches:
+  - target:
+      kind: ExternalSecret
+      name: REPLACE_IN_OVERLAY-certs
+    path: patches/externalsecret-certs.yaml
+  - target:
+      kind: ExternalSecret
+      name: REPLACE_IN_OVERLAY-secrets
+    path: patches/externalsecret-secrets.yaml
+  - target:
+      kind: Deployment
+      name: REPLACE_IN_OVERLAY
+    path: patches/deployment.yaml
+  - target:
+      kind: Service
+      name: REPLACE_IN_OVERLAY
+    path: patches/service.yaml
+  - target:
+      kind: Route
+      name: REPLACE_IN_OVERLAY
+    path: patches/route.yaml

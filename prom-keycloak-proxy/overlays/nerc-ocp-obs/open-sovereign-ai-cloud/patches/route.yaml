@@ -1,0 +1,9 @@
+- op: replace
+  path: /metadata/name
+  value: prom-keycloak-proxy-open-sovereign-ai-cloud
+- op: replace
+  path: /spec/host
+  value: metrics-open-sovereign-ai-cloud.apps.obs.nerc.mghpcc.org
+- op: replace
+  path: /spec/to/name
+  value: prom-keycloak-proxy-open-sovereign-ai-cloud
