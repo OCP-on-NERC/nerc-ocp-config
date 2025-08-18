@@ -6,3 +6,4 @@ resources:
   - nvidia-dcgm-exporter-dashboard.yaml
   - model-performance-dashboard.yaml
   - vllm-dashboard.yaml
+  - blocked-machineconfig-dashboard.yaml
