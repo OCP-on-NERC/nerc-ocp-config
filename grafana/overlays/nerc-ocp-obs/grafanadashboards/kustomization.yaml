@@ -7,3 +7,4 @@ resources:
   - model-performance-dashboard.yaml
   - vllm-dashboard.yaml
   - blocked-machineconfig-dashboard.yaml
+  - enhanced-machineconfig-dashboard.yaml
