@@ -1,0 +1,74 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+labels:
+  - pairs:
+      app: prom-keycloak-proxy
+      deployment: prom-keycloak-proxy-moc
+    includeSelectors: true
+
+nameSuffix: -moc
+
+resources:
+  - ../../../base
+
+patches:
+  - patch: |
+      apiVersion: external-secrets.io/v1beta1
+      kind: ExternalSecret
+      metadata:
+        name: prom-keycloak-proxy-certs
+      spec:
+        target:
+          name: prom-keycloak-proxy-certs-moc
+        dataFrom:
+        - extract:
+            key: nerc/nerc-ocp-obs/prom-keycloak-proxy/moc/certs
+  - patch: |
+      apiVersion: external-secrets.io/v1beta1
+      kind: ExternalSecret
+      metadata:
+        name: prom-keycloak-proxy-secrets
+      spec:
+        target:
+          name: prom-keycloak-proxy-secrets-moc
+        dataFrom:
+        - extract:
+            key: nerc/nerc-ocp-obs/prom-keycloak-proxy/moc/secrets
+  - patch: |
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: prom-keycloak-proxy
+      spec:
+        template:
+          spec:
+            containers:
+            - name: prom-keycloak-proxy
+              env:
+                - name: PROXY_ACM_HUB
+                  value: moc
+              envFrom:
+                - secretRef:
+                    name: prom-keycloak-proxy-secrets-moc
+            volumes:
+              - name: prom-keycloak-proxy-certs
+                secret:
+                  secretName: prom-keycloak-proxy-certs-moc
+  - patch: |
+      apiVersion: v1
+      kind: Service
+      metadata:
+        name: prom-keycloak-proxy
+      spec:
+        selector:
+          app: prom-keycloak-proxy
+          deployment: prom-keycloak-proxy-moc
+  - patch: |
+      kind: Route
+      apiVersion: route.openshift.io/v1
+      metadata:
+        name: prom-keycloak-proxy
+      spec:
+        host: metrics-moc.apps.obs.nerc.mghpcc.org
+        to:
+          name: prom-keycloak-proxy-moc
