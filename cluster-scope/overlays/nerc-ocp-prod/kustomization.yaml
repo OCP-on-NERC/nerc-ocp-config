@@ -7,7 +7,7 @@ resources:
 - ../common
 - ../../bundles/acct-mgt
 - ../../bundles/patch-operator
-- ../../bundles/xdmod-reader
+- ../../bundles/moc-metrics-collector
 - ../../bundles/solr-helm-repo
 - ../../bundles/ansible-automation-platform-operator
 - ../../bundles/openshift-serverless-operator
