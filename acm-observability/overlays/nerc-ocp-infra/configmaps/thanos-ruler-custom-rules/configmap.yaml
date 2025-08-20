@@ -16,21 +16,11 @@ data:
             description: |
               <https://grafana-open-cluster-management-observability.apps.infra.nerc.mghpcc.org/explore?orgId=1&left=%5B%22now-3h%22,%22now%22,%22Observatorium%22,%7B%22exemplar%22:true,%22expr%22:%22kubelet_volume_stats_available_bytes%7Bpersistentvolumeclaim!~%5C%22wal-logging-loki-ingester-.*%5C%22%7D%2Fkubelet_volume_stats_capacity_bytes%20%3C%200.10%22%7D%5D|Click here to see these metrics in Observability Monitoring>
               The PersistentVolume claimed by {{ $labels.persistentvolumeclaim }} in Namespace {{ $labels.namespace }} is only {{ $value | humanizePercentage }} free.
-          expr: kubelet_volume_stats_available_bytes{persistentvolumeclaim!~"wal-logging-loki-ingester-.*"}/kubelet_volume_stats_capacity_bytes < 0.10
+          expr: kubelet_volume_stats_available_bytes{persistentvolumeclaim!~"wal-logging-loki-ingester-.*",namespace!~"virt-test",persistentvolumeclaim!~"example-instance1-tfxn-pgdata"}/kubelet_volume_stats_capacity_bytes < 0.10
           for: 1m
           labels:
             severity: critical
 
-        - alert: CustomStoragePersistentVolumeFillingUpPredicted
-          annotations:
-            summary: "{{ $labels.cluster }} PersistentVolume is filling up and is predicted to run out of space in 6h"
-            description: |
-              <https://grafana-open-cluster-management-observability.apps.infra.nerc.mghpcc.org/explore?orgId=1&left=%5B%22now-3h%22,%22now%22,%22Observatorium%22,%7B%22exemplar%22:true,%22expr%22:%22(kubelet_volume_stats_available_bytes%7Bpersistentvolumeclaim!~%5C%22wal-logging-loki-ingester-.*%5C%22%7D%2Fkubelet_volume_stats_capacity_bytes)%20%3C%200.10%20and%20(predict_linear(kubelet_volume_stats_available_bytes%5B6h%5D,%204%20*%2024%20*%203600))%20%3C%200%22%7D%5D|Click here to see these metrics in Observability Monitoring>
-              The PersistentVolume claimed by {{ $labels.persistentvolumeclaim }} in Namespace {{ $labels.namespace }} is only {{ $value | humanizePercentage }} free.
-          expr: (kubelet_volume_stats_available_bytes{persistentvolumeclaim!~"wal-logging-loki-ingester-.*"}/kubelet_volume_stats_capacity_bytes) < 0.10 and (predict_linear(kubelet_volume_stats_available_bytes[6h], 4 * 24 * 3600)) < 0
-          for: 1h
-          labels:
-            severity: warning
 
       - name: ceph-storage
         rules:
@@ -62,12 +52,16 @@ data:
 
         - alert: CustomNetworkInterfaceErrors
           annotations:
-            summary: "{{ $labels.cluster }} Node network transmit errors"
+            summary: "{{ $labels.cluster }} {{ $labels.instance }}: high TX error count on {{ $labels.device }}"
             description: |
-              <https://grafana-open-cluster-management-observability.apps.infra.nerc.mghpcc.org/explore?orgId=1&left=%5B%22now-3h%22,%22now%22,%22Observatorium%22,%7B%22exemplar%22:true,%22expr%22:%22increase(node_network_transmit_errs_total%5B1h%5D)%20%3E%200%22%7D%5D|Click here to see these metrics in Observability Monitoring>
-              {{ $value }} node network transmit errors occured.
-          expr: increase(node_network_transmit_errs_total[1h]) > 0
-          for: 1m
+              <https://grafana-open-cluster-management-observability.apps.infra.nerc.mghpcc.org/explore?orgId=1&left=%5B%22now-3h%22,%22now%22,%22Observatorium%22,%7B%22exemplar%22:true,%22expr%22:%22increase(node_network_transmit_errs_total%5B15m%5D)%20%3E%2050%22%7D%5D|Click here to see these metrics in Observability Monitoring>
+              TX errors > 50 over 15m (persisting 10m). Occasional single errors are ignored.
+              {{ $value }} errors observed.
+          expr: |
+            sum by (cluster, instance, device) (
+              increase(node_network_transmit_errs_total{device!~"lo|veth.*|cali.*|cni.*|flannel.*|tunl.*|docker.*|br.*|vxlan.*"}[15m])
+            ) > 50
+          for: 10m
           labels:
             severity: warning
 
@@ -81,7 +75,7 @@ data:
               <https://grafana-open-cluster-management-observability.apps.infra.nerc.mghpcc.org/explore?orgId=1&left=%5B%22now-3h%22,%22now%22,%22Observatorium%22,%7B%22exemplar%22:true,%22expr%22:%22ipmi_power_state%7B%7D%20%3E%200%22%7D%5D|Click here to see these metrics in Observability Monitoring>
               {{ $labels.cluster }} on instance {{$labels.instance }} has a non-zero power supply state {{ $value }}.
           expr: ipmi_power_state{} > 0
-          for: 1m
+          for: 10m
           labels:
             severity: warning
 
@@ -92,7 +86,7 @@ data:
               <https://grafana-open-cluster-management-observability.apps.infra.nerc.mghpcc.org/explore?orgId=1&left=%5B%22now-3h%22,%22now%22,%22Observatorium%22,%7B%22exemplar%22:true,%22expr%22:%22ipmi_chassis_power_state%7B%7D%20%3D%3D%200%22%7D%5D|Click here to see these metrics in Observability Monitoring>
               {{ $labels.cluster}} on instance {{$labels.instance }} chassis power is off.
           expr: ipmi_chassis_power_state{} == 0
-          for: 1m
+          for: 10m
           labels:
             severity: warning
 
@@ -103,7 +97,7 @@ data:
               <https://grafana-open-cluster-management-observability.apps.infra.nerc.mghpcc.org/explore?orgId=1&left=%5B%22now-3h%22,%22now%22,%22Observatorium%22,%7B%22exemplar%22:true,%22expr%22:%22ipmi_sensor_state%7Btype%3D%5C%22Memory%5C%22%7D%20%3E%200%22%7D%5D|Click here to see these metrics in Observability Monitoring>
               {{ $labels.cluster}} on instance {{$labels.instance }} has a non-zero memory state {{ $value }}.
           expr: ipmi_sensor_state{type="Memory"} > 0
-          for: 1m
+          for: 10m
           labels:
             severity: warning
 
@@ -114,7 +108,7 @@ data:
               <https://grafana-open-cluster-management-observability.apps.infra.nerc.mghpcc.org/explore?orgId=1&left=%5B%22now-3h%22,%22now%22,%22Observatorium%22,%7B%22exemplar%22:true,%22expr%22:%22ipmi_sensor_state%7Btype%3D%5C%22Drive%20Slot%5C%22%7D%20%3E%200%22%7D%5D|Click here to see these metrics in Observability Monitoring>
               {{ $labels.cluster}} on instance {{$labels.instance }} has a non-zero drive slot state {{ $value }}.
           expr: ipmi_sensor_state{type="Drive Slot"} > 0
-          for: 1m
+          for: 10m
           labels:
             severity: warning
 
@@ -125,7 +119,7 @@ data:
               <https://grafana-open-cluster-management-observability.apps.infra.nerc.mghpcc.org/explore?orgId=1&left=%5B%22now-3h%22,%22now%22,%22Observatorium%22,%7B%22exemplar%22:true,%22expr%22:%22ipmi_fan_speed_state%7B%7D%20%3E%200%22%7D%5D|Click here to see these metrics in Observability Monitoring>
               {{ $labels.cluster}} on instance {{$labels.instance }} has a non-zero fan speed state {{ $value }}.
           expr: ipmi_fan_speed_state{} > 0
-          for: 1m
+          for: 10m
           labels:
             severity: warning
 
@@ -139,7 +133,7 @@ data:
               <https://grafana-open-cluster-management-observability.apps.infra.nerc.mghpcc.org/explore?orgId=1&left=%5B%22now-3h%22,%22now%22,%22Observatorium%22,%7B%22exemplar%22:true,%22expr%22:%22kube_node_status_condition%7Bcondition%3D%5C%22Ready%5C%22,%20status!%3D%5C%22true%5C%22%7D%20%3E%200%22%7D%5D|Click here to see these metrics in Observability Monitoring>
               {{ $labels.cluster}} node {{$labels.node }} is not in ready status.
           expr: kube_node_status_condition{condition="Ready", status!="true"} > 0
-          for: 1m
+          for: 5m
           labels:
             severity: warning
 
