@@ -51,3 +51,4 @@ data:
       - __name__=~"(mco_.*)"
       - __name__=~"(llm_performance_.*)"
       - __name__=~"(vllm:.*)"
+      - __name__=~"(acm_managed_cluster_*.*)"
