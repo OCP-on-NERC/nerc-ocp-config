@@ -126,10 +126,3 @@ patches:
       path: /spec/acme/solvers/0/selector/dnsZones
       value:
         - ocp-test.nerc.mghpcc.org
-- target:
-    kind: Console
-    name: cluster
-  patch: |
-    - op: add
-      path: /spec/managementState
-      value: Managed
