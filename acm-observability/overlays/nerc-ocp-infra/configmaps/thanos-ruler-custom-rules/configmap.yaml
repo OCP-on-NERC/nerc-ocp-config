@@ -163,121 +163,117 @@ data:
             severity: warning
             cpu: limit
 
+      - name: ope6amStatus-recording
+        interval: 1m
+        rules:
+        # Recording rules for resource quota percentages
+        - record: ope:resourcequota_usage_ratio
+          expr: >-
+            max_over_time(
+              sum(kube_resourcequota{cluster="nerc-ocp-prod",namespace="rhods-notebooks",type="used"}) by (resource)
+            [10m:5m]) /
+            max_over_time(
+              sum(kube_resourcequota{cluster="nerc-ocp-prod",namespace="rhods-notebooks",type="hard"}) by (resource)
+            [10m:5m])
+          labels:
+            cluster: nerc-ocp-prod
+            namespace: rhods-notebooks
+
+        # Recording rule for container count
+        - record: ope:container_count
+          expr: max_over_time(count(kube_pod_container_info{cluster="nerc-ocp-prod",namespace="rhods-notebooks"})[10m:5m])
+          labels:
+            cluster: nerc-ocp-prod
+            namespace: rhods-notebooks
+
+        # Recording rule for pod owner count
+        - record: ope:pod_owner_count
+          expr: max_over_time(count(kube_pod_owner{cluster="nerc-ocp-prod",namespace="rhods-notebooks"})[10m:5m])
+          labels:
+            cluster: nerc-ocp-prod
+            namespace: rhods-notebooks
+
+        # Recording rule for 6am trigger condition
+        - record: ope:is_6am_status_time
+          expr: (hour()-4+(minute()/60)==6.0)
+
       - name: ope6amStatus
         rules:
 
         - alert: Custom6amOpeLimitsCpu
-          # A limits.cpu percentage of limit
-          expr: >-
-            (
-              max_over_time(
-                sum(
-                  kube_resourcequota{
-                    cluster="nerc-ocp-prod",namespace="rhods-notebooks",resource="limits.cpu",type="used"
-                  }
-                )[10m:5m]
-              )/max_over_time(
-                sum(
-                  kube_resourcequota{
-                    cluster="nerc-ocp-prod",namespace="rhods-notebooks",resource="limits.cpu",type="hard"
-                  }
-                )[10m:5m]
-              )
-            ) and (hour()-4+(minute()/60)==6.0)
-          # No 'for' clause when firing immediately, time is always utc -4 to calculate New York time (summer winter time switch not yet fixed)
+          expr: ope:resourcequota_usage_ratio{resource="limits.cpu"} and on() ope:is_6am_status_time
           labels:
             severity: info
             environment: production
             team: ope
-            component : cpu
+            component: cpu
           annotations:
             summary: "{{ $labels.cluster }} - current status in namespace rhods-notebooks, cluster nerc-ocp-prod"
             description: |
               info: limits.cpu: {{ $value | humanizePercentage }} used
 
         - alert: Custom6amOpeLimitsEphemeralStorage
-          # B limits.ephemeral-storage percentage of limit
-          expr: >-
-            (
-              max_over_time(
-                sum(
-                  kube_resourcequota{
-                    cluster="nerc-ocp-prod",namespace="rhods-notebooks",resource="limits.ephemeral-storage",type="used"
-                  }
-                )[10m:5m]
-              )/max_over_time(
-                sum(
-                  kube_resourcequota{
-                    cluster="nerc-ocp-prod",namespace="rhods-notebooks",resource="limits.ephemeral-storage",type="hard"
-                  }
-                )[10m:5m]
-              )
-            ) and (hour()-4+(minute()/60)==6.0)
+          expr: ope:resourcequota_usage_ratio{resource="limits.ephemeral-storage"} and on() ope:is_6am_status_time
           labels:
             severity: info
             environment: production
             team: ope
-            component : ephemeral-storage
+            component: ephemeral-storage
           annotations:
             description: |
               info: limits.ephemeral-storage: {{ $value | humanizePercentage }} used
 
         - alert: Custom6amOpeLimitsMemory
-          # C limits.memory percentage of limit
-          expr: (max_over_time(sum(kube_resourcequota{cluster="nerc-ocp-prod",namespace="rhods-notebooks",resource="limits.memory",type="used"})[10m:5m])/max_over_time(sum(kube_resourcequota{cluster="nerc-ocp-prod",namespace="rhods-notebooks",resource="limits.memory",type="hard"})[10m:5m])) and (hour()-4+(minute()/60)==6.0)
+          expr: ope:resourcequota_usage_ratio{resource="limits.memory"} and on() ope:is_6am_status_time
           labels:
             severity: info
             environment: production
             team: ope
-            component : memory
+            component: memory
           annotations:
             description: |
               info: limits.memory: {{ $value | humanizePercentage }} used
 
         - alert: Custom6amOpePersistentVolumeClaims
-          # D persistentvolumeclaims percentage of limit
-          expr: (max_over_time(sum(kube_resourcequota{cluster="nerc-ocp-prod",namespace="rhods-notebooks",resource="persistentvolumeclaims",type="used"})[10m:5m])/max_over_time(sum(kube_resourcequota{cluster="nerc-ocp-prod",namespace="rhods-notebooks",resource="persistentvolumeclaims",type="hard"})[10m:5m])) and (hour()-4+(minute()/60)==6.0)
+          expr: ope:resourcequota_usage_ratio{resource="persistentvolumeclaims"} and on() ope:is_6am_status_time
           labels:
             severity: info
             environment: production
             team: ope
-            component : persistentvolumeclaims
+            component: persistentvolumeclaims
           annotations:
             description: |
               info: persistentvolumeclaims: {{ $value | humanizePercentage }} used
 
         - alert: Custom6amOpeRequestsStorage
-          # E requests.storage percentage of limit
-          expr: (max_over_time(sum(kube_resourcequota{cluster="nerc-ocp-prod",namespace="rhods-notebooks",resource="requests.storage",type="used"})[10m:5m])/max_over_time(sum(kube_resourcequota{cluster="nerc-ocp-prod",namespace="rhods-notebooks",resource="requests.storage",type="hard"})[10m:5m])) and (hour()-4+(minute()/60)==6.0)
+          expr: ope:resourcequota_usage_ratio{resource="requests.storage"} and on() ope:is_6am_status_time
           labels:
             severity: info
             environment: production
             team: ope
-            component : storage
+            component: storage
           annotations:
             description: |
               info: requests.storage: {{ $value | humanizePercentage }} used
 
         - alert: Custom6amOpeKubePodContainerInfo
-          # F kube_pod_container_info absolute
-          expr: (max_over_time(count(kube_pod_container_info{cluster="nerc-ocp-prod",namespace="rhods-notebooks"})[10m:5m])) and ((hour()-4+(minute()/60))==6.0)
+          expr: ope:container_count and on() ope:is_6am_status_time
           labels:
             severity: info
             environment: production
             team: ope
-            component : container
+            component: container
           annotations:
             description: |
               info: kube_pod_container_info: {{ $value }} containers
 
         - alert: Custom6amOpeKubePodOwner
-          # G kube_pod_owner absolute
-          expr: (max_over_time(count(kube_pod_owner{cluster="nerc-ocp-prod",namespace="rhods-notebooks"})[10m:5m])) and ((hour()-4+(minute()/60))==6.0)
+          expr: ope:pod_owner_count and on() ope:is_6am_status_time
           labels:
             severity: info
             environment: production
             team: ope
-            component : pod
+            component: pod
           annotations:
             description: |
               info: kube_pod_owner: {{ $value }} pod owners
