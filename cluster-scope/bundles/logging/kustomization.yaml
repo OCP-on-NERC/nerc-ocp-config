@@ -6,4 +6,3 @@ resources:
 - ../../base/core/namespaces/openshift-logging
 - ../../base/operators.coreos.com/operatorgroups/openshift-logging
 - ../../base/operators.coreos.com/subscriptions/cluster-logging
-- ../../base/operators.coreos.com/subscriptions/elasticsearch-operator/
