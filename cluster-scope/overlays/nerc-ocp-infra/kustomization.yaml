@@ -107,13 +107,6 @@ patches:
       path: /spec/channel
       value: stable-6.3
 - target:
-    kind: Subscription
-    name: elasticsearch-operator
-  patch: |
-    - op: replace
-      path: /spec/channel
-      value: stable-5.8
-- target:
     kind: Issuer
   patch: |
     - op: replace
