@@ -10,5 +10,4 @@ resources:
 - ../../base/operators.coreos.com/operatorgroups/openshift-distributed-tracing
 - ../../base/operators.coreos.com/operatorgroups/openshift-tempo-operator
 - ../../base/operators.coreos.com/subscriptions/opentelemetry-product
-- ../../base/operators.coreos.com/subscriptions/jaeger-product
 - ../../base/operators.coreos.com/subscriptions/tempo-product
