@@ -3,6 +3,7 @@ kind: Kustomization
 
 resources:
   - nerc-ocp-prod
+  - nerc-ocp-edu
   - nerc-ocp-test
   - nerc-ocp-obs
   - hypershift1

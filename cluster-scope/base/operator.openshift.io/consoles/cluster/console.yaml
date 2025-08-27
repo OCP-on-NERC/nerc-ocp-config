@@ -7,3 +7,4 @@ spec:
     customLogoFile:
       name: nerc-logo
       key: nerc-logo.png
+  managementState: Managed

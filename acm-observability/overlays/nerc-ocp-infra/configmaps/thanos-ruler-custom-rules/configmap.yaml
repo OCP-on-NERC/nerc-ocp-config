@@ -1,0 +1,442 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: thanos-ruler-custom-rules
+  namespace: open-cluster-management-observability
+data:
+  custom_rules.yaml: |
+    groups:
+
+      - name: openshift-storage
+        rules:
+
+        - alert: CustomStoragePersistentVolumeFillingUp
+          annotations:
+            summary: "{{ $labels.cluster }} PersistentVolume is filling up"
+            description: |
+              <https://grafana-open-cluster-management-observability.apps.infra.nerc.mghpcc.org/explore?orgId=1&left=%5B%22now-3h%22,%22now%22,%22Observatorium%22,%7B%22exemplar%22:true,%22expr%22:%22kubelet_volume_stats_available_bytes%7Bpersistentvolumeclaim!~%5C%22wal-logging-loki-ingester-.*%5C%22%7D%2Fkubelet_volume_stats_capacity_bytes%20%3C%200.10%22%7D%5D|Click here to see these metrics in Observability Monitoring>
+              The PersistentVolume claimed by {{ $labels.persistentvolumeclaim }} in Namespace {{ $labels.namespace }} is only {{ $value | humanizePercentage }} free.
+          expr: kubelet_volume_stats_available_bytes{persistentvolumeclaim!~"wal-logging-loki-ingester-.*",namespace!~"virt-test",persistentvolumeclaim!~"example-instance1-tfxn-pgdata"}/kubelet_volume_stats_capacity_bytes < 0.10
+          for: 1m
+          labels:
+            severity: critical
+
+
+      - name: ceph-storage
+        rules:
+
+        - alert: CustomCephStorageFillingUp
+          annotations:
+            summary: "{{ $labels.cluster }} Ceph Storage is filling up"
+            description: |
+              <https://grafana-open-cluster-management-observability.apps.infra.nerc.mghpcc.org/explore?orgId=1&left=%5B%22now-3h%22,%22now%22,%22Observatorium%22,%7B%22exemplar%22:true,%22expr%22:%22(ceph_pool_raw_used_bytes%7Bpool%3D~%5C%22(nerc_ocp_prod_.*)%7C(nerc_ocp_infra_.*)%5C%22%7D)%20%2F%20on%20(cluster,%20namespace,%20pool)%20(ceph_pool_quota_max_bytes%7Bpool%3D~%5C%22(nerc_ocp_prod_.*)%7C(nerc_ocp_infra_.*)%5C%22%7D)%20%3E%200.80%22%7D%5D|Click here to see these metrics in Observability Monitoring>
+              The {{ $labels.cluster }} {{ $labels.pool }} pool Ceph Storage is {{ $value | humanizePercentage }} full.
+          expr: (ceph_pool_raw_used_bytes{pool=~"(nerc_ocp_prod_.*)|(nerc_ocp_infra_.*)"}) / on (cluster, namespace, pool) (ceph_pool_quota_max_bytes{pool=~"(nerc_ocp_prod_.*)|(nerc_ocp_infra_.*)"}) > 0.80
+          for: 1m
+          labels:
+            severity: warning
+
+        - alert: CustomCephStorageFillingUpPredicted
+          annotations:
+            summary: "{{ $labels.cluster }} Ceph Storage is filling up and is predicted to run out of space in 90 days"
+            description: |
+              <https://grafana-open-cluster-management-observability.apps.infra.nerc.mghpcc.org/explore?orgId=1&left=%5B%22now-1h%22,%22now%22,%22Observatorium%22,%7B%22exemplar%22:true,%22expr%22:%22ceph_pool_quota_max_bytes%7Bpool%3D~%5C%22(nerc_ocp_prod_.*)%7C(nerc_ocp_infra_.*)%5C%22%7D%20-%20on%20(cluster,%20namespace,%20pool,%20pod)%20predict_linear(ceph_pool_used_bytes%7Bpool%3D~%5C%22(nerc_ocp_prod_.*)%7C(nerc_ocp_infra_.*)%5C%22%7D%5B90d%5D,%2090%20*%2024%20*%2060%20*%2060)%20%3C%3D%200%22%7D%5D|Click here to see these metrics in Observability Monitoring>
+              The {{ $labels.cluster }} {{ $labels.pool }} pool Ceph Storage is predicted to run out of space in 90 days
+          expr: ceph_pool_quota_max_bytes{pool=~"(nerc_ocp_prod_.*)|(nerc_ocp_infra_.*)"} - on (cluster, namespace, pool, pod) predict_linear(ceph_pool_used_bytes{pool=~"(nerc_ocp_prod_.*)|(nerc_ocp_infra_.*)"}[90d], 90 * 24 * 60 * 60) <= 0
+          for: 1h
+          labels:
+            severity: warning
+
+      - name: network
+        rules:
+
+        - alert: CustomNetworkInterfaceErrors
+          annotations:
+            summary: "{{ $labels.cluster }} {{ $labels.instance }}: high TX error count on {{ $labels.device }}"
+            description: |
+              <https://grafana-open-cluster-management-observability.apps.infra.nerc.mghpcc.org/explore?orgId=1&left=%5B%22now-3h%22,%22now%22,%22Observatorium%22,%7B%22exemplar%22:true,%22expr%22:%22increase(node_network_transmit_errs_total%5B15m%5D)%20%3E%2050%22%7D%5D|Click here to see these metrics in Observability Monitoring>
+              TX errors > 50 over 15m (persisting 10m). Occasional single errors are ignored.
+              {{ $value }} errors observed.
+          expr: |
+            sum by (cluster, instance, device) (
+              increase(node_network_transmit_errs_total{device!~"lo|veth.*|cali.*|cni.*|flannel.*|tunl.*|docker.*|br.*|vxlan.*"}[15m])
+            ) > 50
+          for: 10m
+          labels:
+            severity: warning
+
+      - name: ipmi
+        rules:
+
+        - alert: CustomIpmiServerPowerSupplyFailure
+          annotations:
+            summary: "{{ $labels.cluster }} Server power supply failure"
+            description: |
+              <https://grafana-open-cluster-management-observability.apps.infra.nerc.mghpcc.org/explore?orgId=1&left=%5B%22now-3h%22,%22now%22,%22Observatorium%22,%7B%22exemplar%22:true,%22expr%22:%22ipmi_power_state%7B%7D%20%3E%200%22%7D%5D|Click here to see these metrics in Observability Monitoring>
+              {{ $labels.cluster }} on instance {{$labels.instance }} has a non-zero power supply state {{ $value }}.
+          expr: ipmi_power_state{} > 0
+          for: 10m
+          labels:
+            severity: warning
+
+        - alert: CustomIpmiChassisPowerSupplyFailure
+          annotations:
+            summary: "{{ $labels.cluster }} Chassis power supply failure"
+            description: |
+              <https://grafana-open-cluster-management-observability.apps.infra.nerc.mghpcc.org/explore?orgId=1&left=%5B%22now-3h%22,%22now%22,%22Observatorium%22,%7B%22exemplar%22:true,%22expr%22:%22ipmi_chassis_power_state%7B%7D%20%3D%3D%200%22%7D%5D|Click here to see these metrics in Observability Monitoring>
+              {{ $labels.cluster}} on instance {{$labels.instance }} chassis power is off.
+          expr: ipmi_chassis_power_state{} == 0
+          for: 10m
+          labels:
+            severity: warning
+
+        - alert: CustomIpmiServerMemoryError
+          annotations:
+            summary: "{{ $labels.cluster }} Server memory error"
+            description: |
+              <https://grafana-open-cluster-management-observability.apps.infra.nerc.mghpcc.org/explore?orgId=1&left=%5B%22now-3h%22,%22now%22,%22Observatorium%22,%7B%22exemplar%22:true,%22expr%22:%22ipmi_sensor_state%7Btype%3D%5C%22Memory%5C%22%7D%20%3E%200%22%7D%5D|Click here to see these metrics in Observability Monitoring>
+              {{ $labels.cluster}} on instance {{$labels.instance }} has a non-zero memory state {{ $value }}.
+          expr: ipmi_sensor_state{type="Memory"} > 0
+          for: 10m
+          labels:
+            severity: warning
+
+        - alert: CustomIpmiLocalDiskError
+          annotations:
+            summary: "{{ $labels.cluster }} Local disk error"
+            description: |
+              <https://grafana-open-cluster-management-observability.apps.infra.nerc.mghpcc.org/explore?orgId=1&left=%5B%22now-3h%22,%22now%22,%22Observatorium%22,%7B%22exemplar%22:true,%22expr%22:%22ipmi_sensor_state%7Btype%3D%5C%22Drive%20Slot%5C%22%7D%20%3E%200%22%7D%5D|Click here to see these metrics in Observability Monitoring>
+              {{ $labels.cluster}} on instance {{$labels.instance }} has a non-zero drive slot state {{ $value }}.
+          expr: ipmi_sensor_state{type="Drive Slot"} > 0
+          for: 10m
+          labels:
+            severity: warning
+
+        - alert: CustomIpmiInternalCoolingFanError
+          annotations:
+            summary: "{{ $labels.cluster}} Internal cooling fan error on {{$labels.instance }}"
+            description: |
+              <https://grafana-open-cluster-management-observability.apps.infra.nerc.mghpcc.org/explore?orgId=1&left=%5B%22now-3h%22,%22now%22,%22Observatorium%22,%7B%22exemplar%22:true,%22expr%22:%22ipmi_fan_speed_state%7B%7D%20%3E%200%22%7D%5D|Click here to see these metrics in Observability Monitoring>
+              {{ $labels.cluster}} on instance {{$labels.instance }} has a non-zero fan speed state {{ $value }}.
+          expr: ipmi_fan_speed_state{} > 0
+          for: 10m
+          labels:
+            severity: warning
+
+      - name: node
+        rules:
+
+        - alert: CustomNodeNotReady
+          annotations:
+            summary: "{{ $labels.cluster}} node {{$labels.node }} not in ready status"
+            description: |
+              <https://grafana-open-cluster-management-observability.apps.infra.nerc.mghpcc.org/explore?orgId=1&left=%5B%22now-3h%22,%22now%22,%22Observatorium%22,%7B%22exemplar%22:true,%22expr%22:%22kube_node_status_condition%7Bcondition%3D%5C%22Ready%5C%22,%20status!%3D%5C%22true%5C%22%7D%20%3E%200%22%7D%5D|Click here to see these metrics in Observability Monitoring>
+              {{ $labels.cluster}} node {{$labels.node }} is not in ready status.
+          expr: kube_node_status_condition{condition="Ready", status!="true"} > 0
+          for: 5m
+          labels:
+            severity: warning
+
+        - alert: CustomNodeLowAvailableMemory
+          annotations:
+            summary: "{{ $labels.cluster}} node {{$labels.instance }} low on memory"
+            description: |
+              <https://grafana-open-cluster-management-observability.apps.infra.nerc.mghpcc.org/explore?orgId=1&left=%5B%22now-1h%22,%22now%22,%22Observatorium%22,%7B%22exemplar%22:true,%22expr%22:%22node_memory_MemAvailable_bytes%2Fnode_memory_MemTotal_bytes%20%3C%200.2%22%7D%5D|Click here to see these metrics in Observability Monitoring>
+              {{ $labels.cluster}} node {{$labels.instance}} is low on memory.
+          expr: node_memory_MemAvailable_bytes/node_memory_MemTotal_bytes < 0.2
+          for: 1m
+          labels:
+            severity: warning
+
+      - name: opelimits
+        rules:
+
+        - alert: CustomOpeLimitsCpu
+          annotations:
+            summary: "{{ $labels.cluster }} - ope CPU usage above 80% of limit"
+            description: |
+              <https://grafana-open-cluster-management-observability.apps.infra.nerc.mghpcc.org/explore?orgId=1&left=%5B%22now-3h%22,%22now%22,%22Observatorium%22,%7B%22exemplar%22:true,%22expr%22:%22sum(avg_over_time(node_namespace_pod_container:container_cpu_usage_seconds_total:sum_rate%5B1h%5D))%20by%20(cluster,%20namespace,%20pod)%20%2F%20avg(kube_pod_container_resource_limits%7Bresource%3D%5C%22cpu%5C%22%7D)%20by%20(cluster,%20namespace,%20pod)%20%3E%200.80%22%7D%5D|Click here to see these metrics in Observability Monitoring>
+              CPU usage is at {{ $value | humanizePercentage }} in namespace {{ $labels.namespace }}, cluster {{ $labels.cluster }}.
+          expr: sum(avg_over_time(kube_resourcequota{cluster="nerc-ocp-prod",namespace="rhods-notebooks",resource="limits.cpu",type="used"}[10m:5m])) / sum(avg_over_time(kube_resourcequota{cluster="nerc-ocp-prod",namespace="rhods-notebooks",resource="limits.cpu",type="hard"}[10m:5m])) > 0.80
+          for: 10m
+          labels:
+            severity: warning
+            cpu: limit
+
+      - name: ope6amStatus
+        rules:
+
+        - alert: Custom6amOpeLimitsCpu
+          # A limits.cpu percentage of limit
+          expr: >-
+            (
+              max_over_time(
+                sum(
+                  kube_resourcequota{
+                    cluster="nerc-ocp-prod",namespace="rhods-notebooks",resource="limits.cpu",type="used"
+                  }
+                )[10m:5m]
+              )/max_over_time(
+                sum(
+                  kube_resourcequota{
+                    cluster="nerc-ocp-prod",namespace="rhods-notebooks",resource="limits.cpu",type="hard"
+                  }
+                )[10m:5m]
+              )
+            ) and (hour()-4+(minute()/60)==6.0)
+          # No 'for' clause when firing immediately, time is always utc -4 to calculate New York time (summer winter time switch not yet fixed)
+          labels:
+            severity: info
+            environment: production
+            team: ope
+            component : cpu
+          annotations:
+            summary: "{{ $labels.cluster }} - current status in namespace rhods-notebooks, cluster nerc-ocp-prod"
+            description: |
+              info: limits.cpu: {{ $value | humanizePercentage }} used
+
+        - alert: Custom6amOpeLimitsEphemeralStorage
+          # B limits.ephemeral-storage percentage of limit
+          expr: >-
+            (
+              max_over_time(
+                sum(
+                  kube_resourcequota{
+                    cluster="nerc-ocp-prod",namespace="rhods-notebooks",resource="limits.ephemeral-storage",type="used"
+                  }
+                )[10m:5m]
+              )/max_over_time(
+                sum(
+                  kube_resourcequota{
+                    cluster="nerc-ocp-prod",namespace="rhods-notebooks",resource="limits.ephemeral-storage",type="hard"
+                  }
+                )[10m:5m]
+              )
+            ) and (hour()-4+(minute()/60)==6.0)
+          labels:
+            severity: info
+            environment: production
+            team: ope
+            component : ephemeral-storage
+          annotations:
+            description: |
+              info: limits.ephemeral-storage: {{ $value | humanizePercentage }} used
+
+        - alert: Custom6amOpeLimitsMemory
+          # C limits.memory percentage of limit
+          expr: (max_over_time(sum(kube_resourcequota{cluster="nerc-ocp-prod",namespace="rhods-notebooks",resource="limits.memory",type="used"})[10m:5m])/max_over_time(sum(kube_resourcequota{cluster="nerc-ocp-prod",namespace="rhods-notebooks",resource="limits.memory",type="hard"})[10m:5m])) and (hour()-4+(minute()/60)==6.0)
+          labels:
+            severity: info
+            environment: production
+            team: ope
+            component : memory
+          annotations:
+            description: |
+              info: limits.memory: {{ $value | humanizePercentage }} used
+
+        - alert: Custom6amOpePersistentVolumeClaims
+          # D persistentvolumeclaims percentage of limit
+          expr: (max_over_time(sum(kube_resourcequota{cluster="nerc-ocp-prod",namespace="rhods-notebooks",resource="persistentvolumeclaims",type="used"})[10m:5m])/max_over_time(sum(kube_resourcequota{cluster="nerc-ocp-prod",namespace="rhods-notebooks",resource="persistentvolumeclaims",type="hard"})[10m:5m])) and (hour()-4+(minute()/60)==6.0)
+          labels:
+            severity: info
+            environment: production
+            team: ope
+            component : persistentvolumeclaims
+          annotations:
+            description: |
+              info: persistentvolumeclaims: {{ $value | humanizePercentage }} used
+
+        - alert: Custom6amOpeRequestsStorage
+          # E requests.storage percentage of limit
+          expr: (max_over_time(sum(kube_resourcequota{cluster="nerc-ocp-prod",namespace="rhods-notebooks",resource="requests.storage",type="used"})[10m:5m])/max_over_time(sum(kube_resourcequota{cluster="nerc-ocp-prod",namespace="rhods-notebooks",resource="requests.storage",type="hard"})[10m:5m])) and (hour()-4+(minute()/60)==6.0)
+          labels:
+            severity: info
+            environment: production
+            team: ope
+            component : storage
+          annotations:
+            description: |
+              info: requests.storage: {{ $value | humanizePercentage }} used
+
+        - alert: Custom6amOpeKubePodContainerInfo
+          # F kube_pod_container_info absolute
+          expr: (max_over_time(count(kube_pod_container_info{cluster="nerc-ocp-prod",namespace="rhods-notebooks"})[10m:5m])) and ((hour()-4+(minute()/60))==6.0)
+          labels:
+            severity: info
+            environment: production
+            team: ope
+            component : container
+          annotations:
+            description: |
+              info: kube_pod_container_info: {{ $value }} containers
+
+        - alert: Custom6amOpeKubePodOwner
+          # G kube_pod_owner absolute
+          expr: (max_over_time(count(kube_pod_owner{cluster="nerc-ocp-prod",namespace="rhods-notebooks"})[10m:5m])) and ((hour()-4+(minute()/60))==6.0)
+          labels:
+            severity: info
+            environment: production
+            team: ope
+            component : pod
+          annotations:
+            description: |
+              info: kube_pod_owner: {{ $value }} pod owners
+
+      - name: machine-config
+        rules:
+        - alert: CustomBlockedMachineConfigUpdate
+          annotations:
+            summary: "{{ $labels.cluster }} Machine Config Pool {{ $labels.pool }} stuck updating for >30min"
+            description: |
+              <https://grafana-open-cluster-management-observability.apps.infra.nerc.mghpcc.org/explore?orgId=1&left=%5B%22now-3h%22,%22now%22,%22Observatorium%22,%7B%22exemplar%22:true,%22expr%22:%22(mco_machine_count%20-%20mco_updated_machine_count)%20%3E%200%20and%20mco_unavailable_machine_count%20%3E%200%22%7D%5D|Click here to see these metrics in Observability Monitoring>
+              Machine Config Pool {{ $labels.pool }} in cluster {{ $labels.cluster }} has been updating for more than 30 minutes. This could indicate a stuck update that might require manual intervention.
+          expr: ((mco_machine_count - mco_updated_machine_count) > 0 and mco_unavailable_machine_count > 0) > 0
+          for: 30m
+          labels:
+            severity: critical
+
+        - alert: CustomMachineConfigHighUnavailable
+          annotations:
+            summary: "{{ $labels.cluster }} Machine Config Pool {{ $labels.pool }} has unavailable machines for >15min"
+            description: |
+              <https://grafana-open-cluster-management-observability.apps.infra.nerc.mghpcc.org/explore?orgId=1&left=%5B%22now-3h%22,%22now%22,%22Observatorium%22,%7B%22exemplar%22:true,%22expr%22:%22mco_unavailable_machine_count%20%3E%200%22%7D%5D|Click here to see these metrics in Observability Monitoring>
+              Machine Config Pool {{ $labels.pool }} in cluster {{ $labels.cluster }} has {{ $value }} unavailable machines for more than 15 minutes. This indicates machines are not ready and might require investigation.
+          expr: mco_unavailable_machine_count > 0
+          for: 15m
+          labels:
+            severity: critical
+
+        - alert: CustomMachineConfigPoolDegraded
+          annotations:
+            summary: "{{ $labels.cluster }} Machine Config Pool {{ $labels.pool }} is degraded"
+            description: |
+              <https://grafana-open-cluster-management-observability.apps.infra.nerc.mghpcc.org/explore?orgId=1&left=%5B%22now-3h%22,%22now%22,%22Observatorium%22,%7B%22exemplar%22:true,%22expr%22:%22mco_degraded_machine_count%20%3E%200%22%7D%5D|Click here to see these metrics in Observability Monitoring>
+              Machine Config Pool {{ $labels.pool }} in cluster {{ $labels.cluster }} has {{ $value }} degraded machines. This indicates the pool is in a degraded state and requires immediate attention.
+          expr: mco_degraded_machine_count > 0
+          for: 5m
+          labels:
+            severity: critical
+
+      - name: IBM autopilot
+        rules:
+        - alert: LowPCIeBandwidth
+          annotations:
+            description: |
+              GPU device {{ $labels.deviceid }} on node {{ $labels.node }} has a PCIE bandwidth of {{ $value }}.
+            summary: GPU with a PCIe bandwidth of 4 or less
+          expr: |
+            sum (autopilot_health_checks{health="pciebw"}<=4) by (node, deviceid, value) > 0
+          for: 1m
+          labels:
+            severity: warning
+            alert: autopilot
+
+        - alert: DCGMLevel1Errors
+          annotations:
+            description: |
+              GPUs on node {{ $labels.node }} have DCGM Level 1 failures.
+            summary: GPUs have DCGM failures
+          expr: |
+            sum (autopilot_health_checks{health="dcgm"}==1) by (node)
+          for: 1m
+          labels:
+            severity: warning
+            alert: autopilot
+
+        - alert: GPUPowerSlowdownEnabled
+          annotations:
+            description: |
+              GPU device {{ $labels.deviceid }} on node {{ $labels.node }} has power slowdown enabled.
+            summary: A GPU has power slowdown enabled.
+          expr: |
+            sum (autopilot_health_checks{health="power-slowdown"}==1) by (node, deviceid)
+          for: 1m
+          labels:
+            severity: warning
+            alert: autopilot
+
+        - alert: RemappedRowsActive
+          annotations:
+            description: |
+              GPU device {{ $labels.deviceid }} on node {{ $labels.node }} has incorrect remapped rows in memory.
+            summary: A GPU device has incorrect remapped rows.
+          expr: |
+            sum (autopilot_health_checks{health="remapped"}==1) by (node, deviceid)
+          for: 1m
+          labels:
+            severity: warning
+            alert: autopilot
+
+        - alert: DCGMLevel3Errors
+          annotations:
+            description: |
+              A node reported errors after running DCGM level 3 - check health of nodes.
+            summary: Node {{ $labels.node }} has GPU errors.
+          expr: |
+            kube_node_labels{label_autopilot_ibm_com_dcgm_level_3=~".*ERR.*"} and kube_node_labels{label_autopilot_ibm_com_dcgm_level_3!~""}
+          for: 1m
+          labels:
+            severity: critical
+            alert: autopilot
+
+        - alert: PingFailures
+          annotations:
+            description: |
+              IP {{ $labels.deviceid }} on node {{ $labels.node }} is unreachable.
+            summary: Node has unreachable IPs.
+          expr: |
+            sum (autopilot_health_checks{health="ping"}==1) by (deviceid)
+          for: 10m
+          labels:
+            severity: critical
+            alert: autopilot
+
+        - alert: PVCAlert
+          annotations:
+            description: |
+              PVC creation by Autopilot on node {{ $labels.node }} failed.
+            summary: PVC cannot be created.
+          expr: |
+            sum (autopilot_health_checks{health="pvc"}==1) by (node)
+          for: 1m
+          labels:
+            severity: critical
+            alert: autopilot
+
+        - alert: GPUNodeHealth
+          annotations:
+            description: |
+              Node {{ $labels.node }} reported errors after running Autopilot's periodic health checks.
+            summary: Node {{ $labels.node }} has errors.
+          expr: |
+            kube_node_labels{label_autopilot_ibm_com_gpuhealth=~".*ERR.*"} and kube_node_labels{label_autopilot_ibm_com_gpuhealth!~""}
+          for: 1m
+          labels:
+            severity: warning
+            alert: autopilot
+
+        - alert: AutopilotPodsFailing
+          annotations:
+            description: |
+              Autopilot pod on node {{ $labels.node }} is failing.
+            summary: Autopilot pod on node {{ $labels.node }} is failing.
+          expr: count(kube_pod_info{} and on(pod) (kube_pod_container_status_waiting{namespace=~"autopilot.*"} > 0)) by (namespace)
+          for: 5m
+          labels:
+            severity: critical
+            alert: autopilot
+
+# Prometheus generates a metric called up that indicates whether a scrape was successful.
+# A value of “1” is scrape indicates success, “0” failure.
+# The up metric is useful for debugging and alerting for targets that are down or having issues.
+# Each target should produce an up metric on every scrape.
+# I'm not sure which of the many metrics we want to check are up, but there are many here:
+# https://multicloud-console.apps.infra.nerc.mghpcc.org/grafana/explore?orgId=1&left=%5B%22now-1h%22,%22now%22,%22Observatorium%22,%7B%22exemplar%22:true,%22expr%22:%22up%7Bpod!%3D%5C%22%5C%22%7D%20%3D%3D%200%22%7D%5D
+#        - alert: CustomInstanceDown
+#          annotations:
+#            summary: "Instance [{{ $labels.instance }}] down"
+#            description: "[{{ $labels.instance }}] of job [{{ $labels.job }}] has been down for more than 15 minute."
+#          expr: up == 0
+#          for: 15m
+#          labels:
+#            severity: critical

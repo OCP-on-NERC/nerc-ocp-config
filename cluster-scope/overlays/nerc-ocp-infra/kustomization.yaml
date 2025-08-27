@@ -19,6 +19,9 @@ resources:
 - ../../base/core/namespaces/nerc-ocp-obs
 - ../../base/operators.coreos.com/subscriptions/openshift-pipelines-operator
 - ../../base/operators.coreos.com/subscriptions/loki-operator
+- issuers
+- certificates
+- feature/custom-routes
 - feature/odf
 - clusterversion.yaml
 - machineconfigs/disable-net-ifnames.yaml
@@ -54,10 +57,6 @@ patches:
 - path: consoles.operator.openshift.io/cluster_patch.yaml
 - path: storageclasses/ocs-external-storagecluster-ceph-rbd_patch.yaml
 - path: clustersecretstores/nerc-cluster-secrets_patch.yaml
-- path: machineconfigs/hostpath-provisioner-selinux_patch.yaml
-- path: externalsecrets/open-cluster-management-observability-multiclusterhub-operator-pull-secret_patch.yaml
-- path: externalsecrets/open-cluster-management-observability-acm-metrics-2ti-object-storage_patch.yaml
-- path: externalsecrets/open-cluster-management-observability-thanos-object-storage_patch.yaml
 - patch: |
     apiVersion: config.openshift.io/v1
     kind: OAuth
@@ -92,4 +91,25 @@ patches:
   patch: |
     - op: replace
       path: /spec/servingCerts/namedCertificates/0/names/0
-      value: api.nerc-ocp-infra.rc.fas.harvard.edu
+      value: api.infra.nerc.mghpcc.org
+- target:
+    kind: Subscription
+    name: cluster-logging
+  patch: |
+    - op: replace
+      path: /spec/channel
+      value: stable-6.3
+- target:
+    kind: Subscription
+    name: loki-operator
+  patch: |
+    - op: replace
+      path: /spec/channel
+      value: stable-6.3
+- target:
+    kind: Issuer
+  patch: |
+    - op: replace
+      path: /spec/acme/solvers/0/selector/dnsZones
+      value:
+        - infra.nerc.mghpcc.org

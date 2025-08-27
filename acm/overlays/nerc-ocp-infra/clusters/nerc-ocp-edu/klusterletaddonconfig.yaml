@@ -1,0 +1,23 @@
+apiVersion: agent.open-cluster-management.io/v1
+kind: KlusterletAddonConfig
+metadata:
+  name: nerc-ocp-edu
+  namespace: nerc-ocp-edu
+spec:
+  clusterName: nerc-ocp-edu
+  clusterNamespace: nerc-ocp-edu
+  clusterLabels:
+    name: nerc-ocp-edu
+    cloud: auto-detect
+    vendor: auto-detect
+    cluster.open-cluster-management.io/clusterset: default
+  applicationManager:
+    enabled: true
+  policyController:
+    enabled: true
+  searchCollector:
+    enabled: true
+  certPolicyController:
+    enabled: true
+  iamPolicyController:
+    enabled: true

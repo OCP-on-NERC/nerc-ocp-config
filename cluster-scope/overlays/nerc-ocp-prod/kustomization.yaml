@@ -7,7 +7,7 @@ resources:
 - ../common
 - ../../bundles/acct-mgt
 - ../../bundles/patch-operator
-- ../../bundles/xdmod-reader
+- ../../bundles/moc-metrics-collector
 - ../../bundles/solr-helm-repo
 - ../../bundles/ansible-automation-platform-operator
 - ../../bundles/openshift-serverless-operator
@@ -50,7 +50,6 @@ resources:
 - rhoai
 - object-storage
 - rolebindings
-- clusterrolebindings
 - groups
 
 components:
@@ -143,13 +142,6 @@ patches:
     - op: replace
       path: /spec/resources/requests/storage
       value: 750Gi
-- target:
-    kind: Subscription
-    name: odf-operator
-  patch: |
-    - op: replace
-      path: /spec/channel
-      value: stable-4.17
 - target:
     kind: Subscription
     name: cluster-logging

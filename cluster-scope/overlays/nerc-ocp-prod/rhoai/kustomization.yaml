@@ -5,3 +5,4 @@ resources:
 - imagestreams/ucsls-f24-imagestream.yaml
 - imagestreams/oauth-proxy.yaml
 - acceleratorprofiles
+- datascienceclusters

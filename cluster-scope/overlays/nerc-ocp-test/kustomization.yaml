@@ -37,7 +37,7 @@ resources:
 - ../../bundles/autopilot
 - ../../bundles/minio
 - ../../bundles/mongodb-operator
-- ../../bundles/xdmod-reader
+- ../../bundles/moc-metrics-collector
 - ../../bundles/nagios-monitoring
 - ../../bundles/authorino-operator
 - ../../bundles/servicemesh-operator
@@ -55,7 +55,7 @@ configMapGenerator:
   namespace: openshift-config
   behavior: merge
   literals:
-    - ack-4.15-kube-1.29-api-removals-in-4.16=true
+    - ack-4.18-kube-1.32-api-removals-in-4.19=true
 - files:
   - config.yaml=configmaps/cluster-monitoring-config.yaml
   name: cluster-monitoring-config
@@ -126,10 +126,3 @@ patches:
       path: /spec/acme/solvers/0/selector/dnsZones
       value:
         - ocp-test.nerc.mghpcc.org
-- target:
-    kind: Console
-    name: cluster
-  patch: |
-    - op: add
-      path: /spec/managementState
-      value: Managed

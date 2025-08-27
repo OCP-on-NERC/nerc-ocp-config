@@ -23,6 +23,7 @@ resources:
 - ../../bundles/acm-cim
 - ../../bundles/openshift-gitops
 - ../../bundles/ansible-automation-platform-operator
+- ../../bundles/acm-observability
 
 components:
   - ../../components/nerc-oauth-github
@@ -153,6 +154,17 @@ patches:
     - op: replace
       path: /spec/channel
       value: stable-2.5
+
+- patch: |
+    apiVersion: operators.coreos.com/v1
+    kind: OperatorGroup
+    metadata:
+      name: ansible-automation-platform-operator
+      namespace: aap
+    spec:
+      targetNamespaces:
+      - aap
+      - innabox
 
 # enable http/2 in ingresscontroller
 # (https://www.redhat.com/en/blog/grpc-or-http/2-ingress-connectivity-in-openshift)

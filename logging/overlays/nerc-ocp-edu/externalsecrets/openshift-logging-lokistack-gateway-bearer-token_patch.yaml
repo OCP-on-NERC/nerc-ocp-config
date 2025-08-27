@@ -1,0 +1,13 @@
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: openshift-logging-lokistack-gateway-bearer-token
+  namespace: openshift-logging
+spec:
+  secretStoreRef:
+    kind: SecretStore
+    name: nerc-secret-store
+  dataFrom:
+    - extract:
+        # Command to extract the JSON pull secret: oc extract secret/pull-secret -n openshift-config --to=-
+        key: nerc/nerc-ocp-edu/lokistack-gateway-bearer-token

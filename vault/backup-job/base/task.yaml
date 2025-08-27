@@ -18,7 +18,7 @@ spec:
       mountPath: /scripts
   steps:
     - name: create-snapshot
-      image: docker.io/hashicorp/vault:1.15.5
+      image: docker.io/hashicorp/vault:1.20.0
       workingDir: /workspace
       env:
         - name: VAULT_CACERT

@@ -5,13 +5,13 @@ metadata:
   namespace: custom-dns
 data:
   Corefile: |
-    nerc-ocp-infra.rc.fas.harvard.edu:8053 {
+    infra.nerc.mghpcc.org:8053 {
         log stdout
-        file /etc/coredns/nerc-ocp-infra.rc.fas.harvard.edu
+        file /etc/coredns/infra.nerc.mghpcc.org
     }
-  nerc-ocp-infra.rc.fas.harvard.edu: |
+  infra.nerc.mghpcc.org: |
     $TTL    1800
-    $ORIGIN nerc-ocp-infra.rc.fas.harvard.edu.
+    $ORIGIN infra.nerc.mghpcc.org.
 
     @ IN SOA dns domains (
         2020031101   ; serial
