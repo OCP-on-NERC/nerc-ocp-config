@@ -1,0 +1,6 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: aitelemetry-site
+spec:
+  host: "aitelemetry.apps.obs.nerc.mghpcc.org"

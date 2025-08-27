@@ -22,6 +22,7 @@ resources:
 - ../../bundles/cluster-observability-operator
 - ../../base/core/namespaces/openshift-gitops
 - ../../base/core/namespaces/dex
+- ../../base/core/namespaces/aitelemetry
 - ../../base/rbac.authorization.k8s.io/clusterroles/allow-edit-rbac
 - ../../base/operators.coreos.com/subscriptions/loki-operator
 - ../../base/rbac.authorization.k8s.io/clusterrolebindings/nerc-obs-admins-ops

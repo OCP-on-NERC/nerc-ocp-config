@@ -1,0 +1,72 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aitelemetry-worker
+spec:
+  replicas: 1
+  revisionHistoryLimit: 0
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    spec:
+      containers:
+        - name: aitelemetry
+          image: 'quay.io/nerc-images/ai-telemetry:latest'
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 10210
+              name: http
+              protocol: TCP
+            - containerPort: 10211
+              name: cluster
+              protocol: TCP
+          livenessProbe:
+            initialDelaySeconds: 20
+            periodSeconds: 10
+            successThreshold: 1
+            tcpSocket:
+              port: 'http'
+            timeoutSeconds: 10
+            failureThreshold: 10
+          readinessProbe:
+            initialDelaySeconds: 20
+            periodSeconds: 10
+            successThreshold: 1
+            tcpSocket:
+              port: 'http'
+            timeoutSeconds: 10
+            failureThreshold: 10
+          resources:
+            requests:
+              cpu: '500m'
+              memory: '500Mi'
+            limits:
+              cpu: '1'
+              memory: '2Gi'
+          env:
+            - name: ENABLE_ZOOKEEPER_CLUSTER
+              value: 'false'
+            - name: CLUSTER_HOST_NAME
+              value: '0.0.0.0'
+            - name: CLUSTER_PORT
+              value: '10211'
+            - name: CLUSTER_PUBLIC_HOST_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+            - name: CLUSTER_PUBLIC_PORT
+              value: '10211'
+          envFrom:
+            - secretRef:
+                name: aitelemetry-zookeeper
+            - secretRef:
+                name: aitelemetry-solr
+            - secretRef:
+                name: aitelemetry-database
+            - secretRef:
+                name: aitelemetry-auth
+            - secretRef:
+                name: aitelemetry-worker
