@@ -5,5 +5,5 @@ metadata:
 spec:
   channel: stable-4.16
   desiredUpdate:
-    version: 4.16.44
+    version: 4.17.36
   clusterID: 760c86f3-95a0-489e-b72a-2938bb80bcea
