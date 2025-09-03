@@ -193,9 +193,37 @@ data:
             cluster: nerc-ocp-prod
             namespace: rhods-notebooks
 
+        # Recording rules for resource quota percentages - edu cluster (all bu-cs599-* namespaces)
+        - record: ope:resourcequota_usage_ratio_edu
+          expr: >-
+            max_over_time(
+              sum(kube_resourcequota{cluster="nerc-ocp-edu",namespace=~"bu-cs599-.*",type="used"}) by (resource)
+            [10m:5m]) /
+            max_over_time(
+              sum(kube_resourcequota{cluster="nerc-ocp-edu",namespace=~"bu-cs599-.*",type="hard"}) by (resource)
+            [10m:5m])
+          labels:
+            cluster: nerc-ocp-edu
+
+        # Recording rule for container count - edu cluster (all bu-cs599-* namespaces)
+        - record: ope:container_count_edu
+          expr: max_over_time(count(kube_pod_container_info{cluster="nerc-ocp-edu",namespace=~"bu-cs599-.*"})[10m:5m])
+          labels:
+            cluster: nerc-ocp-edu
+
+        # Recording rule for pod owner count - edu cluster (all bu-cs599-* namespaces)
+        - record: ope:pod_owner_count_edu
+          expr: max_over_time(count(kube_pod_owner{cluster="nerc-ocp-edu",namespace=~"bu-cs599-.*"})[10m:5m])
+          labels:
+            cluster: nerc-ocp-edu
+
         # Recording rule for 6am trigger condition
         - record: ope:is_6am_status_time
           expr: (hour()-4+(minute()/60)==6.0)
+
+        # Recording rule for 6:05am trigger condition for edu cluster
+        - record: ope:is_605am_status_time
+          expr: (hour()-4+(minute()/60)==6.083333)
 
       - name: ope6amStatus
         rules:
@@ -272,6 +300,98 @@ data:
           labels:
             severity: info
             environment: production
+            team: ope
+            component: pod
+          annotations:
+            description: |
+              info: kube_pod_owner: {{ $value }} pod owners
+
+      - name: ope605amStatus
+        rules:
+
+        - alert: Custom605amOpeLimitsCpu
+          expr: ope:resourcequota_usage_ratio_edu{resource="limits.cpu"} and on() ope:is_605am_status_time
+          labels:
+            severity: info
+            environment: education
+            team: ope
+            component: cpu
+          annotations:
+            summary: "{{ $labels.cluster }} - current status in bu-cs599-* namespaces, cluster nerc-ocp-edu"
+            description: |
+              info: limits.cpu: {{ $value | humanizePercentage }} used
+
+        - alert: Custom605amOpeLimitsEphemeralStorage
+          expr: ope:resourcequota_usage_ratio_edu{resource="limits.ephemeral-storage"} and on() ope:is_605am_status_time
+          labels:
+            severity: info
+            environment: education
+            team: ope
+            component: ephemeral-storage
+          annotations:
+            description: |
+              info: limits.ephemeral-storage: {{ $value | humanizePercentage }} used
+
+        - alert: Custom605amOpeLimitsMemory
+          expr: ope:resourcequota_usage_ratio_edu{resource="limits.memory"} and on() ope:is_605am_status_time
+          labels:
+            severity: info
+            environment: education
+            team: ope
+            component: memory
+          annotations:
+            description: |
+              info: limits.memory: {{ $value | humanizePercentage }} used
+
+        - alert: Custom605amOpePersistentVolumeClaims
+          expr: ope:resourcequota_usage_ratio_edu{resource="persistentvolumeclaims"} and on() ope:is_605am_status_time
+          labels:
+            severity: info
+            environment: education
+            team: ope
+            component: persistentvolumeclaims
+          annotations:
+            description: |
+              info: persistentvolumeclaims: {{ $value | humanizePercentage }} used
+
+        - alert: Custom605amOpeRequestsGpu
+          expr: ope:resourcequota_usage_ratio_edu{resource="requests.nvidia.com/gpu"} and on() ope:is_605am_status_time
+          labels:
+            severity: info
+            environment: education
+            team: ope
+            component: gpu
+          annotations:
+            description: |
+              info: requests.nvidia.com/gpu: {{ $value | humanizePercentage }} used
+
+        - alert: Custom605amOpeRequestsStorage
+          expr: ope:resourcequota_usage_ratio_edu{resource="requests.storage"} and on() ope:is_605am_status_time
+          labels:
+            severity: info
+            environment: education
+            team: ope
+            component: storage
+          annotations:
+            description: |
+              info: requests.storage: {{ $value | humanizePercentage }} used
+
+        - alert: Custom605amOpeKubePodContainerInfo
+          expr: ope:container_count_edu and on() ope:is_605am_status_time
+          labels:
+            severity: info
+            environment: education
+            team: ope
+            component: container
+          annotations:
+            description: |
+              info: kube_pod_container_info: {{ $value }} containers
+
+        - alert: Custom605amOpeKubePodOwner
+          expr: ope:pod_owner_count_edu and on() ope:is_605am_status_time
+          labels:
+            severity: info
+            environment: education
             team: ope
             component: pod
           annotations:
