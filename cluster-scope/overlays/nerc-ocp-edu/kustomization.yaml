@@ -45,7 +45,8 @@ resources:
 - consolelinks
 - rhoai
 # - object-storage
-- clusterrolebindings
+- rbac
+- kueue-config
 
 components:
   - ../../components/nerc-oauth-keycloak

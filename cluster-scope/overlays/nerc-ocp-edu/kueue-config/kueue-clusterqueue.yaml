@@ -1,0 +1,41 @@
+apiVersion: kueue.x-k8s.io/v1beta1
+kind: ClusterQueue
+metadata:
+  name: v100-clusterqueue
+spec:
+  namespaceSelector: {}
+  resourceGroups:
+    - coveredResources: ["nvidia.com/gpu"]
+      flavors:
+        - name: "v100-flavor"
+          resources:
+            - name: "nvidia.com/gpu"
+              nominalQuota: 4
+---
+apiVersion: kueue.x-k8s.io/v1beta1
+kind: ClusterQueue
+metadata:
+  name: a100-clusterqueue
+spec:
+  namespaceSelector: {}
+  resourceGroups:
+    - coveredResources: ["nvidia.com/gpu"]
+      flavors:
+        - name: "a100-flavor"
+          resources:
+            - name: "nvidia.com/gpu"
+              nominalQuota: 0
+---
+apiVersion: kueue.x-k8s.io/v1beta1
+kind: ClusterQueue
+metadata:
+  name: h100-clusterqueue
+spec:
+  namespaceSelector: {}
+  resourceGroups:
+    - coveredResources: ["nvidia.com/gpu"]
+      flavors:
+        - name: "h100-flavor"
+          resources:
+            - name: "nvidia.com/gpu"
+              nominalQuota: 0
