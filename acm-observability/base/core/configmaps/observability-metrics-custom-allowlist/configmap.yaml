@@ -48,6 +48,7 @@ data:
       - __name__=~"(argocd_.*)"
       - __name__=~"(kube_node_.*)"
       - __name__=~"(kube_pod_.*)"
+      - __name__=~"(kube_job_.*)"
       - __name__=~"(mco_.*)"
       - __name__=~"(llm_performance_.*)"
       - __name__=~"(vllm:.*)"
