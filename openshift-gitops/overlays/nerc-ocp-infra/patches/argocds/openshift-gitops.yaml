@@ -27,8 +27,7 @@ spec:
       - "*"
   rbac:
     policy: |
-      p, role:operator, applications, sync, */*, allow
-      p, role:operator, applications, update, */*, allow
+      p, role:operator, applications, *, */*, allow
 
       g, system:cluster-admins, role:admin
       g, cluster-admins, role:admin
