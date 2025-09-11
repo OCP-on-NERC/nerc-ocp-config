@@ -219,11 +219,11 @@ data:
 
         # Recording rule for 6am trigger condition
         - record: ope:is_6am_status_time
-          expr: (hour()-4+(minute()/60)==6.0)
+          expr: (hour()-4==6 and minute()==0)
 
         # Recording rule for 6:05am trigger condition for edu cluster
         - record: ope:is_605am_status_time
-          expr: (hour()-4+(minute()/60)==6.083333)
+          expr: (hour()-4==6 and minute()==5)
 
       - name: ope6amStatus
         rules:
@@ -248,6 +248,7 @@ data:
             team: ope
             component: ephemeral-storage
           annotations:
+            summary: "[STATUS 6:00] {{ $labels.cluster }} - limits.ephemeral-storage status"
             description: |
               info: limits.ephemeral-storage: {{ $value | humanizePercentage }} used
 
@@ -259,6 +260,7 @@ data:
             team: ope
             component: memory
           annotations:
+            summary: "[STATUS 6:00] {{ $labels.cluster }} - limits.memory status"
             description: |
               info: limits.memory: {{ $value | humanizePercentage }} used
 
@@ -270,6 +272,7 @@ data:
             team: ope
             component: persistentvolumeclaims
           annotations:
+            summary: "[STATUS 6:00] {{ $labels.cluster }} - persistentvolumeclaims status"
             description: |
               info: persistentvolumeclaims: {{ $value | humanizePercentage }} used
 
@@ -281,6 +284,7 @@ data:
             team: ope
             component: storage
           annotations:
+            summary: "[STATUS 6:00] {{ $labels.cluster }} - requests.storage status"
             description: |
               info: requests.storage: {{ $value | humanizePercentage }} used
 
@@ -292,6 +296,7 @@ data:
             team: ope
             component: container
           annotations:
+            summary: "[STATUS 6:00] {{ $labels.cluster }} - container count status"
             description: |
               info: kube_pod_container_info: {{ $value }} containers
 
@@ -303,6 +308,7 @@ data:
             team: ope
             component: pod
           annotations:
+            summary: "[STATUS 6:00] {{ $labels.cluster }} - pod owner count status"
             description: |
               info: kube_pod_owner: {{ $value }} pod owners
 
@@ -317,7 +323,7 @@ data:
             team: ope
             component: cpu
           annotations:
-            summary: "{{ $labels.cluster }} - current status in bu-cs599-* namespaces, cluster nerc-ocp-edu"
+            summary: "[STATUS 6:05] {{ $labels.cluster }} - current status in bu-cs599-* namespaces, cluster nerc-ocp-edu"
             description: |
               info: limits.cpu: {{ $value | humanizePercentage }} used
 
@@ -329,6 +335,7 @@ data:
             team: ope
             component: ephemeral-storage
           annotations:
+            summary: "[STATUS 6:05] {{ $labels.cluster }} - limits.ephemeral-storage status in bu-cs599-* namespaces"
             description: |
               info: limits.ephemeral-storage: {{ $value | humanizePercentage }} used
 
@@ -340,6 +347,7 @@ data:
             team: ope
             component: memory
           annotations:
+            summary: "[STATUS 6:05] {{ $labels.cluster }} - limits.memory status in bu-cs599-* namespaces"
             description: |
               info: limits.memory: {{ $value | humanizePercentage }} used
 
@@ -351,6 +359,7 @@ data:
             team: ope
             component: persistentvolumeclaims
           annotations:
+            summary: "[STATUS 6:05] {{ $labels.cluster }} - persistentvolumeclaims status in bu-cs599-* namespaces"
             description: |
               info: persistentvolumeclaims: {{ $value | humanizePercentage }} used
 
@@ -362,6 +371,7 @@ data:
             team: ope
             component: gpu
           annotations:
+            summary: "[STATUS 6:05] {{ $labels.cluster }} - requests.nvidia.com/gpu status in bu-cs599-* namespaces"
             description: |
               info: requests.nvidia.com/gpu: {{ $value | humanizePercentage }} used
 
@@ -373,6 +383,7 @@ data:
             team: ope
             component: storage
           annotations:
+            summary: "[STATUS 6:05] {{ $labels.cluster }} - requests.storage status in bu-cs599-* namespaces"
             description: |
               info: requests.storage: {{ $value | humanizePercentage }} used
 
@@ -384,6 +395,7 @@ data:
             team: ope
             component: container
           annotations:
+            summary: "[STATUS 6:05] {{ $labels.cluster }} - container count status in bu-cs599-* namespaces"
             description: |
               info: kube_pod_container_info: {{ $value }} containers
 
@@ -395,6 +407,7 @@ data:
             team: ope
             component: pod
           annotations:
+            summary: "[STATUS 6:05] {{ $labels.cluster }} - pod owner count status in bu-cs599-* namespaces"
             description: |
               info: kube_pod_owner: {{ $value }} pod owners
 
