@@ -1,0 +1,11 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: clickhouse-operator-sub
+  namespace: clickhouse-operator
+spec:
+  channel: latest
+  installPlanApproval: Automatic
+  name: clickhouse
+  source: operatorhubio-catalog
+  sourceNamespace: openshift-marketplace
