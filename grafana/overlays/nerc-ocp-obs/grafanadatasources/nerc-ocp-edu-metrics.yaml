@@ -1,0 +1,51 @@
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDatasource
+metadata:
+  name: nerc-ocp-edu-metrics
+  namespace: grafana
+  labels:
+    app.kubernetes.io/instance: grafana-obs
+spec:
+  instanceSelector:
+    matchLabels:
+      dashboards: grafana
+  valuesFrom:
+    - targetPath: "secureJsonData.httpHeaderValue1"
+      valueFrom:
+        secretKeyRef:
+          name: "oauth-client-secret"
+          key: "GF_AUTH_TOKEN"
+    - targetPath: "secureJsonData.tlsCACert"
+      valueFrom:
+        secretKeyRef:
+          name: "oauth-client-secret"
+          key: "GF_TLSCACERT"
+    - targetPath: "secureJsonData.tlsClientCert"
+      valueFrom:
+        secretKeyRef:
+          name: "oauth-client-secret"
+          key: "GF_TLSCLIENTCERT"
+    - targetPath: "secureJsonData.tlsClientKey"
+      valueFrom:
+        secretKeyRef:
+          name: "oauth-client-secret"
+          key: "GF_TLSCLIENTKEY"
+  datasource:
+    name: nerc-ocp-edu-metrics
+    access: proxy
+    editable: false
+    isDefault: false
+    jsonData:
+      httpHeaderName1: Authorization
+      timeInterval: 5s
+      tlsAuth: true
+      tlsAuthWithCACert: true
+      # Add default cluster filter for all queries
+      customQueryParameters: "match[]={cluster=\"nerc-ocp-edu\"}"
+    secureJsonData:
+      httpHeaderValue1: "Bearer ${GF_AUTH_TOKEN}"
+      tlsCACert: "${GF_TLSCACERT}"
+      tlsClientCert: "${GF_TLSCLIENTCERT}"
+      tlsClientKey: "${GF_TLSCLIENTKEY}"
+    type: prometheus
+    url: 'https://observatorium-api-open-cluster-management-observability.apps.infra.nerc.mghpcc.org/api/metrics/v1/default'
