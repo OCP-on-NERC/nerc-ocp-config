@@ -17,6 +17,7 @@ spec:
   - port: http
     honorLabels: true
     path: /snmp
+    interval: 60s
     scrapeTimeout: 30s
     params:
       module:
@@ -58,6 +59,7 @@ spec:
   - port: http
     honorLabels: true
     path: /snmp
+    interval: 60s
     scrapeTimeout: 30s
     params:
       module:
@@ -99,6 +101,7 @@ spec:
   - port: http
     honorLabels: true
     path: /snmp
+    interval: 60s
     scrapeTimeout: 30s
     params:
       module:
@@ -140,6 +143,7 @@ spec:
   - port: http
     honorLabels: true
     path: /snmp
+    interval: 60s
     scrapeTimeout: 30s
     params:
       module:
@@ -181,6 +185,7 @@ spec:
   - port: http
     honorLabels: true
     path: /snmp
+    interval: 60s
     scrapeTimeout: 30s
     params:
       module:
@@ -222,6 +227,7 @@ spec:
   - port: http
     honorLabels: true
     path: /snmp
+    interval: 60s
     scrapeTimeout: 30s
     params:
       module:
@@ -263,6 +269,7 @@ spec:
   - port: http
     honorLabels: true
     path: /snmp
+    interval: 60s
     scrapeTimeout: 30s
     params:
       module:
@@ -304,6 +311,7 @@ spec:
   - port: http
     honorLabels: true
     path: /snmp
+    interval: 60s
     scrapeTimeout: 30s
     params:
       module:
@@ -345,6 +353,7 @@ spec:
   - port: http
     honorLabels: true
     path: /snmp
+    interval: 60s
     scrapeTimeout: 30s
     params:
       module:
@@ -386,6 +395,7 @@ spec:
   - port: http
     honorLabels: true
     path: /snmp
+    interval: 60s
     scrapeTimeout: 30s
     params:
       module:
@@ -427,6 +437,7 @@ spec:
   - port: http
     honorLabels: true
     path: /snmp
+    interval: 60s
     scrapeTimeout: 30s
     params:
       module:
@@ -468,6 +479,7 @@ spec:
   - port: http
     honorLabels: true
     path: /snmp
+    interval: 60s
     scrapeTimeout: 30s
     params:
       module:
