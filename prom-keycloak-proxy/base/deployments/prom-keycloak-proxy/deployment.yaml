@@ -37,7 +37,7 @@ spec:
               value: CLUSTER
             - name: PROXY_PROJECT_KEY
               value: PROJECT
-          image: quay.io/nerc-images/prom-keycloak-proxy:2.1.0
+          image: quay.io/nerc-images/prom-keycloak-proxy:2.2.0
           imagePullPolicy: Always
           livenessProbe:
             exec:
