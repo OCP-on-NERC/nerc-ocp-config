@@ -40,17 +40,17 @@ data:
       - container_memory_max_usage_bytes
       - container_memory_failures_total
     matches:
-      - __name__=~"(ipmi_.*)"
-      - __name__=~"(ceph_.*)"
-      - __name__=~"(log_.*)"
-      - __name__=~"(gpu_operator_.*)"
-      - __name__=~"(DCGM_FI_.*)"
-      - __name__=~"(argocd_.*)"
-      - __name__=~"(kube_node_.*)"
-      - __name__=~"(kube_pod_.*)"
-      - __name__=~"(kube_job_.*)"
-      - __name__=~"(mco_.*)"
-      - __name__=~"(llm_performance_.*)"
-      - __name__=~"(vllm:.*)"
-      - __name__=~"(acm_managed_cluster_*.*)"
-      - __name__=~"(thanos_.*)"
+      - __name__=~"^ipmi_.*"
+      - __name__=~"^ceph_.*"
+      - __name__=~"^log_.*"
+      - __name__=~"^gpu_operator_.*"
+      - __name__=~"^DCGM_FI_.*"
+      - __name__=~"^argocd_.*"
+
+      # Consolidate kube*:
+      - __name__=~"^kube_(node|pod|job)_.*"
+      - __name__=~"^mco_.*"
+      - __name__=~"^llm_performance_.*"
+      - __name__=~"^vllm:.*"
+      - __name__=~"^acm_managed_cluster_.*"
+      - __name__=~"^thanos_.*"
