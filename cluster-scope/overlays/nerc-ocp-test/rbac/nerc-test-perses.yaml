@@ -6,6 +6,7 @@ metadata:
 rules:
   - verbs:
       - create
+      - get
     apiGroups:
       - monitoring.coreos.com
     resources:
