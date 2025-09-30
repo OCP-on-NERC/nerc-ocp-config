@@ -54,3 +54,5 @@ data:
       - __name__=~"^vllm:.*"
       - __name__=~"^acm_managed_cluster_.*"
       - __name__=~"^thanos_.*"
+      - __name__=~"^kueue_.*"
+      - __name__=~"^ovms_.*"
