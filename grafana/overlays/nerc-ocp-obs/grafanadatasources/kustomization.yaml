@@ -3,4 +3,3 @@ kind: Kustomization
 
 resources:
   - observability-metrics.yaml
-  - nerc-ocp-edu-metrics.yaml
