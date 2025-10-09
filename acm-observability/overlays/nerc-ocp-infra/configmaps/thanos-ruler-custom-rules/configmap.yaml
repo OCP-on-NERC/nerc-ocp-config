@@ -446,6 +446,35 @@ data:
           labels:
             severity: critical
 
+      - name: gpu-activity-1h
+        interval: 1h
+        rules:
+        # Recording rule to check if GPU was active in the last hour (1=active, 0=inactive)
+        # Per GPU - for detailed billing tracking
+        - record: gpu:active_hourly:bool
+          expr: max_over_time(DCGM_FI_DEV_GPU_UTIL[1h]) > bool 0
+
+        # Per Node - check if node has at least one active GPU (1=yes, 0=no)
+        - record: gpu:active_hourly:bool_per_node
+          expr: |
+            max by (cluster, instance, Hostname) (
+              max_over_time(DCGM_FI_DEV_GPU_UTIL[1h])
+            ) > bool 0
+
+        # Count of active GPUs per Node
+        - record: gpu:active_hourly:count_per_node
+          expr: |
+            count by (cluster, instance, Hostname) (
+              max_over_time(DCGM_FI_DEV_GPU_UTIL[1h]) > 0
+            )
+
+        # Count of active GPUs per Cluster
+        - record: gpu:active_hourly:count_per_cluster
+          expr: |
+            count by (cluster) (
+              max_over_time(DCGM_FI_DEV_GPU_UTIL[1h]) > 0
+            )
+
       - name: IBM autopilot
         rules:
         - alert: LowPCIeBandwidth
