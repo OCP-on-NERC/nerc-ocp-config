@@ -456,6 +456,7 @@ data:
         # Recording rule to check if GPU was active in the last hour.
         # Returns a boolean value (true/false), represented as 1 (active/true) or 0 (inactive/false) in Prometheus.
         # Per GPU - for detailed billing tracking
+        - record: gpu:active_hourly:bool
           expr: gpu:active_hourly:raw > bool 0
 
         # Per Node - check if node has at least one active GPU (1=yes, 0=no)
