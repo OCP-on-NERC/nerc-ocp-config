@@ -44,7 +44,7 @@ spec:
       enableServiceLinks: true
       initContainers:
         - name: prepare-server-dir
-          image: docker.io/bitnami/solr:9.7.0-debian-12-r0
+          image: docker.io/bitnamilegacy/solr:9.7.0-debian-12-r0
           imagePullPolicy: "IfNotPresent"
           resources:
             limits:
