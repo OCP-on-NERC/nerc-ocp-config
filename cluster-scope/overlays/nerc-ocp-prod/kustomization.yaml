@@ -159,7 +159,7 @@ patches:
       value: stable-2.22
     - op: replace
       path: /spec/startingCSV
-      value: rhods-operator.2.19.0
+      value: rhods-operator.2.22.2
 - target:
     kind: Subscription
     name: gpu-operator-certified
