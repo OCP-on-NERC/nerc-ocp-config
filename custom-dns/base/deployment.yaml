@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: dns
+  name: custom-dns
   namespace: custom-dns
 spec:
   replicas: 1
