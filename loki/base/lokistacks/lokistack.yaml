@@ -25,6 +25,13 @@ spec:
           days: 30
   managementState: Managed
   storage:
+    schemas:
+    - effectiveDate: '2020-10-11'
+      version: v11
+    - effectiveDate: '2025-11-01'
+      version: v12
+    - effectiveDate: '2025-11-15'
+      version: v13
     secret:
       name: thanos-object-storage
       type: s3
