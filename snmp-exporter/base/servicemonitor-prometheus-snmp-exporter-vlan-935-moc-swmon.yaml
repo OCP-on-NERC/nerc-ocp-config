@@ -11,7 +11,6 @@ metadata:
     app.kubernetes.io/part-of: prometheus-snmp-exporter
     app.kubernetes.io/name: prometheus-snmp-exporter
     app.kubernetes.io/version: "v0.27.0"
-    prometheus: "kube-prometheus"
 spec:
   endpoints:
   - port: http
@@ -65,7 +64,6 @@ metadata:
     app.kubernetes.io/part-of: prometheus-snmp-exporter
     app.kubernetes.io/name: prometheus-snmp-exporter
     app.kubernetes.io/version: "v0.27.0"
-    prometheus: "kube-prometheus"
 spec:
   endpoints:
   - port: http
@@ -119,7 +117,6 @@ metadata:
     app.kubernetes.io/part-of: prometheus-snmp-exporter
     app.kubernetes.io/name: prometheus-snmp-exporter
     app.kubernetes.io/version: "v0.27.0"
-    prometheus: "kube-prometheus"
 spec:
   endpoints:
   - port: http
@@ -173,7 +170,6 @@ metadata:
     app.kubernetes.io/part-of: prometheus-snmp-exporter
     app.kubernetes.io/name: prometheus-snmp-exporter
     app.kubernetes.io/version: "v0.27.0"
-    prometheus: "kube-prometheus"
 spec:
   endpoints:
   - port: http
@@ -226,7 +222,6 @@ metadata:
     app.kubernetes.io/part-of: prometheus-snmp-exporter
     app.kubernetes.io/name: prometheus-snmp-exporter
     app.kubernetes.io/version: "v0.27.0"
-    prometheus: "kube-prometheus"
 spec:
   endpoints:
   - port: http
