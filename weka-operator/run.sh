@@ -24,4 +24,5 @@ helm upgrade --install weka-operator oci://quay.io/weka.io/helm/weka-operator \
    --version v1.7.0 \
    --set nodeAgent.persistencePaths=/root/k8s-weka \
    --set ocpCompatibility.hugepageConfiguration.enabled=true \
-   --set ocpCompatibility.hugepageConfiguration.hugepagesCount=4000
+   --set ocpCompatibility.hugepageConfiguration.hugepagesCount=4000 \
+   --set csi.installationEnabled=true
