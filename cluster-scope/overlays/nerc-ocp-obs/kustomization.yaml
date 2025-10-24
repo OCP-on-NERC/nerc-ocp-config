@@ -20,6 +20,7 @@ resources:
 - ../../bundles/opentelemetry
 - ../../bundles/snmp-exporter
 - ../../bundles/cluster-observability-operator
+- ../../bundles/solr-helm-repo
 - ../../base/core/namespaces/openshift-gitops
 - ../../base/core/namespaces/dex
 - ../../base/core/namespaces/aitelemetry
