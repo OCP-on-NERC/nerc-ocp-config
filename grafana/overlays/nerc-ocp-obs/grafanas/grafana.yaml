@@ -29,6 +29,10 @@ spec:
       scopes: openid email groups profile
     log:
       mode: console
+    rendering:
+      server_url: 'http://grafana-image-renderer:8081/render'
+      callback_url: 'http://grafana:3000/'
+      renderer_token: '${GF_RENDERING_RENDERER_TOKEN}'
   deployment:
     spec:
       template:
@@ -36,6 +40,12 @@ spec:
           containers:
             - image: 'grafana/grafana:11.3.0'
               name: grafana
+              env:
+                - name: GF_RENDERING_RENDERER_TOKEN
+                  valueFrom:
+                    secretKeyRef:
+                      name: grafana-renderer-token
+                      key: GF_RENDERING_RENDERER_TOKEN
               envFrom:
                 - secretRef:
                     name: oauth-client-secret
