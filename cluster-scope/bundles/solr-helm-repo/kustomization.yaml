@@ -5,3 +5,5 @@ commonLabels:
 resources:
 - ../../base/helm.openshift.io/helmchartrepositories/solr-helm-repo
 - ../../base/apiextensions.k8s.io/customresourcedefinitions/solr-helm-repo
+- ../../base/rbac.authorization.k8s.io/clusterroles/zookeeper-edit
+- ../../base/rbac.authorization.k8s.io/clusterroles/solr-edit
