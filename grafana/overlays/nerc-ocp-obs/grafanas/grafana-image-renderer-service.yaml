@@ -8,7 +8,7 @@ metadata:
 spec:
   ports:
     - port: 8081
-      targetPort: 8081
+      targetPort: http
       protocol: TCP
       name: http
   selector:
