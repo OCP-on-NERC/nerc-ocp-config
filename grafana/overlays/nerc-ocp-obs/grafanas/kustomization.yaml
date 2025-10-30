@@ -3,3 +3,6 @@ kind: Kustomization
 
 resources:
   - grafana.yaml
+  - grafana-image-renderer-deployment.yaml
+  - grafana-image-renderer-service.yaml
+  - grafana-image-renderer-networkpolicy.yaml
