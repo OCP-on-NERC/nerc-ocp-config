@@ -127,3 +127,10 @@ patches:
       path: /spec/acme/solvers/0/selector/dnsZones
       value:
         - ocp-test.nerc.mghpcc.org
+- target:
+    kind: Subscription
+    name: serverless-operator
+  patch: |
+    - op: replace
+      path: /spec/channel
+      value: stable-1.36
