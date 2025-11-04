@@ -31,7 +31,7 @@ spec:
       mode: console
     rendering:
       server_url: 'http://grafana-image-renderer:8081/render'
-      callback_url: 'http://grafana-service:3000/'
+      callback_url: '${GF_RENDERING_CALLBACK_URL}'
       renderer_token: '${GF_RENDERING_RENDERER_TOKEN}'
   deployment:
     spec:
