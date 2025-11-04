@@ -31,7 +31,7 @@ spec:
       mode: console
     rendering:
       server_url: 'http://grafana-image-renderer:8081/render'
-      callback_url: 'http://grafana:3000/'
+      callback_url: 'http://grafana-service:3000/'
       renderer_token: '${GF_RENDERING_RENDERER_TOKEN}'
   deployment:
     spec:
@@ -46,6 +46,8 @@ spec:
                     secretKeyRef:
                       name: grafana-renderer-token
                       key: GF_RENDERING_RENDERER_TOKEN
+                - name: GF_RENDERING_CALLBACK_URL
+                  value: 'http://grafana-service:3000/'
               envFrom:
                 - secretRef:
                     name: oauth-client-secret
