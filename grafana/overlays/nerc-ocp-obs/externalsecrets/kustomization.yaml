@@ -3,3 +3,4 @@ kind: Kustomization
 resources:
 - oauth-client-secret.yaml
 - grafana-renderer-token.yaml
+- grafana-renderer-service-account-token.yaml
