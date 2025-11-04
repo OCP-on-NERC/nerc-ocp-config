@@ -25,7 +25,7 @@ spec:
     ray:
       managementState: Managed
     kueue:
-      managementState: Removed
+      managementState: Managed
     workbenches:
       managementState: Managed
     dashboard:
