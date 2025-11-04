@@ -1,0 +1,59 @@
+---
+apiVersion: solr.apache.org/v1beta1
+kind: SolrCloud
+metadata:
+  name: solr
+spec:
+  solrLogLevel: INFO
+  zookeeperRef:
+    connectionInfo:
+      chroot: /
+      internalConnectionString: 'zookeeper-client.zookeeper.svc:2181'
+  solrSecurity:
+    authenticationType: Basic
+  scaling:
+    populatePodsOnScaleUp: true
+    vacatePodsOnScaleDown: true
+  busyBoxImage:
+    repository: library/busybox
+    tag: 1.28.0-glibc
+  customSolrKubeOptions:
+    podOptions:
+      openshift: true
+      serviceAccountName: solr
+      defaultInitContainerResources:
+        limits:
+          cpu: '1'
+          memory: 1Gi
+        requests:
+          cpu: 200m
+          memory: 200Mi
+      resources:
+        limits:
+          cpu: '4'
+          memory: 8Gi
+        requests:
+          cpu: '1'
+          memory: 2Gi
+  solrJavaMem: '-Xms1g -Xmx7g'
+  dataStorage:
+    persistent:
+      pvcTemplate:
+        metadata: {}
+        spec:
+          resources:
+            requests:
+              storage: 100Gi
+          storageClassName: ocs-external-storagecluster-ceph-rbd
+      reclaimPolicy: Retain
+  solrImage:
+    repository: solr
+    tag: 9.9.0
+  availability:
+    podDisruptionBudget:
+      enabled: true
+      method: ClusterWide
+  replicas: 3
+  updateStrategy:
+    managed: {}
+    method: Managed
