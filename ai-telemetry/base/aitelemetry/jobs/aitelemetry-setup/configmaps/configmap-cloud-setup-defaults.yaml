@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: aitelemetry-setup-defaults
+  namespace: aitelemetry
+data:
+  main.yaml: |
+    # The namespace in OpenShift where Solr will run.
+    SOLR_NAMESPACE: "solr"
+    # Whether to use SSL when connecting to Solr.
+    SOLR_SSL: "false"
+    # The host name to connect to Solr in OpenShift.
+    SOLR_HOST_NAME: "solr-solrcloud-common.solr.svc"
+    # The default port that Solr runs.
+    SOLR_PORT: "80"
+    # The solr collection to use for the site.
+    SOLR_COLLECTION: "aitelemetry"
+    # The solr configset to use for the site.
+    SOLR_CONFIGSET: "computate"
+    # The Solr admin username
+    SOLR_USERNAME: "admin"
+    # The Solr admin password
+    SOLR_PASSWORD: "{{ query('kubernetes.core.k8s', kind='Secret', resource_name='solr-solrcloud-security-bootstrap', namespace=SOLR_NAMESPACE)[0].data['admin'] | b64decode }}"

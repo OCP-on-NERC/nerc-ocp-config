@@ -1,0 +1,58 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: aitelemetry-setup-tasks
+  namespace: aitelemetry
+data:
+  main.yaml: |
+    # Create default computate Solr configset
+    - name: "Download computate configset: curl -k https://raw.githubusercontent.com/computate-org/computate/refs/heads/main/config/solr/computate-configset.zip -o /tmp/computate-configset.zip"
+      kubernetes.core.k8s_exec:
+        namespace: solr
+        pod: solr-solrcloud-0
+        command: >-
+          curl -k https://raw.githubusercontent.com/computate-org/computate/refs/heads/main/config/solr/computate-configset.zip -o /tmp/computate-configset.zip
+    - name: >-
+        Upload default computate configset:
+        curl -k -X POST
+          -H "Content-Type:application/octet-stream"
+          --data-binary @/tmp/computate-configset.zip
+          "https://solr.apps-crc.testing/solr/admin/configs?action=UPLOAD&name=computate&overwrite=true"
+      kubernetes.core.k8s_exec:
+        namespace: solr
+        pod: solr-solrcloud-0
+        command: >-
+          bash -c '
+          curl -k -X POST
+          -H "Content-Type:application/octet-stream"
+          --data-binary @/tmp/computate-configset.zip
+          "http://localhost:8983/solr/admin/configs?action=UPLOAD&name=computate&overwrite=true"
+          '
+      register: upload_computate_configset
+    - name: Debug upload_computate_configset
+      debug:
+        var: upload_computate_configset
+
+    # Create aitelemetry Solr collection
+    - name: >-
+        Create {{ SOLR_COLLECTION }} collection:
+        SOLR_AUTH_TYPE=basic
+        /opt/solr/bin/solr create_collection --solr-url http://localhost:8983 -c {{ SOLR_COLLECTION }} -n computate'
+      kubernetes.core.k8s_exec:
+        namespace: solr
+        pod: solr-solrcloud-0
+        command: >-
+          bash -c '
+          SOLR_AUTH_TYPE=basic
+          SOLR_AUTHENTICATION_OPTS="-Dbasicauth=admin:{{ SOLR_PASSWORD }}"
+          /opt/solr/bin/solr create_collection --solr-url http://localhost:8983 -c {{ SOLR_COLLECTION }} -n computate
+          '
+      register: create_collection
+      ignore_errors: true
+    - name: Debug create_collection
+      debug:
+        var: create_collection
+    - name: Test create {{ SOLR_COLLECTION }} collection success
+      fail:
+        msg: "{{ command_status }}"
+      when: create_collection.failed and create_collection is not search("already exists")

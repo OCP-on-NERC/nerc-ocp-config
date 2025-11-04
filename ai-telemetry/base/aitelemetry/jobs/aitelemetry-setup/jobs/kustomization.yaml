@@ -1,12 +1,8 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-namespace: aitelemetry
 labels:
   - pairs:
-      app: aitelemetry
-      app.kubernetes.io/name: aitelemetry
+      job: aitelemetry-setup
     includeSelectors: true
 resources:
-  - site/
-  - worker/
-  - jobs/
+- aitelemetry-setup.yaml

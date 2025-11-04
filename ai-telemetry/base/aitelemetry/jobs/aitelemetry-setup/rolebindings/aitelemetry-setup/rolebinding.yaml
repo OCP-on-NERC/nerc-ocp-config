@@ -1,0 +1,51 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: solr
+  name: solr-aitelemetry-setup-aitelemetry-exec
+rules:
+- apiGroups: [""]
+  resources: ["pods/exec"]
+  verbs: ["get", "create"]
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "list"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  namespace: solr
+  name: solr-aitelemetry-setup-aitelemetry-exec
+subjects:
+- kind: ServiceAccount
+  name: aitelemetry-setup
+  namespace: aitelemetry
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: solr-aitelemetry-setup-aitelemetry-exec
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: solr
+  name: aitelemetry-aitelemetry-setup-solr-secrets
+rules:
+- apiGroups: [""]
+  resources: ["secrets"]
+  verbs: ["get", "list"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  namespace: solr
+  name: aitelemetry-aitelemetry-setup-solr-secrets
+subjects:
+- kind: ServiceAccount
+  name: aitelemetry-setup
+  namespace: aitelemetry
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: aitelemetry-aitelemetry-setup-solr-secrets
