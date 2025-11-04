@@ -1,0 +1,26 @@
+kind: Kafka
+apiVersion: kafka.strimzi.io/v1beta2
+metadata:
+  name: kafka
+spec:
+  kafka:
+    version: 3.3.1
+    replicas: 3
+    authorization:
+      type: simple
+    listeners:
+      - name: tls
+        port: 9093
+        type: internal
+        tls: true
+        authentication:
+          type: tls
+    storage:
+      type: ephemeral
+  zookeeper:
+    replicas: 3
+    storage:
+      type: ephemeral
+  entityOperator:
+    topicOperator: {}
+    userOperator: {}
