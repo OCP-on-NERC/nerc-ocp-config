@@ -1,0 +1,42 @@
+---
+# Source: zookeeper-operator/templates/operator.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zookeeper-operator
+  namespace: default
+  labels:
+    app.kubernetes.io/name: zookeeper-operator
+    app.kubernetes.io/version: "0.2.14"
+    app.kubernetes.io/managed-by: Helm
+    helm.sh/chart: "zookeeper-operator-0.2.14"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: zookeeper-operator
+  template:
+    metadata:
+      labels:
+        name: zookeeper-operator
+        component: zookeeper-operator
+    spec:
+      serviceAccountName: zookeeper-operator
+      containers:
+      - name: zookeeper-operator
+        image: "pravega/zookeeper-operator:0.2.14"
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 6000
+          name: metrics
+        command:
+        - zookeeper-operator
+        env:
+        - name: WATCH_NAMESPACE
+          value: "zookeeper"
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: OPERATOR_NAME
+          value: zookeeper-operator
