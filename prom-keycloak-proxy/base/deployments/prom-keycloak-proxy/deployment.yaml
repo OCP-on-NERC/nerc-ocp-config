@@ -19,9 +19,9 @@ spec:
           env:
             - name: PROXY_ACM_HUB
               value: REPLACE_IN_OVERLAY
-            - name: PROXY_PROMETHEUS_CA_CRT
+            - name: PROXY_PROMETHEUS_CA_CERT
               value: /opt/prom-keycloak-proxy-certs/ca.crt
-            - name: PROXY_PROMETHEUS_TLS_CRT
+            - name: PROXY_PROMETHEUS_TLS_CERT
               value: /opt/prom-keycloak-proxy-certs/tls.crt
             - name: PROXY_PROMETHEUS_TLS_KEY
               value: /opt/prom-keycloak-proxy-certs/tls.key
@@ -37,7 +37,7 @@ spec:
               value: CLUSTER
             - name: PROXY_PROJECT_KEY
               value: PROJECT
-          image: quay.io/nerc-images/prom-keycloak-proxy:2.2.0
+          image: quay.io/nerc-images/prom-keycloak-proxy:2.3.0
           imagePullPolicy: Always
           livenessProbe:
             exec:
