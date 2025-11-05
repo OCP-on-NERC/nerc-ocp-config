@@ -39,6 +39,7 @@ data:
       - container_cpu_cfs_throttled_seconds_total
       - container_memory_max_usage_bytes
       - container_memory_failures_total
+      - process_start_time_seconds
     matches:
       - __name__=~"^ipmi_.*"
       - __name__=~"^ceph_.*"
