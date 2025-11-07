@@ -1,0 +1,33 @@
+---
+# Source: zookeeper-operator/templates/post-install-upgrade-hooks.yaml
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: zookeeper-operator-post-install-upgrade
+  namespace: default
+  annotations:
+    "helm.sh/hook": post-install, post-upgrade
+    "helm.sh/hook-weight": "2"
+    "helm.sh/hook-delete-policy": hook-succeeded, before-hook-creation, hook-failed
+spec:
+  backoffLimit: 10
+  template:
+    metadata:
+      name: zookeeper-operator-post-install-upgrade
+    spec:
+      serviceAccountName: zookeeper-operator-post-install-upgrade
+      restartPolicy: Never
+      containers:
+      - name: post-install-upgrade-job
+        image: "lachlanevenson/k8s-kubectl:v1.23.2"
+        command:
+          - /scripts/validations.sh
+        volumeMounts:
+          - name: sh
+            mountPath: /scripts
+            readOnly: true
+      volumes:
+        - name: sh
+          configMap:
+            name: zookeeper-operator-post-install-upgrade
+            defaultMode: 0555

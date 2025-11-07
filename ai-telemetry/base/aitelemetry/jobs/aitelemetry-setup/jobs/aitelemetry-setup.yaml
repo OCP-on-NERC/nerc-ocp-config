@@ -1,0 +1,51 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: aitelemetry-setup
+  namespace: aitelemetry
+spec:
+  backoffLimit: 1000
+  template:
+    spec:
+      restartPolicy: OnFailure
+      serviceAccountName: aitelemetry-setup
+      volumes:
+        - name: aitelemetry-setup-playbook
+          configMap:
+            name: aitelemetry-setup-playbook
+        - name: aitelemetry-setup-defaults
+          configMap:
+            name: aitelemetry-setup-defaults
+        - name: aitelemetry-setup-tasks
+          configMap:
+            name: aitelemetry-setup-tasks
+        - name: home
+          emptyDir: {}
+        - name: ansible-tmp
+          emptyDir: {}
+      containers:
+        - name: aitelemetry-setup
+          image: quay.io/nerc-images/keycloak-ansible:ansible-collection-upgrade
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: aitelemetry-setup-playbook
+              mountPath: /home/ansible/.ansible/playbooks/
+            - name: aitelemetry-setup-tasks
+              mountPath: /home/ansible/.ansible/roles/aitelemetry-setup/tasks/
+            - name: aitelemetry-setup-defaults
+              mountPath: /home/ansible/.ansible/roles/aitelemetry-setup/defaults/
+            - name: home
+              mountPath: /home/ansible
+            - name: ansible-tmp
+              mountPath: /home/ansible/.ansible/tmp/
+          env:
+            - name: ANSIBLE_ROLES_PATH
+              value: /home/ansible/.ansible/roles
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+          command: ["/bin/bash", "-c", "--"]
+          args:
+            - |
+                ansible-playbook /home/ansible/.ansible/playbooks/aitelemetry-setup.yaml

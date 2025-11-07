@@ -1,0 +1,56 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: db-to-solr-sync
+  namespace: aitelemetry
+spec:
+  backoffLimit: 1000
+  template:
+    spec:
+      restartPolicy: OnFailure
+      containers:
+      - name: db-to-solr-sync
+        env:
+          - name: ENABLE_ZOOKEEPER_CLUSTER
+            value: 'true'
+          - name: CLUSTER_HOST_NAME
+            value: 0.0.0.0
+          - name: CLUSTER_PORT
+            value: '10211'
+          - name: CLUSTER_PUBLIC_HOST_NAME
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: status.podIP
+          - name: CLUSTER_PUBLIC_PORT
+            value: '10211'
+        envFrom:
+          - secretRef:
+              name: aitelemetry-zookeeper
+          - secretRef:
+              name: aitelemetry-solr
+          - secretRef:
+              name: aitelemetry-database
+          - secretRef:
+              name: aitelemetry-auth
+          - secretRef:
+              name: aitelemetry-site
+        image: quay.io/nerc-images/ai-telemetry:latest
+        imagePullPolicy: Always
+        resources:
+          limits:
+            cpu: 750m
+            ephemeral-storage: 1Gi
+            memory: 768Mi
+          requests:
+            cpu: 750m
+            ephemeral-storage: 1Gi
+            memory: 768Mi
+        ports:
+        - containerPort: 10211
+          name: cluster
+          protocol: TCP
+        command: ["/bin/bash", "-c", "--"]
+        args:
+          - >-
+              java -cp "$(cat /home/default/ai-telemetry/cp.txt):/home/default/ai-telemetry/target/classes" org.mghpcc.aitelemetry.verticle.DbToSolrSync

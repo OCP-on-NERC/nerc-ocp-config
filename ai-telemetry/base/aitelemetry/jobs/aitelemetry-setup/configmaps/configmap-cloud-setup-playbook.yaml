@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: aitelemetry-setup-playbook
+  namespace: aitelemetry
+data:
+  aitelemetry-setup.yaml: |
+    ---
+    - name: aitelemetry-setup
+      hosts: localhost
+      connection: local
+      gather_facts: false
+      roles:
+        - aitelemetry-setup
