@@ -8,3 +8,4 @@ resources:
   - vllm-dashboard.yaml
   - blocked-machineconfig-dashboard.yaml
   - enhanced-machineconfig-dashboard.yaml
+  - kueue-metrics-dashboard.yaml
