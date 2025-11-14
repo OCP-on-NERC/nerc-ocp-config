@@ -7,6 +7,7 @@ resources:
 - clusterversion.yaml
 - ../common
 - ../../base/rbac.authorization.k8s.io/clusterroles/allow-edit-rbac
+- ../../base/rbac.authorization.k8s.io/clusterroles/application-edit
 - ../../base/core/namespaces/openshift-gitops
 - ../../base/core/namespaces/dex
 - externalsecrets
