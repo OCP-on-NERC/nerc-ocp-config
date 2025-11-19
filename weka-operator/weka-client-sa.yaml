@@ -1,0 +1,11 @@
+apiVersion: v1
+imagePullSecrets:
+- name: weka-client-dockercfg-n9ptb
+kind: ServiceAccount
+metadata:
+  annotations:
+    openshift.io/internal-registry-pull-secret-ref: weka-client-dockercfg-n9ptb
+  name: weka-client
+  namespace: weka-operator-system
+secrets:
+- name: weka-client-dockercfg-n9ptb
