@@ -14,7 +14,7 @@ spec:
       serving:
         ingressGateway:
           certificate:
-            type: SelfSigned
+            type: OpenShiftDefaultIngress
         managementState: Managed
         name: knative-serving
     modelregistry:
