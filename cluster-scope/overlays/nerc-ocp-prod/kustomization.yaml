@@ -31,6 +31,7 @@ resources:
 - ../../bundles/nagios-monitoring
 - ../../base/rbac.authorization.k8s.io/clusterroles/allow-edit-rbac
 - ../../base/rbac.authorization.k8s.io/clusterroles/application-edit
+- ../../base/rbac.authorization.k8s.io/clusterroles/allow-list-crds
 - ../../base/rbac.authorization.k8s.io/clusterroles/project-monitoring-edit
 - ../../base/rbac.authorization.k8s.io/clusterroles/nerc-allow-sys-admin
 - ../../base/security.openshift.io/securitycontextconstraints/nerc-allow-sys-admin
