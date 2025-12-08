@@ -63,4 +63,5 @@ data:
       - __name__=~"^batch_.*"
   uwl_metrics_list.yaml: |
     matches:
+      # GPU batch job metrics (when DCGM unavailable):
       - __name__=~"^batch_.*"
