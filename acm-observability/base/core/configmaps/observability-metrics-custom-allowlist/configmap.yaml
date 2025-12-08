@@ -50,6 +50,7 @@ data:
 
       # Consolidate kube*:
       - __name__=~"^kube_(?:node|pod|job)_.*"
+
       - __name__=~"^mco_.*"
       - __name__=~"^llm_performance_.*"
       - __name__=~"^vllm:.*"
@@ -57,4 +58,9 @@ data:
       - __name__=~"^thanos_.*"
       - __name__=~"^kueue_.*"
       - __name__=~"^ovms_.*"
+
+      # GPU batch job metrics (when DCGM unavailable):
+      - __name__=~"^batch_.*"
+  uwl_metrics_list.yaml: |
+    matches:
       - __name__=~"^batch_.*"
