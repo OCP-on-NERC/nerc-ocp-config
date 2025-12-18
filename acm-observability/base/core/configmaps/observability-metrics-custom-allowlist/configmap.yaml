@@ -57,6 +57,7 @@ data:
       - __name__=~"^thanos_.*"
       - __name__=~"^kueue_.*"
       - __name__=~"^ovms_.*"
+      - __name__=~"^minio_.*"
 
       # GPU batch job metrics (when DCGM unavailable):
       - __name__=~"^batch_.*"

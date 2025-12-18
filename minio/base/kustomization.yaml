@@ -11,3 +11,4 @@ resources:
 - service.yaml
 - console-route.yaml
 - object-storage-route.yaml
+- servicemonitor.yaml
