@@ -12,6 +12,28 @@ spec:
       maxSurge: 1
   template:
     spec:
+      volumes:
+        - name: "ai-telemetry-developer"
+          emptyDir: {}
+      initContainers:
+        - resources: {}
+          terminationMessagePath: /dev/termination-log
+          name: git-cloner
+          command:
+            - sh
+            - '-c'
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: "ai-telemetry-developer"
+              mountPath: "/home/default/ai-telemetry-static/webawesome/templates/en-us/ai-telemetry-developer"
+          terminationMessagePolicy: File
+          envFrom:
+            - secretRef:
+                name: aitelemetry-worker
+          image: docker.io/alpine/git
+          args:
+            - >-
+              git clone https://computate.org:$GITHUB_DEVELOPERS_TOKEN@github.com/computate-org/ai-telemetry-developer.git /home/default/ai-telemetry-static/webawesome/templates/en-us/ai-telemetry-developer;
       containers:
         - name: aitelemetry
           image: 'quay.io/nerc-images/ai-telemetry:latest'
@@ -46,6 +68,9 @@ spec:
             limits:
               cpu: '1'
               memory: '2Gi'
+          volumeMounts:
+            - name: "ai-telemetry-developer"
+              mountPath: "/home/default/ai-telemetry-static/webawesome/templates/en-us/ai-telemetry-developer"
           env:
             - name: ENABLE_ZOOKEEPER_CLUSTER
               value: 'false'
