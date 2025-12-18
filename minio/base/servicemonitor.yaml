@@ -1,0 +1,36 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: minio
+  labels:
+    app: minio
+spec:
+  endpoints:
+  - port: object-storage
+    path: /minio/v2/metrics/cluster
+    interval: 5m
+    scheme: http
+    basicAuth:
+      username:
+        name: minio-admin-credentials
+        key: MINIO_ROOT_USER
+      password:
+        name: minio-admin-credentials
+        key: MINIO_ROOT_PASSWORD
+  - port: object-storage
+    path: /minio/v2/metrics/bucket
+    interval: 5m
+    scheme: http
+    basicAuth:
+      username:
+        name: minio-admin-credentials
+        key: MINIO_ROOT_USER
+      password:
+        name: minio-admin-credentials
+        key: MINIO_ROOT_PASSWORD
+  selector:
+    matchLabels:
+      app: minio
+  namespaceSelector:
+    matchNames:
+    - minio
