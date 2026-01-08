@@ -59,6 +59,7 @@ configMapGenerator:
   namespace: openshift-monitoring
 
 patches:
+- path: kubeletconfigs/system-reserved-patch.yaml
 - target:
     kind: SecretStore
   patch: |
