@@ -10,5 +10,4 @@ spec:
     lokistack:
       name: logging-loki
   collection:
-    logs:
-      type: vector
+    type: vector
