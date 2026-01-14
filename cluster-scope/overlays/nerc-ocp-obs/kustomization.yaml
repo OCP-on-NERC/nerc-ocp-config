@@ -34,7 +34,6 @@ resources:
 - feature/odf
 - certificates
 - machineconfigs
-- configmaps/nerc-logo.yaml
 - nodenetworkconfigurationpolicies
 
 components:
@@ -60,6 +59,7 @@ configMapGenerator:
   namespace: openshift-monitoring
 
 patches:
+- path: configmaps/nerc-logo_patch.yaml
 - path: kubeletconfigs/system-reserved-patch.yaml
 - target:
     kind: SecretStore
