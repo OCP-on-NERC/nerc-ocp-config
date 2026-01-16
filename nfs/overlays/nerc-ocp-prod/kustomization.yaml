@@ -13,4 +13,4 @@ patches:
   patch: |
     - op: replace
       path: /spec/resources/requests/storage
-      value: 25TiB
+      value: 25Ti
