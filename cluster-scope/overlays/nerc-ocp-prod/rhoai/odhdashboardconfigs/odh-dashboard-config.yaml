@@ -48,7 +48,7 @@ spec:
         cpu: "6"
         memory: 16Gi
   notebookController:
-    enabled: false
+    enabled: true
     notebookNamespace: rhods-notebooks
     pvcSize: 20Gi
   notebookSizes:
