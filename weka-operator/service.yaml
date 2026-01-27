@@ -1,0 +1,14 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: weka-driver-builder
+  namespace: weka-operator-system
+spec:
+  type: ClusterIP
+  ports:
+    - name: weka-driver-builder
+      port: 60002
+      targetPort: 60002
+  selector:
+    app: weka-driver-builder
