@@ -26,13 +26,28 @@ spec:
         - application
       outputRefs:
         - loki-app
+      labels:
+        # Drop high-cardinality labels - see https://github.com/nerc-project/operations/issues/1410
+        kubernetes_pod_name: ""
+        kubernetes_pod_id: ""
+        kubernetes_container_id: ""
     - name: send-infra-logs
       inputRefs:
         - infrastructure
       outputRefs:
         - loki-infra
+      labels:
+        # Drop high-cardinality labels - see https://github.com/nerc-project/operations/issues/1410
+        kubernetes_pod_name: ""
+        kubernetes_pod_id: ""
+        kubernetes_container_id: ""
     - name: send-audit-logs
       inputRefs:
         - audit
       outputRefs:
         - loki-audit
+      labels:
+        # Drop high-cardinality labels - see https://github.com/nerc-project/operations/issues/1410
+        kubernetes_pod_name: ""
+        kubernetes_pod_id: ""
+        kubernetes_container_id: ""
