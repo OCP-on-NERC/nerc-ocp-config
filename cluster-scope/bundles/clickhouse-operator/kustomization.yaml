@@ -1,0 +1,9 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+commonLabels:
+  nerc.mghpcc.org/bundle: clickhouse-operator
+resources:
+- ../../base/core/namespaces/clickhouse-operator
+- ../../base/operators.coreos.com/catalogsources/operatorhubio
+- ../../base/operators.coreos.com/operatorgroups/clickhouse-operator
+- ../../base/operators.coreos.com/subscriptions/clickhouse-operator
