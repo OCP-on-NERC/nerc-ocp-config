@@ -1,0 +1,10 @@
+apiVersion: v2
+appVersion: 4.2.7.815-d3e193ee4ceb15033f5207b466815c3c
+description: A Helm chart for Kubernetes
+maintainers:
+- email: csi@weka.io
+  name: weka
+  url: https://weka.io
+name: weka-operator
+type: application
+version: v1.6.2
