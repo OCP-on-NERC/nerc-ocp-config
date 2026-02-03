@@ -26,6 +26,7 @@ resources:
 - ../../bundles/node-feature-discovery
 - ../../bundles/patch-operator
 - ../../bundles/nvidia-gpu-operator
+- ../../bundles/nvidia-network-operator
 - ../../bundles/koku-metrics-operator
 - ../../bundles/kubernetes-image-puller-operator
 - ../../bundles/curator

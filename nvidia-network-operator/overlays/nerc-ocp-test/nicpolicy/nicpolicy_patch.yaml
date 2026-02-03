@@ -1,0 +1,18 @@
+apiVersion: mellanox.com/v1alpha1
+kind: NicClusterPolicy
+metadata:
+  name: nic-cluster-policy
+spec:
+  tolerations:
+    - effect: NoSchedule
+      key: nvidia.com/gpu.product
+      operator: Equal
+      value: NVIDIA-A100-SXM4-40GB
+    - effect: NoSchedule
+      key: nvidia.com/gpu.product
+      operator: Equal
+      value: Tesla-V100-PCIE-32GB
+    - effect: NoSchedule
+      key: nvidia.com/gpu.product
+      operator: Equal
+      value: NVIDIA-H100-80GB-HBM3
