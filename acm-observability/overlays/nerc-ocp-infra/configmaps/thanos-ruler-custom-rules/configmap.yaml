@@ -23,11 +23,11 @@ data:
 
         - alert: CustomStoragePersistentVolumeClaimPending
           annotations:
-            summary: "{{ $labels.cluster }} PersistentVolumeClaim is pending"
+            summary: "{{ $labels.cluster }} PersistentVolumeClaim is pending with pod waiting"
             description: |
-              <https://grafana.apps.obs.nerc.mghpcc.org/explore?schemaVersion=1&panes=%7B%227rs%22:%7B%22datasource%22:%22a0fa9d88-8932-41f7-af80-6f678d4fb1e7%22,%22queries%22:%5B%7B%22exemplar%22:true,%22expr%22:%22kube_persistentvolumeclaim_status_phase%7Bphase%3D%5C%22Pending%5C%22%7D%20%3D%3D%201%22,%22refId%22:%22A%22,%22datasource%22:%7B%22type%22:%22prometheus%22,%22uid%22:%22a0fa9d88-8932-41f7-af80-6f678d4fb1e7%22%7D,%22editorMode%22:%22code%22,%22range%22:true,%22instant%22:true,%22legendFormat%22:%22__auto%22%7D%5D,%22range%22:%7B%22from%22:%22now-3h%22,%22to%22:%22now%22%7D%7D%7D&orgId=1|Click here to see these metrics in Observability Monitoring>
-              PersistentVolumeClaim {{ $labels.persistentvolumeclaim }} in Namespace {{ $labels.namespace }} on cluster {{ $labels.cluster }} has been in Pending state for more than 5 minutes.
-          expr: kube_persistentvolumeclaim_status_phase{phase="Pending"} == 1
+              <https://grafana.apps.obs.nerc.mghpcc.org/explore?schemaVersion=1&panes=%7B%227rs%22:%7B%22datasource%22:%22a0fa9d88-8932-41f7-af80-6f678d4fb1e7%22,%22queries%22:%5B%7B%22exemplar%22:true,%22expr%22:%22kube_persistentvolumeclaim_status_phase%7Bphase%3D%5C%22Pending%5C%22%7D%20%3D%3D%201%20and%20on(namespace%2C%20persistentvolumeclaim)%20kube_pod_spec_volumes_persistentvolumeclaims_info%22,%22refId%22:%22A%22,%22datasource%22:%7B%22type%22:%22prometheus%22,%22uid%22:%22a0fa9d88-8932-41f7-af80-6f678d4fb1e7%22%7D,%22editorMode%22:%22code%22,%22range%22:true,%22instant%22:true,%22legendFormat%22:%22__auto%22%7D%5D,%22range%22:%7B%22from%22:%22now-3h%22,%22to%22:%22now%22%7D%7D%7D&orgId=1|Click here to see these metrics in Observability Monitoring>
+              PersistentVolumeClaim {{ $labels.persistentvolumeclaim }} in Namespace {{ $labels.namespace }} on cluster {{ $labels.cluster }} has been in Pending state for more than 5 minutes and a pod is waiting for it.
+          expr: kube_persistentvolumeclaim_status_phase{phase="Pending"} == 1 and on(namespace, persistentvolumeclaim) kube_pod_spec_volumes_persistentvolumeclaims_info
           for: 5m
           labels:
             severity: warning
