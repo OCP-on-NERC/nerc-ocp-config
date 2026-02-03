@@ -8,6 +8,7 @@ data:
     names:
       - kube_persistentvolumeclaim_resource_requests_storage_bytes
       - kube_persistentvolumeclaim_info
+      - kube_persistentvolumeclaim_status_phase
       - kube_storageclass_info
       - kubelet_volume_stats_used_bytes
       - node_memory_MemTotal_bytes
