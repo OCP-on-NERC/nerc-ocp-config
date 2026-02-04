@@ -9,6 +9,9 @@ spec:
     config:
       default: all-disabled
       name: test-mig-parted-config
+  driver:
+    rdma:
+      enabled: true
   daemonsets:
     tolerations:
     - effect: NoSchedule
