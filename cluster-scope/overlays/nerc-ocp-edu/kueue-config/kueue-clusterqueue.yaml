@@ -10,7 +10,7 @@ spec:
         - name: "v100-flavor"
           resources:
             - name: "nvidia.com/gpu"
-              nominalQuota: 3
+              nominalQuota: 5
             - name: "cpu"
               nominalQuota: 20
             - name: "memory"
@@ -28,7 +28,7 @@ spec:
         - name: "a100-flavor"
           resources:
             - name: "nvidia.com/gpu"
-              nominalQuota: 0
+              nominalQuota: 1
             - name: "cpu"
               nominalQuota: 20
             - name: "memory"
