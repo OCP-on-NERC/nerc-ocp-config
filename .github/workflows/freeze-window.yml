@@ -1,0 +1,99 @@
+name: freeze-window
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+  # Allow manual re-runs for re-checking the freeze status
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    name: check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Evaluate freeze window (UTC)
+        id: freeze
+        shell: bash
+        run: |
+          echo "Actual time (UTC): $(date -u)"
+          echo ""
+
+          python3 - <<'PY'
+          import sys
+          import yaml
+          import datetime
+          import calendar
+
+          def to_epoch(s):
+              """Convert Zulu timestamp (YYYY-MM-DDTHH:MM:SSZ) to Unix epoch timestamp."""
+              dt = datetime.datetime.strptime(s, "%Y-%m-%dT%H:%M:%SZ")
+              return calendar.timegm(dt.timetuple())
+
+          def format_time(s):
+              """Format timestamp for the display."""
+              return s.replace("T", " ").replace("Z", " UTC")
+
+          try:
+              with open(".github/freeze-windows.yml", "r") as f:
+                  cfg = yaml.safe_load(f) or {}
+          except FileNotFoundError:
+              print("No freeze-windows.yml found - no freeze is active.")
+              sys.exit(0)
+          except yaml.YAMLError as e:
+              print(f"Error by parsing freeze-windows.yml: {e}")
+              sys.exit(1)
+
+          now = int(datetime.datetime.now(datetime.timezone.utc).timestamp())
+          windows = cfg.get("windows", [])
+
+          if not windows:
+              print("No freeze windows are configured - merges are allowed.")
+              sys.exit(0)
+
+          active = []
+          upcoming = []
+
+          for w in windows:
+              try:
+                  start = to_epoch(w["start"])
+                  end = to_epoch(w["end"])
+              except (KeyError, ValueError) as e:
+                  print(f"Warning: Invalid window entry has been found: {w} - {e}")
+                  continue
+
+              if start <= now <= end:
+                  active.append(w)
+              elif start > now:
+                  upcoming.append((start, w))
+
+          if active:
+              print("=" * 60)
+              print("FREEZE WINDOW IS ACTUAL ACTIVE - MERGES ARE BLOCKED")
+              print("=" * 60)
+              print("")
+              for w in active:
+                  print(f"  Period: {format_time(w['start'])} to {format_time(w['end'])}")
+                  print(f"  Reason: {w.get('reason', '(no reason was provided)')}")
+                  print("")
+              print("PR merges are during freeze windows not allowed.")
+              # Find the latest end time among all active freezes
+              latest_end = max(w['end'] for w in active)
+              print(f"Please wait until the freeze period has ended: {format_time(latest_end)}")
+              print("")
+              print("If this is an emergency situation, contact an admin with ruleset")
+              print("bypass permissions please.")
+              sys.exit(1)
+          else:
+              print("No freeze window is active - merges are allowed.")
+              if upcoming:
+                  upcoming.sort(key=lambda x: x[0])
+                  next_freeze = upcoming[0][1]
+                  print("")
+                  print(f"Next freeze window: {format_time(next_freeze['start'])}")
+                  print(f"  Reason: {next_freeze.get('reason', '(no reason was provided)')}")
+          PY

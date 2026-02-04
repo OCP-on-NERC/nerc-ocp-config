@@ -1,0 +1,19 @@
+# Freeze Windows Configuration
+# Define time periods when PR merges should be blocked.
+# All times must be in UTC (use Z suffix) to avoid DST issues.
+#
+# Format:
+#   windows:
+#     - start: "YYYY-MM-DDTHH:MM:SSZ"
+#       end: "YYYY-MM-DDTHH:MM:SSZ"
+#       reason: "Description of the freeze"
+
+windows:
+  # Example freeze windows - replace with actual freeze periods
+  - start: "2026-03-10T00:00:00Z"
+    end: "2026-03-12T23:59:59Z"
+    reason: "NERC maintenance freeze"
+
+  - start: "2026-04-01T13:00:00Z"
+    end: "2026-04-01T22:00:00Z"
+    reason: "Quarterly network change window"
