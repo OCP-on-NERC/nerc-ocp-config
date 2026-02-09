@@ -14,7 +14,7 @@ data:
           annotations:
             summary: "{{ $labels.cluster }} PersistentVolume is filling up"
             description: |
-              <https://grafana-open-cluster-management-observability.apps.infra.nerc.mghpcc.org/explore?orgId=1&left=%5B%22now-3h%22,%22now%22,%22Observatorium%22,%7B%22exemplar%22:true,%22expr%22:%22kubelet_volume_stats_available_bytes%7Bpersistentvolumeclaim!~%5C%22wal-logging-loki-ingester-.*%5C%22%7D%2Fkubelet_volume_stats_capacity_bytes%20%3C%200.10%22%7D%5D|Click here to see these metrics in Observability Monitoring>
+              <https://grafana.apps.obs.nerc.mghpcc.org/explore?orgId=1&left=%5B%22now-3h%22,%22now%22,%22Observatorium%22,%7B%22exemplar%22:true,%22expr%22:%22kubelet_volume_stats_available_bytes%7Bpersistentvolumeclaim!~%5C%22wal-logging-loki-ingester-.*%5C%22%7D%2Fkubelet_volume_stats_capacity_bytes%20%3C%200.10%22%7D%5D|Click here to see these metrics in Observability Monitoring>
               The PersistentVolume claimed by {{ $labels.persistentvolumeclaim }} in Namespace {{ $labels.namespace }} is only {{ $value | humanizePercentage }} free.
           expr: kubelet_volume_stats_available_bytes{persistentvolumeclaim!~"wal-logging-loki-ingester-.*",namespace!~"virt-test",persistentvolumeclaim!~"example-instance1-tfxn-pgdata"}/kubelet_volume_stats_capacity_bytes < 0.10
           for: 1m
@@ -40,7 +40,7 @@ data:
           annotations:
             summary: "{{ $labels.cluster }} Ceph Storage is filling up"
             description: |
-              <https://grafana-open-cluster-management-observability.apps.infra.nerc.mghpcc.org/explore?orgId=1&left=%5B%22now-3h%22,%22now%22,%22Observatorium%22,%7B%22exemplar%22:true,%22expr%22:%22(ceph_pool_raw_used_bytes%7Bpool%3D~%5C%22(nerc_ocp_prod_.*)%7C(nerc_ocp_infra_.*)%5C%22%7D)%20%2F%20on%20(cluster,%20namespace,%20pool)%20(ceph_pool_quota_max_bytes%7Bpool%3D~%5C%22(nerc_ocp_prod_.*)%7C(nerc_ocp_infra_.*)%5C%22%7D)%20%3E%200.80%22%7D%5D|Click here to see these metrics in Observability Monitoring>
+              <https://grafana.apps.obs.nerc.mghpcc.org/explore?orgId=1&left=%5B%22now-3h%22,%22now%22,%22Observatorium%22,%7B%22exemplar%22:true,%22expr%22:%22(ceph_pool_raw_used_bytes%7Bpool%3D~%5C%22(nerc_ocp_prod_.*)%7C(nerc_ocp_infra_.*)%5C%22%7D)%20%2F%20on%20(cluster,%20namespace,%20pool)%20(ceph_pool_quota_max_bytes%7Bpool%3D~%5C%22(nerc_ocp_prod_.*)%7C(nerc_ocp_infra_.*)%5C%22%7D)%20%3E%200.80%22%7D%5D|Click here to see these metrics in Observability Monitoring>
               The {{ $labels.cluster }} {{ $labels.pool }} pool Ceph Storage is {{ $value | humanizePercentage }} full.
           expr: (ceph_pool_raw_used_bytes{pool=~"(nerc_ocp_prod_.*)|(nerc_ocp_infra_.*)"}) / on (cluster, namespace, pool) (ceph_pool_quota_max_bytes{pool=~"(nerc_ocp_prod_.*)|(nerc_ocp_infra_.*)"}) > 0.80
           for: 1m
@@ -51,7 +51,7 @@ data:
           annotations:
             summary: "{{ $labels.cluster }} Ceph Storage is filling up and is predicted to run out of space in 90 days"
             description: |
-              <https://grafana-open-cluster-management-observability.apps.infra.nerc.mghpcc.org/explore?orgId=1&left=%5B%22now-1h%22,%22now%22,%22Observatorium%22,%7B%22exemplar%22:true,%22expr%22:%22ceph_pool_quota_max_bytes%7Bpool%3D~%5C%22(nerc_ocp_prod_.*)%7C(nerc_ocp_infra_.*)%5C%22%7D%20-%20on%20(cluster,%20namespace,%20pool,%20pod,%20tenant_id)%20predict_linear(ceph_pool_used_bytes%7Bpool%3D~%5C%22(nerc_ocp_prod_.*)%7C(nerc_ocp_infra_.*)%5C%22%7D%5B90d%5D,%2090%20*%2024%20*%2060%20*%2060)%20%3C%3D%200%22%7D%5D|Click here to see these metrics in Observability Monitoring>
+              <https://grafana.apps.obs.nerc.mghpcc.org/explore?orgId=1&left=%5B%22now-1h%22,%22now%22,%22Observatorium%22,%7B%22exemplar%22:true,%22expr%22:%22ceph_pool_quota_max_bytes%7Bpool%3D~%5C%22(nerc_ocp_prod_.*)%7C(nerc_ocp_infra_.*)%5C%22%7D%20-%20on%20(cluster,%20namespace,%20pool,%20pod,%20tenant_id)%20predict_linear(ceph_pool_used_bytes%7Bpool%3D~%5C%22(nerc_ocp_prod_.*)%7C(nerc_ocp_infra_.*)%5C%22%7D%5B90d%5D,%2090%20*%2024%20*%2060%20*%2060)%20%3C%3D%200%22%7D%5D|Click here to see these metrics in Observability Monitoring>
               The {{ $labels.cluster }} {{ $labels.pool }} pool Ceph Storage is predicted to run out of space in 90 days
           expr: ceph_pool_quota_max_bytes{pool=~"(nerc_ocp_prod_.*)|(nerc_ocp_infra_.*)"} - on (cluster, namespace, pool, pod, tenant_id) predict_linear(ceph_pool_used_bytes{pool=~"(nerc_ocp_prod_.*)|(nerc_ocp_infra_.*)"}[90d], 90 * 24 * 60 * 60) <= 0
           for: 1h
@@ -65,7 +65,7 @@ data:
           annotations:
             summary: "{{ $labels.cluster }} {{ $labels.instance }}: high TX error count on {{ $labels.device }}"
             description: |
-              <https://grafana-open-cluster-management-observability.apps.infra.nerc.mghpcc.org/explore?orgId=1&left=%5B%22now-3h%22,%22now%22,%22Observatorium%22,%7B%22exemplar%22:true,%22expr%22:%22increase(node_network_transmit_errs_total%5B15m%5D)%20%3E%2050%22%7D%5D|Click here to see these metrics in Observability Monitoring>
+              <https://grafana.apps.obs.nerc.mghpcc.org/explore?orgId=1&left=%5B%22now-3h%22,%22now%22,%22Observatorium%22,%7B%22exemplar%22:true,%22expr%22:%22increase(node_network_transmit_errs_total%5B15m%5D)%20%3E%2050%22%7D%5D|Click here to see these metrics in Observability Monitoring>
               TX errors > 50 over 15m (persisting 10m). Occasional single errors are ignored.
               {{ $value }} errors observed.
           expr: |
@@ -83,7 +83,7 @@ data:
           annotations:
             summary: "{{ $labels.cluster }} Server power supply failure"
             description: |
-              <https://grafana-open-cluster-management-observability.apps.infra.nerc.mghpcc.org/explore?orgId=1&left=%5B%22now-3h%22,%22now%22,%22Observatorium%22,%7B%22exemplar%22:true,%22expr%22:%22ipmi_power_state%7B%7D%20%3E%200%22%7D%5D|Click here to see these metrics in Observability Monitoring>
+              <https://grafana.apps.obs.nerc.mghpcc.org/explore?orgId=1&left=%5B%22now-3h%22,%22now%22,%22Observatorium%22,%7B%22exemplar%22:true,%22expr%22:%22ipmi_power_state%7B%7D%20%3E%200%22%7D%5D|Click here to see these metrics in Observability Monitoring>
               {{ $labels.cluster }} on instance {{$labels.instance }} has a non-zero power supply state {{ $value }}.
           expr: ipmi_power_state{} > 0
           for: 10m
@@ -94,7 +94,7 @@ data:
           annotations:
             summary: "{{ $labels.cluster }} Chassis power supply failure"
             description: |
-              <https://grafana-open-cluster-management-observability.apps.infra.nerc.mghpcc.org/explore?orgId=1&left=%5B%22now-3h%22,%22now%22,%22Observatorium%22,%7B%22exemplar%22:true,%22expr%22:%22ipmi_chassis_power_state%7B%7D%20%3D%3D%200%22%7D%5D|Click here to see these metrics in Observability Monitoring>
+              <https://grafana.apps.obs.nerc.mghpcc.org/explore?orgId=1&left=%5B%22now-3h%22,%22now%22,%22Observatorium%22,%7B%22exemplar%22:true,%22expr%22:%22ipmi_chassis_power_state%7B%7D%20%3D%3D%200%22%7D%5D|Click here to see these metrics in Observability Monitoring>
               {{ $labels.cluster}} on instance {{$labels.instance }} chassis power is off.
           expr: ipmi_chassis_power_state{} == 0
           for: 10m
@@ -105,7 +105,7 @@ data:
           annotations:
             summary: "{{ $labels.cluster }} Server memory error"
             description: |
-              <https://grafana-open-cluster-management-observability.apps.infra.nerc.mghpcc.org/explore?orgId=1&left=%5B%22now-3h%22,%22now%22,%22Observatorium%22,%7B%22exemplar%22:true,%22expr%22:%22ipmi_sensor_state%7Btype%3D%5C%22Memory%5C%22%7D%20%3E%200%22%7D%5D|Click here to see these metrics in Observability Monitoring>
+              <https://grafana.apps.obs.nerc.mghpcc.org/explore?orgId=1&left=%5B%22now-3h%22,%22now%22,%22Observatorium%22,%7B%22exemplar%22:true,%22expr%22:%22ipmi_sensor_state%7Btype%3D%5C%22Memory%5C%22%7D%20%3E%200%22%7D%5D|Click here to see these metrics in Observability Monitoring>
               {{ $labels.cluster}} on instance {{$labels.instance }} has a non-zero memory state {{ $value }}.
           expr: ipmi_sensor_state{type="Memory"} > 0
           for: 10m
@@ -116,7 +116,7 @@ data:
           annotations:
             summary: "{{ $labels.cluster }} Local disk error"
             description: |
-              <https://grafana-open-cluster-management-observability.apps.infra.nerc.mghpcc.org/explore?orgId=1&left=%5B%22now-3h%22,%22now%22,%22Observatorium%22,%7B%22exemplar%22:true,%22expr%22:%22ipmi_sensor_state%7Btype%3D%5C%22Drive%20Slot%5C%22%7D%20%3E%200%22%7D%5D|Click here to see these metrics in Observability Monitoring>
+              <https://grafana.apps.obs.nerc.mghpcc.org/explore?orgId=1&left=%5B%22now-3h%22,%22now%22,%22Observatorium%22,%7B%22exemplar%22:true,%22expr%22:%22ipmi_sensor_state%7Btype%3D%5C%22Drive%20Slot%5C%22%7D%20%3E%200%22%7D%5D|Click here to see these metrics in Observability Monitoring>
               {{ $labels.cluster}} on instance {{$labels.instance }} has a non-zero drive slot state {{ $value }}.
           expr: ipmi_sensor_state{type="Drive Slot"} > 0
           for: 10m
@@ -127,7 +127,7 @@ data:
           annotations:
             summary: "{{ $labels.cluster}} Internal cooling fan error on {{$labels.instance }}"
             description: |
-              <https://grafana-open-cluster-management-observability.apps.infra.nerc.mghpcc.org/explore?orgId=1&left=%5B%22now-3h%22,%22now%22,%22Observatorium%22,%7B%22exemplar%22:true,%22expr%22:%22ipmi_fan_speed_state%7B%7D%20%3E%200%22%7D%5D|Click here to see these metrics in Observability Monitoring>
+              <https://grafana.apps.obs.nerc.mghpcc.org/explore?orgId=1&left=%5B%22now-3h%22,%22now%22,%22Observatorium%22,%7B%22exemplar%22:true,%22expr%22:%22ipmi_fan_speed_state%7B%7D%20%3E%200%22%7D%5D|Click here to see these metrics in Observability Monitoring>
               {{ $labels.cluster}} on instance {{$labels.instance }} has a non-zero fan speed state {{ $value }}.
           expr: ipmi_fan_speed_state{} > 0
           for: 10m
@@ -141,7 +141,7 @@ data:
           annotations:
             summary: "{{ $labels.cluster}} node {{$labels.node }} not in ready status"
             description: |
-              <https://grafana-open-cluster-management-observability.apps.infra.nerc.mghpcc.org/explore?orgId=1&left=%5B%22now-3h%22,%22now%22,%22Observatorium%22,%7B%22exemplar%22:true,%22expr%22:%22kube_node_status_condition%7Bcondition%3D%5C%22Ready%5C%22,%20status!%3D%5C%22true%5C%22%7D%20%3E%200%22%7D%5D|Click here to see these metrics in Observability Monitoring>
+              <https://grafana.apps.obs.nerc.mghpcc.org/explore?orgId=1&left=%5B%22now-3h%22,%22now%22,%22Observatorium%22,%7B%22exemplar%22:true,%22expr%22:%22kube_node_status_condition%7Bcondition%3D%5C%22Ready%5C%22,%20status!%3D%5C%22true%5C%22%7D%20%3E%200%22%7D%5D|Click here to see these metrics in Observability Monitoring>
               {{ $labels.cluster}} node {{$labels.node }} is not in ready status.
           expr: kube_node_status_condition{condition="Ready", status!="true"} > 0
           for: 5m
@@ -152,7 +152,7 @@ data:
           annotations:
             summary: "{{ $labels.cluster}} node {{$labels.instance }} low on memory"
             description: |
-              <https://grafana-open-cluster-management-observability.apps.infra.nerc.mghpcc.org/explore?orgId=1&left=%5B%22now-1h%22,%22now%22,%22Observatorium%22,%7B%22exemplar%22:true,%22expr%22:%22node_memory_MemAvailable_bytes%2Fnode_memory_MemTotal_bytes%20%3C%200.2%22%7D%5D|Click here to see these metrics in Observability Monitoring>
+              <https://grafana.apps.obs.nerc.mghpcc.org/explore?orgId=1&left=%5B%22now-1h%22,%22now%22,%22Observatorium%22,%7B%22exemplar%22:true,%22expr%22:%22node_memory_MemAvailable_bytes%2Fnode_memory_MemTotal_bytes%20%3C%200.2%22%7D%5D|Click here to see these metrics in Observability Monitoring>
               {{ $labels.cluster}} node {{$labels.instance}} is low on memory.
           expr: node_memory_MemAvailable_bytes/node_memory_MemTotal_bytes < 0.2
           for: 1m
@@ -166,7 +166,7 @@ data:
           annotations:
             summary: "{{ $labels.cluster }} - ope CPU usage above 80% of limit"
             description: |
-              <https://grafana-open-cluster-management-observability.apps.infra.nerc.mghpcc.org/explore?orgId=1&left=%5B%22now-3h%22,%22now%22,%22Observatorium%22,%7B%22exemplar%22:true,%22expr%22:%22sum(avg_over_time(node_namespace_pod_container:container_cpu_usage_seconds_total:sum_rate%5B1h%5D))%20by%20(cluster,%20namespace,%20pod)%20%2F%20avg(kube_pod_container_resource_limits%7Bresource%3D%5C%22cpu%5C%22%7D)%20by%20(cluster,%20namespace,%20pod)%20%3E%200.80%22%7D%5D|Click here to see these metrics in Observability Monitoring>
+              <https://grafana.apps.obs.nerc.mghpcc.org/explore?orgId=1&left=%5B%22now-3h%22,%22now%22,%22Observatorium%22,%7B%22exemplar%22:true,%22expr%22:%22sum(avg_over_time(node_namespace_pod_container:container_cpu_usage_seconds_total:sum_rate%5B1h%5D))%20by%20(cluster,%20namespace,%20pod)%20%2F%20avg(kube_pod_container_resource_limits%7Bresource%3D%5C%22cpu%5C%22%7D)%20by%20(cluster,%20namespace,%20pod)%20%3E%200.80%22%7D%5D|Click here to see these metrics in Observability Monitoring>
               CPU usage is at {{ $value | humanizePercentage }} in namespace {{ $labels.namespace }}, cluster {{ $labels.cluster }}.
           expr: sum(avg_over_time(kube_resourcequota{cluster="nerc-ocp-prod",namespace="rhods-notebooks",resource="limits.cpu",type="used"}[10m:5m])) / sum(avg_over_time(kube_resourcequota{cluster="nerc-ocp-prod",namespace="rhods-notebooks",resource="limits.cpu",type="hard"}[10m:5m])) > 0.80
           for: 10m
@@ -428,7 +428,7 @@ data:
           annotations:
             summary: "{{ $labels.cluster }} Machine Config Pool {{ $labels.pool }} stuck updating for >30min"
             description: |
-              <https://grafana-open-cluster-management-observability.apps.infra.nerc.mghpcc.org/explore?orgId=1&left=%5B%22now-3h%22,%22now%22,%22Observatorium%22,%7B%22exemplar%22:true,%22expr%22:%22(mco_machine_count%20-%20mco_updated_machine_count)%20%3E%200%20and%20mco_unavailable_machine_count%20%3E%200%22%7D%5D|Click here to see these metrics in Observability Monitoring>
+              <https://grafana.apps.obs.nerc.mghpcc.org/explore?orgId=1&left=%5B%22now-3h%22,%22now%22,%22Observatorium%22,%7B%22exemplar%22:true,%22expr%22:%22(mco_machine_count%20-%20mco_updated_machine_count)%20%3E%200%20and%20mco_unavailable_machine_count%20%3E%200%22%7D%5D|Click here to see these metrics in Observability Monitoring>
               Machine Config Pool {{ $labels.pool }} in cluster {{ $labels.cluster }} has been updating for more than 30 minutes. This could indicate a stuck update that might require manual intervention.
           expr: ((mco_machine_count - mco_updated_machine_count) > 0 and mco_unavailable_machine_count > 0) > 0
           for: 30m
@@ -439,7 +439,7 @@ data:
           annotations:
             summary: "{{ $labels.cluster }} Machine Config Pool {{ $labels.pool }} has unavailable machines for >15min"
             description: |
-              <https://grafana-open-cluster-management-observability.apps.infra.nerc.mghpcc.org/explore?orgId=1&left=%5B%22now-3h%22,%22now%22,%22Observatorium%22,%7B%22exemplar%22:true,%22expr%22:%22mco_unavailable_machine_count%20%3E%200%22%7D%5D|Click here to see these metrics in Observability Monitoring>
+              <https://grafana.apps.obs.nerc.mghpcc.org/explore?orgId=1&left=%5B%22now-3h%22,%22now%22,%22Observatorium%22,%7B%22exemplar%22:true,%22expr%22:%22mco_unavailable_machine_count%20%3E%200%22%7D%5D|Click here to see these metrics in Observability Monitoring>
               Machine Config Pool {{ $labels.pool }} in cluster {{ $labels.cluster }} has {{ $value }} unavailable machines for more than 15 minutes. This indicates machines are not ready and might require investigation.
           expr: mco_unavailable_machine_count > 0
           for: 15m
@@ -450,7 +450,7 @@ data:
           annotations:
             summary: "{{ $labels.cluster }} Machine Config Pool {{ $labels.pool }} is degraded"
             description: |
-              <https://grafana-open-cluster-management-observability.apps.infra.nerc.mghpcc.org/explore?orgId=1&left=%5B%22now-3h%22,%22now%22,%22Observatorium%22,%7B%22exemplar%22:true,%22expr%22:%22mco_degraded_machine_count%20%3E%200%22%7D%5D|Click here to see these metrics in Observability Monitoring>
+              <https://grafana.apps.obs.nerc.mghpcc.org/explore?orgId=1&left=%5B%22now-3h%22,%22now%22,%22Observatorium%22,%7B%22exemplar%22:true,%22expr%22:%22mco_degraded_machine_count%20%3E%200%22%7D%5D|Click here to see these metrics in Observability Monitoring>
               Machine Config Pool {{ $labels.pool }} in cluster {{ $labels.cluster }} has {{ $value }} degraded machines. This indicates the pool is in a degraded state and requires immediate attention.
           expr: mco_degraded_machine_count > 0
           for: 5m

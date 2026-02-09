@@ -1,0 +1,12 @@
+apiVersion: sriovnetwork.openshift.io/v1
+kind: SriovOperatorConfig
+metadata:
+  name: default
+spec:
+  configurationMode: daemon
+  disableDrain: false
+  enableInjector: true
+  enableOperatorWebhook: true
+  featureGates:
+    resourceInjectorMatchCondition: true
+  logLevel: 2
