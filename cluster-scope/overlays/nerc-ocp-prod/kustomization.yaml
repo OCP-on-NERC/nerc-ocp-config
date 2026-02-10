@@ -168,10 +168,10 @@ patches:
   patch: |
     - op: replace
       path: /spec/channel
-      value: stable-2.22
+      value: stable-2.25
     - op: replace
       path: /spec/startingCSV
-      value: rhods-operator.2.22.1
+      value: rhods-operator.2.25.1
 - target:
     kind: Subscription
     name: gpu-operator-certified
