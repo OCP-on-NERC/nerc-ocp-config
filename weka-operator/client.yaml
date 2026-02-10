@@ -1,0 +1,27 @@
+apiVersion: weka.weka.io/v1alpha1
+kind: WekaClient
+metadata:
+  name: weka-clients
+  namespace: weka-operator-system
+spec:
+  serviceAccountName: weka-client
+  image: quay.io/weka.io/weka-in-container:4.4.5.128-k8s
+  imagePullSecret: weka-quayio-creds
+  driversDistService: "https://weka-driver-builder:60002"
+  port: 45001
+  agentPort: 45000
+  network:
+    #ethDevice: bond0.2175
+    udpMode: true
+    deviceSubnets:
+      - 10.30.12.0/24
+  coresNum: 2
+  joinIpPorts: 
+   - 10.30.11.4:14000
+   - 10.30.11.5:14000
+   - 10.30.11.6:14000
+  nodeSelector:
+    node-role.kubernetes.io/worker: ""
+  tracesConfiguration:
+    maxCapacityPerIoNode: 10
+    ensureFreeSpace: 50
