@@ -6,4 +6,4 @@ spec:
   channel: stable-4.19
   clusterID: 2b3d6e03-1bfe-4d1e-bf32-3e2df96fc2bd
   desiredUpdate:
-    version: 4.19.9
+    version: 4.19.22
