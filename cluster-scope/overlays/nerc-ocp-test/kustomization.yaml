@@ -45,6 +45,7 @@ resources:
 - ../../bundles/authorino-operator
 - ../../bundles/servicemesh-operator
 - ../../bundles/cluster-observability-operator
+- ../../bundles/clickhouse-operator
 
 components:
   - ../../components/nerc-oauth-github
