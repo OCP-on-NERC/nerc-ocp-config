@@ -154,16 +154,6 @@ patches:
       value: stable-6.2
 - target:
     kind: Subscription
-    name: authorino-operator
-  patch: |
-    - op: replace
-      path: /spec/channel
-      value: stable
-    - op: replace
-      path: /spec/startingCSV
-      value: authorino-operator.v1.2.3
-- target:
-    kind: Subscription
     name: rhods-operator
   patch: |
     - op: replace
