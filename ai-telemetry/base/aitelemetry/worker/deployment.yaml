@@ -15,6 +15,8 @@ spec:
       volumes:
         - name: "ai-telemetry-developer"
           emptyDir: {}
+        - name: "nairr"
+          emptyDir: {}
       initContainers:
         - resources: {}
           terminationMessagePath: /dev/termination-log
@@ -26,6 +28,8 @@ spec:
           volumeMounts:
             - name: "ai-telemetry-developer"
               mountPath: "/home/default/ai-telemetry-static/webawesome/templates/en-us/ai-telemetry-developer"
+            - name: "nairr"
+              mountPath: "/home/default/ai-telemetry-static/webawesome/templates/en-us/user/project/NAIRR2025"
           terminationMessagePolicy: File
           envFrom:
             - secretRef:
@@ -34,6 +38,7 @@ spec:
           args:
             - >-
               git clone https://computate.org:$GITHUB_DEVELOPERS_TOKEN@github.com/computate-org/ai-telemetry-developer.git /home/default/ai-telemetry-static/webawesome/templates/en-us/ai-telemetry-developer;
+              git clone https://computate:$GITHUB_PERSONAL_TOKEN@github.com/computate/NAIRR2025.git /home/default/ai-telemetry-static/webawesome/templates/en-us/user/project/NAIRR2025;
       containers:
         - name: aitelemetry
           image: 'quay.io/nerc-images/ai-telemetry:latest'
@@ -71,6 +76,8 @@ spec:
           volumeMounts:
             - name: "ai-telemetry-developer"
               mountPath: "/home/default/ai-telemetry-static/webawesome/templates/en-us/ai-telemetry-developer"
+            - name: "nairr"
+              mountPath: "/home/default/ai-telemetry-static/webawesome/templates/en-us/user/project/NAIRR2025"
           env:
             - name: ENABLE_ZOOKEEPER_CLUSTER
               value: 'false'
