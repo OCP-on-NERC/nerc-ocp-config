@@ -7,8 +7,10 @@ spec:
   controller:
     resources:
       limits:
+        cpu: "8"
         memory: 20Gi
       requests:
+        cpu: "4"
         memory: 15Gi
   server:
     insecure: true
