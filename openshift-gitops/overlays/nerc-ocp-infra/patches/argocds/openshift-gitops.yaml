@@ -4,6 +4,12 @@ metadata:
   name: openshift-gitops
   namespace: openshift-gitops
 spec:
+  controller:
+    resources:
+      limits:
+        memory: 20Gi
+      requests:
+        memory: 15Gi
   server:
     insecure: true
     route:
