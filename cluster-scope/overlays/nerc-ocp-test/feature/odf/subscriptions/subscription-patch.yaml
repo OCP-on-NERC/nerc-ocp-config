@@ -3,4 +3,4 @@ kind: Subscription
 metadata:
   name: odf-operator
 spec:
-  channel: stable-4.19
+  channel: stable-4.20
