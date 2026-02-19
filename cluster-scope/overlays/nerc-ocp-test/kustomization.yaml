@@ -138,3 +138,10 @@ patches:
     - op: replace
       path: /spec/channel
       value: stable-1.36
+- target:
+    kind: Subscription
+    name: gpu-operator-certified
+  patch: |
+    - op: replace
+      path: /spec/channel
+      value: v25.10
