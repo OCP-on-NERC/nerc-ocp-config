@@ -10,6 +10,9 @@ spec:
       default: all-disabled
       name: test-mig-parted-config
   driver:
+    upgradePolicy:
+      autoUpgrade: true
+    version: "580.105.08"
     rdma:
       enabled: true
   daemonsets:
