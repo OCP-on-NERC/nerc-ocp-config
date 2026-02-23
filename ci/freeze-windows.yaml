@@ -1,0 +1,11 @@
+# Freeze Windows Configuration
+# Define time periods when PR merges should be blocked.
+# All times must be in UTC (use Z suffix) to avoid DST issues.
+#
+# Format:
+#   windows:
+#     - start: "YYYY-MM-DDTHH:MM:SSZ"
+#       end: "YYYY-MM-DDTHH:MM:SSZ"
+#       reason: "Description of the freeze"
+
+windows:
