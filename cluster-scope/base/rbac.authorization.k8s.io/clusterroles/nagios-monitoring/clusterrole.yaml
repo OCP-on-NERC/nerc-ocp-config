@@ -14,8 +14,6 @@ rules:
     - "config.openshift.io"
     - "machineconfiguration.openshift.io"
     - "argoproj.io"
-    - "datasciencecluster.opendatahub.io"
-    - "dscinitialization.opendatahub.io"
   resources:
     - "*"
   verbs:
