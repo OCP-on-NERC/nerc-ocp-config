@@ -168,7 +168,7 @@ patches:
   patch: |
     - op: replace
       path: /spec/channel
-      value: v25.3
+      value: v25.10
 - target:
     kind: Subscription
     name: serverless-operator

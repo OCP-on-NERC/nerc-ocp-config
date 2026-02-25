@@ -3,6 +3,12 @@ kind: ClusterPolicy
 metadata:
   name: gpu-cluster-policy
 spec:
+  driver:
+    upgradePolicy:
+      autoUpgrade: true
+    version: "580.105.08"
+    repository: "nvcr.io/nvidia"
+    image: "driver"
   daemonsets:
     tolerations:
     - effect: NoSchedule
