@@ -21,6 +21,8 @@ resources:
 - ../../bundles/rhods-operator
 - ../../bundles/node-feature-discovery
 - ../../bundles/nvidia-gpu-operator
+- ../../bundles/nvidia-network-operator
+- ../../bundles/openshift-sriov-network-operator
 - ../../bundles/openshift-custom-metrics-autoscaler-operator
 - ../../bundles/clusterissuer-http01
 - ../../bundles/curator
