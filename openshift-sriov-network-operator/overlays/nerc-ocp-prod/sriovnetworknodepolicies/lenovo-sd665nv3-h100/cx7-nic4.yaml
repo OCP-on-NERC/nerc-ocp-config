@@ -1,0 +1,20 @@
+apiVersion: sriovnetwork.openshift.io/v1
+kind: SriovNetworkNodePolicy
+metadata:
+  name: cx7-nic4
+  namespace: openshift-sriov-network-operator
+spec:
+  resourceName: cx7_nic4
+  nodeSelector:
+    feature.node.kubernetes.io/network-sriov.capable: "true"
+  priority: 10
+  mtu: 9000
+  numVfs: 1
+  nicSelector:
+    pfNames:
+      - nic4
+    vendor: "15b3"
+    deviceID: "1021"
+  deviceType: netdevice
+  isRdma: true
+  linkType: eth
