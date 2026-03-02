@@ -45,6 +45,7 @@ resources:
 - ../../bundles/authorino-operator
 - ../../bundles/servicemesh-operator
 - ../../bundles/cluster-observability-operator
+- ../../bundles/strimzi-kafka-operator
 
 components:
   - ../../components/nerc-oauth-github
@@ -145,3 +146,10 @@ patches:
     - op: replace
       path: /spec/channel
       value: v25.10
+- target:
+    kind: Subscription
+    name: strimzi-kafka-operator
+  patch: |
+    - op: replace
+      path: /spec/channel
+      value: strimzi-0.50.x
