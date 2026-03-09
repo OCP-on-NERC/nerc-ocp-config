@@ -52,7 +52,7 @@ data:
       # Consolidate kube*:
       - __name__=~"^kube_(?:node|pod|job|namespace)_.*"
       - __name__=~"^mco_.*"
-      - __name__=~"^llm_performance_.*"
+      - __name__=~"^llm_load_test_.*"
       - __name__=~"^vllm:.*"
       - __name__=~"^acm_managed_cluster_.*"
       - __name__=~"^thanos_.*"
