@@ -66,370 +66,7 @@ spec:
                 "barAlignment": 0,
                 "barWidthFactor": 0.6,
                 "drawStyle": "line",
-                "fillOpacity": 0,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "insertNulls": false,
-                "lineInterpolation": "smooth",
-                "lineWidth": 2,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "never",
-                "spanNulls": false,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  }
-                ]
-              },
-              "unit": "ms"
-            },
-            "overrides": [
-              {
-                "matcher": {
-                  "id": "byRegexp",
-                  "options": ".*P95.*"
-                },
-                "properties": [
-                  {
-                    "id": "custom.lineStyle",
-                    "value": {
-                      "dash": [
-                        10,
-                        5
-                      ],
-                      "fill": "dash"
-                    }
-                  },
-                  {
-                    "id": "custom.lineWidth",
-                    "value": 1
-                  }
-                ]
-              }
-            ]
-          },
-          "gridPos": {
-            "h": 9,
-            "w": 8,
-            "x": 0,
-            "y": 1
-          },
-          "id": 3,
-          "options": {
-            "legend": {
-              "calcs": [
-                "lastNotNull"
-              ],
-              "displayMode": "table",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "multi",
-              "sort": "desc"
-            }
-          },
-          "pluginVersion": "11.3.0",
-          "targets": [
-            {
-              "editorMode": "code",
-              "expr": "llm_load_test_response_time_mean_ms{model=~\"$model\", namespace=~\"$namespace\"}",
-              "legendFormat": "{{model}} Mean",
-              "range": true,
-              "refId": "A"
-            },
-            {
-              "editorMode": "code",
-              "expr": "llm_load_test_response_time_p95_ms{model=~\"$model\", namespace=~\"$namespace\"}",
-              "legendFormat": "{{model}} P95",
-              "range": true,
-              "refId": "B"
-            }
-          ],
-          "title": "Response Time (ms)",
-          "type": "timeseries"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisBorderShow": false,
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "barWidthFactor": 0.6,
-                "drawStyle": "line",
-                "fillOpacity": 0,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "insertNulls": false,
-                "lineInterpolation": "smooth",
-                "lineWidth": 2,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "never",
-                "spanNulls": false,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  }
-                ]
-              },
-              "unit": "ms"
-            },
-            "overrides": [
-              {
-                "matcher": {
-                  "id": "byRegexp",
-                  "options": ".*P95.*"
-                },
-                "properties": [
-                  {
-                    "id": "custom.lineStyle",
-                    "value": {
-                      "dash": [
-                        10,
-                        5
-                      ],
-                      "fill": "dash"
-                    }
-                  },
-                  {
-                    "id": "custom.lineWidth",
-                    "value": 1
-                  }
-                ]
-              }
-            ]
-          },
-          "gridPos": {
-            "h": 9,
-            "w": 8,
-            "x": 8,
-            "y": 1
-          },
-          "id": 2,
-          "options": {
-            "legend": {
-              "calcs": [
-                "lastNotNull"
-              ],
-              "displayMode": "table",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "multi",
-              "sort": "desc"
-            }
-          },
-          "pluginVersion": "11.3.0",
-          "targets": [
-            {
-              "editorMode": "code",
-              "expr": "llm_load_test_tpot_mean_ms{model=~\"$model\", namespace=~\"$namespace\"}",
-              "legendFormat": "{{model}} Mean",
-              "range": true,
-              "refId": "A"
-            },
-            {
-              "editorMode": "code",
-              "expr": "llm_load_test_tpot_p95_ms{model=~\"$model\", namespace=~\"$namespace\"}",
-              "legendFormat": "{{model}} P95",
-              "range": true,
-              "refId": "B"
-            }
-          ],
-          "title": "Time Per Output Token (ms)",
-          "type": "timeseries"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisBorderShow": false,
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "barWidthFactor": 0.6,
-                "drawStyle": "line",
-                "fillOpacity": 0,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "insertNulls": false,
-                "lineInterpolation": "smooth",
-                "lineWidth": 2,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "never",
-                "spanNulls": false,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  }
-                ]
-              },
-              "unit": "ms"
-            },
-            "overrides": [
-              {
-                "matcher": {
-                  "id": "byRegexp",
-                  "options": ".*P95.*"
-                },
-                "properties": [
-                  {
-                    "id": "custom.lineStyle",
-                    "value": {
-                      "dash": [
-                        10,
-                        5
-                      ],
-                      "fill": "dash"
-                    }
-                  },
-                  {
-                    "id": "custom.lineWidth",
-                    "value": 1
-                  }
-                ]
-              }
-            ]
-          },
-          "gridPos": {
-            "h": 9,
-            "w": 8,
-            "x": 16,
-            "y": 1
-          },
-          "id": 12,
-          "options": {
-            "legend": {
-              "calcs": [
-                "lastNotNull"
-              ],
-              "displayMode": "table",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "multi",
-              "sort": "desc"
-            }
-          },
-          "pluginVersion": "11.3.0",
-          "targets": [
-            {
-              "editorMode": "code",
-              "expr": "llm_load_test_ttft_mean_ms{model=~\"$model\", namespace=~\"$namespace\"}",
-              "legendFormat": "{{model}} Mean",
-              "range": true,
-              "refId": "A"
-            },
-            {
-              "editorMode": "code",
-              "expr": "llm_load_test_ttft_p95_ms{model=~\"$model\", namespace=~\"$namespace\"}",
-              "legendFormat": "{{model}} P95",
-              "range": true,
-              "refId": "B"
-            }
-          ],
-          "title": "Time to First Token (ms)",
-          "type": "timeseries"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisBorderShow": false,
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "barWidthFactor": 0.6,
-                "drawStyle": "line",
-                "fillOpacity": 0,
+                "fillOpacity": 10,
                 "gradientMode": "none",
                 "hideFrom": {
                   "legend": false,
@@ -468,15 +105,16 @@ spec:
             "overrides": []
           },
           "gridPos": {
-            "h": 8,
+            "h": 9,
             "w": 8,
             "x": 0,
-            "y": 10
+            "y": 1
           },
-          "id": 5,
+          "id": 3,
           "options": {
             "legend": {
               "calcs": [
+                "mean",
                 "lastNotNull"
               ],
               "displayMode": "table",
@@ -492,13 +130,42 @@ spec:
           "targets": [
             {
               "editorMode": "code",
-              "expr": "llm_load_test_itl_mean_ms{model=~\"$model\", namespace=~\"$namespace\"}",
-              "legendFormat": "{{model}}",
+              "expr": "llm_load_test_response_time_p99_ms{model=~\"$model\", namespace=~\"$namespace\"}",
+              "legendFormat": "{{model}} P99",
               "range": true,
               "refId": "A"
+            },
+            {
+              "editorMode": "code",
+              "expr": "llm_load_test_response_time_p95_ms{model=~\"$model\", namespace=~\"$namespace\"}",
+              "legendFormat": "{{model}} P95",
+              "range": true,
+              "refId": "B"
+            },
+            {
+              "editorMode": "code",
+              "expr": "llm_load_test_response_time_p90_ms{model=~\"$model\", namespace=~\"$namespace\"}",
+              "legendFormat": "{{model}} P90",
+              "range": true,
+              "refId": "C"
+            },
+            {
+              "editorMode": "code",
+              "expr": "llm_load_test_response_time_p80_ms{model=~\"$model\", namespace=~\"$namespace\"}",
+              "legendFormat": "{{model}} P80",
+              "range": true,
+              "refId": "D"
+            },
+            {
+              "editorMode": "code",
+              "expr": "llm_load_test_response_time_mean_ms{model=~\"$model\", namespace=~\"$namespace\"}",
+              "legendFormat": "{{model}} Mean",
+              "range": true,
+              "refId": "E"
             }
           ],
-          "title": "Inter-Token Latency — Mean (ms)",
+          "description": "End-to-end request latency from send to final response, including network and inference time.",
+          "title": "Response Time (ms)",
           "type": "timeseries"
         },
         {
@@ -520,7 +187,491 @@ spec:
                 "barAlignment": 0,
                 "barWidthFactor": 0.6,
                 "drawStyle": "line",
-                "fillOpacity": 0,
+                "fillOpacity": 10,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "smooth",
+                "lineWidth": 2,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "never",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  }
+                ]
+              },
+              "unit": "ms"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 9,
+            "w": 8,
+            "x": 8,
+            "y": 1
+          },
+          "id": 2,
+          "options": {
+            "legend": {
+              "calcs": [
+                "mean",
+                "lastNotNull"
+              ],
+              "displayMode": "table",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "multi",
+              "sort": "desc"
+            }
+          },
+          "pluginVersion": "11.3.0",
+          "targets": [
+            {
+              "editorMode": "code",
+              "expr": "llm_load_test_tpot_p99_ms{model=~\"$model\", namespace=~\"$namespace\"}",
+              "legendFormat": "{{model}} P99",
+              "range": true,
+              "refId": "A"
+            },
+            {
+              "editorMode": "code",
+              "expr": "llm_load_test_tpot_p95_ms{model=~\"$model\", namespace=~\"$namespace\"}",
+              "legendFormat": "{{model}} P95",
+              "range": true,
+              "refId": "B"
+            },
+            {
+              "editorMode": "code",
+              "expr": "llm_load_test_tpot_p90_ms{model=~\"$model\", namespace=~\"$namespace\"}",
+              "legendFormat": "{{model}} P90",
+              "range": true,
+              "refId": "C"
+            },
+            {
+              "editorMode": "code",
+              "expr": "llm_load_test_tpot_p80_ms{model=~\"$model\", namespace=~\"$namespace\"}",
+              "legendFormat": "{{model}} P80",
+              "range": true,
+              "refId": "D"
+            },
+            {
+              "editorMode": "code",
+              "expr": "llm_load_test_tpot_mean_ms{model=~\"$model\", namespace=~\"$namespace\"}",
+              "legendFormat": "{{model}} Mean",
+              "range": true,
+              "refId": "E"
+            }
+          ],
+          "description": "Time to generate each output token after the first. Lower values mean faster streaming generation.",
+          "title": "Time Per Output Token (ms)",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "barWidthFactor": 0.6,
+                "drawStyle": "line",
+                "fillOpacity": 10,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "smooth",
+                "lineWidth": 2,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "never",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  }
+                ]
+              },
+              "unit": "ms"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 9,
+            "w": 8,
+            "x": 16,
+            "y": 1
+          },
+          "id": 12,
+          "options": {
+            "legend": {
+              "calcs": [
+                "mean",
+                "lastNotNull"
+              ],
+              "displayMode": "table",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "multi",
+              "sort": "desc"
+            }
+          },
+          "pluginVersion": "11.3.0",
+          "targets": [
+            {
+              "editorMode": "code",
+              "expr": "llm_load_test_ttft_p99_ms{model=~\"$model\", namespace=~\"$namespace\"}",
+              "legendFormat": "{{model}} P99",
+              "range": true,
+              "refId": "A"
+            },
+            {
+              "editorMode": "code",
+              "expr": "llm_load_test_ttft_p95_ms{model=~\"$model\", namespace=~\"$namespace\"}",
+              "legendFormat": "{{model}} P95",
+              "range": true,
+              "refId": "B"
+            },
+            {
+              "editorMode": "code",
+              "expr": "llm_load_test_ttft_p90_ms{model=~\"$model\", namespace=~\"$namespace\"}",
+              "legendFormat": "{{model}} P90",
+              "range": true,
+              "refId": "C"
+            },
+            {
+              "editorMode": "code",
+              "expr": "llm_load_test_ttft_p80_ms{model=~\"$model\", namespace=~\"$namespace\"}",
+              "legendFormat": "{{model}} P80",
+              "range": true,
+              "refId": "D"
+            },
+            {
+              "editorMode": "code",
+              "expr": "llm_load_test_ttft_mean_ms{model=~\"$model\", namespace=~\"$namespace\"}",
+              "legendFormat": "{{model}} Mean",
+              "range": true,
+              "refId": "E"
+            }
+          ],
+          "description": "Time from sending the request to receiving the first generated token. Measures initial responsiveness.",
+          "title": "Time to First Token (ms)",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "barWidthFactor": 0.6,
+                "drawStyle": "line",
+                "fillOpacity": 10,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "smooth",
+                "lineWidth": 2,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "never",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  }
+                ]
+              },
+              "unit": "ms"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 9,
+            "w": 8,
+            "x": 0,
+            "y": 10
+          },
+          "id": 5,
+          "options": {
+            "legend": {
+              "calcs": [
+                "mean",
+                "lastNotNull"
+              ],
+              "displayMode": "table",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "multi",
+              "sort": "desc"
+            }
+          },
+          "pluginVersion": "11.3.0",
+          "targets": [
+            {
+              "editorMode": "code",
+              "expr": "llm_load_test_itl_p99_ms{model=~\"$model\", namespace=~\"$namespace\"}",
+              "legendFormat": "{{model}} P99",
+              "range": true,
+              "refId": "A"
+            },
+            {
+              "editorMode": "code",
+              "expr": "llm_load_test_itl_p95_ms{model=~\"$model\", namespace=~\"$namespace\"}",
+              "legendFormat": "{{model}} P95",
+              "range": true,
+              "refId": "B"
+            },
+            {
+              "editorMode": "code",
+              "expr": "llm_load_test_itl_p90_ms{model=~\"$model\", namespace=~\"$namespace\"}",
+              "legendFormat": "{{model}} P90",
+              "range": true,
+              "refId": "C"
+            },
+            {
+              "editorMode": "code",
+              "expr": "llm_load_test_itl_p80_ms{model=~\"$model\", namespace=~\"$namespace\"}",
+              "legendFormat": "{{model}} P80",
+              "range": true,
+              "refId": "D"
+            },
+            {
+              "editorMode": "code",
+              "expr": "llm_load_test_itl_mean_ms{model=~\"$model\", namespace=~\"$namespace\"}",
+              "legendFormat": "{{model}} Mean",
+              "range": true,
+              "refId": "E"
+            }
+          ],
+          "description": "Time between consecutive output tokens during streaming. Indicates how smooth the token stream feels to users.",
+          "title": "Inter-Token Latency (ms)",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "description": "Time from sending the request to the server's first acknowledgement, before any tokens are generated.",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "barWidthFactor": 0.6,
+                "drawStyle": "line",
+                "fillOpacity": 10,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "smooth",
+                "lineWidth": 2,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "never",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  }
+                ]
+              },
+              "unit": "ms"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 9,
+            "w": 8,
+            "x": 8,
+            "y": 10
+          },
+          "id": 24,
+          "options": {
+            "legend": {
+              "calcs": [
+                "mean",
+                "lastNotNull"
+              ],
+              "displayMode": "table",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "multi",
+              "sort": "desc"
+            }
+          },
+          "pluginVersion": "11.3.0",
+          "targets": [
+            {
+              "editorMode": "code",
+              "expr": "llm_load_test_tt_ack_p99_ms{model=~\"$model\", namespace=~\"$namespace\"}",
+              "legendFormat": "{{model}} P99",
+              "range": true,
+              "refId": "A"
+            },
+            {
+              "editorMode": "code",
+              "expr": "llm_load_test_tt_ack_p95_ms{model=~\"$model\", namespace=~\"$namespace\"}",
+              "legendFormat": "{{model}} P95",
+              "range": true,
+              "refId": "B"
+            },
+            {
+              "editorMode": "code",
+              "expr": "llm_load_test_tt_ack_p90_ms{model=~\"$model\", namespace=~\"$namespace\"}",
+              "legendFormat": "{{model}} P90",
+              "range": true,
+              "refId": "C"
+            },
+            {
+              "editorMode": "code",
+              "expr": "llm_load_test_tt_ack_p80_ms{model=~\"$model\", namespace=~\"$namespace\"}",
+              "legendFormat": "{{model}} P80",
+              "range": true,
+              "refId": "D"
+            },
+            {
+              "editorMode": "code",
+              "expr": "llm_load_test_tt_ack_mean_ms{model=~\"$model\", namespace=~\"$namespace\"}",
+              "legendFormat": "{{model}} Mean",
+              "range": true,
+              "refId": "E"
+            }
+          ],
+          "title": "Time to Acknowledge (ms)",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "barWidthFactor": 0.6,
+                "drawStyle": "line",
+                "fillOpacity": 10,
                 "gradientMode": "none",
                 "hideFrom": {
                   "legend": false,
@@ -559,15 +710,16 @@ spec:
             "overrides": []
           },
           "gridPos": {
-            "h": 8,
+            "h": 9,
             "w": 8,
-            "x": 8,
+            "x": 16,
             "y": 10
           },
           "id": 1,
           "options": {
             "legend": {
               "calcs": [
+                "mean",
                 "lastNotNull"
               ],
               "displayMode": "table",
@@ -589,6 +741,7 @@ spec:
               "refId": "A"
             }
           ],
+          "description": "Total output tokens generated per second across all concurrent requests in the load test.",
           "title": "Throughput (tokens/sec)",
           "type": "timeseries"
         },
@@ -629,8 +782,8 @@ spec:
           "gridPos": {
             "h": 8,
             "w": 4,
-            "x": 16,
-            "y": 10
+            "x": 0,
+            "y": 19
           },
           "id": 17,
           "options": {
@@ -660,7 +813,78 @@ spec:
               "refId": "A"
             }
           ],
+          "description": "Percentage of requests that failed (connection errors, timeouts, or server errors).",
           "title": "Failure Rate (%)",
+          "type": "stat"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "yellow",
+                    "value": 1
+                  },
+                  {
+                    "color": "red",
+                    "value": 5
+                  }
+                ]
+              },
+              "unit": "short"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 4,
+            "x": 4,
+            "y": 19
+          },
+          "id": 25,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "percentChangeColorMode": "standard",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showPercentChange": false,
+            "textMode": "auto",
+            "wideLayout": true
+          },
+          "pluginVersion": "11.3.0",
+          "targets": [
+            {
+              "editorMode": "code",
+              "expr": "llm_load_test_total_failures{model=~\"$model\", namespace=~\"$namespace\"}",
+              "legendFormat": "{{model}}",
+              "range": true,
+              "refId": "A"
+            }
+          ],
+          "description": "Absolute count of failed requests in the most recent load test run.",
+          "title": "Total Failures",
           "type": "stat"
         },
         {
@@ -690,8 +914,8 @@ spec:
           "gridPos": {
             "h": 8,
             "w": 4,
-            "x": 20,
-            "y": 10
+            "x": 8,
+            "y": 19
           },
           "id": 16,
           "options": {
@@ -721,7 +945,132 @@ spec:
               "refId": "A"
             }
           ],
+          "description": "Total number of requests sent in the most recent load test run.",
           "title": "Total Requests",
+          "type": "stat"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "purple",
+                    "value": null
+                  }
+                ]
+              },
+              "unit": "short"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 6,
+            "x": 12,
+            "y": 19
+          },
+          "id": 26,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "percentChangeColorMode": "standard",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showPercentChange": false,
+            "textMode": "auto",
+            "wideLayout": true
+          },
+          "pluginVersion": "11.3.0",
+          "targets": [
+            {
+              "editorMode": "code",
+              "expr": "llm_load_test_input_tokens_mean{model=~\"$model\", namespace=~\"$namespace\"}",
+              "legendFormat": "{{model}}",
+              "range": true,
+              "refId": "A"
+            }
+          ],
+          "description": "Average number of input (prompt) tokens per request in the load test.",
+          "title": "Mean Input Tokens",
+          "type": "stat"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "orange",
+                    "value": null
+                  }
+                ]
+              },
+              "unit": "short"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 6,
+            "x": 18,
+            "y": 19
+          },
+          "id": 27,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "percentChangeColorMode": "standard",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showPercentChange": false,
+            "textMode": "auto",
+            "wideLayout": true
+          },
+          "pluginVersion": "11.3.0",
+          "targets": [
+            {
+              "editorMode": "code",
+              "expr": "llm_load_test_output_tokens_mean{model=~\"$model\", namespace=~\"$namespace\"}",
+              "legendFormat": "{{model}}",
+              "range": true,
+              "refId": "A"
+            }
+          ],
+          "description": "Average number of output (generated) tokens per request in the load test.",
+          "title": "Mean Output Tokens",
           "type": "stat"
         },
         {
@@ -730,7 +1079,7 @@ spec:
             "h": 1,
             "w": 24,
             "x": 0,
-            "y": 18
+            "y": 27
           },
           "id": 23,
           "panels": [],
@@ -802,7 +1151,7 @@ spec:
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 19
+            "y": 28
           },
           "id": 4,
           "options": {
@@ -896,7 +1245,7 @@ spec:
             "h": 8,
             "w": 6,
             "x": 12,
-            "y": 19
+            "y": 28
           },
           "id": 6,
           "options": {
@@ -990,7 +1339,7 @@ spec:
             "h": 8,
             "w": 6,
             "x": 18,
-            "y": 19
+            "y": 28
           },
           "id": 8,
           "options": {
@@ -1084,7 +1433,7 @@ spec:
             "h": 7,
             "w": 6,
             "x": 0,
-            "y": 27
+            "y": 36
           },
           "id": 7,
           "options": {
@@ -1151,7 +1500,7 @@ spec:
             "h": 7,
             "w": 6,
             "x": 6,
-            "y": 27
+            "y": 36
           },
           "id": 11,
           "options": {
@@ -1248,7 +1597,7 @@ spec:
             "h": 7,
             "w": 6,
             "x": 12,
-            "y": 27
+            "y": 36
           },
           "id": 9,
           "options": {
@@ -1357,7 +1706,7 @@ spec:
             "h": 7,
             "w": 6,
             "x": 18,
-            "y": 27
+            "y": 36
           },
           "id": 10,
           "options": {
