@@ -1,0 +1,12 @@
+$TTL    1800
+$ORIGIN nerc-ocp-infra.rc.fas.harvard.edu.
+
+@ IN SOA dns domains (
+    2020031101   ; serial
+    300          ; refresh
+    1800         ; retry
+    14400        ; expire
+    300 )        ; minimum
+
+api        IN  A  10.30.9.5
+*.apps     IN  A  10.30.9.6
