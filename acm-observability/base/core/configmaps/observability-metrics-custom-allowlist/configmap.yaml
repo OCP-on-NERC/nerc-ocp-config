@@ -50,7 +50,7 @@ data:
       - __name__=~"^argocd_.*"
 
       # Consolidate kube*:
-      - __name__=~"^kube_(?:node|pod|job|namespace)_.*"
+      - __name__=~"^kube_(?:node|pod|job|cronjob|namespace)_.*"
       - __name__=~"^mco_.*"
       - __name__=~"^llm_load_test_.*"
       - __name__=~"^vllm:.*"
