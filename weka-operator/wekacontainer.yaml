@@ -1,0 +1,18 @@
+---
+apiVersion: weka.weka.io/v1alpha1
+kind: WekaContainer
+metadata:
+  name: weka-driver-builder
+  namespace: weka-operator-system
+  labels:
+    app: weka-driver-builder
+spec:
+  agentPort: 60001
+  nodeSelector:
+    weka.io/role: builder
+  image: quay.io/weka.io/weka-in-container:4.4.5.128-k8s
+  imagePullSecret: "weka-quayio-creds"
+  mode: "dist"
+  name: dist
+  numCores: 1
+  port: 60002
