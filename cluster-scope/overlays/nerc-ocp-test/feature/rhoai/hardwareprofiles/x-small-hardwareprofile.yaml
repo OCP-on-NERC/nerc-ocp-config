@@ -5,7 +5,6 @@ metadata:
     opendatahub.io/dashboard-feature-visibility: '[]'
     opendatahub.io/disabled: "false"
     opendatahub.io/display-name: X Small
-    opendatahub.io/modified-date: "2026-01-06T19:13:32.019Z"
   name: x-small
   namespace: redhat-ods-applications
 spec:

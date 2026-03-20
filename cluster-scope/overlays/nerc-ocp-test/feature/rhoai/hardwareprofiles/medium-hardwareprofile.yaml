@@ -5,7 +5,6 @@ metadata:
     opendatahub.io/dashboard-feature-visibility: '[]'
     opendatahub.io/disabled: "false"
     opendatahub.io/display-name: Medium
-    opendatahub.io/modified-date: "2026-01-06T19:32:46.853Z"
   name: medium
   namespace: redhat-ods-applications
 spec:

@@ -5,7 +5,6 @@ metadata:
     opendatahub.io/dashboard-feature-visibility: '[]'
     opendatahub.io/disabled: "false"
     opendatahub.io/display-name: NVIDIA A100 GPU
-    opendatahub.io/modified-date: "2026-01-06T19:05:12.228Z"
   name: nvidia-a100-gpu
   namespace: redhat-ods-applications
 spec:
