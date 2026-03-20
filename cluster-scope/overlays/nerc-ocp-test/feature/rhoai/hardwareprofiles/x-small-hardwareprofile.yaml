@@ -1,0 +1,24 @@
+apiVersion: infrastructure.opendatahub.io/v1alpha1
+kind: HardwareProfile
+metadata:
+  annotations:
+    opendatahub.io/dashboard-feature-visibility: '[]'
+    opendatahub.io/disabled: "false"
+    opendatahub.io/display-name: X Small
+    opendatahub.io/modified-date: "2026-01-06T19:13:32.019Z"
+  name: x-small
+  namespace: redhat-ods-applications
+spec:
+  identifiers:
+  - defaultCount: 100m
+    displayName: CPU
+    identifier: cpu
+    maxCount: "1"
+    minCount: 100m
+    resourceType: CPU
+  - defaultCount: 1Gi
+    displayName: Memory
+    identifier: memory
+    maxCount: 4Gi
+    minCount: 1Gi
+    resourceType: Memory

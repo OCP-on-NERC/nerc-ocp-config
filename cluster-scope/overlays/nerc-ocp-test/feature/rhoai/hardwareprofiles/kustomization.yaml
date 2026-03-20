@@ -1,0 +1,12 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - x-small-hardwareprofile.yaml
+  - small-hardwareprofile.yaml
+  - medium-hardwareprofile.yaml
+  - large-hardwareprofile.yaml
+  - x-large-hardwareprofile.yaml
+  - nvidia-a100-gpu-hardwareprofile.yaml
+  - nvidia-h100-gpu-hardwareprofile.yaml
+  - nvidia-v100-gpu-hardwareprofile.yaml
