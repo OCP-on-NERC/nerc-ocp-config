@@ -25,7 +25,7 @@ spec:
   - defaultCount: 1
     displayName: gpu
     identifier: nvidia.com/gpu
-    maxCount: 1
+    maxCount: 4
     minCount: 1
     resourceType: Accelerator
   scheduling:
