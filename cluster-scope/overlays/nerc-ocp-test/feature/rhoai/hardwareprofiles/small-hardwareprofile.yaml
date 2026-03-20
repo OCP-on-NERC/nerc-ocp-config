@@ -20,5 +20,5 @@ spec:
     displayName: Memory
     identifier: memory
     maxCount: 8Gi
-    minCount: 8Gi
+    minCount: 4Gi
     resourceType: Memory

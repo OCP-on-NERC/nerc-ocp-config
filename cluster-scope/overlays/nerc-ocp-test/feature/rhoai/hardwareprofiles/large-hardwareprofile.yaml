@@ -14,11 +14,11 @@ spec:
     displayName: CPU
     identifier: cpu
     maxCount: "14"
-    minCount: 1
+    minCount: 4
     resourceType: CPU
   - defaultCount: 56Gi
     displayName: Memory
     identifier: memory
     maxCount: 56Gi
-    minCount: 2Gi
+    minCount: 16Gi
     resourceType: Memory
