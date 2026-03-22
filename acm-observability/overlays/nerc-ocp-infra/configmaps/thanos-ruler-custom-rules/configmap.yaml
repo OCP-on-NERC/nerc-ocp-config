@@ -482,6 +482,46 @@ data:
         - record: gpu:active_hourly:count_per_cluster
           expr: count by (cluster) (gpu:active_hourly:raw > 0)
 
+      - name: cronjob-monitoring
+        rules:
+
+        - alert: CustomCronJobNotRunningRecently
+          annotations:
+            summary: "{{ $labels.cluster }} CronJob {{ $labels.cronjob }} hasn't run recently"
+            description: |
+              <https://grafana.apps.obs.nerc.mghpcc.org/explore?orgId=1&left=%5B%22now-24h%22,%22now%22,%22Observatorium%22,%7B%22exemplar%22:true,%22expr%22:%22(time()%20-%20kube_cronjob_status_last_schedule_time)%20%3E%20(6%20*%203600)%20and%20kube_cronjob_spec_suspend%20%3D%3D%200%22%7D%5D|Click here to see these metrics in Observability Monitoring>
+              CronJob {{ $labels.cronjob }} in namespace {{ $labels.namespace }} on cluster {{ $labels.cluster }} hasn't run successfully for {{ $value | humanizeDuration }}.
+              This could indicate the CronJob is stuck, failing silently, or the schedule is not being honored.
+          expr: (time() - kube_cronjob_status_last_schedule_time) > (6 * 3600) and kube_cronjob_spec_suspend == 0
+          for: 10m
+          labels:
+            severity: warning
+
+        - alert: CustomCronJobFailed
+          annotations:
+            summary: "{{ $labels.cluster }} CronJob {{ $labels.job_name }} failed"
+            description: |
+              <https://grafana.apps.obs.nerc.mghpcc.org/explore?orgId=1&left=%5B%22now-3h%22,%22now%22,%22Observatorium%22,%7B%22exemplar%22:true,%22expr%22:%22kube_job_status_failed%7Bjob_name%3D~%5C%22.*cronjob.*%5C%22%7D%20%3E%200%20and%20kube_job_status_succeeded%20%3D%3D%200%22%7D%5D|Click here to see these metrics in Observability Monitoring>
+              Job {{ $labels.job_name }} (created by CronJob) in namespace {{ $labels.namespace }} on cluster {{ $labels.cluster }} has failed.
+              Failed pods: {{ $value }}
+              Check pod logs for error details.
+          expr: kube_job_status_failed{job_name=~".*cronjob.*"} > 0 and kube_job_status_succeeded == 0
+          for: 5m
+          labels:
+            severity: critical
+
+        - alert: CustomCronJobMissedSchedule
+          annotations:
+            summary: "{{ $labels.cluster }} CronJob {{ $labels.cronjob }} missed its schedule"
+            description: |
+              <https://grafana.apps.obs.nerc.mghpcc.org/explore?orgId=1&left=%5B%22now-3h%22,%22now%22,%22Observatorium%22,%7B%22exemplar%22:true,%22expr%22:%22increase(kube_cronjob_status_last_schedule_time%5B1h%5D)%20%3D%3D%200%20and%20kube_cronjob_spec_suspend%20%3D%3D%200%22%7D%5D|Click here to see these metrics in Observability Monitoring>
+              CronJob {{ $labels.cronjob }} in namespace {{ $labels.namespace }} on cluster {{ $labels.cluster }} has not been scheduled in the last 2 hours despite not being suspended.
+              This could indicate the CronJob controller is not functioning properly or the schedule configuration is incorrect.
+          expr: increase(kube_cronjob_status_last_schedule_time[1h]) == 0 and kube_cronjob_spec_suspend == 0
+          for: 2h
+          labels:
+            severity: warning
+
       - name: IBM autopilot
         rules:
         - alert: LowPCIeBandwidth
