@@ -16,6 +16,7 @@ rules:
     - "argoproj.io"
     - "datasciencecluster.opendatahub.io"
     - "dscinitialization.opendatahub.io"
+    - "nvidia.com"
   resources:
     - "*"
   verbs:
