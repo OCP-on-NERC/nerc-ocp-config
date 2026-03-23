@@ -244,7 +244,7 @@ data:
             summary: "{{ $labels.cluster }} - OPE status recording rules not producing data"
             description: |
               <https://grafana.apps.obs.nerc.mghpcc.org/explore?orgId=1&left=%5B%22now-1h%22,%22now%22,%22Observatorium%22,%7B%22exemplar%22:true,%22expr%22:%22absent(ope:resourcequota_usage_ratio%7Bresource%3D%5C%22limits.cpu%5C%22,cluster%3D%5C%22nerc-ocp-prod%5C%22,namespace%3D%5C%22rhods-notebooks%5C%22%7D)%20or%20absent(ope:resourcequota_usage_ratio_edu%7Bresource%3D%5C%22limits.cpu%5C%22,cluster%3D%5C%22nerc-ocp-edu%5C%22%7D)%22%7D%5D|Click here to see these metrics in Observability Monitoring>
-              Recording rule ope:resourcequota_usage_ratio is not producing data for {{ $labels.resource }}.
+              One or more OPE resource quota usage recording rules (prod or edu) are not producing data for {{ $labels.resource }}.
               This means 6am/6:05am status alerts will not fire!
               Check if kube-state-metrics is running and kube_resourcequota metrics are being scraped.
           expr: absent(ope:resourcequota_usage_ratio{resource="limits.cpu",cluster="nerc-ocp-prod",namespace="rhods-notebooks"}) or absent(ope:resourcequota_usage_ratio_edu{resource="limits.cpu",cluster="nerc-ocp-edu"})
