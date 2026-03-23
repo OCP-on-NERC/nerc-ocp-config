@@ -247,7 +247,7 @@ data:
               Recording rule ope:resourcequota_usage_ratio is not producing data for {{ $labels.resource }}.
               This means 6am/6:05am status alerts will not fire!
               Check if kube-state-metrics is running and kube_resourcequota metrics are being scraped.
-          expr: absent(ope:resourcequota_usage_ratio{resource="limits.cpu"}) or absent(ope:resourcequota_usage_ratio_edu{resource="limits.cpu"})
+          expr: absent(ope:resourcequota_usage_ratio{resource="limits.cpu",cluster="nerc-ocp-prod",namespace="rhods-notebooks"}) or absent(ope:resourcequota_usage_ratio_edu{resource="limits.cpu",cluster="nerc-ocp-edu"})
           for: 15m
           labels:
             severity: critical
@@ -260,7 +260,7 @@ data:
               Recording rules for container counts are not producing data.
               This means 6am/6:05am status alerts will not include container count information!
               Check if kube-state-metrics is running and kube_pod_container_info metrics are being scraped.
-          expr: absent(ope:container_count) or absent(ope:container_count_edu)
+          expr: absent(ope:container_count{cluster="nerc-ocp-prod"}) or absent(ope:container_count_edu{cluster="nerc-ocp-edu"})
           for: 15m
           labels:
             severity: warning
@@ -269,7 +269,7 @@ data:
         rules:
 
         - alert: Custom6amOpeLimitsCpu
-          expr: ope:resourcequota_usage_ratio{resource="limits.cpu"} and ignoring(cluster) ope:is_6am_status_time
+          expr: ope:resourcequota_usage_ratio{resource="limits.cpu"} and on() ope:is_6am_status_time
           labels:
             severity: info
             environment: production
@@ -281,7 +281,7 @@ data:
               info: limits.cpu: {{ $value | humanizePercentage }} used
 
         - alert: Custom6amOpeLimitsEphemeralStorage
-          expr: ope:resourcequota_usage_ratio{resource="limits.ephemeral-storage"} and ignoring(cluster) ope:is_6am_status_time
+          expr: ope:resourcequota_usage_ratio{resource="limits.ephemeral-storage"} and on() ope:is_6am_status_time
           labels:
             severity: info
             environment: production
@@ -293,7 +293,7 @@ data:
               info: limits.ephemeral-storage: {{ $value | humanizePercentage }} used
 
         - alert: Custom6amOpeLimitsMemory
-          expr: ope:resourcequota_usage_ratio{resource="limits.memory"} and ignoring(cluster) ope:is_6am_status_time
+          expr: ope:resourcequota_usage_ratio{resource="limits.memory"} and on() ope:is_6am_status_time
           labels:
             severity: info
             environment: production
@@ -305,7 +305,7 @@ data:
               info: limits.memory: {{ $value | humanizePercentage }} used
 
         - alert: Custom6amOpePersistentVolumeClaims
-          expr: ope:resourcequota_usage_ratio{resource="persistentvolumeclaims"} and ignoring(cluster) ope:is_6am_status_time
+          expr: ope:resourcequota_usage_ratio{resource="persistentvolumeclaims"} and on() ope:is_6am_status_time
           labels:
             severity: info
             environment: production
@@ -317,7 +317,7 @@ data:
               info: persistentvolumeclaims: {{ $value | humanizePercentage }} used
 
         - alert: Custom6amOpeRequestsGpu
-          expr: ope:resourcequota_usage_ratio{resource="requests.nvidia.com/gpu"} and ignoring(cluster) ope:is_6am_status_time
+          expr: ope:resourcequota_usage_ratio{resource="requests.nvidia.com/gpu"} and on() ope:is_6am_status_time
           labels:
             severity: info
             environment: production
@@ -329,7 +329,7 @@ data:
               info: requests.nvidia.com/gpu: {{ $value | humanizePercentage }} used
 
         - alert: Custom6amOpeRequestsStorage
-          expr: ope:resourcequota_usage_ratio{resource="requests.storage"} and ignoring(cluster) ope:is_6am_status_time
+          expr: ope:resourcequota_usage_ratio{resource="requests.storage"} and on() ope:is_6am_status_time
           labels:
             severity: info
             environment: production
@@ -341,7 +341,7 @@ data:
               info: requests.storage: {{ $value | humanizePercentage }} used
 
         - alert: Custom6amOpeKubePodContainerInfo
-          expr: ope:container_count and ignoring(cluster) ope:is_6am_status_time
+          expr: ope:container_count and on() ope:is_6am_status_time
           labels:
             severity: info
             environment: production
@@ -353,7 +353,7 @@ data:
               info: kube_pod_container_info: {{ $value }} containers
 
         - alert: Custom6amOpeKubePodOwner
-          expr: ope:pod_owner_count and ignoring(cluster) ope:is_6am_status_time
+          expr: ope:pod_owner_count and on() ope:is_6am_status_time
           labels:
             severity: info
             environment: production
@@ -368,7 +368,7 @@ data:
         rules:
 
         - alert: Custom605amOpeLimitsCpu
-          expr: ope:resourcequota_usage_ratio_edu{resource="limits.cpu"} and ignoring(cluster) ope:is_605am_status_time
+          expr: ope:resourcequota_usage_ratio_edu{resource="limits.cpu"} and on() ope:is_605am_status_time
           labels:
             severity: info
             environment: education
@@ -380,7 +380,7 @@ data:
               info: limits.cpu: {{ $value | humanizePercentage }} used
 
         - alert: Custom605amOpeLimitsEphemeralStorage
-          expr: ope:resourcequota_usage_ratio_edu{resource="limits.ephemeral-storage"} and ignoring(cluster) ope:is_605am_status_time
+          expr: ope:resourcequota_usage_ratio_edu{resource="limits.ephemeral-storage"} and on() ope:is_605am_status_time
           labels:
             severity: info
             environment: education
@@ -392,7 +392,7 @@ data:
               info: limits.ephemeral-storage: {{ $value | humanizePercentage }} used
 
         - alert: Custom605amOpeLimitsMemory
-          expr: ope:resourcequota_usage_ratio_edu{resource="limits.memory"} and ignoring(cluster) ope:is_605am_status_time
+          expr: ope:resourcequota_usage_ratio_edu{resource="limits.memory"} and on() ope:is_605am_status_time
           labels:
             severity: info
             environment: education
@@ -404,7 +404,7 @@ data:
               info: limits.memory: {{ $value | humanizePercentage }} used
 
         - alert: Custom605amOpePersistentVolumeClaims
-          expr: ope:resourcequota_usage_ratio_edu{resource="persistentvolumeclaims"} and ignoring(cluster) ope:is_605am_status_time
+          expr: ope:resourcequota_usage_ratio_edu{resource="persistentvolumeclaims"} and on() ope:is_605am_status_time
           labels:
             severity: info
             environment: education
@@ -416,7 +416,7 @@ data:
               info: persistentvolumeclaims: {{ $value | humanizePercentage }} used
 
         - alert: Custom605amOpeRequestsGpu
-          expr: ope:resourcequota_usage_ratio_edu{resource="requests.nvidia.com/gpu"} and ignoring(cluster) ope:is_605am_status_time
+          expr: ope:resourcequota_usage_ratio_edu{resource="requests.nvidia.com/gpu"} and on() ope:is_605am_status_time
           labels:
             severity: info
             environment: education
@@ -428,7 +428,7 @@ data:
               info: requests.nvidia.com/gpu: {{ $value | humanizePercentage }} used
 
         - alert: Custom605amOpeRequestsStorage
-          expr: ope:resourcequota_usage_ratio_edu{resource="requests.storage"} and ignoring(cluster) ope:is_605am_status_time
+          expr: ope:resourcequota_usage_ratio_edu{resource="requests.storage"} and on() ope:is_605am_status_time
           labels:
             severity: info
             environment: education
@@ -440,7 +440,7 @@ data:
               info: requests.storage: {{ $value | humanizePercentage }} used
 
         - alert: Custom605amOpeKubePodContainerInfo
-          expr: ope:container_count_edu and ignoring(cluster) ope:is_605am_status_time
+          expr: ope:container_count_edu and on() ope:is_605am_status_time
           labels:
             severity: info
             environment: education
@@ -452,7 +452,7 @@ data:
               info: kube_pod_container_info: {{ $value }} containers
 
         - alert: Custom605amOpeKubePodOwner
-          expr: ope:pod_owner_count_edu and ignoring(cluster) ope:is_605am_status_time
+          expr: ope:pod_owner_count_edu and on() ope:is_605am_status_time
           labels:
             severity: info
             environment: education
