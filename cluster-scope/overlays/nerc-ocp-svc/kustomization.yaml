@@ -1,0 +1,108 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+commonLabels:
+  nerc.mghpcc.org/kustomized: "true"
+
+resources:
+- ../common
+- ../../bundles/nerc-certificate-clusterissuers
+- ../../bundles/external-secrets-clustersecretstore
+- ../../bundles/node-feature-discovery
+- ../../bundles/patch-operator
+- ../../bundles/clusterissuer-http01
+- ../../bundles/crunchy-postgres-operator
+- ../../bundles/keycloak
+- ../../base/rbac.authorization.k8s.io/clusterroles/allow-edit-rbac
+- ../../base/core/namespaces/openshift-gitops
+- externalsecrets
+- issuers
+- feature/odf
+#- machineconfigs
+- certificates
+
+components:
+  - ../../components/nerc-oauth-github
+
+  # this must come last in order to apply
+  # to all resources.
+  - ../../components/argocd-skip-dryrun
+
+generatorOptions:
+  disableNameSuffixHash: true
+  
+patches:
+- path: kubeletconfigs/system-reserved-patch.yaml
+ 
+- patch: |
+    apiVersion: config.openshift.io/v1
+    kind: OAuth
+    metadata:
+      name: cluster
+    spec:
+      identityProviders:
+      - name: github
+        github:
+          clientID: Ov23liIYFewHpMri8GO1
+- target:
+    kind: ExternalSecret
+    name: github-client-secret
+  patch: |
+    - op: replace
+      path: /spec/data/0/remoteRef/key
+      value: nerc/nerc-ocp-svc/openshift-config/github-client-secret
+
+- target:
+    kind: ExternalSecret
+    name: aws-route53-credentials
+  patch: |
+    - op: replace
+      path: /spec/dataFrom/0/extract/key
+      value: nerc/nerc-ocp-svc/aws-route53-credentials
+- target:
+    kind: APIServer
+    name: cluster
+  patch: |
+    - op: replace
+      path: /spec/servingCerts/namedCertificates/0/names/0
+      value: api.nerc-ocp-svc.nerc.mghpcc.org
+- patch: |
+    apiVersion: external-secrets.io/v1beta1
+    kind: ClusterSecretStore
+    metadata:
+      name: nerc-cluster-secrets
+    spec:
+      provider:
+        vault:
+          auth:
+            kubernetes:
+              mountPath: kubernetes/nerc-ocp-obs
+          server: https://vault-ui-vault.apps.nerc-ocp-infra.rc.fas.harvard.edu/
+- target:
+    kind: Issuer
+    name: letsencrypt-.*-dns01
+  patch: |
+    - op: replace
+      path: /spec/acme/solvers/0/selector/dnsZones
+      value:
+        - nerc-ocp-svc.nerc.mghpcc.org
+- target:
+    kind: Subscription
+    name: odf-operator
+  patch: |
+    - op: replace
+      path: /spec/channel
+      value: stable-4.21
+- target:
+    kind: Subscription
+    name: cluster-logging
+  patch: |
+    - op: replace
+      path: /spec/channel
+      value: stable-6.4
+- target:
+    kind: Subscription
+    name: rhbk-operator
+  patch: |
+    - op: replace
+      path: /spec/channel
+      value: stable-v26.4
