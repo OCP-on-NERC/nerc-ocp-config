@@ -2,8 +2,8 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: solr
 resources:
-- serviceaccounts.yaml
-- rolebindings.yaml
-- deployments.yaml
-- solrclouds.yaml
-- networkpolicies.yaml
+  - serviceaccounts.yaml
+  - rolebindings.yaml
+  - deployments.yaml
+  - solrclouds.yaml
+  - networkpolicies.yaml

@@ -5,7 +5,9 @@ resources:
   - clusterlogforwarders
   - externalsecrets
   - clusterrolebindings
-commonLabels:
-  app.kubernetes.io/name: logging
-  app.kubernetes.io/component: logging
-  app.kubernetes.io/part-of: cluster-logging
+labels:
+  - includeSelectors: true
+    pairs:
+      app.kubernetes.io/component: logging
+      app.kubernetes.io/name: logging
+      app.kubernetes.io/part-of: cluster-logging

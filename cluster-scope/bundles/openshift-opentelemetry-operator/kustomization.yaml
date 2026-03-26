@@ -1,13 +1,15 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-commonLabels:
-  nerc.mghpcc.org/bundle: openshift-opentelemetry-operator
 resources:
-- ../../base/core/namespaces/openshift-opentelemetry-operator
-- ../../base/core/namespaces/openshift-distributed-tracing
-- ../../base/core/namespaces/openshift-tempo-operator
-- ../../base/operators.coreos.com/operatorgroups/openshift-opentelemetry-operator
-- ../../base/operators.coreos.com/operatorgroups/openshift-distributed-tracing
-- ../../base/operators.coreos.com/operatorgroups/openshift-tempo-operator
-- ../../base/operators.coreos.com/subscriptions/opentelemetry-product
-- ../../base/operators.coreos.com/subscriptions/tempo-product
+  - ../../base/core/namespaces/openshift-opentelemetry-operator
+  - ../../base/core/namespaces/openshift-distributed-tracing
+  - ../../base/core/namespaces/openshift-tempo-operator
+  - ../../base/operators.coreos.com/operatorgroups/openshift-opentelemetry-operator
+  - ../../base/operators.coreos.com/operatorgroups/openshift-distributed-tracing
+  - ../../base/operators.coreos.com/operatorgroups/openshift-tempo-operator
+  - ../../base/operators.coreos.com/subscriptions/opentelemetry-product
+  - ../../base/operators.coreos.com/subscriptions/tempo-product
+labels:
+  - includeSelectors: true
+    pairs:
+      nerc.mghpcc.org/bundle: openshift-opentelemetry-operator

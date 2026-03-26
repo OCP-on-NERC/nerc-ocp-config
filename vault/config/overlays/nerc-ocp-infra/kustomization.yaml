@@ -1,37 +1,38 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: vault
-commonLabels:
-  app: vault-config
 
 resources:
-- job.yaml
-- cronjob.yaml
+  - job.yaml
+  - cronjob.yaml
 
 generatorOptions:
   disableNameSuffixHash: true
 
 configMapGenerator:
-- name: ca-certs
-  files:
-  - certs/letsencrypt.crt
-  - certs/nerc-internal-root.crt
-
-- name: vault-config
-  files:
-  - config/backup-job.yaml
-  - config/groups.yaml
-  - config/hypershift1.yaml
-  - config/hypershift2.yaml
-  - config/nerc-ocp-infra.yaml
-  - config/nerc-ocp-obs.yaml
-  - config/nerc-ocp-prod.yaml
-  - config/nerc-ocp-edu.yaml
-  - config/nerc-ocp-test.yaml
-  - config/nerc-ocp-beta-test.yaml
-  - config/rhoai-test.yaml
-  - config/oidc.yaml
-  - config/policies.yaml
-  - config/secrets.yaml
-  - config/pki-nerc.yaml
-  - config/albany.yaml
+  - files:
+      - certs/letsencrypt.crt
+      - certs/nerc-internal-root.crt
+    name: ca-certs
+  - files:
+      - config/backup-job.yaml
+      - config/groups.yaml
+      - config/hypershift1.yaml
+      - config/hypershift2.yaml
+      - config/nerc-ocp-infra.yaml
+      - config/nerc-ocp-obs.yaml
+      - config/nerc-ocp-prod.yaml
+      - config/nerc-ocp-edu.yaml
+      - config/nerc-ocp-test.yaml
+      - config/nerc-ocp-beta-test.yaml
+      - config/rhoai-test.yaml
+      - config/oidc.yaml
+      - config/policies.yaml
+      - config/secrets.yaml
+      - config/pki-nerc.yaml
+      - config/albany.yaml
+    name: vault-config
+labels:
+  - includeSelectors: true
+    pairs:
+      app: vault-config

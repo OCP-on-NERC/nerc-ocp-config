@@ -6,7 +6,9 @@ resources:
   - clusterroles
   - clusterrolebindings
   - uiplugins
-commonLabels:
-  app.kubernetes.io/name: loki
-  app.kubernetes.io/component: lokistack
-  app.kubernetes.io/part-of: cluster-logging
+labels:
+  - includeSelectors: true
+    pairs:
+      app.kubernetes.io/component: lokistack
+      app.kubernetes.io/name: loki
+      app.kubernetes.io/part-of: cluster-logging

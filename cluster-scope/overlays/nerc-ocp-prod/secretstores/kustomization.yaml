@@ -1,10 +1,10 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-- acct-mgt
-- openshift-config
-- openshift-ingress
-- openshift-logging
-- group-sync-operator
-- ece440spring2024-619f12
-- rhods-notebooks
+  - acct-mgt
+  - openshift-config
+  - openshift-ingress
+  - openshift-logging
+  - group-sync-operator
+  - ece440spring2024-619f12
+  - rhods-notebooks

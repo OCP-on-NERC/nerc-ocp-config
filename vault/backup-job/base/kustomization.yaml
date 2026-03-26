@@ -1,8 +1,6 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: vault
-commonLabels:
-  app.kubernetes.io/name: vault-backup-job
 
 resources:
   - externalsecret.yaml
@@ -13,16 +11,19 @@ resources:
   - trigger
 
 configMapGenerator:
-  - name: vault-backup-config
-    options:
-      disableNameSuffixHash: true
-    envs:
+  - envs:
       - vault-backup-config.env
-
-  - name: backup-scripts
+    name: vault-backup-config
     options:
       disableNameSuffixHash: true
-    files:
+  - files:
       - scripts/create-snapshot.sh
       - scripts/backup-to-s3.sh
       - scripts/cleanup-taskruns.sh
+    name: backup-scripts
+    options:
+      disableNameSuffixHash: true
+labels:
+  - includeSelectors: true
+    pairs:
+      app.kubernetes.io/name: vault-backup-job

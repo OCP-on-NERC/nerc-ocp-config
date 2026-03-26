@@ -1,178 +1,171 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-commonLabels:
-  nerc.mghpcc.org/kustomized: "true"
 
 resources:
-- ../common
-
-- certificates
-- console
-- clusterrolebindings
-- machineconfigs
-- nodenetworkconfigurationpolicies
-- feature/odf
-- externalsecrets
-- metallb-config
-- lvmcluster
-
-- ../../bundles/external-secrets-clustersecretstore
-- ../../bundles/metallb
-- ../../bundles/nerc-certificate-clusterissuers
-- ../../bundles/virt
-- ../../bundles/acm-cim
-- ../../bundles/openshift-gitops
-- ../../bundles/ansible-automation-platform-operator
-- ../../bundles/acm-observability
+  - ../common
+  - certificates
+  - console
+  - clusterrolebindings
+  - machineconfigs
+  - nodenetworkconfigurationpolicies
+  - feature/odf
+  - externalsecrets
+  - metallb-config
+  - lvmcluster
+  - ../../bundles/external-secrets-clustersecretstore
+  - ../../bundles/metallb
+  - ../../bundles/nerc-certificate-clusterissuers
+  - ../../bundles/virt
+  - ../../bundles/acm-cim
+  - ../../bundles/openshift-gitops
+  - ../../bundles/ansible-automation-platform-operator
+  - ../../bundles/acm-observability
 
 components:
   - ../../components/nerc-oauth-github
 
 configMapGenerator:
-- name: cluster-monitoring-config
-  namespace: openshift-monitoring
-  options:
-    disableNameSuffixHash: true
-  files:
-  - config.yaml=configmaps/cluster-monitoring-config.yaml
+  - files:
+      - config.yaml=configmaps/cluster-monitoring-config.yaml
+    name: cluster-monitoring-config
+    namespace: openshift-monitoring
+    options:
+      disableNameSuffixHash: true
 
 patches:
-- target:
-    kind: ClusterIssuer
-    name: letsencrypt-.*-dns01
-  patch: |
-    - op: replace
-      path: /spec/acme/solvers/0/selector/dnsZones/0
-      value: hypershift2.nerc.mghpcc.org
-- path: clustersecretstores/nerc-cluster-secrets_patch.yaml
-- patch: |
-    apiVersion: config.openshift.io/v1
-    kind: OAuth
-    metadata:
+  - patch: |
+      - op: replace
+        path: /spec/acme/solvers/0/selector/dnsZones/0
+        value: hypershift2.nerc.mghpcc.org
+    target:
+      kind: ClusterIssuer
+      name: letsencrypt-.*-dns01
+  - path: clustersecretstores/nerc-cluster-secrets_patch.yaml
+  - patch: |
+      apiVersion: config.openshift.io/v1
+      kind: OAuth
+      metadata:
+        name: cluster
+      spec:
+        identityProviders:
+        - name: github
+          github:
+            clientID: Ov23liFL7hFi2qkzUlIQ
+  - patch: |
+      - op: replace
+        path: /spec/data/0/remoteRef/key
+        value: nerc/hypershift2/openshift-config/github-client-secret
+    target:
+      kind: ExternalSecret
+      name: github-client-secret
+  - patch: |
+      - op: replace
+        path: /spec/dataFrom/0/extract/key
+        value: nerc/hypershift2/aws-route53-credentials
+    target:
+      kind: ExternalSecret
+      name: aws-route53-credentials
+  - patch: |
+      - op: replace
+        path: /spec/servingCerts/namedCertificates/0/names/0
+        value: api.hypershift2.nerc.mghpcc.org
+    target:
+      kind: APIServer
       name: cluster
-    spec:
-      identityProviders:
-      - name: github
-        github:
-          clientID: Ov23liFL7hFi2qkzUlIQ
-- target:
-    kind: ExternalSecret
-    name: github-client-secret
-  patch: |
-    - op: replace
-      path: /spec/data/0/remoteRef/key
-      value: nerc/hypershift2/openshift-config/github-client-secret
-- target:
-    kind: ExternalSecret
-    name: aws-route53-credentials
-  patch: |
-    - op: replace
-      path: /spec/dataFrom/0/extract/key
-      value: nerc/hypershift2/aws-route53-credentials
-- target:
-    kind: APIServer
-    name: cluster
-  patch: |
-    - op: replace
-      path: /spec/servingCerts/namedCertificates/0/names/0
-      value: api.hypershift2.nerc.mghpcc.org
-- target:
-    kind: ExternalSecret
-  patch: |
-    - op: replace
-      path: /spec/secretStoreRef
-      value:
-        kind: ClusterSecretStore
-        name: nerc-cluster-secrets
-- target:
-    kind: ExternalSecret
-    name: aws-route53-credentials
-  patch: |
-    - op: add
-      path: /metadata/namespace
-      value: openshift-operators
-    - op: replace
-      path: /spec/dataFrom/0/extract/key
-      value: nerc/hypershift2/openshift-operators/aws-route53-credentials
-- target:
-    kind: Subscription
-    name: odf-operator
-    namespace: openshift-storage
-  patch: |
-    - op: replace
-      path: /spec/channel
-      value: stable-4.18
-- target:
-    kind: Subscription
-    name: acm
-    namespace: open-cluster-management
-  patch: |
-    - op: replace
-      path: /spec/channel
-      value: release-2.13
-- target:
-    kind: Subscription
-    name: openshift-gitops-operator
-  patch: |
-    - op: replace
-      path: /spec/channel
-      value: gitops-1.17
-
-# per: https://docs.openshift.com/container-platform/4.17/hosted_control_planes/hcp-deploy/hcp-deploy-virt.html
-- target:
-    kind: IngressController
-    name: default
-    namespace: openshift-ingress-operator
-  patch: |
-    - op: add
-      path: /spec/routeAdmission
-      value:
-        wildcardPolicy: WildcardsAllowed
-
-- target:
-    kind: Network
-    group: operator.openshift.io
-    name: cluster
-  patch: |
-    - op: add
-      path: /spec/defaultNetwork/ovnKubernetesConfig/gatewayConfig/ipForwarding
-      value: Global
-
-# delete sysctl ip-forward patch (this is handled via the network.operator config)
-- patch: |
-    apiVersion: machineconfiguration.openshift.io/v1
-    kind: MachineConfig
-    metadata:
-      name: configure-sysctl-ip-forward
-    $patch: delete
-
-- target:
-    kind: Subscription
-    name: ansible-automation-platform-operator
-    namespace: aap
-  patch: |
-    - op: replace
-      path: /spec/channel
-      value: stable-2.5
-
-- patch: |
-    apiVersion: operators.coreos.com/v1
-    kind: OperatorGroup
-    metadata:
+  - patch: |
+      - op: replace
+        path: /spec/secretStoreRef
+        value:
+          kind: ClusterSecretStore
+          name: nerc-cluster-secrets
+    target:
+      kind: ExternalSecret
+  - patch: |
+      - op: add
+        path: /metadata/namespace
+        value: openshift-operators
+      - op: replace
+        path: /spec/dataFrom/0/extract/key
+        value: nerc/hypershift2/openshift-operators/aws-route53-credentials
+    target:
+      kind: ExternalSecret
+      name: aws-route53-credentials
+  - patch: |
+      - op: replace
+        path: /spec/channel
+        value: stable-4.18
+    target:
+      kind: Subscription
+      name: odf-operator
+      namespace: openshift-storage
+  - patch: |
+      - op: replace
+        path: /spec/channel
+        value: release-2.13
+    target:
+      kind: Subscription
+      name: acm
+      namespace: open-cluster-management
+  - patch: |
+      - op: replace
+        path: /spec/channel
+        value: gitops-1.17
+    target:
+      kind: Subscription
+      name: openshift-gitops-operator
+  - patch: |
+      - op: add
+        path: /spec/routeAdmission
+        value:
+          wildcardPolicy: WildcardsAllowed
+    target:
+      kind: IngressController
+      name: default
+      namespace: openshift-ingress-operator
+  - patch: |
+      - op: add
+        path: /spec/defaultNetwork/ovnKubernetesConfig/gatewayConfig/ipForwarding
+        value: Global
+    target:
+      group: operator.openshift.io
+      kind: Network
+      name: cluster
+  # delete sysctl ip-forward patch (this is handled via the network.operator config)
+  - patch: |
+      apiVersion: machineconfiguration.openshift.io/v1
+      kind: MachineConfig
+      metadata:
+        name: configure-sysctl-ip-forward
+      $patch: delete
+  - patch: |
+      - op: replace
+        path: /spec/channel
+        value: stable-2.5
+    target:
+      kind: Subscription
       name: ansible-automation-platform-operator
       namespace: aap
-    spec:
-      targetNamespaces:
-      - aap
-      - innabox
-
-# enable http/2 in ingresscontroller
-# (https://www.redhat.com/en/blog/grpc-or-http/2-ingress-connectivity-in-openshift)
-- patch: |
-    apiVersion: operator.openshift.io/v1
-    kind: IngressController
-    metadata:
-      namespace: openshift-ingress-operator
-      name: default
-      annotations:
-        ingress.operator.openshift.io/default-enable-http2: 'true'
+  - patch: |
+      apiVersion: operators.coreos.com/v1
+      kind: OperatorGroup
+      metadata:
+        name: ansible-automation-platform-operator
+        namespace: aap
+      spec:
+        targetNamespaces:
+        - aap
+        - innabox
+  # enable http/2 in ingresscontroller
+  # (https://www.redhat.com/en/blog/grpc-or-http/2-ingress-connectivity-in-openshift)
+  - patch: |
+      apiVersion: operator.openshift.io/v1
+      kind: IngressController
+      metadata:
+        namespace: openshift-ingress-operator
+        name: default
+        annotations:
+          ingress.operator.openshift.io/default-enable-http2: 'true'
+labels:
+  - includeSelectors: true
+    pairs:
+      nerc.mghpcc.org/kustomized: "true"
