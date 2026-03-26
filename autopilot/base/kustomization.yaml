@@ -7,7 +7,9 @@ resources:
 - services
 - daemonsets
 - servicemonitors
-commonLabels:
-  app.kubernetes.io/name: autopilot
-  app.kubernetes.io/component: autopilot
-  app.kubernetes.io/part-of: autopilot
+labels:
+- includeSelectors: true
+  pairs:
+    app.kubernetes.io/component: autopilot
+    app.kubernetes.io/name: autopilot
+    app.kubernetes.io/part-of: autopilot

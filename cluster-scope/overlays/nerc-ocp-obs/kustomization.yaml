@@ -1,7 +1,5 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-commonLabels:
-  nerc.mghpcc.org/kustomized: "true"
 
 resources:
 - ../common
@@ -36,23 +34,22 @@ resources:
 - machineconfigs
 - nodenetworkconfigurationpolicies
 
+# this must come last in order to apply
+# to all resources.
 components:
-  - ../../components/nerc-oauth-github
-
-  # this must come last in order to apply
-  # to all resources.
-  - ../../components/argocd-skip-dryrun
+- ../../components/nerc-oauth-github
+- ../../components/argocd-skip-dryrun
 
 generatorOptions:
   disableNameSuffixHash: true
 
 configMapGenerator:
-- name: admin-acks
-  namespace: openshift-config
-  behavior: merge
+- behavior: merge
   literals:
-    - ack-4.11-kube-1.25-api-removals-in-4.12=true
-    - ack-4.12-kube-1.26-api-removals-in-4.13=true
+  - ack-4.11-kube-1.25-api-removals-in-4.12=true
+  - ack-4.12-kube-1.26-api-removals-in-4.13=true
+  name: admin-acks
+  namespace: openshift-config
 - files:
   - config.yaml=configmaps/cluster-monitoring-config.yaml
   name: cluster-monitoring-config
@@ -61,12 +58,12 @@ configMapGenerator:
 patches:
 - path: configmaps/nerc-logo_patch.yaml
 - path: kubeletconfigs/system-reserved-patch.yaml
-- target:
-    kind: SecretStore
-  patch: |
+- patch: |
     - op: replace
       path: /spec/provider/vault/auth/kubernetes/mountPath
       value: kubernetes/nerc-ocp-obs
+  target:
+    kind: SecretStore
 - patch: |
     apiVersion: config.openshift.io/v1
     kind: OAuth
@@ -81,17 +78,14 @@ patches:
             - ocp-on-nerc/nerc-ops
             - ocp-on-nerc/nerc-logs-metrics
             - ocp-on-nerc/nerc-obs-admins
-- target:
-    kind: ExternalSecret
-    name: aws-route53-credentials
-  patch: |
+- patch: |
     - op: replace
       path: /spec/dataFrom/0/extract/key
       value: nerc/nerc-ocp-obs/aws-route53-credentials
-- target:
+  target:
     kind: ExternalSecret
-    name: github-client-secret
-  patch: |
+    name: aws-route53-credentials
+- patch: |
     - op: replace
       path: /spec/data/0/remoteRef/key
       value: nerc/nerc-ocp-obs/openshift-config/github-client-secret
@@ -100,21 +94,24 @@ patches:
       value:
         kind: ClusterSecretStore
         name: nerc-cluster-secrets
-- target:
-    kind: APIServer
-    name: cluster
-  patch: |
+  target:
+    kind: ExternalSecret
+    name: github-client-secret
+- patch: |
     - op: replace
       path: /spec/servingCerts/namedCertificates/0/names/0
       value: api.obs.nerc.mghpcc.org
-- target:
-    kind: ClusterIssuer
-    name: letsencrypt-.*-dns01
-  patch: |
+  target:
+    kind: APIServer
+    name: cluster
+- patch: |
     - op: replace
       path: /spec/acme/solvers/0/selector/dnsZones
       value:
         - obs.nerc.mghpcc.org
+  target:
+    kind: ClusterIssuer
+    name: letsencrypt-.*-dns01
 - patch: |
     apiVersion: external-secrets.io/v1beta1
     kind: ClusterSecretStore
@@ -127,3 +124,7 @@ patches:
             kubernetes:
               mountPath: kubernetes/nerc-ocp-obs
           server: https://vault-ui-vault.apps.infra.nerc.mghpcc.org/
+labels:
+- includeSelectors: true
+  pairs:
+    nerc.mghpcc.org/kustomized: "true"

@@ -1,7 +1,5 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-commonLabels:
-  nerc.mghpcc.org/kustomized: "true"
 
 resources:
 - ../common
@@ -16,18 +14,16 @@ resources:
 - certificates
 - secretstores
 
+# this must come last in order to apply
+# to all resources.
 components:
-  - ../../components/nerc-oauth-github
-
-  # this must come last in order to apply
-  # to all resources.
-  - ../../components/argocd-skip-dryrun
+- ../../components/nerc-oauth-github
+- ../../components/argocd-skip-dryrun
 
 generatorOptions:
   disableNameSuffixHash: true
 
 patches:
-
 - patch: |
     apiVersion: config.openshift.io/v1
     kind: OAuth
@@ -38,39 +34,42 @@ patches:
       - name: github
         github:
           clientID: Ov23liezggam3Edgcsfs
-- target:
-    kind: ExternalSecret
-    name: github-client-secret
-  patch: |
+- patch: |
     - op: replace
       path: /spec/data/0/remoteRef/key
       value: nerc/albany/openshift-config/github-client-secret
-
-- target:
-    kind: SecretStore
-  patch: |
+  target:
+    kind: ExternalSecret
+    name: github-client-secret
+- patch: |
     - op: replace
       path: /spec/provider/vault/auth/kubernetes/mountPath
       value: kubernetes/albany
-- target:
-    kind: ExternalSecret
-    name: aws-route53-credentials
-  patch: |
+  target:
+    kind: SecretStore
+- patch: |
     - op: replace
       path: /spec/dataFrom/0/extract/key
       value: nerc/albany/aws-route53-credentials
-- target:
-    kind: APIServer
-    name: cluster
-  patch: |
+  target:
+    kind: ExternalSecret
+    name: aws-route53-credentials
+- patch: |
     - op: replace
       path: /spec/servingCerts/namedCertificates/0/names/0
       value: api.albany.nerc.mghpcc.org
-- target:
-    kind: Issuer
-    name: letsencrypt-.*-dns01
-  patch: |
+  target:
+    kind: APIServer
+    name: cluster
+- patch: |
     - op: replace
       path: /spec/acme/solvers/0/selector/dnsZones
       value:
         - albany.nerc.mghpcc.org
+  target:
+    kind: Issuer
+    name: letsencrypt-.*-dns01
+labels:
+- includeSelectors: true
+  pairs:
+    nerc.mghpcc.org/kustomized: "true"

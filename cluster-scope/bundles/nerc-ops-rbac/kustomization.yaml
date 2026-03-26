@@ -1,7 +1,5 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-commonLabels:
-  nerc.mghpcc.org/bundle: nerc-ops-rbac
 
 resources:
 - ../../base/rbac.authorization.k8s.io/clusterrolebindings/nerc-ops
@@ -14,3 +12,7 @@ resources:
 - ../../base/rbac.authorization.k8s.io/clusterroles/nerc-ops-machineconfig
 - ../../base/rbac.authorization.k8s.io/clusterroles/nerc-ops-rhoai
 - ../../base/rbac.authorization.k8s.io/clusterroles/nerc-ops-operators
+labels:
+- includeSelectors: true
+  pairs:
+    nerc.mghpcc.org/bundle: nerc-ops-rbac

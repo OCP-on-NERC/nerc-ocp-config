@@ -1,9 +1,11 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-commonLabels:
-  nerc.mghpcc.org/bundle: acm
 resources:
 - ../../base/operators.coreos.com/subscriptions/acm
 - ../../base/core/namespaces/open-cluster-management
 - ../../base/operators.coreos.com/operatorgroups/open-cluster-management
 - ../../base/operator.open-cluster-management.io/multiclusterhubs/multiclusterhub
+labels:
+- includeSelectors: true
+  pairs:
+    nerc.mghpcc.org/bundle: acm

@@ -1,8 +1,6 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: opentelemetry
-commonLabels:
-  app: opentelemetry
 
 resources:
 - externalsecret-opentelemetry.yaml
@@ -10,3 +8,7 @@ resources:
 - opentelemetry-tempostack.yaml
 - opentelemetry-collector.yaml
 - opentelemetry-instrumentation.yaml
+labels:
+- includeSelectors: true
+  pairs:
+    app: opentelemetry

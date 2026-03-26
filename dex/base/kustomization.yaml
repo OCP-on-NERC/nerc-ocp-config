@@ -8,7 +8,9 @@ resources:
 - secrets
 - serviceaccounts
 - services
-commonLabels:
-  app.kubernetes.io/name: dex
-  app.kubernetes.io/component: dex-server
-  app.kubernetes.io/part-of: auth
+labels:
+- includeSelectors: true
+  pairs:
+    app.kubernetes.io/component: dex-server
+    app.kubernetes.io/name: dex
+    app.kubernetes.io/part-of: auth
