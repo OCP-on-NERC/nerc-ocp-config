@@ -3,9 +3,9 @@ kind: Kustomization
 namespace: vault-operator
 
 helmCharts:
-  - name: vault-operator
+  - includeCRDs: true
+    name: vault-operator
     namespace: vault-operator
+    releaseName: vault-operator
     repo: oci://ghcr.io/bank-vaults/helm-charts
     version: 1.22.6
-    includeCRDs: true
-    releaseName: vault-operator

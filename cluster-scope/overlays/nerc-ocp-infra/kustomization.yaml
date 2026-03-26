@@ -1,39 +1,37 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-commonLabels:
-  nerc.mghpcc.org/kustomized: "true"
 
 resources:
-- ../common
-- ../../bundles/openshift-gitops
-- ../../bundles/acm
-- ../../bundles/acm-observability
-- ../../bundles/hostpath-provisioner
-- ../../bundles/patch-operator
-- ../../bundles/external-secrets-clustersecretstore
-- ../../bundles/multicluster-engine-operator
-- ../../bundles/grafana
-- ../../bundles/nagios-monitoring
-- ../../base/core/namespaces/dex
-- ../../base/core/namespaces/nerc-ocp-prod
-- ../../base/core/namespaces/nerc-ocp-obs
-- ../../base/operators.coreos.com/subscriptions/openshift-pipelines-operator
-- ../../base/operators.coreos.com/subscriptions/loki-operator
-- issuers
-- certificates
-- feature/custom-routes
-- feature/odf
-- clusterversion.yaml
-- machineconfigs/disable-net-ifnames.yaml
-- machineconfigs/refresh-storage-interface.yaml
-- machineconfigs/udev-rules
-- machineconfigs/configure-bond0
-- nodenetworkconfigurationpolicies/vlan-2177-nese.yaml
-- externalsecrets
-- redhatcop.redhat.io/odf-node-patcher.yaml
-- grafana-dashboards
-- persistentvolumeclaims
-- nerc-logs-metrics-open-cluster-management-cluster-manager-admin.yaml
+  - ../common
+  - ../../bundles/openshift-gitops
+  - ../../bundles/acm
+  - ../../bundles/acm-observability
+  - ../../bundles/hostpath-provisioner
+  - ../../bundles/patch-operator
+  - ../../bundles/external-secrets-clustersecretstore
+  - ../../bundles/multicluster-engine-operator
+  - ../../bundles/grafana
+  - ../../bundles/nagios-monitoring
+  - ../../base/core/namespaces/dex
+  - ../../base/core/namespaces/nerc-ocp-prod
+  - ../../base/core/namespaces/nerc-ocp-obs
+  - ../../base/operators.coreos.com/subscriptions/openshift-pipelines-operator
+  - ../../base/operators.coreos.com/subscriptions/loki-operator
+  - issuers
+  - certificates
+  - feature/custom-routes
+  - feature/odf
+  - clusterversion.yaml
+  - machineconfigs/disable-net-ifnames.yaml
+  - machineconfigs/refresh-storage-interface.yaml
+  - machineconfigs/udev-rules
+  - machineconfigs/configure-bond0
+  - nodenetworkconfigurationpolicies/vlan-2177-nese.yaml
+  - externalsecrets
+  - redhatcop.redhat.io/odf-node-patcher.yaml
+  - grafana-dashboards
+  - persistentvolumeclaims
+  - nerc-logs-metrics-open-cluster-management-cluster-manager-admin.yaml
 components:
   - ../../components/nerc-oauth-github
 
@@ -41,76 +39,80 @@ generatorOptions:
   disableNameSuffixHash: true
 
 configMapGenerator:
-- name: admin-acks
-  namespace: openshift-config
-  behavior: merge
-  literals:
-    - ack-4.11-kube-1.25-api-removals-in-4.12=true
-    - ack-4.12-kube-1.26-api-removals-in-4.13=true
-    - ack-4.13-kube-1.27-api-removals-in-4.14=true
-    - ack-4.18-kube-1.32-api-removals-in-4.19=true
-- files:
-  - config.yaml=configmaps/cluster-monitoring-config.yaml
-  name: cluster-monitoring-config
-  namespace: openshift-monitoring
+  - behavior: merge
+    literals:
+      - ack-4.11-kube-1.25-api-removals-in-4.12=true
+      - ack-4.12-kube-1.26-api-removals-in-4.13=true
+      - ack-4.13-kube-1.27-api-removals-in-4.14=true
+      - ack-4.18-kube-1.32-api-removals-in-4.19=true
+    name: admin-acks
+    namespace: openshift-config
+  - files:
+      - config.yaml=configmaps/cluster-monitoring-config.yaml
+    name: cluster-monitoring-config
+    namespace: openshift-monitoring
 
 patches:
-- path: consoles.operator.openshift.io/cluster_patch.yaml
-- path: storageclasses/ocs-external-storagecluster-ceph-rbd_patch.yaml
-- path: clustersecretstores/nerc-cluster-secrets_patch.yaml
-- patch: |
-    apiVersion: config.openshift.io/v1
-    kind: OAuth
-    metadata:
+  - path: consoles.operator.openshift.io/cluster_patch.yaml
+  - path: storageclasses/ocs-external-storagecluster-ceph-rbd_patch.yaml
+  - path: clustersecretstores/nerc-cluster-secrets_patch.yaml
+  - patch: |
+      apiVersion: config.openshift.io/v1
+      kind: OAuth
+      metadata:
+        name: cluster
+      spec:
+        identityProviders:
+        - name: github
+          github:
+            clientID: 77915cd4cdb5c4df7723
+            teams:
+              - ocp-on-nerc/nerc-ops
+              - ocp-on-nerc/nerc-logs-metrics
+  - patch: |
+      - op: replace
+        path: /spec/data/0/remoteRef/key
+        value: nerc/nerc-ocp-infra/openshift-config/github-client-secret
+    target:
+      kind: ExternalSecret
+      name: github-client-secret
+  - patch: |
+      - op: replace
+        path: /spec/secretStoreRef
+        value:
+          kind: ClusterSecretStore
+          name: nerc-cluster-secrets
+    target:
+      kind: ExternalSecret
+  - patch: |
+      - op: replace
+        path: /spec/servingCerts/namedCertificates/0/names/0
+        value: api.infra.nerc.mghpcc.org
+    target:
+      kind: APIServer
       name: cluster
-    spec:
-      identityProviders:
-      - name: github
-        github:
-          clientID: 77915cd4cdb5c4df7723
-          teams:
-            - ocp-on-nerc/nerc-ops
-            - ocp-on-nerc/nerc-logs-metrics
-- target:
-    kind: ExternalSecret
-    name: github-client-secret
-  patch: |
-    - op: replace
-      path: /spec/data/0/remoteRef/key
-      value: nerc/nerc-ocp-infra/openshift-config/github-client-secret
-- target:
-    kind: ExternalSecret
-  patch: |
-    - op: replace
-      path: /spec/secretStoreRef
-      value:
-        kind: ClusterSecretStore
-        name: nerc-cluster-secrets
-- target:
-    kind: APIServer
-    name: cluster
-  patch: |
-    - op: replace
-      path: /spec/servingCerts/namedCertificates/0/names/0
-      value: api.infra.nerc.mghpcc.org
-- target:
-    kind: Subscription
-    name: cluster-logging
-  patch: |
-    - op: replace
-      path: /spec/channel
-      value: stable-6.3
-- target:
-    kind: Subscription
-    name: loki-operator
-  patch: |
-    - op: replace
-      path: /spec/channel
-      value: stable-6.3
-- target:
-    kind: Issuer
-  patch: |
-    - op: replace
-      path: /spec/acme/solvers/0/selector/dnsZones
-      value:
-        - infra.nerc.mghpcc.org
+  - patch: |
+      - op: replace
+        path: /spec/channel
+        value: stable-6.3
+    target:
+      kind: Subscription
+      name: cluster-logging
+  - patch: |
+      - op: replace
+        path: /spec/channel
+        value: stable-6.3
+    target:
+      kind: Subscription
+      name: loki-operator
+  - patch: |
+      - op: replace
+        path: /spec/acme/solvers/0/selector/dnsZones
+        value:
+          - infra.nerc.mghpcc.org
+    target:
+      kind: Issuer
+labels:
+  - includeSelectors: true
+    pairs:
+      nerc.mghpcc.org/kustomized: "true"

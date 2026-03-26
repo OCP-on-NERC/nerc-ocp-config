@@ -4,4 +4,4 @@ namespace: openshift-cnv
 resources:
   - ../../base
 patches:
-- path: hyperconverged.yaml
+  - path: hyperconverged.yaml

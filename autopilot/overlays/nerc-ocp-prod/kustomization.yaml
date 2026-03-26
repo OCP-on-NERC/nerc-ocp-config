@@ -3,4 +3,4 @@ kind: Kustomization
 namespace: autopilot
 
 resources:
-- ../../base
+  - ../../base

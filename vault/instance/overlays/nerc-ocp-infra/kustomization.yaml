@@ -1,39 +1,40 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: vault
-commonLabels:
-  app.kubernetes.io/name: vault
 
 resources:
-- ../../base
-- vault-compat-route.yaml
+  - ../../base
+  - vault-compat-route.yaml
 
 patches:
-- patch: |
-    apiVersion: route.openshift.io/v1
-    kind: Route
-    metadata:
-      name: vault
-    spec:
-      host: vault.apps.infra.nerc.mghpcc.org
-
-- patch: |
-    apiVersion: vault.banzaicloud.com/v1alpha1
-    kind: Vault
-    metadata:
-      name: vault
-    spec:
-      # The vault operator will create a secret with the generated
-      # ca.crt in the following namespaces.
-      caNamespaces:
-        - "external-secrets-operator"
-      vaultInitContainers:
-        - name: fix-permissions
-          volumeMounts:
-          - name: vault-config
-            mountPath: /vault/config
-          image: ghcr.io/bank-vaults/bank-vaults:v1.31.4
-          command:
-          - chmod
-          - g+rw
-          - /vault/config/vault.json
+  - patch: |
+      apiVersion: route.openshift.io/v1
+      kind: Route
+      metadata:
+        name: vault
+      spec:
+        host: vault.apps.infra.nerc.mghpcc.org
+  - patch: |
+      apiVersion: vault.banzaicloud.com/v1alpha1
+      kind: Vault
+      metadata:
+        name: vault
+      spec:
+        # The vault operator will create a secret with the generated
+        # ca.crt in the following namespaces.
+        caNamespaces:
+          - "external-secrets-operator"
+        vaultInitContainers:
+          - name: fix-permissions
+            volumeMounts:
+            - name: vault-config
+              mountPath: /vault/config
+            image: ghcr.io/bank-vaults/bank-vaults:v1.31.4
+            command:
+            - chmod
+            - g+rw
+            - /vault/config/vault.json
+labels:
+  - includeSelectors: true
+    pairs:
+      app.kubernetes.io/name: vault
