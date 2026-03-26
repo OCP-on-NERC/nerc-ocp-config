@@ -1,8 +1,6 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: vault
-commonLabels:
-  app: vault-config
 
 resources:
 - job.yaml
@@ -11,14 +9,13 @@ resources:
 generatorOptions:
   disableNameSuffixHash: true
 
+
 configMapGenerator:
-- name: ca-certs
-  files:
+- files:
   - certs/letsencrypt.crt
   - certs/nerc-internal-root.crt
-
-- name: vault-config
-  files:
+  name: ca-certs
+- files:
   - config/backup-job.yaml
   - config/groups.yaml
   - config/hypershift1.yaml
@@ -35,3 +32,8 @@ configMapGenerator:
   - config/secrets.yaml
   - config/pki-nerc.yaml
   - config/albany.yaml
+  name: vault-config
+labels:
+- includeSelectors: true
+  pairs:
+    app: vault-config

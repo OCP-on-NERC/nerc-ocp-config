@@ -1,7 +1,5 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-commonLabels:
-  nerc.mghpcc.org/bundle: odf
 resources:
 - ../../base/core/namespaces/openshift-storage
 - ../../base/core/serviceaccounts/odf-node-patcher/
@@ -9,3 +7,7 @@ resources:
 - ../../base/operators.coreos.com/subscriptions/odf-operator
 - ../../base/ocs.openshift.io/ocsinitializations/ocsinit
 - ../../base/rbac.authorization.k8s.io/clusterrolebindings/odf-node-labeler/
+labels:
+- includeSelectors: true
+  pairs:
+    nerc.mghpcc.org/bundle: odf

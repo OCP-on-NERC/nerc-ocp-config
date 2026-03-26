@@ -1,7 +1,5 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-commonLabels:
-  nerc.mghpcc.org/kustomized: "true"
 
 resources:
 - ../common
@@ -35,20 +33,20 @@ resources:
 - persistentvolumeclaims
 - nerc-logs-metrics-open-cluster-management-cluster-manager-admin.yaml
 components:
-  - ../../components/nerc-oauth-github
+- ../../components/nerc-oauth-github
 
 generatorOptions:
   disableNameSuffixHash: true
 
 configMapGenerator:
-- name: admin-acks
-  namespace: openshift-config
-  behavior: merge
+- behavior: merge
   literals:
-    - ack-4.11-kube-1.25-api-removals-in-4.12=true
-    - ack-4.12-kube-1.26-api-removals-in-4.13=true
-    - ack-4.13-kube-1.27-api-removals-in-4.14=true
-    - ack-4.18-kube-1.32-api-removals-in-4.19=true
+  - ack-4.11-kube-1.25-api-removals-in-4.12=true
+  - ack-4.12-kube-1.26-api-removals-in-4.13=true
+  - ack-4.13-kube-1.27-api-removals-in-4.14=true
+  - ack-4.18-kube-1.32-api-removals-in-4.19=true
+  name: admin-acks
+  namespace: openshift-config
 - files:
   - config.yaml=configmaps/cluster-monitoring-config.yaml
   name: cluster-monitoring-config
@@ -71,46 +69,50 @@ patches:
           teams:
             - ocp-on-nerc/nerc-ops
             - ocp-on-nerc/nerc-logs-metrics
-- target:
-    kind: ExternalSecret
-    name: github-client-secret
-  patch: |
+- patch: |
     - op: replace
       path: /spec/data/0/remoteRef/key
       value: nerc/nerc-ocp-infra/openshift-config/github-client-secret
-- target:
+  target:
     kind: ExternalSecret
-  patch: |
+    name: github-client-secret
+- patch: |
     - op: replace
       path: /spec/secretStoreRef
       value:
         kind: ClusterSecretStore
         name: nerc-cluster-secrets
-- target:
-    kind: APIServer
-    name: cluster
-  patch: |
+  target:
+    kind: ExternalSecret
+- patch: |
     - op: replace
       path: /spec/servingCerts/namedCertificates/0/names/0
       value: api.infra.nerc.mghpcc.org
-- target:
+  target:
+    kind: APIServer
+    name: cluster
+- patch: |
+    - op: replace
+      path: /spec/channel
+      value: stable-6.3
+  target:
     kind: Subscription
     name: cluster-logging
-  patch: |
+- patch: |
     - op: replace
       path: /spec/channel
       value: stable-6.3
-- target:
+  target:
     kind: Subscription
     name: loki-operator
-  patch: |
-    - op: replace
-      path: /spec/channel
-      value: stable-6.3
-- target:
-    kind: Issuer
-  patch: |
+- patch: |
     - op: replace
       path: /spec/acme/solvers/0/selector/dnsZones
       value:
         - infra.nerc.mghpcc.org
+  target:
+    kind: Issuer
+labels:
+- includeSelectors: true
+  pairs:
+    nerc.mghpcc.org/kustomized: "true"

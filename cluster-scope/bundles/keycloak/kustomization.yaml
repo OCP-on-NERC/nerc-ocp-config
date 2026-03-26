@@ -1,9 +1,11 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-commonLabels:
-  nerc.mghpcc.org/bundle: keycloak
 resources:
 - ../../base/core/namespaces/keycloak
 - ../../base/operators.coreos.com/operatorgroups/keycloak
 - ../../base/operators.coreos.com/subscriptions/rhbk-operator
 - ../../base/operators.coreos.com/subscriptions/keycloak-permissions-operator
+labels:
+- includeSelectors: true
+  pairs:
+    nerc.mghpcc.org/bundle: keycloak

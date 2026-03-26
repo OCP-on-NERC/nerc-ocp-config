@@ -1,13 +1,13 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: vault
-commonLabels:
-  app.kubernetes.io/name: vault
 
 resources:
 - ../../base
 - vault-compat-route.yaml
 
+# The vault operator will create a secret with the generated
+# ca.crt in the following namespaces.
 patches:
 - patch: |
     apiVersion: route.openshift.io/v1
@@ -16,7 +16,6 @@ patches:
       name: vault
     spec:
       host: vault.apps.infra.nerc.mghpcc.org
-
 - patch: |
     apiVersion: vault.banzaicloud.com/v1alpha1
     kind: Vault
@@ -37,3 +36,7 @@ patches:
           - chmod
           - g+rw
           - /vault/config/vault.json
+labels:
+- includeSelectors: true
+  pairs:
+    app.kubernetes.io/name: vault

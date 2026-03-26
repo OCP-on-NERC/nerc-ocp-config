@@ -1,7 +1,5 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-commonLabels:
-  nerc.mghpcc.org/kustomized: "true"
 
 resources:
 - ../common
@@ -55,29 +53,29 @@ resources:
 - rolebindings
 - groups
 
-components:
-  - ../../components/nerc-oauth-keycloak
-  - ../../components/nerc-oauth-github
-  - ../../components/resourcequotas/ope-course-quota
 
-  # this must come last in order to apply
-  # to all resources.
-  - ../../components/argocd-skip-dryrun
+# this must come last in order to apply
+# to all resources.
+components:
+- ../../components/nerc-oauth-keycloak
+- ../../components/nerc-oauth-github
+- ../../components/resourcequotas/ope-course-quota
+- ../../components/argocd-skip-dryrun
 
 generatorOptions:
   disableNameSuffixHash: true
 
 configMapGenerator:
-- name: admin-acks
-  namespace: openshift-config
-  behavior: merge
+- behavior: merge
   literals:
-    - ack-4.11-kube-1.25-api-removals-in-4.12=true
-    - ack-4.12-kube-1.26-api-removals-in-4.13=true
-    - ack-4.13-kube-1.27-api-removals-in-4.14=true
-    - ack-4.15-kube-1.29-api-removals-in-4.16=true
-    - ack-4.18-kube-1.32-api-removals-in-4.19=true
-    - ack-4.19-admissionregistration-v1beta1-api-removals-in-4.20=true
+  - ack-4.11-kube-1.25-api-removals-in-4.12=true
+  - ack-4.12-kube-1.26-api-removals-in-4.13=true
+  - ack-4.13-kube-1.27-api-removals-in-4.14=true
+  - ack-4.15-kube-1.29-api-removals-in-4.16=true
+  - ack-4.18-kube-1.32-api-removals-in-4.19=true
+  - ack-4.19-admissionregistration-v1beta1-api-removals-in-4.20=true
+  name: admin-acks
+  namespace: openshift-config
 - files:
   - config.yaml=configmaps/cluster-monitoring-config.yaml
   name: cluster-monitoring-config
@@ -86,12 +84,12 @@ configMapGenerator:
 patches:
 - path: kubeletconfigs/system-reserved-patch.yaml
 - path: subscriptions/rhoai-operator-patch.yaml
-- target:
-    kind: SecretStore
-  patch: |
+- patch: |
     - op: replace
       path: /spec/provider/vault/auth/kubernetes/mountPath
       value: kubernetes/nerc-ocp-prod
+  target:
+    kind: SecretStore
 - patch: |
     apiVersion: config.openshift.io/v1
     kind: OAuth
@@ -112,69 +110,73 @@ patches:
       - name: github
         github:
           clientID: 771ea98004d436c6e529
-- target:
-    kind: ExternalSecret
-    name: oauths-clientsecret-nerc
-  patch: |
+- patch: |
     - op: replace
       path: /spec/data/0/remoteRef/key
       value: nerc/nerc-ocp-prod/openshift-config/oauths-clientsecret-nerc
-- target:
+  target:
     kind: ExternalSecret
-    name: aws-route53-credentials
-  patch: |
+    name: oauths-clientsecret-nerc
+- patch: |
     - op: replace
       path: /spec/dataFrom/0/extract/key
       value: nerc/nerc-ocp-prod/aws-route53-credentials
-- target:
+  target:
     kind: ExternalSecret
-    name: github-client-secret
-  patch: |
+    name: aws-route53-credentials
+- patch: |
     - op: replace
       path: /spec/data/0/remoteRef/key
       value: nerc/nerc-ocp-prod/openshift-config/github-client-secret
-- target:
-    kind: APIServer
-    name: cluster
-  patch: |
+  target:
+    kind: ExternalSecret
+    name: github-client-secret
+- patch: |
     - op: replace
       path: /spec/servingCerts/namedCertificates/0/names/0
       value: api.shift.nerc.mghpcc.org
-- target:
-    kind: PersistentVolumeClaim
-    name: image-registry-storage
-  patch: |
+  target:
+    kind: APIServer
+    name: cluster
+- patch: |
     - op: replace
       path: /spec/resources/requests/storage
       value: 750Gi
-- target:
-    kind: Subscription
-    name: cluster-logging
-  patch: |
+  target:
+    kind: PersistentVolumeClaim
+    name: image-registry-storage
+- patch: |
     - op: replace
       path: /spec/channel
       value: stable-6.2
-- target:
+  target:
     kind: Subscription
-    name: rhods-operator
-  patch: |
+    name: cluster-logging
+- patch: |
     - op: replace
       path: /spec/channel
       value: stable-2.25
     - op: replace
       path: /spec/startingCSV
       value: rhods-operator.2.25.1
-- target:
+  target:
     kind: Subscription
-    name: gpu-operator-certified
-  patch: |
+    name: rhods-operator
+- patch: |
     - op: replace
       path: /spec/channel
       value: v25.10
-- target:
+  target:
     kind: Subscription
-    name: serverless-operator
-  patch: |
+    name: gpu-operator-certified
+- patch: |
     - op: replace
       path: /spec/channel
       value: stable-1.36
+  target:
+    kind: Subscription
+    name: serverless-operator
+labels:
+- includeSelectors: true
+  pairs:
+    nerc.mghpcc.org/kustomized: "true"
