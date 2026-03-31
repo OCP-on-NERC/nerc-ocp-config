@@ -1,0 +1,50 @@
+---
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: nerc-test-cost-management
+rules:
+  - verbs:
+      - create
+      - get
+    apiGroups:
+      - monitoring.coreos.com
+    resources:
+      - prometheuses/api
+  - verbs:
+      - '*'
+    apiGroups:
+      - perses.dev
+    resources:
+      - perses
+      - persesdatasources
+      - persesdashboards
+  - apiGroups:
+      - "monitoring.coreos.com"
+    resources:
+      - "*"
+    verbs:
+      - list
+      - get
+      - watch
+  - apiGroups:
+      - "operators.coreos.com"
+    resources:
+      - "*"
+    verbs:
+      - list
+      - get
+      - watch
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: nerc-test-cost-management
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: nerc-test-cost-management
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: nerc-test-cost-management
