@@ -6,3 +6,4 @@ resources:
 - imagestreams/oauth-proxy.yaml
 - acceleratorprofiles
 - datascienceclusters
+- servingruntimes
