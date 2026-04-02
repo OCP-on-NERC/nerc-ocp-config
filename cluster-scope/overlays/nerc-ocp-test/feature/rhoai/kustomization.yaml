@@ -11,6 +11,7 @@ resources:
   - imagestreams/ucsls-f24-imagestream.yaml
   - hardwareprofiles
   - configmaps
+  - servingruntimes
 
 patches:
   - path: subscriptions/subscription-patch.yaml
