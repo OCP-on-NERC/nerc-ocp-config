@@ -6,7 +6,7 @@ metadata:
     opendatahub.io/apiProtocol: REST
     opendatahub.io/model-type: '["generative"]'
     opendatahub.io/modelServingSupport: '["single"]'
-    openshift.io/display-name: vLLM v0.15+ NVIDIA GPU ServingRuntime for KServe
+    openshift.io/display-name: vLLM v0.15+ NVIDIA GPU ServingRuntime for KServe (experimental)
     openshift.io/provider-display-name: Red Hat, Inc.
     tags: rhods,rhoai,kserve,servingruntime,vllm-v15
     template.openshift.io/documentation-url: https://github.com/opendatahub-io/vllm
@@ -25,7 +25,7 @@ objects:
     annotations:
       opendatahub.io/recommended-accelerators: '["nvidia.com/gpu"]'
       opendatahub.io/runtime-version: v0.15.0
-      openshift.io/display-name: vLLM v0.15+ NVIDIA GPU ServingRuntime for KServe
+      openshift.io/display-name: vLLM v0.15.0 NVIDIA GPU ServingRuntime for KServe (experimental)
     labels:
       opendatahub.io/dashboard: "true"
     name: vllm-cuda-v15-runtime
