@@ -256,11 +256,11 @@ data:
           annotations:
             summary: "{{ $labels.cluster }} - OPE container count recording rules not producing data"
             description: |
-              <https://grafana.apps.obs.nerc.mghpcc.org/explore?orgId=1&left=%5B%22now-1h%22,%22now%22,%22Observatorium%22,%7B%22exemplar%22:true,%22expr%22:%22absent(ope:container_count%7Bcluster%3D%5C%22nerc-ocp-prod%5C%22%7D)%20or%20absent(ope:container_count_edu%7Bcluster%3D%5C%22nerc-ocp-edu%5C%22%7D)%22%7D%5D|Click here to see these metrics in Observability Monitoring>
+              <https://grafana.apps.obs.nerc.mghpcc.org/explore?orgId=1&left=%5B%22now-1h%22,%22now%22,%22Observatorium%22,%7B%22exemplar%22:true,%22expr%22:%22absent(ope:container_count%7Bcluster%3D%5C%22nerc-ocp-prod%5C%22,namespace%3D%5C%22rhods-notebooks%5C%22%7D)%20or%20absent(ope:container_count_edu%7Bcluster%3D%5C%22nerc-ocp-edu%5C%22%7D)%22%7D%5D|Click here to see these metrics in Observability Monitoring>
               Recording rules for container counts are not producing data.
               This means 6am/6:05am status alerts will not include container count information!
               Check if kube-state-metrics is running and kube_pod_container_info metrics are being scraped.
-          expr: absent(ope:container_count{cluster="nerc-ocp-prod"}) or absent(ope:container_count_edu{cluster="nerc-ocp-edu"})
+          expr: absent(ope:container_count{cluster="nerc-ocp-prod",namespace="rhods-notebooks"}) or absent(ope:container_count_edu{cluster="nerc-ocp-edu"})
           for: 15m
           labels:
             severity: warning
