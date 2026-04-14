@@ -154,7 +154,7 @@ patches:
   patch: |
     - op: replace
       path: /spec/channel
-      value: stable-6.2
+      value: stable-6.5
 - target:
     kind: Subscription
     name: rhods-operator
