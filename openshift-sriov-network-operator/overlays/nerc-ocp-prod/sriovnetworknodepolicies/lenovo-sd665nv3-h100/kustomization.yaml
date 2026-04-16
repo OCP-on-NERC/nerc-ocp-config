@@ -1,0 +1,8 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: openshift-sriov-network-operator
+resources:
+  - cx7-nic3.yaml
+  - cx7-nic4.yaml
+  - cx7-nic5.yaml
+  - cx7-nic6.yaml
