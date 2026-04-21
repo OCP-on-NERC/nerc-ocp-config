@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: metering-stream-processor
+  namespace: metering-thor
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: metering-stream-processor
+  template:
+    metadata:
+      labels:
+        app: metering-stream-processor
+    spec:
+      serviceAccountName: metering-reconciler
+      containers:
+      - name: stream-processor
+        image: registry.access.redhat.com/ubi9/python-311:latest
+        env:
+        - name: KAFKA_BOOTSTRAP
+          value: metering-kafka-bootstrap.metering-thor.svc:9092
+        - name: KAFKA_TOPIC
+          value: billing-events
+        - name: KAFKA_DLQ_TOPIC
+          value: billing-events-dlq
+        - name: KAFKA_GROUP_ID
+          value: metering-stream-processor
+        - name: KAFKA_USER
+          value: metering-stream-processor
+        - name: KAFKA_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: metering-stream-processor
+              key: password
+        - name: CLICKHOUSE_HOST
+          value: chi-metering-metering-0-0.metering-thor.svc
+        - name: CLICKHOUSE_PORT
+          value: "9000"
+        - name: CLICKHOUSE_DB
+          value: billing
+        - name: CLICKHOUSE_USER
+          value: default
+        - name: CLICKHOUSE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: clickhouse-billing-credentials
+              key: password
+        command:
+        - /bin/sh
+        - -c
+        - |
+          echo "stream-processor placeholder - implement START/STOP pairing and ClickHouse writes"
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          limits:
+            cpu: 500m
+            memory: 512Mi
+        livenessProbe:
+          exec:
+            command: ["/bin/sh", "-c", "exit 0"]
+          initialDelaySeconds: 30
+          periodSeconds: 60

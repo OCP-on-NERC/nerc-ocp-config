@@ -14,3 +14,4 @@ resources:
 - clickhouse.yaml
 - clickhouse-schema-configmap.yaml
 - clickhouse-schema-job.yaml
+- stream-processor.yaml
