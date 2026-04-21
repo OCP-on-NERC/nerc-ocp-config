@@ -8,3 +8,5 @@ resources:
 - kafka.yaml
 - kafkatopics.yaml
 - kafkausers.yaml
+- rbac.yaml
+- reconciler-cronjob.yaml
