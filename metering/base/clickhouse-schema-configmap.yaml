@@ -1,0 +1,65 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: clickhouse-billing-schema
+  namespace: metering-thor
+data:
+  00_create_database.sql: |
+    CREATE DATABASE IF NOT EXISTS billing;
+
+  01_billing_events.sql: |
+    CREATE TABLE IF NOT EXISTS billing.billing_events
+    (
+        event_id        UUID DEFAULT generateUUIDv4(),
+        received_at     DateTime DEFAULT now(),
+        event_time      DateTime,
+        event_reason    LowCardinality(String),
+        billing_action  LowCardinality(String),
+        namespace       String,
+        pod_name        String,
+        node_name       String,
+        nerc_tenant     String,
+        nerc_owner      String,
+        resource_type   LowCardinality(String),
+        raw_payload     String
+    )
+    ENGINE = MergeTree()
+    PARTITION BY toYYYYMM(event_time)
+    ORDER BY (nerc_tenant, namespace, event_time, event_id)
+    TTL event_time + INTERVAL 13 MONTH;
+
+  02_billing_sessions.sql: |
+    CREATE TABLE IF NOT EXISTS billing.billing_sessions
+    (
+        session_id      UUID DEFAULT generateUUIDv4(),
+        nerc_tenant     String,
+        namespace       String,
+        pod_name        String,
+        node_name       String,
+        resource_type   LowCardinality(String),
+        start_time      DateTime,
+        stop_time       Nullable(DateTime),
+        stop_reason     LowCardinality(String),
+        duration_seconds Nullable(UInt64)
+    )
+    ENGINE = MergeTree()
+    PARTITION BY toYYYYMM(start_time)
+    ORDER BY (nerc_tenant, namespace, start_time, session_id)
+    TTL start_time + INTERVAL 25 MONTH;
+
+  03_namespace_usage_daily.sql: |
+    CREATE MATERIALIZED VIEW IF NOT EXISTS billing.namespace_usage_daily
+    ENGINE = SummingMergeTree()
+    PARTITION BY toYYYYMM(usage_date)
+    ORDER BY (nerc_tenant, namespace, resource_type, usage_date)
+    AS
+    SELECT
+        nerc_tenant,
+        namespace,
+        resource_type,
+        toDate(start_time)              AS usage_date,
+        count()                         AS session_count,
+        sum(duration_seconds)           AS total_seconds
+    FROM billing.billing_sessions
+    WHERE stop_time IS NOT NULL
+    GROUP BY nerc_tenant, namespace, resource_type, usage_date;

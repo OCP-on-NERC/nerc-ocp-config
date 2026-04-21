@@ -1,0 +1,41 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: clickhouse-schema-init
+  namespace: metering-thor
+  annotations:
+    argocd.argoproj.io/hook: PostSync
+    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
+spec:
+  backoffLimit: 10
+  template:
+    spec:
+      restartPolicy: OnFailure
+      containers:
+      - name: schema-init
+        image: clickhouse/clickhouse-client:24.3
+        command:
+        - /bin/sh
+        - -c
+        - |
+          set -e
+          HOST="chi-metering-metering-0-0.metering-thor.svc"
+          for f in /sql/*.sql; do
+            echo "applying $f"
+            clickhouse-client --host "$HOST" --multiquery < "$f"
+          done
+          echo "schema init complete"
+        volumeMounts:
+        - name: sql
+          mountPath: /sql
+        resources:
+          requests:
+            cpu: 50m
+            memory: 64Mi
+          limits:
+            cpu: 200m
+            memory: 128Mi
+      volumes:
+      - name: sql
+        configMap:
+          name: clickhouse-billing-schema

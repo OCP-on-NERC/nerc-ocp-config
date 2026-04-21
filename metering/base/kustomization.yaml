@@ -10,3 +10,6 @@ resources:
 - kafkausers.yaml
 - rbac.yaml
 - reconciler-cronjob.yaml
+- clickhouse.yaml
+- clickhouse-schema-configmap.yaml
+- clickhouse-schema-job.yaml
