@@ -1,0 +1,53 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: metering-openmeter-config
+  namespace: metering-thor
+data:
+  config.yaml: |
+    address: 0.0.0.0:8080
+
+    ingest:
+      kafka:
+        broker: metering-kafka-bootstrap.metering-thor.svc:9092
+        securityProtocol: SASL_PLAINTEXT
+        saslMechanisms: SCRAM-SHA-512
+        saslUsername: metering-openmeter
+        saslPasswordFile: /mnt/kafka-secret/password
+        topics:
+          - billing-events
+        consumerGroupID: openmeter-consumer
+
+    sink:
+      clickhouse:
+        address: chi-metering-clickhouse-0-0.metering-thor.svc:9000
+        username: default
+        database: billing
+        eventsTableName: billing_events
+
+    meters:
+      - slug: pod_running_seconds
+        description: "Pod running time in seconds"
+        aggregation: SUM
+        valueProperty: "$.duration_seconds"
+        groupBy:
+          namespace: "$.namespace"
+          pod: "$.pod_name"
+        eventType: POD_RUNNING
+
+      - slug: storage_request_bytes
+        description: "Persistent volume storage requested"
+        aggregation: MAX
+        valueProperty: "$.storage_bytes"
+        groupBy:
+          namespace: "$.namespace"
+          pvc: "$.pvc_name"
+        eventType: PVC_BOUND
+
+      - slug: pod_error_count
+        description: "Pod error events"
+        aggregation: COUNT
+        groupBy:
+          namespace: "$.namespace"
+          reason: "$.reason"
+        eventType: POD_ERROR

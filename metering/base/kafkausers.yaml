@@ -4,23 +4,25 @@ metadata:
   name: metering-otel-collector
   namespace: metering-thor
   labels:
-    strimzi.io/cluster: metering
+    strimzi.io/cluster: metering-kafka
 spec:
   authentication:
     type: scram-sha-512
   authorization:
     type: simple
     acls:
-    - resource:
-        type: topic
-        name: billing-events
-        patternType: literal
-      operations: [Write, Describe]
-    - resource:
-        type: transactionalId
-        name: otel-collector
-        patternType: literal
-      operations: [Describe, Write]
+      - resource:
+          type: topic
+          name: billing-events
+        operations:
+          - Write
+          - Describe
+      - resource:
+          type: transactionalId
+          name: otel-collector
+        operations:
+          - Describe
+          - Write
 ---
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaUser
@@ -28,18 +30,19 @@ metadata:
   name: metering-reconciler
   namespace: metering-thor
   labels:
-    strimzi.io/cluster: metering
+    strimzi.io/cluster: metering-kafka
 spec:
   authentication:
     type: scram-sha-512
   authorization:
     type: simple
     acls:
-    - resource:
-        type: topic
-        name: billing-events
-        patternType: literal
-      operations: [Write, Describe]
+      - resource:
+          type: topic
+          name: billing-events
+        operations:
+          - Write
+          - Describe
 ---
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaUser
@@ -47,28 +50,24 @@ metadata:
   name: metering-stream-processor
   namespace: metering-thor
   labels:
-    strimzi.io/cluster: metering
+    strimzi.io/cluster: metering-kafka
 spec:
   authentication:
     type: scram-sha-512
   authorization:
     type: simple
     acls:
-    - resource:
-        type: topic
-        name: billing-events
-        patternType: literal
-      operations: [Read, Describe]
-    - resource:
-        type: topic
-        name: billing-events-dlq
-        patternType: literal
-      operations: [Write, Describe]
-    - resource:
-        type: group
-        name: metering-stream-processor
-        patternType: literal
-      operations: [Read, Describe]
+      - resource:
+          type: topic
+          name: billing-events
+        operations:
+          - Read
+          - Describe
+      - resource:
+          type: group
+          name: stream-processor
+        operations:
+          - Read
 ---
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaUser
@@ -76,20 +75,21 @@ metadata:
   name: metering-openmeter
   namespace: metering-thor
   labels:
-    strimzi.io/cluster: metering
+    strimzi.io/cluster: metering-kafka
 spec:
   authentication:
     type: scram-sha-512
   authorization:
     type: simple
     acls:
-    - resource:
-        type: topic
-        name: billing-events
-        patternType: literal
-      operations: [Read, Describe]
-    - resource:
-        type: group
-        name: metering-openmeter
-        patternType: literal
-      operations: [Read, Describe]
+      - resource:
+          type: topic
+          name: billing-events
+        operations:
+          - Read
+          - Describe
+      - resource:
+          type: group
+          name: openmeter-consumer
+        operations:
+          - Read
