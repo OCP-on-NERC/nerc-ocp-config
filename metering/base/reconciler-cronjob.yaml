@@ -23,10 +23,7 @@ spec:
             - name: KAFKA_TOPIC
               value: billing-events
             - name: KAFKA_USER
-              valueFrom:
-                secretKeyRef:
-                  name: metering-reconciler
-                  key: user
+              value: metering-reconciler
             - name: KAFKA_PASSWORD
               valueFrom:
                 secretKeyRef:
