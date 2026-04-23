@@ -27,6 +27,9 @@ spec:
             - name: kafka-secret
               mountPath: /mnt/kafka-secret
               readOnly: true
+            - name: kafka-ca
+              mountPath: /mnt/kafka-ca
+              readOnly: true
           resources:
             requests:
               cpu: 100m
@@ -44,6 +47,9 @@ spec:
             items:
               - key: password
                 path: password
+        - name: kafka-ca
+          secret:
+            secretName: metering-cluster-ca-cert
 ---
 apiVersion: v1
 kind: Service
