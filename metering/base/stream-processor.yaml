@@ -19,7 +19,9 @@ spec:
         image: registry.access.redhat.com/ubi9/python-311:latest
         env:
         - name: KAFKA_BOOTSTRAP
-          value: metering-kafka-bootstrap.metering-thor.svc:9092
+          value: metering-kafka-bootstrap.metering-thor.svc:9093
+        - name: KAFKA_CA_CERT
+          value: /mnt/kafka-ca/ca.crt
         - name: KAFKA_TOPIC
           value: billing-events
         - name: KAFKA_DLQ_TOPIC
@@ -58,8 +60,16 @@ spec:
           limits:
             cpu: 500m
             memory: 512Mi
+        volumeMounts:
+        - name: kafka-ca
+          mountPath: /mnt/kafka-ca
+          readOnly: true
         livenessProbe:
           exec:
             command: ["/bin/sh", "-c", "exit 0"]
           initialDelaySeconds: 30
           periodSeconds: 60
+      volumes:
+      - name: kafka-ca
+        secret:
+          secretName: metering-cluster-ca-cert
