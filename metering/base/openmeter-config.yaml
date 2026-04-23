@@ -20,7 +20,7 @@ data:
 
     sink:
       clickhouse:
-        address: chi-metering-clickhouse-0-0.metering-thor.svc:9000
+        address: chi-metering-metering-0-0.metering-thor.svc:9000
         username: default
         database: billing
         eventsTableName: billing_events
