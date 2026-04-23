@@ -23,6 +23,7 @@ data:
       clickhouse:
         address: chi-metering-metering-0-0.metering-thor.svc:9000
         username: default
+        passwordFile: /mnt/clickhouse-secret/password
         database: billing
         eventsTableName: billing_events
 
