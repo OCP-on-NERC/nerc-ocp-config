@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: openmeter
-          image: ghcr.io/openmeterio/openmeter:latest
+          image: ghcr.io/openmeterio/openmeter:v1.0.0-beta.227
           args:
             - --config
             - /etc/openmeter/config.yaml
