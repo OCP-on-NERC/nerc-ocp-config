@@ -30,6 +30,9 @@ spec:
             - name: kafka-ca
               mountPath: /mnt/kafka-ca
               readOnly: true
+            - name: clickhouse-secret
+              mountPath: /mnt/clickhouse-secret
+              readOnly: true
           resources:
             requests:
               cpu: 100m
@@ -50,6 +53,12 @@ spec:
         - name: kafka-ca
           secret:
             secretName: metering-cluster-ca-cert
+        - name: clickhouse-secret
+          secret:
+            secretName: clickhouse-billing-credentials
+            items:
+              - key: password
+                path: password
 ---
 apiVersion: v1
 kind: Service
