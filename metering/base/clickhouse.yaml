@@ -5,6 +5,9 @@ metadata:
   namespace: metering-thor
 spec:
   configuration:
+    users:
+      default/passwordSecret/name: clickhouse-default-password
+      default/passwordSecret/key: password
     clusters:
     - name: metering
       layout:
