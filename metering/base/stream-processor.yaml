@@ -16,7 +16,7 @@ spec:
       serviceAccountName: metering-reconciler
       containers:
       - name: stream-processor
-        image: registry.access.redhat.com/ubi9/python-311:latest
+        image: registry.access.redhat.com/ubi9/python-311:9.7-1776963225
         env:
         - name: KAFKA_BOOTSTRAP
           value: metering-kafka-bootstrap.metering-thor.svc:9093
