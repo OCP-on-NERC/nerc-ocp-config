@@ -4,12 +4,13 @@ metadata:
   name: metering-reconciler
   namespace: metering-thor
 spec:
-  schedule: "*/5 * * * *"
+  schedule: "*/30 * * * *"
   concurrencyPolicy: Forbid
   successfulJobsHistoryLimit: 3
   failedJobsHistoryLimit: 3
   jobTemplate:
     spec:
+      activeDeadlineSeconds: 1500
       template:
         spec:
           serviceAccountName: metering-reconciler
