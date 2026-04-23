@@ -56,7 +56,7 @@ spec:
           X-Scope-OrgID: "dev"
       kafka/billing:
         brokers:
-        - metering-kafka-bootstrap.metering-thor.svc:9092
+        - metering-kafka-bootstrap.metering-thor.svc:9093
         topic: billing-events
         encoding: otlp_json
         auth:
@@ -64,6 +64,8 @@ spec:
             mechanism: SCRAM-SHA-512
             username: metering-otel-collector
             password: "${KAFKA_PASSWORD}"
+          tls:
+            ca_file: /mnt/kafka-ca/ca.crt
     service:
       telemetry:
         metrics:
@@ -88,3 +90,11 @@ spec:
       secretKeyRef:
         name: metering-otel-collector
         key: password
+  volumes:
+  - name: kafka-ca
+    secret:
+      secretName: metering-cluster-ca-cert
+  volumeMounts:
+  - name: kafka-ca
+    mountPath: /mnt/kafka-ca
+    readOnly: true
