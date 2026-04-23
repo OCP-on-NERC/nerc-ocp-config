@@ -27,7 +27,7 @@ spec:
       log.retention.hours: 168
     storage:
       type: persistent-claim
-      size: 20Gi
+      size: 5Gi
       deleteClaim: false
   zookeeper:
     replicas: 1
