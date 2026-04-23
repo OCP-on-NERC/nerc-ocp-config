@@ -9,11 +9,12 @@ data:
 
     ingest:
       kafka:
-        broker: metering-kafka-bootstrap.metering-thor.svc:9092
-        securityProtocol: SASL_PLAINTEXT
+        broker: metering-kafka-bootstrap.metering-thor.svc:9093
+        securityProtocol: SASL_SSL
         saslMechanisms: SCRAM-SHA-512
         saslUsername: metering-openmeter
         saslPasswordFile: /mnt/kafka-secret/password
+        sslCaLocation: /mnt/kafka-ca/ca.crt
         topics:
           - billing-events
         consumerGroupID: openmeter-consumer
