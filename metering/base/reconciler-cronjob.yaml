@@ -36,7 +36,92 @@ spec:
             - /bin/sh
             - -c
             - |
-              echo "reconciler placeholder - implement emit of synthetic START/STOP events"
+              set -e
+              pip install --quiet kafka-python
+
+              python3 - <<'PYEOF'
+              import json
+              import os
+              import ssl
+              import time
+              import urllib.request
+              from datetime import datetime, timezone
+
+              from kafka import KafkaProducer
+
+              BOOTSTRAP = os.environ["KAFKA_BOOTSTRAP"]
+              CA_CERT   = os.environ["KAFKA_CA_CERT"]
+              TOPIC     = os.environ["KAFKA_TOPIC"]
+              USER      = os.environ["KAFKA_USER"]
+              PASSWORD  = os.environ["KAFKA_PASSWORD"]
+
+              # --- Kubernetes API (in-cluster) ---
+              K8S_HOST  = "https://kubernetes.default.svc"
+              SA_DIR    = "/var/run/secrets/kubernetes.io/serviceaccount"
+              TOKEN     = open(f"{SA_DIR}/token").read().strip()
+              K8S_CA    = f"{SA_DIR}/ca.crt"
+
+              def k8s_get(path):
+                  ctx = ssl.create_default_context(cafile=K8S_CA)
+                  req = urllib.request.Request(
+                      f"{K8S_HOST}{path}",
+                      headers={"Authorization": f"Bearer {TOKEN}"},
+                  )
+                  with urllib.request.urlopen(req, context=ctx) as r:
+                      return json.loads(r.read())
+
+              # List all running pods across all namespaces (skip system namespaces)
+              SKIP_NS = {
+                  "kube-system", "openshift", "openshift-monitoring",
+                  "openshift-operators", "openshift-gitops",
+              }
+
+              pods_raw = k8s_get("/api/v1/pods?fieldSelector=status.phase%3DRunning")
+              pods = [
+                  p for p in pods_raw.get("items", [])
+                  if p["metadata"]["namespace"] not in SKIP_NS
+              ]
+
+              # --- Kafka producer (SCRAM-SHA-512 + TLS) ---
+              producer = KafkaProducer(
+                  bootstrap_servers=BOOTSTRAP,
+                  security_protocol="SASL_SSL",
+                  sasl_mechanism="SCRAM-SHA-512",
+                  sasl_plain_username=USER,
+                  sasl_plain_password=PASSWORD,
+                  ssl_cafile=CA_CERT,
+                  value_serializer=lambda v: json.dumps(v).encode(),
+              )
+
+              now_iso = datetime.now(timezone.utc).isoformat()
+              count = 0
+
+              for pod in pods:
+                  meta = pod["metadata"]
+                  spec = pod["spec"]
+                  status = pod["status"]
+
+                  event = {
+                      "event_type": "START",
+                      "timestamp": now_iso,
+                      "namespace": meta["namespace"],
+                      "pod_name": meta["name"],
+                      "node_name": spec.get("nodeName", ""),
+                      "start_time": status.get("startTime", ""),
+                      "containers": [
+                          {
+                              "name": c["name"],
+                              "image": c["image"],
+                          }
+                          for c in spec.get("containers", [])
+                      ],
+                  }
+                  producer.send(TOPIC, value=event)
+                  count += 1
+
+              producer.flush()
+              print(f"Emitted {count} START events to topic '{TOPIC}'")
+              PYEOF
             volumeMounts:
             - name: kafka-ca
               mountPath: /mnt/kafka-ca
