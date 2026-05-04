@@ -63,20 +63,15 @@ spec:
         check_interval: 1s
         limit_percentage: 50
         spike_limit_percentage: 30
-      k8sattributes:
-        auth_type: serviceAccount
-        extract:
-          metadata:
-          - k8s.namespace.name
-          - k8s.pod.name
-          - k8s.node.name
-          labels:
-          - tag_name: nerc.tenant
-            key: nerc.mghpcc.org/project
-            from: namespace
-          - tag_name: nerc.owner
-            key: nerc.mghpcc.org/owner
-            from: namespace
+      transform/billing:
+        log_statements:
+        - context: log
+          statements:
+          - set(attributes["namespace"],  body["involvedObject"]["namespace"])
+          - set(attributes["object_name"], body["involvedObject"]["name"])
+          - set(attributes["object_kind"], body["involvedObject"]["kind"])
+          - set(attributes["reason"],      body["reason"])
+          - set(attributes["event_time"],  body["lastTimestamp"])
     exporters:
       prometheus:
         endpoint: 0.0.0.0:8889
@@ -117,7 +112,7 @@ spec:
           exporters: [otlp]
         logs/billing:
           receivers: [k8sobjects]
-          processors: [memory_limiter, batch]
+          processors: [transform/billing, memory_limiter, batch]
           exporters: [kafka/billing]
   env:
   - name: KAFKA_PASSWORD
