@@ -1,0 +1,54 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: metering-reconciler
+  namespace: metering-thor
+spec:
+  schedule: "*/30 * * * *"
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      activeDeadlineSeconds: 1500
+      template:
+        spec:
+          serviceAccountName: metering-reconciler
+          restartPolicy: OnFailure
+          containers:
+          - name: reconciler
+            image: registry.access.redhat.com/ubi9/python-311:9.7-1776963225
+            env:
+            - name: KAFKA_BOOTSTRAP
+              value: metering-kafka-bootstrap.metering-thor.svc:9093
+            - name: KAFKA_CA_CERT
+              value: /mnt/kafka-ca/ca.crt
+            - name: KAFKA_TOPIC
+              value: billing-events
+            - name: KAFKA_USER
+              value: metering-reconciler
+            - name: KAFKA_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: metering-reconciler
+                  key: password
+            command:
+            - /bin/sh
+            - -c
+            - |
+              echo "reconciler placeholder - implement emit of synthetic START/STOP events"
+            volumeMounts:
+            - name: kafka-ca
+              mountPath: /mnt/kafka-ca
+              readOnly: true
+            resources:
+              requests:
+                cpu: 50m
+                memory: 64Mi
+              limits:
+                cpu: 200m
+                memory: 256Mi
+          volumes:
+          - name: kafka-ca
+            secret:
+              secretName: metering-cluster-ca-cert
