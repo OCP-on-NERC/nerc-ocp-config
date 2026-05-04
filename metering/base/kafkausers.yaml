@@ -11,16 +11,18 @@ spec:
   authorization:
     type: simple
     acls:
-    - resource:
-        type: topic
-        name: billing-events
-        patternType: literal
-      operations: [Write, Describe]
-    - resource:
-        type: transactionalId
-        name: otel-collector
-        patternType: literal
-      operations: [Describe, Write]
+      - resource:
+          type: topic
+          name: billing-events
+        operations:
+          - Write
+          - Describe
+      - resource:
+          type: transactionalId
+          name: otel-collector
+        operations:
+          - Describe
+          - Write
 ---
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaUser
@@ -35,11 +37,12 @@ spec:
   authorization:
     type: simple
     acls:
-    - resource:
-        type: topic
-        name: billing-events
-        patternType: literal
-      operations: [Write, Describe]
+      - resource:
+          type: topic
+          name: billing-events
+        operations:
+          - Write
+          - Describe
 ---
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaUser
@@ -54,21 +57,23 @@ spec:
   authorization:
     type: simple
     acls:
-    - resource:
-        type: topic
-        name: billing-events
-        patternType: literal
-      operations: [Read, Describe]
-    - resource:
-        type: topic
-        name: billing-events-dlq
-        patternType: literal
-      operations: [Write, Describe]
-    - resource:
-        type: group
-        name: metering-stream-processor
-        patternType: literal
-      operations: [Read, Describe]
+      - resource:
+          type: topic
+          name: billing-events
+        operations:
+          - Read
+          - Describe
+      - resource:
+          type: topic
+          name: billing-events-dlq
+        operations:
+          - Write
+          - Describe
+      - resource:
+          type: group
+          name: metering-stream-processor
+        operations:
+          - Read
 ---
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaUser
@@ -83,13 +88,14 @@ spec:
   authorization:
     type: simple
     acls:
-    - resource:
-        type: topic
-        name: billing-events
-        patternType: literal
-      operations: [Read, Describe]
-    - resource:
-        type: group
-        name: metering-openmeter
-        patternType: literal
-      operations: [Read, Describe]
+      - resource:
+          type: topic
+          name: billing-events
+        operations:
+          - Read
+          - Describe
+      - resource:
+          type: group
+          name: openmeter-consumer
+        operations:
+          - Read
