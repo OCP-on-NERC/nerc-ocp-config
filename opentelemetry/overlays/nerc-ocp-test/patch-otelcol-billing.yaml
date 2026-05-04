@@ -1,0 +1,100 @@
+apiVersion: opentelemetry.io/v1alpha1
+kind: OpenTelemetryCollector
+metadata:
+  name: opentelemetry
+  namespace: opentelemetry
+spec:
+  config: |
+    receivers:
+      otlp:
+        protocols:
+          grpc:
+            endpoint: 0.0.0.0:4317
+          http:
+            endpoint: 0.0.0.0:4318
+      k8sobjects:
+        auth_type: serviceAccount
+        objects:
+        - name: events
+          mode: watch
+          group: ""
+          namespaces: []
+          field_selector: "reason=Started,reason=Killing,reason=Failed,reason=OOMKilling,reason=SuccessfulCreate,reason=SuccessfulDelete,reason=ProvisioningSucceeded,reason=Preempting,reason=BackOff"
+    processors:
+      batch:
+        timeout: 5s
+        send_batch_max_size: 10000
+      memory_limiter:
+        check_interval: 1s
+        limit_percentage: 50
+        spike_limit_percentage: 30
+      k8sattributes:
+        auth_type: serviceAccount
+        extract:
+          metadata:
+          - k8s.namespace.name
+          - k8s.pod.name
+          - k8s.node.name
+          labels:
+          - tag_name: nerc.tenant
+            key: nerc.mghpcc.org/project
+            from: namespace
+          - tag_name: nerc.owner
+            key: nerc.mghpcc.org/owner
+            from: namespace
+    exporters:
+      prometheus:
+        endpoint: 0.0.0.0:8889
+        add_metric_suffixes: false
+        resource_to_telemetry_conversion:
+          enabled: true
+      otlp:
+        endpoint: tempo-opentelemetry-distributor.opentelemetry.svc:4317
+        tls:
+          ca_file: /var/run/secrets/kubernetes.io/serviceaccount/service-ca.crt
+        headers:
+          X-Scope-OrgID: "dev"
+      kafka/billing:
+        brokers:
+        - metering-kafka-bootstrap.metering-thor.svc:9093
+        topic: billing-events
+        encoding: otlp_json
+        auth:
+          sasl:
+            mechanism: SCRAM-SHA-512
+            username: metering-otel-collector
+            password: "${KAFKA_PASSWORD}"
+          tls:
+            ca_file: /mnt/kafka-ca/ca.crt
+    service:
+      telemetry:
+        metrics:
+          readers:
+          - pull:
+              exporter:
+                prometheus:
+                  host: '0.0.0.0'
+                  port: 8888
+      pipelines:
+        traces:
+          receivers: [otlp]
+          processors: [memory_limiter, batch]
+          exporters: [otlp]
+        logs/billing:
+          receivers: [k8sobjects]
+          processors: [k8sattributes, memory_limiter, batch]
+          exporters: [kafka/billing]
+  env:
+  - name: KAFKA_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: metering-otel-collector
+        key: password
+  volumes:
+  - name: kafka-ca
+    secret:
+      secretName: metering-cluster-ca-cert
+  volumeMounts:
+  - name: kafka-ca
+    mountPath: /mnt/kafka-ca
+    readOnly: true
