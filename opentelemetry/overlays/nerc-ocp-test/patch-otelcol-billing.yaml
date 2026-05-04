@@ -19,7 +19,42 @@ spec:
           mode: watch
           group: ""
           namespaces: []
-          field_selector: "reason=Started,reason=Killing,reason=Failed,reason=OOMKilling,reason=SuccessfulCreate,reason=SuccessfulDelete,reason=ProvisioningSucceeded,reason=Preempting,reason=BackOff"
+          field_selector: "reason=Started"
+        - name: events
+          mode: watch
+          group: ""
+          namespaces: []
+          field_selector: "reason=Killing"
+        - name: events
+          mode: watch
+          group: ""
+          namespaces: []
+          field_selector: "reason=Failed"
+        - name: events
+          mode: watch
+          group: ""
+          namespaces: []
+          field_selector: "reason=OOMKilling"
+        - name: events
+          mode: watch
+          group: ""
+          namespaces: []
+          field_selector: "reason=SuccessfulCreate"
+        - name: events
+          mode: watch
+          group: ""
+          namespaces: []
+          field_selector: "reason=SuccessfulDelete"
+        - name: events
+          mode: watch
+          group: ""
+          namespaces: []
+          field_selector: "reason=Preempting"
+        - name: events
+          mode: watch
+          group: ""
+          namespaces: []
+          field_selector: "reason=BackOff"
     processors:
       batch:
         timeout: 5s
@@ -58,7 +93,7 @@ spec:
         brokers:
         - metering-kafka-bootstrap.metering-thor.svc:9093
         topic: billing-events
-        encoding: otlp_json
+        encoding: json
         auth:
           sasl:
             mechanism: SCRAM-SHA-512
@@ -82,7 +117,7 @@ spec:
           exporters: [otlp]
         logs/billing:
           receivers: [k8sobjects]
-          processors: [k8sattributes, memory_limiter, batch]
+          processors: [memory_limiter, batch]
           exporters: [kafka/billing]
   env:
   - name: KAFKA_PASSWORD
