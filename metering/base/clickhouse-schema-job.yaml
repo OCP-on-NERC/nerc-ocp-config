@@ -14,6 +14,12 @@ spec:
       containers:
       - name: schema-init
         image: clickhouse/clickhouse-client:24.3
+        env:
+        - name: CLICKHOUSE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: clickhouse-default-password
+              key: password
         command:
         - /bin/sh
         - -c
@@ -22,7 +28,8 @@ spec:
           HOST="chi-metering-metering-0-0.metering-thor.svc"
           for f in /sql/*.sql; do
             echo "applying $f"
-            clickhouse-client --host "$HOST" --multiquery < "$f"
+            clickhouse-client --host "$HOST" --user default \
+              --password "$CLICKHOUSE_PASSWORD" --multiquery < "$f"
           done
           echo "schema init complete"
         volumeMounts:
