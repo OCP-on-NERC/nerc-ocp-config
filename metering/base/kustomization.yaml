@@ -15,3 +15,5 @@ resources:
 - clickhouse-schema-configmap.yaml
 - clickhouse-schema-job.yaml
 - stream-processor.yaml
+- openmeter-config.yaml
+- openmeter.yaml

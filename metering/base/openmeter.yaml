@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: metering-openmeter
+  namespace: metering-thor
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: metering-openmeter
+  template:
+    metadata:
+      labels:
+        app: metering-openmeter
+    spec:
+      containers:
+        - name: openmeter
+          image: ghcr.io/openmeterio/openmeter:v1.0.0-beta.227
+          args:
+            - --config
+            - /etc/openmeter/config.yaml
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - name: config
+              mountPath: /etc/openmeter
+            - name: kafka-secret
+              mountPath: /mnt/kafka-secret
+              readOnly: true
+            - name: kafka-ca
+              mountPath: /mnt/kafka-ca
+              readOnly: true
+            - name: clickhouse-secret
+              mountPath: /mnt/clickhouse-secret
+              readOnly: true
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+      volumes:
+        - name: config
+          configMap:
+            name: metering-openmeter-config
+        - name: kafka-secret
+          secret:
+            secretName: metering-openmeter
+            items:
+              - key: password
+                path: password
+        - name: kafka-ca
+          secret:
+            secretName: metering-cluster-ca-cert
+        - name: clickhouse-secret
+          secret:
+            secretName: clickhouse-billing-credentials
+            items:
+              - key: password
+                path: password
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: metering-openmeter
+  namespace: metering-thor
+spec:
+  selector:
+    app: metering-openmeter
+  ports:
+    - port: 8080
+      targetPort: 8080
