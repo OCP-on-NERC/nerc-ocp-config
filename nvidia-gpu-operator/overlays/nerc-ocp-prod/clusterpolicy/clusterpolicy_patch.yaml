@@ -6,7 +6,7 @@ spec:
   driver:
     upgradePolicy:
       autoUpgrade: true
-    version: "580.105.08"
+    version: "580.126.20"
     repository: "nvcr.io/nvidia"
     image: "driver"
   daemonsets:

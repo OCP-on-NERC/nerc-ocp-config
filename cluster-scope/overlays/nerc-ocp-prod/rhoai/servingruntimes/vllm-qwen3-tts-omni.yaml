@@ -1,0 +1,84 @@
+apiVersion: template.openshift.io/v1
+kind: Template
+metadata:
+  labels:
+    opendatahub.io/dashboard: 'true'
+    opendatahub.io/ootb: 'true'
+  annotations:
+    description: vLLM-Omni v0.18.0 serving runtime for Qwen3-TTS multimodal models with task-type support
+    openshift.io/display-name: vLLM-Omni Qwen3-TTS
+    openshift.io/provider-display-name: Red Hat, Inc.
+    tags: rhods,rhoai,kserve,servingruntime,vllm,omni
+    opendatahub.io/runtime-version: v0.18.0
+    template.openshift.io/documentation-url: https://github.com/vllm-project/vllm
+    template.openshift.io/long-description: This template defines resources needed to deploy vLLM-Omni v0.18.0 ServingRuntime with KServe for Qwen3-TTS models in Red Hat OpenShift AI.
+    opendatahub.io/modelServingSupport: '["single"]'
+    opendatahub.io/apiProtocol: 'REST'
+    opendatahub.io/model-type: '["generative"]'
+  name: vllm-qwen3-tts-omni-runtime-template
+  namespace: multi-modal-semantic-routing-for-vllm-d266df
+objects:
+  - apiVersion: serving.kserve.io/v1alpha1
+    kind: ServingRuntime
+    metadata:
+      name: vllm-qwen3-tts-omni-runtime
+      annotations:
+        openshift.io/display-name: vLLM-Omni Qwen3-TTS
+        opendatahub.io/recommended-accelerators: '["nvidia.com/gpu"]'
+        opendatahub.io/apiProtocol: REST
+        opendatahub.io/runtime-version: v0.18.0
+      labels:
+        opendatahub.io/dashboard: 'true'
+    spec:
+      annotations:
+        prometheus.io/path: /metrics
+        prometheus.io/port: "8000"
+      multiModel: false
+      supportedModelFormats:
+        - name: vllm-omni
+          autoSelect: true
+      containers:
+        - name: kserve-container
+          image: vllm/vllm-omni:v0.18.0
+          command:
+            - /bin/sh
+            - -c
+          args:
+            - |
+              exec vllm serve /mnt/models --omni --task-type ${TASK_TYPE} \
+                --host 0.0.0.0 --port 8000 --served-model-name={{.Name}} \
+                --trust-remote-code --enforce-eager ${EXTRA_ARGS}
+          env:
+            - name: TASK_TYPE
+              value: CustomVoice
+            - name: EXTRA_ARGS
+              value: ""
+            - name: HOME
+              value: /tmp
+            - name: HF_HOME
+              value: /tmp/hf_home
+            - name: NUMBA_CACHE_DIR
+              value: /tmp/numba_cache
+            - name: MPLCONFIGDIR
+              value: /tmp/matplotlib
+          ports:
+            - name: http
+              containerPort: 8000
+              protocol: TCP
+          resources:
+            requests:
+              memory: 16Gi
+              cpu: "4"
+              nvidia.com/gpu: "1"
+            limits:
+              memory: 32Gi
+              cpu: "8"
+              nvidia.com/gpu: "1"
+          volumeMounts:
+            - name: shm
+              mountPath: /dev/shm
+      volumes:
+        - name: shm
+          emptyDir:
+            medium: Memory
+            sizeLimit: 8Gi

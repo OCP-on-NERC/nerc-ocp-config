@@ -1,0 +1,38 @@
+apiVersion: infrastructure.opendatahub.io/v1alpha1
+kind: HardwareProfile
+metadata:
+  annotations:
+    opendatahub.io/dashboard-feature-visibility: '[]'
+    opendatahub.io/disabled: "false"
+    opendatahub.io/display-name: NVIDIA A100 GPU
+  name: nvidia-a100-gpu
+  namespace: redhat-ods-applications
+spec:
+  identifiers:
+  - defaultCount: 2
+    displayName: CPU
+    identifier: cpu
+    maxCount: "14"
+    minCount: 1
+    resourceType: CPU
+  - defaultCount: 8Gi
+    displayName: Memory
+    identifier: memory
+    maxCount: 56Gi
+    minCount: 2Gi
+    resourceType: Memory
+  - defaultCount: 1
+    displayName: gpu
+    identifier: nvidia.com/gpu
+    maxCount: 4
+    minCount: 1
+    resourceType: Accelerator
+  scheduling:
+    node:
+      nodeSelector: {}
+      tolerations:
+      - effect: NoSchedule
+        key: nvidia.com/gpu.product
+        operator: Equal
+        value: NVIDIA-A100-SXM4-40GB
+    type: Node
