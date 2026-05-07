@@ -44,7 +44,6 @@ resources:
 - ../../bundles/moc-metrics-collector
 - ../../bundles/nagios-monitoring
 - ../../bundles/authorino-operator
-- ../../bundles/servicemesh-operator
 - ../../bundles/cluster-observability-operator
 - ../../bundles/strimzi-kafka-operator
 - ../../bundles/costmanagement-metrics-operator
