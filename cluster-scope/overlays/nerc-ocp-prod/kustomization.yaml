@@ -176,6 +176,19 @@ patches:
       value: v26.3
 - target:
     kind: Subscription
+    name: nvidia-network-operator
+  patch: |
+    - op: replace
+      path: /spec/channel
+      value: v26.1
+    - op: replace
+      path: /spec/config/resources/limits/memory
+      value: 1.5Gi
+    - op: replace
+      path: /spec/config/resources/requests/memory
+      value: 1Gi
+- target:
+    kind: Subscription
     name: serverless-operator
   patch: |
     - op: replace
