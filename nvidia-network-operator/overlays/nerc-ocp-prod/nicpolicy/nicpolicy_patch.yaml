@@ -3,6 +3,8 @@ kind: NicClusterPolicy
 metadata:
   name: nic-cluster-policy
 spec:
+  ofedDriver:
+    version: doca3.2.2-25.10-2.4.1.0-4
   tolerations:
     - effect: NoSchedule
       key: nvidia.com/gpu.product
