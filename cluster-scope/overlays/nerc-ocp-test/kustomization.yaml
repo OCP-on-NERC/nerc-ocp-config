@@ -10,6 +10,7 @@ resources:
 - ../../base/rbac.authorization.k8s.io/clusterroles/application-edit
 - ../../base/core/namespaces/openshift-gitops
 - ../../base/core/namespaces/dex
+- ../../base/core/namespaces/metering-thor
 - externalsecrets
 - secretstores
 - issuers
