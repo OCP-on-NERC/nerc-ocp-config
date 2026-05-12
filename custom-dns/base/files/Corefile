@@ -1,0 +1,4 @@
+nerc-ocp-infra.rc.fas.harvard.edu:8053 {
+    log stdout
+    file /etc/coredns/nerc-ocp-infra.rc.fas.harvard.edu
+}
