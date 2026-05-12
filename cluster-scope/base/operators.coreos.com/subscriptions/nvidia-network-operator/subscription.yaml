@@ -8,3 +8,11 @@ spec:
   name: nvidia-network-operator
   source: certified-operators
   sourceNamespace: openshift-marketplace
+  config:
+    resources:
+      limits:
+        cpu: 500m
+        memory: 512Mi
+      requests:
+        cpu: 5m
+        memory: 256Mi
