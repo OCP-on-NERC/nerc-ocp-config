@@ -5,5 +5,5 @@ metadata:
 spec:
   channel: stable-4.21
   desiredUpdate:
-    version: 4.21.8
+    version: 4.21.10
   clusterID: fcb727d6-3e61-4d23-913d-756cf41c7982
