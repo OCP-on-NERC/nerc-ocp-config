@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  annotations:
+    pv.kubernetes.io/bind-completed: "yes"
+    pv.kubernetes.io/bound-by-controller: "yes"
+    volume.beta.kubernetes.io/storage-provisioner: csi.weka.io
+    volume.kubernetes.io/storage-provisioner: csi.weka.io
+  name: pvc-wekafs-dir-api2
+  namespace: default
+spec:
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 200Gi
+  storageClassName: storageclass-wekafs-dir-api
+  volumeName: pvc-1bdd7c1f-6229-4861-b2b3-05151c75447a
