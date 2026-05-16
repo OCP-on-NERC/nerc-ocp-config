@@ -1,0 +1,337 @@
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  name: nairr-pilot-project-dashboard
+  namespace: grafana
+  labels:
+    app: grafana
+spec:
+  instanceSelector:
+    matchLabels:
+      dashboards: grafana
+  folder: NAIRR2025
+  json: |
+    {
+        "annotations": {
+            "list": [
+                {
+                    "builtIn": 1,
+                    "datasource": {
+                        "type": "grafana",
+                        "uid": "-- Grafana --"
+                    },
+                    "enable": true,
+                    "hide": true,
+                    "iconColor": "rgba(0, 211, 255, 1)",
+                    "name": "Annotations & Alerts",
+                    "type": "dashboard"
+                }
+            ]
+        },
+        "editable": true,
+        "graphTooltip": 1,
+        "panels": [
+            {
+                "gridPos": {
+                    "h": 1,
+                    "w": 24,
+                    "x": 0,
+                    "y": 0
+                },
+                "id": 1,
+                "title": "NAIRR Pilot \u2013 Per Project (Namespace)",
+                "type": "row"
+            },
+            {
+                "datasource": null,
+                "gridPos": {
+                    "h": 5,
+                    "w": 24,
+                    "x": 0,
+                    "y": 1
+                },
+                "id": 99,
+                "options": {
+                    "content": "**Note for Barcelona projects (`b-*` namespaces):**\n\nThese projects run on the `beta-test` cluster, which does not have a DCGM exporter deployed.\n\nAs a result, GPU memory metrics (VRAM) are unavailable for `b-*` namespaces - the panel will show `0`.\n\nAll other metrics (CPU, RAM, storage, network, GPU count) are fully available.",
+                    "mode": "markdown"
+                },
+                "title": "",
+                "type": "text"
+            },
+            {
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "a0fa9d88-8932-41f7-af80-6f678d4fb1e7"
+                },
+                "fieldConfig": {
+                    "defaults": {
+                        "unit": "cores"
+                    }
+                },
+                "gridPos": {
+                    "h": 8,
+                    "w": 12,
+                    "x": 0,
+                    "y": 6
+                },
+                "targets": [
+                    {
+                        "expr": "sum(rate(container_cpu_usage_seconds_total{namespace=\"$namespace\",container!=\"POD\",image!=\"\"}[5m]))",
+                        "refId": "A"
+                    }
+                ],
+                "title": "CPU used (cores)",
+                "type": "timeseries"
+            },
+            {
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "a0fa9d88-8932-41f7-af80-6f678d4fb1e7"
+                },
+                "fieldConfig": {
+                    "defaults": {
+                        "unit": "cores"
+                    }
+                },
+                "gridPos": {
+                    "h": 8,
+                    "w": 12,
+                    "x": 12,
+                    "y": 6
+                },
+                "targets": [
+                    {
+                        "expr": "sum(kube_pod_container_resource_requests{namespace=\"$namespace\",resource=\"cpu\",unit=\"core\"})",
+                        "refId": "A"
+                    }
+                ],
+                "title": "CPU requests (cores)",
+                "type": "timeseries"
+            },
+            {
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "a0fa9d88-8932-41f7-af80-6f678d4fb1e7"
+                },
+                "fieldConfig": {
+                    "defaults": {
+                        "unit": "bytes"
+                    }
+                },
+                "gridPos": {
+                    "h": 8,
+                    "w": 12,
+                    "x": 0,
+                    "y": 14
+                },
+                "targets": [
+                    {
+                        "expr": "sum(container_memory_working_set_bytes{namespace=\"$namespace\",container!=\"POD\",image!=\"\"})",
+                        "refId": "A"
+                    }
+                ],
+                "title": "Memory used",
+                "type": "timeseries"
+            },
+            {
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "a0fa9d88-8932-41f7-af80-6f678d4fb1e7"
+                },
+                "fieldConfig": {
+                    "defaults": {
+                        "unit": "bytes"
+                    }
+                },
+                "gridPos": {
+                    "h": 8,
+                    "w": 12,
+                    "x": 12,
+                    "y": 14
+                },
+                "targets": [
+                    {
+                        "expr": "sum(kube_pod_container_resource_requests{namespace=\"$namespace\",resource=\"memory\",unit=\"byte\"})",
+                        "refId": "A"
+                    }
+                ],
+                "title": "Memory requests",
+                "type": "timeseries"
+            },
+            {
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "a0fa9d88-8932-41f7-af80-6f678d4fb1e7"
+                },
+                "fieldConfig": {
+                    "defaults": {
+                        "unit": "short"
+                    },
+                    "overrides": []
+                },
+                "gridPos": {
+                    "h": 8,
+                    "w": 6,
+                    "x": 0,
+                    "y": 22
+                },
+                "targets": [
+                    {
+                        "expr": "sum(kube_pod_container_resource_requests{resource=\"nvidia_com_gpu\",namespace=\"$namespace\"})",
+                        "legendFormat": "GPUs allocated",
+                        "refId": "A"
+                    }
+                ],
+                "title": "GPU allocated (count)",
+                "type": "timeseries"
+            },
+            {
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "a0fa9d88-8932-41f7-af80-6f678d4fb1e7"
+                },
+                "fieldConfig": {
+                    "defaults": {
+                        "unit": "gibibytes",
+                        "thresholds": {
+                            "mode": "absolute",
+                            "steps": [
+                                {
+                                    "color": "green",
+                                    "value": null
+                                }
+                            ]
+                        },
+                        "noValue": "N/A"
+                    },
+                    "overrides": []
+                },
+                "gridPos": {
+                    "h": 8,
+                    "w": 6,
+                    "x": 6,
+                    "y": 22
+                },
+                "id": 20,
+                "targets": [
+                    {
+                        "expr": "(sum by (node) (label_replace(DCGM_FI_DEV_FB_USED, \"node\", \"$1\", \"Hostname\", \"(.+)\") * on(node) group_left() max by (node) (kube_pod_info{namespace=\"$namespace\"})) / 1024) or (0 * absent(kube_pod_info{namespace=\"$namespace\", cluster=\"nerc-ocp-prod\"}))",
+                        "legendFormat": "GPU memory used (GiB) [0 = no DCGM data]",
+                        "refId": "A"
+                    }
+                ],
+                "title": "GPU memory used (GiB) [node-level approx]",
+                "type": "timeseries",
+                "options": {
+                    "noValue": "N/A (no GPU data)"
+                },
+                "description": "GPU VRAM usage via DCGM exporter (node-level approximation).\n\nDCGM_FI_DEV_FB_USED is node/GPU-level \u2014 if multiple namespaces share a GPU node, each will show the full node VRAM. No pod-level VRAM metric is available from DCGM.\n\n\u26a0\ufe0f Not available for Barcelona projects (b-* namespaces) \u2014 the beta-test cluster does not run a DCGM exporter."
+            },
+            {
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "a0fa9d88-8932-41f7-af80-6f678d4fb1e7"
+                },
+                "fieldConfig": {
+                    "defaults": {
+                        "unit": "bytes"
+                    }
+                },
+                "gridPos": {
+                    "h": 8,
+                    "w": 12,
+                    "x": 12,
+                    "y": 22
+                },
+                "targets": [
+                    {
+                        "expr": "sum(kubelet_volume_stats_used_bytes{namespace=\"$namespace\"})",
+                        "refId": "A"
+                    }
+                ],
+                "title": "Storage (PVC) used",
+                "type": "timeseries"
+            },
+            {
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "a0fa9d88-8932-41f7-af80-6f678d4fb1e7"
+                },
+                "fieldConfig": {
+                    "defaults": {
+                        "unit": "Bps"
+                    }
+                },
+                "gridPos": {
+                    "h": 8,
+                    "w": 12,
+                    "x": 0,
+                    "y": 30
+                },
+                "targets": [
+                    {
+                        "expr": "sum(rate(container_network_receive_bytes_total{namespace=\"$namespace\"}[5m]) + rate(container_network_transmit_bytes_total{namespace=\"$namespace\"}[5m]))",
+                        "refId": "A"
+                    }
+                ],
+                "title": "Network throughput (Rx + Tx)",
+                "type": "timeseries"
+            },
+            {
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "a0fa9d88-8932-41f7-af80-6f678d4fb1e7"
+                },
+                "fieldConfig": {
+                    "defaults": {
+                        "unit": "watt"
+                    }
+                },
+                "gridPos": {
+                    "h": 8,
+                    "w": 12,
+                    "x": 12,
+                    "y": 30
+                },
+                "targets": [
+                    {
+                        "expr": "(sum(rate(container_cpu_usage_seconds_total{namespace=\"$namespace\",container!=\"POD\",image!=\"\"}[5m])) * 15) + ((sum(kube_pod_container_resource_requests{resource=\"nvidia_com_gpu\",namespace=\"$namespace\"}) or vector(0)) * 250)",
+                        "legendFormat": "Estimated power (W)",
+                        "refId": "A"
+                    }
+                ],
+                "title": "Estimated power usage (heuristic)",
+                "type": "timeseries"
+            }
+        ],
+        "refresh": "1m",
+        "schemaVersion": 39,
+        "style": "dark",
+        "tags": [
+            "nairr",
+            "rhoai",
+            "mvp"
+        ],
+        "templating": {
+            "list": [
+                {
+                    "current": {
+                        "text": "multi-modal-semantic-routing-for-vllm-d266df",
+                        "value": "multi-modal-semantic-routing-for-vllm-d266df"
+                    },
+                    "label": "RHOAI Project / Namespace",
+                    "name": "namespace",
+                    "query": "multi-modal-semantic-routing-for-vllm-d266df,ts-data-agent-0a0cee,b-ts-data-agent-0a0cee,efficient-memory-offloading-765cab,b-efficient-memory-offloading-765cab,model-merging-47c2fd,reliability-for-llm-agents-3fc129,mllm-interpretation-and-failure-investigation-c8fa7f,kv-cache-compression-c45372,adaptive-kv-cache-compression-for-agentic-ai-6f3c1f",
+                    "type": "custom"
+                }
+            ]
+        },
+        "time": {
+            "from": "now-30d",
+            "to": "now"
+        },
+        "timezone": "browser",
+        "title": "NAIRR Pilot Project Dashboard (MVP) v1",
+        "uid": "nairr-pilot-mvp-v1",
+        "version": 1
+    }
