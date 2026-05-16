@@ -9,3 +9,4 @@ resources:
   - blocked-machineconfig-dashboard.yaml
   - enhanced-machineconfig-dashboard.yaml
   - kueue-metrics-dashboard.yaml
+  - nairr-pilot-project-dashboard.yaml
