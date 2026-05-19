@@ -10,7 +10,7 @@ spec:
     repository: "nvcr.io/nvidia"
     image: "driver"
     rdma:
-      enabled: true
+      enabled: false
   daemonsets:
     tolerations:
     - effect: NoSchedule
