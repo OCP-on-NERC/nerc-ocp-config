@@ -215,7 +215,7 @@ spec:
                 "id": 20,
                 "targets": [
                     {
-                        "expr": "(sum by (node) (label_replace(DCGM_FI_DEV_FB_USED, \"node\", \"$1\", \"Hostname\", \"(.+)\") * on(node) group_left() max by (node) (kube_pod_info{namespace=\"$namespace\"})) / 1024) or (0 * absent(kube_pod_info{namespace=\"$namespace\", cluster=\"nerc-ocp-prod\"}))",
+                        "expr": "(sum by (node) (label_replace(DCGM_FI_DEV_FB_USED, \"node\", \"$1\", \"Hostname\", \"(.+)\") * on(node) group_left() max by (node) ((max by (namespace, pod) (kube_pod_container_resource_requests{namespace=\"$namespace\", resource=\"nvidia_com_gpu\"} > 0)) * on(namespace, pod) group_left(node) kube_pod_info{namespace=\"$namespace\"}))) / 1024) or (0 * absent(kube_pod_container_resource_requests{namespace=\"$namespace\", resource=\"nvidia_com_gpu\"}))",
                         "legendFormat": "GPU memory used (GiB) [0 = no DCGM data]",
                         "refId": "A"
                     }
