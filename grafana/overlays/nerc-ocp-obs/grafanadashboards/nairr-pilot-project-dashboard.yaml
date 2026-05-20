@@ -215,7 +215,7 @@ spec:
                 "id": 20,
                 "targets": [
                     {
-                        "expr": "(sum by (node) (label_replace(DCGM_FI_DEV_FB_USED, \"node\", \"$1\", \"Hostname\", \"(.+)\") * on(node) group_left() max by (node) ((max by (namespace, pod) (kube_pod_container_resource_requests{namespace=\"$namespace\", resource=\"nvidia_com_gpu\"} > 0)) * on(namespace, pod) group_left(node) kube_pod_info{namespace=\"$namespace\"}))) / 1024) or (0 * absent(kube_pod_container_resource_requests{namespace=\"$namespace\", resource=\"nvidia_com_gpu\"}))",
+                        "expr": "(sum by (node) (label_replace(DCGM_FI_DEV_FB_USED, \"node\", \"$1\", \"Hostname\", \"(.+)\") * on(node) group_left() max by (node) (kube_pod_info{namespace=\"$namespace\"})) / 1024) or (0 * absent(kube_pod_info{namespace=\"$namespace\", cluster=\"nerc-ocp-prod\"}))",
                         "legendFormat": "GPU memory used (GiB) [0 = no DCGM data]",
                         "refId": "A"
                     }
@@ -225,7 +225,7 @@ spec:
                 "options": {
                     "noValue": "N/A (no GPU data)"
                 },
-                "description": "GPU VRAM usage via DCGM exporter (node-level approximation).\n\nDCGM_FI_DEV_FB_USED is node/GPU-level \u2014 if multiple namespaces share a GPU node, each will show the full node VRAM. No pod-level VRAM metric is available from DCGM.\n\n\u26a0\ufe0f Not available for Barcelona projects (b-* namespaces) \u2014 the beta-test cluster does not run a DCGM exporter."
+                "description": "GPU VRAM usage via DCGM exporter (node-level approximation).\n\nDCGM_FI_DEV_FB_USED is node/GPU-level — if multiple namespaces share a GPU node, each will show the full node VRAM. No pod-level VRAM metric is available from DCGM.\n\n\u26a0\ufe0f Not available for Barcelona projects (b-* namespaces) \u2014 the beta-test cluster does not run a DCGM exporter."
             },
             {
                 "datasource": {
