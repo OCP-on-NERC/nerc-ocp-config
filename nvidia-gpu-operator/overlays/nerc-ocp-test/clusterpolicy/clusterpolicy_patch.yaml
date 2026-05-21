@@ -13,6 +13,19 @@ spec:
     enabled: false
     upgradePolicy:
       autoUpgrade: true
+      drain:
+        deleteEmptyDir: true
+        enable: true
+        force: true
+        timeoutSeconds: 300
+      maxParallelUpgrades: 1
+      maxUnavailable: 25%
+      podDeletion:
+        deleteEmptyDir: true
+        force: true
+        timeoutSeconds: 300
+      waitForCompletion:
+        timeoutSeconds: 0
     useNvidiaDriverCRD: true
   daemonsets:
     tolerations:
