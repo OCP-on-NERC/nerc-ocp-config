@@ -76,7 +76,7 @@ spec:
                 },
                 "targets": [
                     {
-                        "expr": "sum(rate(container_cpu_usage_seconds_total{namespace=\"$namespace\",container!=\"POD\",image!=\"\"}[5m]))",
+                        "expr": "sum(rate(container_cpu_usage_seconds_total{namespace=\"$namespace\",container!=\"POD\",container!=\"\"}[5m]))",
                         "refId": "A"
                     }
                 ],
@@ -295,7 +295,7 @@ spec:
                 },
                 "targets": [
                     {
-                        "expr": "(sum(rate(container_cpu_usage_seconds_total{namespace=\"$namespace\",container!=\"POD\",image!=\"\"}[5m])) * 15) + ((sum(kube_pod_container_resource_requests{resource=\"nvidia_com_gpu\",namespace=\"$namespace\"}) or vector(0)) * 250)",
+                        "expr": "(sum(rate(container_cpu_usage_seconds_total{namespace=\"$namespace\",container!=\"POD\",container!=\"\"}[5m])) * 15) + ((sum(kube_pod_container_resource_requests{resource=\"nvidia_com_gpu\",namespace=\"$namespace\"}) or vector(0)) * 250)",
                         "legendFormat": "Estimated power (W)",
                         "refId": "A"
                     }
