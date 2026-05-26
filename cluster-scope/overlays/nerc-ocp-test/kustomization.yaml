@@ -146,7 +146,7 @@ patches:
   patch: |
     - op: replace
       path: /spec/channel
-      value: v25.10
+      value: v26.3
 - target:
     kind: Subscription
     name: strimzi-kafka-operator

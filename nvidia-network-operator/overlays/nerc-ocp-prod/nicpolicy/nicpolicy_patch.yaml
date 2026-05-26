@@ -1,18 +1,11 @@
-apiVersion: nvidia.com/v1
-kind: ClusterPolicy
+apiVersion: mellanox.com/v1alpha1
+kind: NicClusterPolicy
 metadata:
-  name: gpu-cluster-policy
+  name: nic-cluster-policy
 spec:
-  driver:
-    upgradePolicy:
-      autoUpgrade: true
-    version: "580.126.20"
-    repository: "nvcr.io/nvidia"
-    image: "driver"
-    rdma:
-      enabled: false
-  daemonsets:
-    tolerations:
+  ofedDriver:
+    version: doca3.2.2-25.10-2.4.1.0-4
+  tolerations:
     - effect: NoSchedule
       key: nvidia.com/gpu.product
       operator: Equal
