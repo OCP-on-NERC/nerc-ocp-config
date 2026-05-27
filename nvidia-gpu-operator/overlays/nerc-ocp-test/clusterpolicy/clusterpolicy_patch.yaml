@@ -10,13 +10,23 @@ spec:
       default: all-disabled
       name: test-mig-parted-config
   driver:
+    enabled: false
     upgradePolicy:
       autoUpgrade: true
-    version: "580.105.08"
-    repository: "nvcr.io/nvidia"
-    image: "driver"
-    rdma:
-      enabled: true
+      drain:
+        deleteEmptyDir: true
+        enable: true
+        force: true
+        timeoutSeconds: 300
+      maxParallelUpgrades: 1
+      maxUnavailable: 25%
+      podDeletion:
+        deleteEmptyDir: true
+        force: true
+        timeoutSeconds: 300
+      waitForCompletion:
+        timeoutSeconds: 0
+    useNvidiaDriverCRD: true
   daemonsets:
     tolerations:
     - effect: NoSchedule

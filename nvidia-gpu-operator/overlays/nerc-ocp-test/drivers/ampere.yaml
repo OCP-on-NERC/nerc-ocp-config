@@ -1,0 +1,19 @@
+apiVersion: nvidia.com/v1alpha1
+kind: NVIDIADriver
+metadata:
+  name: ampere
+spec:
+  driverType: "gpu"
+  image: "driver"
+  repository: "nvcr.io/nvidia"
+  version: "580.105.08"
+  kernelModuleType: "auto"
+  rdma:
+    enabled: true
+  nodeSelector:
+    feature.node.kubernetes.io/nvidia-gpu.product: NVIDIA-A100-SXM4-40GB
+  tolerations:
+  - effect: NoSchedule
+    key: nvidia.com/gpu.product
+    operator: Equal
+    value: NVIDIA-A100-SXM4-40GB

@@ -4,5 +4,6 @@ namespace: nvidia-gpu-operator
 resources:
   - ../../base
   - configmaps/mig-manager-config.yaml
+  - drivers
 patches:
   - path: clusterpolicy/clusterpolicy_patch.yaml
