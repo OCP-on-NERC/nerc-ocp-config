@@ -16,6 +16,7 @@ resources:
 - certificates
 - machineconfigs
 - nodenetworkconfigurationpolicies
+- adminnetworkpolicies
 - feature/odf
 - feature/rhoai
 - rbac
