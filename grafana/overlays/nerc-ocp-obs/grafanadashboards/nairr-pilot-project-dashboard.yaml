@@ -101,7 +101,7 @@ spec:
                 },
                 "targets": [
                     {
-                        "expr": "sum(kube_pod_container_resource_requests{namespace=\"$namespace\",resource=\"cpu\",unit=\"core\"})",
+                        "expr": "sum(kube_pod_container_resource_requests{namespace=\"$namespace\",resource=\"cpu\",unit=\"core\"} * on(namespace,pod,cluster) group_left() max by(namespace,pod,cluster) (kube_pod_status_phase{namespace=\"$namespace\",phase=\"Running\"}))",
                         "refId": "A"
                     }
                 ],
@@ -151,7 +151,7 @@ spec:
                 },
                 "targets": [
                     {
-                        "expr": "sum(kube_pod_container_resource_requests{namespace=\"$namespace\",resource=\"memory\",unit=\"byte\"})",
+                        "expr": "sum(kube_pod_container_resource_requests{namespace=\"$namespace\",resource=\"memory\",unit=\"byte\"} * on(namespace,pod,cluster) group_left() max by(namespace,pod,cluster) (kube_pod_status_phase{namespace=\"$namespace\",phase=\"Running\"}))",
                         "refId": "A"
                     }
                 ],
