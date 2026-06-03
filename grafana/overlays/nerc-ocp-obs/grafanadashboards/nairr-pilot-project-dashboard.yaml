@@ -302,6 +302,162 @@ spec:
                 ],
                 "title": "Estimated power usage (heuristic)",
                 "type": "timeseries"
+            },
+            {
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "a0fa9d88-8932-41f7-af80-6f678d4fb1e7"
+                },
+                "fieldConfig": {
+                    "defaults": {
+                        "unit": "none",
+                        "decimals": 1,
+                        "displayName": "CPU core-hours used (MTD)"
+                    }
+                },
+                "gridPos": {
+                    "h": 6,
+                    "w": 12,
+                    "x": 0,
+                    "y": 38
+                },
+                "id": 203,
+                "options": {
+                    "reduceOptions": {
+                        "calcs": ["lastNotNull"]
+                    },
+                    "orientation": "auto",
+                    "textMode": "auto",
+                    "colorMode": "value",
+                    "graphMode": "none"
+                },
+                "targets": [
+                    {
+                        "expr": "sum_over_time(sum(rate(container_cpu_usage_seconds_total{namespace=\"$namespace\",container!=\"POD\",container!=\"\"}[5m]))[$__range:5m]) * 5 / 60",
+                        "legendFormat": "CPU core-hours used",
+                        "refId": "A"
+                    }
+                ],
+                "title": "CPU core-hours used (month to date)",
+                "description": "Total CPU core-hours actually consumed since start of current month.",
+                "type": "stat"
+            },
+            {
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "a0fa9d88-8932-41f7-af80-6f678d4fb1e7"
+                },
+                "fieldConfig": {
+                    "defaults": {
+                        "unit": "none",
+                        "decimals": 1,
+                        "displayName": "GPU hours used (MTD)"
+                    }
+                },
+                "gridPos": {
+                    "h": 6,
+                    "w": 12,
+                    "x": 12,
+                    "y": 38
+                },
+                "id": 204,
+                "options": {
+                    "reduceOptions": {
+                        "calcs": ["lastNotNull"]
+                    },
+                    "orientation": "auto",
+                    "textMode": "auto",
+                    "colorMode": "value",
+                    "graphMode": "none"
+                },
+                "targets": [
+                    {
+                        "expr": "sum_over_time(sum(label_replace(DCGM_FI_DEV_GPU_UTIL, \"node\", \"$1\", \"Hostname\", \"(.+)\") * on(node) group_left() max by(node) (kube_pod_info{namespace=\"$namespace\"}))[$__range:5m]) / 100 * 5 / 60",
+                        "legendFormat": "GPU hours used",
+                        "refId": "A"
+                    }
+                ],
+                "title": "GPU hours used (month to date) [node-level approx]",
+                "description": "GPU-hours used based on DCGM_FI_DEV_GPU_UTIL (0-100%) \u00d7 allocated GPUs \u00d7 time. Node-level approximation \u2014 same caveat as GPU memory panel. Not available for b-* namespaces.",
+                "type": "stat"
+            },
+            {
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "a0fa9d88-8932-41f7-af80-6f678d4fb1e7"
+                },
+                "fieldConfig": {
+                    "defaults": {
+                        "unit": "none",
+                        "decimals": 1,
+                        "displayName": "CPU core-hours allocated (MTD)"
+                    }
+                },
+                "gridPos": {
+                    "h": 6,
+                    "w": 12,
+                    "x": 0,
+                    "y": 44
+                },
+                "id": 201,
+                "options": {
+                    "reduceOptions": {
+                        "calcs": ["lastNotNull"]
+                    },
+                    "orientation": "auto",
+                    "textMode": "auto",
+                    "colorMode": "value",
+                    "graphMode": "none"
+                },
+                "targets": [
+                    {
+                        "expr": "sum_over_time(sum(kube_pod_container_resource_requests{namespace=\"$namespace\",resource=\"cpu\",unit=\"core\"} * on(namespace,pod,cluster) group_left() max by(namespace,pod,cluster) (kube_pod_status_phase{namespace=\"$namespace\",phase=\"Running\"}))[$__range:5m]) * 5 / 60",
+                        "legendFormat": "CPU core-hours allocated",
+                        "refId": "A"
+                    }
+                ],
+                "title": "CPU core-hours allocated (month to date)",
+                "description": "Total allocated CPU core-hours for running pods since start of current month.",
+                "type": "stat"
+            },
+            {
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "a0fa9d88-8932-41f7-af80-6f678d4fb1e7"
+                },
+                "fieldConfig": {
+                    "defaults": {
+                        "unit": "none",
+                        "decimals": 1,
+                        "displayName": "GPU hours allocated (MTD)"
+                    }
+                },
+                "gridPos": {
+                    "h": 6,
+                    "w": 12,
+                    "x": 12,
+                    "y": 44
+                },
+                "id": 202,
+                "options": {
+                    "reduceOptions": {
+                        "calcs": ["lastNotNull"]
+                    },
+                    "orientation": "auto",
+                    "textMode": "auto",
+                    "colorMode": "value",
+                    "graphMode": "none"
+                },
+                "targets": [
+                    {
+                        "expr": "sum_over_time(sum(kube_pod_container_resource_requests{namespace=\"$namespace\",resource=\"nvidia_com_gpu\"} * on(namespace,pod,cluster) group_left() max by(namespace,pod,cluster) (kube_pod_status_phase{namespace=\"$namespace\",phase=\"Running\"}))[$__range:5m]) * 5 / 60",
+                        "legendFormat": "GPU hours allocated",
+                        "refId": "A"
+                    }
+                ],
+                "title": "GPU hours allocated (month to date)",
+                "description": "Total allocated GPU-hours for running pods since start of current month.",
+                "type": "stat"
             }
         ],
         "refresh": "1m",
@@ -327,8 +483,18 @@ spec:
             ]
         },
         "time": {
-            "from": "now-30d",
+            "from": "now/M",
             "to": "now"
+        },
+        "timepicker": {
+            "quick_ranges": [
+                {"display": "This month", "from": "now/M", "to": "now"},
+                {"display": "Last month", "from": "now-1M/M", "to": "now-1M/M+1M"},
+                {"display": "Last 30 days", "from": "now-30d", "to": "now"},
+                {"display": "Last 90 days", "from": "now-90d", "to": "now"},
+                {"display": "Last 6 months", "from": "now-6M", "to": "now"},
+                {"display": "Last 1 year", "from": "now-1y", "to": "now"}
+            ]
         },
         "timezone": "browser",
         "title": "NAIRR Pilot Project Dashboard (MVP) v1",
