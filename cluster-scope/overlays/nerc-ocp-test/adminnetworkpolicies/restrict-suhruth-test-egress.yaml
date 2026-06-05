@@ -42,7 +42,18 @@ spec:
     - portNumber:
         protocol: TCP
         port: 443
-  # Rule 3: deny all remaining IPv4 and IPv6 egress destinations not matched above.
+  # Rule 3: allow access to local LLM service within the same namespace.
+  - name: "allow-local-llm"
+    action: "Allow"
+    to:
+    - namespaces:
+        matchLabels:
+          kubernetes.io/metadata.name: suhruth-test
+    ports:
+    - portNumber:
+        protocol: TCP
+        port: 8443
+  # Rule 4: deny all remaining IPv4 and IPv6 egress destinations not matched above.
   - name: "deny-all-other-egress"
     action: "Deny"
     to:
