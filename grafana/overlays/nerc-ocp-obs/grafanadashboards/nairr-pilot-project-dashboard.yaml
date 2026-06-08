@@ -477,7 +477,7 @@ spec:
                     },
                     "label": "RHOAI Project / Namespace",
                     "name": "namespace",
-                    "query": "multi-modal-semantic-routing-for-vllm-d266df,b-multi-modal-semantic-routing-for-vllm-d266df,ts-data-agent-0a0cee,b-ts-data-agent-0a0cee,efficient-memory-offloading-765cab,b-efficient-memory-offloading-765cab,model-merging-47c2fd,reliability-for-llm-agents-3fc129,mllm-interpretation-and-failure-investigation-c8fa7f,kv-cache-compression-c45372,adaptive-kv-cache-compression-for-agentic-ai-6f3c1f",
+                    "query": "multi-modal-semantic-routing-for-vllm-d266df,b-multi-modal-semantic-routing-for-vllm-d266df,ts-data-agent-0a0cee,b-ts-data-agent-0a0cee,efficient-memory-offloading-765cab,b-efficient-memory-offloading-765cab,model-merging-47c2fd,reliability-for-llm-agents-3fc129,mllm-interpretation-and-failure-investigation-c8fa7f,kv-cache-compression-c45372,adaptive-kv-cache-compression-for-agentic-ai-6f3c1f,evaluating-and-improving-applications--ef7fda",
                     "type": "custom"
                 }
             ]
