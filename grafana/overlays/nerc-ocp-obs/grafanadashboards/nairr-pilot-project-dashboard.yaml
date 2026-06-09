@@ -416,7 +416,7 @@ spec:
                         "refId": "A"
                     }
                 ],
-                "title": "CPU core-hours allocated (month to date)",
+                "title": "CPU core-hours allocated (selected period)",
                 "description": "Total allocated CPU core-hours for running pods over the selected time range.",
                 "type": "stat"
             },
@@ -455,7 +455,7 @@ spec:
                         "refId": "A"
                     }
                 ],
-                "title": "GPU hours allocated (month to date)",
+                "title": "GPU hours allocated (selected period)",
                 "description": "Total allocated GPU-hours for running pods over the selected time range.",
                 "type": "stat"
             }
