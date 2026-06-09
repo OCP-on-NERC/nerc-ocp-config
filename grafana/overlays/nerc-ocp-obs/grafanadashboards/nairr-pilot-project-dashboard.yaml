@@ -417,7 +417,7 @@ spec:
                     }
                 ],
                 "title": "CPU core-hours allocated (month to date)",
-                "description": "Total allocated CPU core-hours for running pods since start of current month.",
+                "description": "Total allocated CPU core-hours for running pods over the selected time range.",
                 "type": "stat"
             },
             {
@@ -456,7 +456,7 @@ spec:
                     }
                 ],
                 "title": "GPU hours allocated (month to date)",
-                "description": "Total allocated GPU-hours for running pods since start of current month.",
+                "description": "Total allocated GPU-hours for running pods over the selected time range.",
                 "type": "stat"
             }
         ],
