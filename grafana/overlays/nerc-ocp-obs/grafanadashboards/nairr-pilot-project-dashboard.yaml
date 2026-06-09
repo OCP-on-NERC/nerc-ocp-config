@@ -101,7 +101,7 @@ spec:
                 },
                 "targets": [
                     {
-                        "expr": "sum(kube_pod_container_resource_requests{namespace=\"$namespace\",resource=\"cpu\",unit=\"core\"} * on(namespace,pod,cluster) group_left() max by(namespace,pod,cluster) (kube_pod_status_phase{namespace=\"$namespace\",phase=\"Running\"}))",
+                        "expr": "sum(kube_pod_container_resource_requests{namespace=\"$namespace\",resource=\"cpu\",unit=\"core\"} * on(namespace,pod,cluster) group_left() max by(namespace,pod,cluster) (last_over_time(kube_pod_status_phase{namespace=\"$namespace\",phase=\"Running\"}[10m])))",
                         "refId": "A"
                     }
                 ],
@@ -151,7 +151,7 @@ spec:
                 },
                 "targets": [
                     {
-                        "expr": "sum(kube_pod_container_resource_requests{namespace=\"$namespace\",resource=\"memory\",unit=\"byte\"} * on(namespace,pod,cluster) group_left() max by(namespace,pod,cluster) (kube_pod_status_phase{namespace=\"$namespace\",phase=\"Running\"}))",
+                        "expr": "sum(kube_pod_container_resource_requests{namespace=\"$namespace\",resource=\"memory\",unit=\"byte\"} * on(namespace,pod,cluster) group_left() max by(namespace,pod,cluster) (last_over_time(kube_pod_status_phase{namespace=\"$namespace\",phase=\"Running\"}[10m])))",
                         "refId": "A"
                     }
                 ],
@@ -177,7 +177,7 @@ spec:
                 },
                 "targets": [
                     {
-                        "expr": "sum(kube_pod_container_resource_requests{resource=\"nvidia_com_gpu\",namespace=\"$namespace\"})",
+                        "expr": "sum(kube_pod_container_resource_requests{resource=\"nvidia_com_gpu\",namespace=\"$namespace\"} * on(namespace,pod,cluster) group_left() max by(namespace,pod,cluster) (last_over_time(kube_pod_status_phase{namespace=\"$namespace\",phase=\"Running\"}[10m])))",
                         "legendFormat": "GPUs allocated",
                         "refId": "A"
                     }
@@ -312,7 +312,7 @@ spec:
                     "defaults": {
                         "unit": "none",
                         "decimals": 1,
-                        "displayName": "CPU core-hours used (MTD)"
+                        "displayName": "CPU core-hours used (selected period)"
                     }
                 },
                 "gridPos": {
@@ -338,8 +338,8 @@ spec:
                         "refId": "A"
                     }
                 ],
-                "title": "CPU core-hours used (month to date)",
-                "description": "Total CPU core-hours actually consumed since start of current month.",
+                "title": "CPU core-hours used (selected period)",
+                "description": "Total CPU core-hours actually consumed over the selected time range.",
                 "type": "stat"
             },
             {
@@ -351,7 +351,7 @@ spec:
                     "defaults": {
                         "unit": "none",
                         "decimals": 1,
-                        "displayName": "GPU hours used (MTD)"
+                        "displayName": "GPU hours used (selected period)"
                     }
                 },
                 "gridPos": {
@@ -377,7 +377,7 @@ spec:
                         "refId": "A"
                     }
                 ],
-                "title": "GPU hours used (month to date) [node-level approx]",
+                "title": "GPU hours used (selected period) [node-level approx]",
                 "description": "GPU-hours used based on DCGM_FI_DEV_GPU_UTIL (0-100%) \u00d7 allocated GPUs \u00d7 time. Node-level approximation \u2014 same caveat as GPU memory panel. Not available for b-* namespaces.",
                 "type": "stat"
             },
@@ -390,7 +390,7 @@ spec:
                     "defaults": {
                         "unit": "none",
                         "decimals": 1,
-                        "displayName": "CPU core-hours allocated (MTD)"
+                        "displayName": "CPU core-hours allocated (selected period)"
                     }
                 },
                 "gridPos": {
@@ -411,13 +411,13 @@ spec:
                 },
                 "targets": [
                     {
-                        "expr": "sum_over_time(sum(kube_pod_container_resource_requests{namespace=\"$namespace\",resource=\"cpu\",unit=\"core\"} * on(namespace,pod,cluster) group_left() max by(namespace,pod,cluster) (kube_pod_status_phase{namespace=\"$namespace\",phase=\"Running\"}))[$__range:5m]) * 5 / 60",
+                        "expr": "sum_over_time(sum(kube_pod_container_resource_requests{namespace=\"$namespace\",resource=\"cpu\",unit=\"core\"} * on(namespace,pod,cluster) group_left() max by(namespace,pod,cluster) (last_over_time(kube_pod_status_phase{namespace=\"$namespace\",phase=\"Running\"}[10m])))[$__range:5m]) * 5 / 60",
                         "legendFormat": "CPU core-hours allocated",
                         "refId": "A"
                     }
                 ],
-                "title": "CPU core-hours allocated (month to date)",
-                "description": "Total allocated CPU core-hours for running pods since start of current month.",
+                "title": "CPU core-hours allocated (selected period)",
+                "description": "Total allocated CPU core-hours for running pods over the selected time range.",
                 "type": "stat"
             },
             {
@@ -429,7 +429,7 @@ spec:
                     "defaults": {
                         "unit": "none",
                         "decimals": 1,
-                        "displayName": "GPU hours allocated (MTD)"
+                        "displayName": "GPU hours allocated (selected period)"
                     }
                 },
                 "gridPos": {
@@ -450,13 +450,91 @@ spec:
                 },
                 "targets": [
                     {
-                        "expr": "sum_over_time(sum(kube_pod_container_resource_requests{namespace=\"$namespace\",resource=\"nvidia_com_gpu\"} * on(namespace,pod,cluster) group_left() max by(namespace,pod,cluster) (kube_pod_status_phase{namespace=\"$namespace\",phase=\"Running\"}))[$__range:5m]) * 5 / 60",
+                        "expr": "sum_over_time(sum(kube_pod_container_resource_requests{namespace=\"$namespace\",resource=\"nvidia_com_gpu\"} * on(namespace,pod,cluster) group_left() max by(namespace,pod,cluster) (last_over_time(kube_pod_status_phase{namespace=\"$namespace\",phase=\"Running\"}[10m])))[$__range:5m]) * 5 / 60",
                         "legendFormat": "GPU hours allocated",
                         "refId": "A"
                     }
                 ],
-                "title": "GPU hours allocated (month to date)",
-                "description": "Total allocated GPU-hours for running pods since start of current month.",
+                "title": "GPU hours allocated (selected period)",
+                "description": "Total allocated GPU-hours for running pods over the selected time range.",
+                "type": "stat"
+            },
+            {
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "a0fa9d88-8932-41f7-af80-6f678d4fb1e7"
+                },
+                "fieldConfig": {
+                    "defaults": {
+                        "unit": "none",
+                        "decimals": 1,
+                        "displayName": "CPU core-hours allocated no-join (selected period)"
+                    }
+                },
+                "gridPos": {
+                    "h": 6,
+                    "w": 12,
+                    "x": 0,
+                    "y": 50
+                },
+                "id": 211,
+                "options": {
+                    "reduceOptions": {
+                        "calcs": ["lastNotNull"]
+                    },
+                    "orientation": "auto",
+                    "textMode": "auto",
+                    "colorMode": "value",
+                    "graphMode": "none"
+                },
+                "targets": [
+                    {
+                        "expr": "sum_over_time(sum(kube_pod_container_resource_requests{namespace=\"$namespace\",resource=\"cpu\",unit=\"core\"})[$__range:5m]) * 5 / 60",
+                        "legendFormat": "CPU core-hours allocated (no join)",
+                        "refId": "A"
+                    }
+                ],
+                "title": "CPU core-hours allocated (no join) [control]",
+                "description": "Control panel: CPU core-hours from requests without phase join. Compare with 'CPU core-hours allocated' above to check for scrape gaps.",
+                "type": "stat"
+            },
+            {
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "a0fa9d88-8932-41f7-af80-6f678d4fb1e7"
+                },
+                "fieldConfig": {
+                    "defaults": {
+                        "unit": "none",
+                        "decimals": 1,
+                        "displayName": "GPU hours allocated no-join (selected period)"
+                    }
+                },
+                "gridPos": {
+                    "h": 6,
+                    "w": 12,
+                    "x": 12,
+                    "y": 50
+                },
+                "id": 212,
+                "options": {
+                    "reduceOptions": {
+                        "calcs": ["lastNotNull"]
+                    },
+                    "orientation": "auto",
+                    "textMode": "auto",
+                    "colorMode": "value",
+                    "graphMode": "none"
+                },
+                "targets": [
+                    {
+                        "expr": "sum_over_time(sum(kube_pod_container_resource_requests{namespace=\"$namespace\",resource=\"nvidia_com_gpu\"})[$__range:5m]) * 5 / 60",
+                        "legendFormat": "GPU hours allocated (no join)",
+                        "refId": "A"
+                    }
+                ],
+                "title": "GPU hours allocated (no join) [control]",
+                "description": "Control panel: GPU hours from requests without phase join. Compare with 'GPU hours allocated' above to check for scrape gaps.",
                 "type": "stat"
             }
         ],
