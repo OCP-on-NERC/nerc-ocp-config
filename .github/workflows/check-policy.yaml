@@ -1,0 +1,16 @@
+name: Check policy
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  check-policy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Check policy
+        run: |
+          ./ci/check-policy.sh
