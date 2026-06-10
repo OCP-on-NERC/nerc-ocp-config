@@ -10,4 +10,703 @@ spec:
     matchLabels:
       dashboards: grafana
   folder: NAIRR2025
-  json: "{\n    \"annotations\": {\n        \"list\": [\n            {\n                \"builtIn\": 1,\n                \"datasource\": {\n                    \"type\": \"grafana\",\n                    \"uid\": \"-- Grafana --\"\n                },\n                \"enable\": true,\n                \"hide\": true,\n                \"iconColor\": \"rgba(0, 211, 255, 1)\",\n                \"name\": \"Annotations & Alerts\",\n                \"type\": \"dashboard\"\n            }\n        ]\n    },\n    \"editable\": true,\n    \"graphTooltip\": 1,\n    \"panels\": [\n        {\n            \"gridPos\": {\n                \"h\": 1,\n                \"w\": 24,\n                \"x\": 0,\n                \"y\": 0\n            },\n            \"id\": 1,\n            \"title\": \"NAIRR Pilot \\u2013 Per Project (Namespace)\",\n            \"type\": \"row\"\n        },\n        {\n            \"datasource\": null,\n            \"gridPos\": {\n                \"h\": 5,\n                \"w\": 24,\n                \"x\": 0,\n                \"y\": 1\n            },\n            \"id\": 99,\n            \"options\": {\n                \"content\": \"**Note for Barcelona projects (`b-*` namespaces):**\\n\\nThese projects run on the `beta-test` cluster, which does not have a DCGM exporter deployed.\\n\\nAs a result, GPU memory metrics (VRAM) are unavailable for `b-*` namespaces - the panel will show `0`.\\n\\nAll other metrics (CPU, RAM, storage, network, GPU count) are fully available.\\n\\n---\\n\\n**Note on CPU vs. GPU metrics:**\\n\\nCPU and GPU panels use different measurement approaches \\u2014 this is not a bug, but a limitation of available metrics:\\n\\n- **CPU** \\u2014 measured in cores (absolute consumption via cAdvisor). No pod-level utilization-% is available in this setup.\\n- **GPU** \\u2014 measured in utilization % (via DCGM_FI_DEV_GPU_UTIL, node-level approximation). No pod-level core count metric is available from DCGM.\\n\\n---\\n\\n**Note on GPU hours used:**\\n\\nGPU hours are computed as utilization (0\\u2013100%) \\u00d7 time, normalized to hours at 100% load:\\n\\n- 100% utilization for 1 hour = 1.0 GPU-hour\\n- 50% utilization for 1 hour = 0.5 GPU-hours\\n- 1% utilization for 1 hour = 0.01 GPU-hours\\n\\n\\u26a0\\ufe0f Node-level approximation: if multiple namespaces share a GPU node, each namespace sees the full node utilization \\u2014 values may be overestimated.\",\n                \"mode\": \"markdown\"\n            },\n            \"title\": \"\",\n            \"type\": \"text\"\n        },\n        {\n            \"datasource\": {\n                \"type\": \"prometheus\",\n                \"uid\": \"a0fa9d88-8932-41f7-af80-6f678d4fb1e7\"\n            },\n            \"fieldConfig\": {\n                \"defaults\": {\n                    \"unit\": \"cores\"\n                }\n            },\n            \"gridPos\": {\n                \"x\": 0,\n                \"y\": 14,\n                \"w\": 6,\n                \"h\": 8\n            },\n            \"targets\": [\n                {\n                    \"expr\": \"sum(rate(container_cpu_usage_seconds_total{namespace=\\\"$namespace\\\",container!=\\\"POD\\\",container!=\\\"\\\"}[5m]))\",\n                    \"refId\": \"A\"\n                }\n            ],\n            \"title\": \"CPU used (cores)\",\n            \"type\": \"timeseries\"\n        },\n        {\n            \"datasource\": {\n                \"type\": \"prometheus\",\n                \"uid\": \"a0fa9d88-8932-41f7-af80-6f678d4fb1e7\"\n            },\n            \"fieldConfig\": {\n                \"defaults\": {\n                    \"unit\": \"cores\"\n                }\n            },\n            \"gridPos\": {\n                \"x\": 0,\n                \"y\": 6,\n                \"w\": 6,\n                \"h\": 8\n            },\n            \"targets\": [\n                {\n                    \"expr\": \"sum(kube_pod_container_resource_requests{namespace=\\\"$namespace\\\",resource=\\\"cpu\\\",unit=\\\"core\\\"} * on(namespace,pod,cluster) group_left() max by(namespace,pod,cluster) (last_over_time(kube_pod_status_phase{namespace=\\\"$namespace\\\",phase=\\\"Running\\\"}[10m])))\",\n                    \"refId\": \"A\"\n                }\n            ],\n            \"title\": \"CPU allocated (requests, cores)\",\n            \"type\": \"timeseries\"\n        },\n        {\n            \"datasource\": {\n                \"type\": \"prometheus\",\n                \"uid\": \"a0fa9d88-8932-41f7-af80-6f678d4fb1e7\"\n            },\n            \"fieldConfig\": {\n                \"defaults\": {\n                    \"unit\": \"bytes\"\n                }\n            },\n            \"gridPos\": {\n                \"x\": 12,\n                \"y\": 14,\n                \"w\": 6,\n                \"h\": 8\n            },\n            \"targets\": [\n                {\n                    \"expr\": \"sum(container_memory_working_set_bytes{namespace=\\\"$namespace\\\",container!=\\\"POD\\\",image!=\\\"\\\"})\",\n                    \"refId\": \"A\"\n                }\n            ],\n            \"title\": \"Memory used\",\n            \"type\": \"timeseries\"\n        },\n        {\n            \"datasource\": {\n                \"type\": \"prometheus\",\n                \"uid\": \"a0fa9d88-8932-41f7-af80-6f678d4fb1e7\"\n            },\n            \"fieldConfig\": {\n                \"defaults\": {\n                    \"unit\": \"bytes\"\n                }\n            },\n            \"gridPos\": {\n                \"x\": 12,\n                \"y\": 6,\n                \"w\": 6,\n                \"h\": 8\n            },\n            \"targets\": [\n                {\n                    \"expr\": \"sum(kube_pod_container_resource_requests{namespace=\\\"$namespace\\\",resource=\\\"memory\\\",unit=\\\"byte\\\"} * on(namespace,pod,cluster) group_left() max by(namespace,pod,cluster) (last_over_time(kube_pod_status_phase{namespace=\\\"$namespace\\\",phase=\\\"Running\\\"}[10m])))\",\n                    \"refId\": \"A\"\n                }\n            ],\n            \"title\": \"Memory allocated (requests)\",\n            \"type\": \"timeseries\"\n        },\n        {\n            \"datasource\": {\n                \"type\": \"prometheus\",\n                \"uid\": \"a0fa9d88-8932-41f7-af80-6f678d4fb1e7\"\n            },\n            \"fieldConfig\": {\n                \"defaults\": {\n                    \"unit\": \"short\"\n                },\n                \"overrides\": []\n            },\n            \"gridPos\": {\n                \"x\": 6,\n                \"y\": 6,\n                \"w\": 6,\n                \"h\": 8\n            },\n            \"targets\": [\n                {\n                    \"expr\": \"sum(kube_pod_container_resource_requests{resource=\\\"nvidia_com_gpu\\\",namespace=\\\"$namespace\\\"} * on(namespace,pod,cluster) group_left() max by(namespace,pod,cluster) (last_over_time(kube_pod_status_phase{namespace=\\\"$namespace\\\",phase=\\\"Running\\\"}[10m])))\",\n                    \"legendFormat\": \"GPUs allocated\",\n                    \"refId\": \"A\"\n                }\n            ],\n            \"title\": \"GPU allocated (requests, count)\",\n            \"type\": \"timeseries\"\n        },\n        {\n            \"datasource\": {\n                \"type\": \"prometheus\",\n                \"uid\": \"a0fa9d88-8932-41f7-af80-6f678d4fb1e7\"\n            },\n            \"fieldConfig\": {\n                \"defaults\": {\n                    \"unit\": \"bytes\"\n                }\n            },\n            \"gridPos\": {\n                \"x\": 18,\n                \"y\": 14,\n                \"w\": 6,\n                \"h\": 8\n            },\n            \"targets\": [\n                {\n                    \"expr\": \"sum(kubelet_volume_stats_used_bytes{namespace=\\\"$namespace\\\"})\",\n                    \"refId\": \"A\"\n                }\n            ],\n            \"title\": \"Storage (PVC) used\",\n            \"type\": \"timeseries\"\n        },\n        {\n            \"datasource\": {\n                \"type\": \"prometheus\",\n                \"uid\": \"a0fa9d88-8932-41f7-af80-6f678d4fb1e7\"\n            },\n            \"fieldConfig\": {\n                \"defaults\": {\n                    \"unit\": \"bytes\"\n                }\n            },\n            \"gridPos\": {\n                \"x\": 18,\n                \"y\": 6,\n                \"w\": 6,\n                \"h\": 8\n            },\n            \"id\": 222,\n            \"targets\": [\n                {\n                    \"expr\": \"sum(kubelet_volume_stats_capacity_bytes{namespace=\\\"$namespace\\\"})\",\n                    \"legendFormat\": \"Storage allocated (requests)\",\n                    \"refId\": \"A\"\n                }\n            ],\n            \"title\": \"Storage allocated (requests)\",\n            \"type\": \"timeseries\"\n        },\n        {\n            \"datasource\": {\n                \"type\": \"prometheus\",\n                \"uid\": \"a0fa9d88-8932-41f7-af80-6f678d4fb1e7\"\n            },\n            \"fieldConfig\": {\n                \"defaults\": {\n                    \"unit\": \"Bps\"\n                }\n            },\n            \"gridPos\": {\n                \"x\": 0,\n                \"y\": 30,\n                \"w\": 8,\n                \"h\": 8\n            },\n            \"targets\": [\n                {\n                    \"expr\": \"sum(rate(container_network_receive_bytes_total{namespace=\\\"$namespace\\\"}[5m]) + rate(container_network_transmit_bytes_total{namespace=\\\"$namespace\\\"}[5m]))\",\n                    \"refId\": \"A\"\n                }\n            ],\n            \"title\": \"Network throughput (Rx + Tx)\",\n            \"type\": \"timeseries\"\n        },\n        {\n            \"datasource\": {\n                \"type\": \"prometheus\",\n                \"uid\": \"a0fa9d88-8932-41f7-af80-6f678d4fb1e7\"\n            },\n            \"fieldConfig\": {\n                \"defaults\": {\n                    \"unit\": \"watt\"\n                }\n            },\n            \"gridPos\": {\n                \"x\": 8,\n                \"y\": 30,\n                \"w\": 8,\n                \"h\": 8\n            },\n            \"targets\": [\n                {\n                    \"expr\": \"(sum(rate(container_cpu_usage_seconds_total{namespace=\\\"$namespace\\\",container!=\\\"POD\\\",container!=\\\"\\\"}[5m])) * 15) + ((sum(kube_pod_container_resource_requests{resource=\\\"nvidia_com_gpu\\\",namespace=\\\"$namespace\\\"}) or vector(0)) * 250)\",\n                    \"legendFormat\": \"Estimated power (W)\",\n                    \"refId\": \"A\"\n                }\n            ],\n            \"title\": \"Estimated power usage (heuristic)\",\n            \"type\": \"timeseries\"\n        },\n        {\n            \"collapsed\": false,\n            \"gridPos\": {\n                \"h\": 1,\n                \"w\": 24,\n                \"x\": 0,\n                \"y\": 38\n            },\n            \"id\": 220,\n            \"title\": \"CPU Hours\",\n            \"type\": \"row\"\n        },\n        {\n            \"datasource\": {\n                \"type\": \"prometheus\",\n                \"uid\": \"a0fa9d88-8932-41f7-af80-6f678d4fb1e7\"\n            },\n            \"fieldConfig\": {\n                \"defaults\": {\n                    \"unit\": \"none\",\n                    \"decimals\": 1,\n                    \"displayName\": \"CPU core-hours used (selected period)\"\n                }\n            },\n            \"gridPos\": {\n                \"h\": 6,\n                \"w\": 8,\n                \"x\": 0,\n                \"y\": 47\n            },\n            \"id\": 203,\n            \"options\": {\n                \"reduceOptions\": {\n                    \"calcs\": [\n                        \"lastNotNull\"\n                    ]\n                },\n                \"orientation\": \"auto\",\n                \"textMode\": \"auto\",\n                \"colorMode\": \"value\",\n                \"graphMode\": \"none\"\n            },\n            \"targets\": [\n                {\n                    \"expr\": \"sum_over_time(sum(rate(container_cpu_usage_seconds_total{namespace=\\\"$namespace\\\",container!=\\\"POD\\\",container!=\\\"\\\"}[5m]))[$__range:5m]) * 5 / 60\",\n                    \"legendFormat\": \"CPU core-hours used\",\n                    \"refId\": \"A\"\n                }\n            ],\n            \"title\": \"CPU core-hours used (selected period)\",\n            \"description\": \"Total CPU core-hours actually consumed over the selected time range.\",\n            \"type\": \"stat\"\n        },\n        {\n            \"datasource\": {\n                \"type\": \"prometheus\",\n                \"uid\": \"a0fa9d88-8932-41f7-af80-6f678d4fb1e7\"\n            },\n            \"fieldConfig\": {\n                \"defaults\": {\n                    \"unit\": \"none\",\n                    \"decimals\": 1,\n                    \"displayName\": \"CPU core-hours allocated (selected period)\"\n                }\n            },\n            \"gridPos\": {\n                \"h\": 6,\n                \"w\": 8,\n                \"x\": 8,\n                \"y\": 47\n            },\n            \"id\": 201,\n            \"options\": {\n                \"reduceOptions\": {\n                    \"calcs\": [\n                        \"lastNotNull\"\n                    ]\n                },\n                \"orientation\": \"auto\",\n                \"textMode\": \"auto\",\n                \"colorMode\": \"value\",\n                \"graphMode\": \"none\"\n            },\n            \"targets\": [\n                {\n                    \"expr\": \"sum_over_time(sum(kube_pod_container_resource_requests{namespace=\\\"$namespace\\\",resource=\\\"cpu\\\",unit=\\\"core\\\"} * on(namespace,pod,cluster) group_left() max by(namespace,pod,cluster) (last_over_time(kube_pod_status_phase{namespace=\\\"$namespace\\\",phase=\\\"Running\\\"}[10m])))[$__range:5m]) * 5 / 60\",\n                    \"legendFormat\": \"CPU core-hours allocated\",\n                    \"refId\": \"A\"\n                }\n            ],\n            \"title\": \"CPU core-hours allocated (requests) [selected period]\",\n            \"description\": \"Total allocated CPU core-hours for running pods over the selected time range.\",\n            \"type\": \"stat\"\n        },\n        {\n            \"datasource\": {\n                \"type\": \"prometheus\",\n                \"uid\": \"a0fa9d88-8932-41f7-af80-6f678d4fb1e7\"\n            },\n            \"fieldConfig\": {\n                \"defaults\": {\n                    \"unit\": \"none\",\n                    \"decimals\": 1,\n                    \"displayName\": \"CPU core-hours allocated no-join (selected period)\"\n                }\n            },\n            \"gridPos\": {\n                \"h\": 6,\n                \"w\": 8,\n                \"x\": 16,\n                \"y\": 47\n            },\n            \"id\": 211,\n            \"options\": {\n                \"reduceOptions\": {\n                    \"calcs\": [\n                        \"lastNotNull\"\n                    ]\n                },\n                \"orientation\": \"auto\",\n                \"textMode\": \"auto\",\n                \"colorMode\": \"value\",\n                \"graphMode\": \"none\"\n            },\n            \"targets\": [\n                {\n                    \"expr\": \"sum_over_time(sum(kube_pod_container_resource_requests{namespace=\\\"$namespace\\\",resource=\\\"cpu\\\",unit=\\\"core\\\"})[$__range:5m]) * 5 / 60\",\n                    \"legendFormat\": \"CPU core-hours allocated (no join)\",\n                    \"refId\": \"A\"\n                }\n            ],\n            \"title\": \"CPU core-hours allocated (requests, no join) [control]\",\n            \"description\": \"Control panel: CPU core-hours from requests without phase join. Compare with 'CPU core-hours allocated' above to check for scrape gaps.\",\n            \"type\": \"stat\"\n        },\n        {\n            \"datasource\": {\n                \"type\": \"prometheus\",\n                \"uid\": \"a0fa9d88-8932-41f7-af80-6f678d4fb1e7\"\n            },\n            \"fieldConfig\": {\n                \"defaults\": {\n                    \"unit\": \"none\",\n                    \"decimals\": 1,\n                    \"displayName\": \"GPU hours used (selected period)\"\n                }\n            },\n            \"collapsed\": false,\n            \"gridPos\": {\n                \"h\": 1,\n                \"w\": 24,\n                \"x\": 0,\n                \"y\": 53\n            },\n            \"id\": 221,\n            \"title\": \"GPU Hours\",\n            \"type\": \"row\"\n        },\n        {\n            \"datasource\": {\n                \"type\": \"prometheus\",\n                \"uid\": \"a0fa9d88-8932-41f7-af80-6f678d4fb1e7\"\n            },\n            \"fieldConfig\": {\n                \"defaults\": {\n                    \"unit\": \"none\",\n                    \"decimals\": 1,\n                    \"displayName\": \"GPU hours used (selected period)\"\n                }\n            },\n            \"gridPos\": {\n                \"h\": 6,\n                \"w\": 8,\n                \"x\": 0,\n                \"y\": 54\n            },\n            \"id\": 204,\n            \"options\": {\n                \"reduceOptions\": {\n                    \"calcs\": [\n                        \"lastNotNull\"\n                    ]\n                },\n                \"orientation\": \"auto\",\n                \"textMode\": \"auto\",\n                \"colorMode\": \"value\",\n                \"graphMode\": \"none\"\n            },\n            \"targets\": [\n                {\n                    \"expr\": \"sum_over_time(sum(label_replace(DCGM_FI_DEV_GPU_UTIL, \\\"node\\\", \\\"$1\\\", \\\"Hostname\\\", \\\"(.+)\\\") * on(node) group_left() max by(node) (kube_pod_info{namespace=\\\"$namespace\\\"}))[$__range:5m]) / 100 * 5 / 60\",\n                    \"legendFormat\": \"GPU hours used\",\n                    \"refId\": \"A\"\n                }\n            ],\n            \"title\": \"GPU hours used (selected period) [node-level approx]\",\n            \"description\": \"GPU-hours used based on DCGM_FI_DEV_GPU_UTIL (0-100%) \\u00d7 allocated GPUs \\u00d7 time. Node-level approximation \\u2014 same caveat as GPU memory panel. Not available for b-* namespaces.\",\n            \"type\": \"stat\"\n        },\n        {\n            \"datasource\": {\n                \"type\": \"prometheus\",\n                \"uid\": \"a0fa9d88-8932-41f7-af80-6f678d4fb1e7\"\n            },\n            \"fieldConfig\": {\n                \"defaults\": {\n                    \"unit\": \"none\",\n                    \"decimals\": 1,\n                    \"displayName\": \"GPU hours allocated (selected period)\"\n                }\n            },\n            \"gridPos\": {\n                \"h\": 6,\n                \"w\": 8,\n                \"x\": 8,\n                \"y\": 54\n            },\n            \"id\": 202,\n            \"options\": {\n                \"reduceOptions\": {\n                    \"calcs\": [\n                        \"lastNotNull\"\n                    ]\n                },\n                \"orientation\": \"auto\",\n                \"textMode\": \"auto\",\n                \"colorMode\": \"value\",\n                \"graphMode\": \"none\"\n            },\n            \"targets\": [\n                {\n                    \"expr\": \"sum_over_time(sum(kube_pod_container_resource_requests{namespace=\\\"$namespace\\\",resource=\\\"nvidia_com_gpu\\\"} * on(namespace,pod,cluster) group_left() max by(namespace,pod,cluster) (last_over_time(kube_pod_status_phase{namespace=\\\"$namespace\\\",phase=\\\"Running\\\"}[10m])))[$__range:5m]) * 5 / 60\",\n                    \"legendFormat\": \"GPU hours allocated\",\n                    \"refId\": \"A\"\n                }\n            ],\n            \"title\": \"GPU hours allocated (requests) [selected period]\",\n            \"description\": \"Total allocated GPU-hours for running pods over the selected time range.\",\n            \"type\": \"stat\"\n        },\n        {\n            \"datasource\": {\n                \"type\": \"prometheus\",\n                \"uid\": \"a0fa9d88-8932-41f7-af80-6f678d4fb1e7\"\n            },\n            \"fieldConfig\": {\n                \"defaults\": {\n                    \"unit\": \"none\",\n                    \"decimals\": 1,\n                    \"displayName\": \"GPU hours allocated no-join (selected period)\"\n                }\n            },\n            \"gridPos\": {\n                \"h\": 6,\n                \"w\": 8,\n                \"x\": 16,\n                \"y\": 54\n            },\n            \"id\": 212,\n            \"options\": {\n                \"reduceOptions\": {\n                    \"calcs\": [\n                        \"lastNotNull\"\n                    ]\n                },\n                \"orientation\": \"auto\",\n                \"textMode\": \"auto\",\n                \"colorMode\": \"value\",\n                \"graphMode\": \"none\"\n            },\n            \"targets\": [\n                {\n                    \"expr\": \"sum_over_time(sum(kube_pod_container_resource_requests{namespace=\\\"$namespace\\\",resource=\\\"nvidia_com_gpu\\\"})[$__range:5m]) * 5 / 60\",\n                    \"legendFormat\": \"GPU hours allocated (no join)\",\n                    \"refId\": \"A\"\n                }\n            ],\n            \"title\": \"GPU hours allocated (requests, no join) [control]\",\n            \"description\": \"Control panel: GPU hours from requests without phase join. Compare with 'GPU hours allocated' above to check for scrape gaps.\",\n            \"type\": \"stat\"\n        },\n        {\n            \"datasource\": {\n                \"type\": \"prometheus\",\n                \"uid\": \"a0fa9d88-8932-41f7-af80-6f678d4fb1e7\"\n            },\n            \"fieldConfig\": {\n                \"defaults\": {\n                    \"unit\": \"percentunit\",\n                    \"min\": 0,\n                    \"max\": 1\n                }\n            },\n            \"gridPos\": {\n                \"x\": 6,\n                \"y\": 14,\n                \"w\": 6,\n                \"h\": 8\n            },\n            \"id\": 223,\n            \"targets\": [\n                {\n                    \"expr\": \"sum(label_replace(DCGM_FI_DEV_GPU_UTIL, \\\"node\\\", \\\"$1\\\", \\\"Hostname\\\", \\\"(.+)\\\") * on(node) group_left() max by(node) (kube_pod_info{namespace=\\\"$namespace\\\"})) / 100\",\n                    \"legendFormat\": \"GPU utilization [node-level approx]\",\n                    \"refId\": \"A\"\n                }\n            ],\n            \"title\": \"GPU utilization (%) [node-level approx]\",\n            \"description\": \"GPU utilization via DCGM_FI_DEV_GPU_UTIL (0-100%). Node-level approximation \\u2014 same caveat as GPU hours used panel. Not available for b-* namespaces.\",\n            \"type\": \"timeseries\"\n        },\n        {\n            \"datasource\": {\n                \"type\": \"prometheus\",\n                \"uid\": \"a0fa9d88-8932-41f7-af80-6f678d4fb1e7\"\n            },\n            \"fieldConfig\": {\n                \"defaults\": {\n                    \"unit\": \"decgbytes\"\n                }\n            },\n            \"gridPos\": {\n                \"x\": 16,\n                \"y\": 30,\n                \"w\": 8,\n                \"h\": 8\n            },\n            \"id\": 20,\n            \"options\": {\n                \"noValue\": \"N/A (no GPU data)\"\n            },\n            \"targets\": [\n                {\n                    \"expr\": \"(sum by (node) (label_replace(DCGM_FI_DEV_FB_USED, \\\"node\\\", \\\"$1\\\", \\\"Hostname\\\", \\\"(.+)\\\") * on(node) group_left() max by (node) (kube_pod_info{namespace=\\\"$namespace\\\"})) / 1024) or (0 * absent(kube_pod_info{namespace=\\\"$namespace\\\", cluster=\\\"nerc-ocp-prod\\\"}))\",\n                    \"legendFormat\": \"GPU memory used (GiB) [0 = no DCGM data]\",\n                    \"refId\": \"A\"\n                }\n            ],\n            \"title\": \"GPU memory used (GiB) [node-level approx]\",\n            \"description\": \"GPU VRAM usage via DCGM exporter (node-level approximation).\\n\\nDCGM_FI_DEV_FB_USED is node/GPU-level \\u2014 if multiple namespaces share a GPU node, each will show the full node VRAM. No pod-level VRAM metric is available from DCGM.\\n\\n\\u26a0\\ufe0f Not available for Barcelona projects (b-* namespaces) \\u2014 the beta-test cluster does not run a DCGM exporter.\",\n            \"type\": \"timeseries\"\n        }\n    ],\n    \"refresh\": \"1m\",\n    \"schemaVersion\": 39,\n    \"style\": \"dark\",\n    \"tags\": [\n        \"nairr\",\n        \"rhoai\",\n        \"mvp\"\n    ],\n    \"templating\": {\n        \"list\": [\n            {\n                \"current\": {\n                    \"text\": \"multi-modal-semantic-routing-for-vllm-d266df\",\n                    \"value\": \"multi-modal-semantic-routing-for-vllm-d266df\"\n                },\n                \"label\": \"RHOAI Project / Namespace\",\n                \"name\": \"namespace\",\n                \"query\": \"multi-modal-semantic-routing-for-vllm-d266df,b-multi-modal-semantic-routing-for-vllm-d266df,ts-data-agent-0a0cee,b-ts-data-agent-0a0cee,efficient-memory-offloading-765cab,b-efficient-memory-offloading-765cab,model-merging-47c2fd,reliability-for-llm-agents-3fc129,mllm-interpretation-and-failure-investigation-c8fa7f,kv-cache-compression-c45372,adaptive-kv-cache-compression-for-agentic-ai-6f3c1f,evaluating-and-improving-applications--ef7fda\",\n                \"type\": \"custom\"\n            }\n        ]\n    },\n    \"time\": {\n        \"from\": \"now/M\",\n        \"to\": \"now\"\n    },\n    \"timepicker\": {\n        \"quick_ranges\": [\n            {\n                \"display\": \"This month\",\n                \"from\": \"now/M\",\n                \"to\": \"now\"\n            },\n            {\n                \"display\": \"Last month\",\n                \"from\": \"now-1M/M\",\n                \"to\": \"now-1M/M+1M\"\n            },\n            {\n                \"display\": \"Last 30 days\",\n                \"from\": \"now-30d\",\n                \"to\": \"now\"\n            },\n            {\n                \"display\": \"Last 90 days\",\n                \"from\": \"now-90d\",\n                \"to\": \"now\"\n            },\n            {\n                \"display\": \"Last 6 months\",\n                \"from\": \"now-6M\",\n                \"to\": \"now\"\n            },\n            {\n                \"display\": \"Last 1 year\",\n                \"from\": \"now-1y\",\n                \"to\": \"now\"\n            }\n        ]\n    },\n    \"timezone\": \"browser\",\n    \"title\": \"NAIRR Pilot Project Dashboard (MVP) v1\",\n    \"uid\": \"nairr-pilot-mvp-v1\",\n    \"version\": 1\n}"
+  json: |-
+    {
+        "annotations": {
+            "list": [
+                {
+                    "builtIn": 1,
+                    "datasource": {
+                        "type": "grafana",
+                        "uid": "-- Grafana --"
+                    },
+                    "enable": true,
+                    "hide": true,
+                    "iconColor": "rgba(0, 211, 255, 1)",
+                    "name": "Annotations & Alerts",
+                    "type": "dashboard"
+                }
+            ]
+        },
+        "editable": true,
+        "graphTooltip": 1,
+        "panels": [
+            {
+                "gridPos": {
+                    "h": 1,
+                    "w": 24,
+                    "x": 0,
+                    "y": 0
+                },
+                "id": 1,
+                "title": "NAIRR Pilot – Per Project (Namespace)",
+                "type": "row"
+            },
+            {
+                "datasource": null,
+                "gridPos": {
+                    "h": 5,
+                    "w": 24,
+                    "x": 0,
+                    "y": 1
+                },
+                "id": 99,
+                "options": {
+                    "content": "**Note for Barcelona projects (`b-*` namespaces):**\n\nThese projects run on the `beta-test` cluster, which does not have a DCGM exporter deployed.\n\nAs a result, GPU memory metrics (VRAM) are unavailable for `b-*` namespaces - the panel will show `0`.\n\nAll other metrics (CPU, RAM, storage, network, GPU count) are fully available.\n\n---\n\n**Note on CPU vs. GPU metrics:**\n\nCPU and GPU panels use different measurement approaches — this is not a bug, but a limitation of available metrics:\n\n- **CPU** — measured in cores (absolute consumption via cAdvisor). No pod-level utilization-% is available in this setup.\n- **GPU** — measured in utilization % (via DCGM_FI_DEV_GPU_UTIL, node-level approximation). No pod-level core count metric is available from DCGM.\n\n---\n\n**Note on GPU hours used and GPU utilization %:**\n\nGPU hours are computed as utilization (0–100%) × time, normalized to hours at 100% load:\n\n- 100% utilization for 1 hour = 1.0 GPU-hour\n- 50% utilization for 1 hour = 0.5 GPU-hours\n- 1% utilization for 1 hour = 0.01 GPU-hours\n\n⚠️ Node-level approximation: DCGM_FI_DEV_GPU_UTIL reports per GPU device on the node. The utilization % shown reflects the **node as a whole**, not individual pod allocations. If 6 GPUs are allocated but the panel shows 100%, this means the node's GPUs are fully utilized — it does not tell you which pods or how many GPUs are at 100%. If multiple namespaces share a GPU node, each namespace sees the full node utilization — values may be overestimated.",
+                    "mode": "markdown"
+                },
+                "title": "",
+                "type": "text"
+            },
+            {
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "a0fa9d88-8932-41f7-af80-6f678d4fb1e7"
+                },
+                "fieldConfig": {
+                    "defaults": {
+                        "unit": "cores"
+                    }
+                },
+                "gridPos": {
+                    "x": 0,
+                    "y": 14,
+                    "w": 6,
+                    "h": 8
+                },
+                "targets": [
+                    {
+                        "expr": "sum(rate(container_cpu_usage_seconds_total{namespace=\"$namespace\",container!=\"POD\",container!=\"\"}[5m]))",
+                        "refId": "A"
+                    }
+                ],
+                "title": "CPU used (cores)",
+                "type": "timeseries"
+            },
+            {
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "a0fa9d88-8932-41f7-af80-6f678d4fb1e7"
+                },
+                "fieldConfig": {
+                    "defaults": {
+                        "unit": "cores"
+                    }
+                },
+                "gridPos": {
+                    "x": 0,
+                    "y": 6,
+                    "w": 6,
+                    "h": 8
+                },
+                "targets": [
+                    {
+                        "expr": "sum(kube_pod_container_resource_requests{namespace=\"$namespace\",resource=\"cpu\",unit=\"core\"} * on(namespace,pod,cluster) group_left() max by(namespace,pod,cluster) (last_over_time(kube_pod_status_phase{namespace=\"$namespace\",phase=\"Running\"}[10m])))",
+                        "refId": "A"
+                    }
+                ],
+                "title": "CPU allocated (requests, cores)",
+                "type": "timeseries"
+            },
+            {
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "a0fa9d88-8932-41f7-af80-6f678d4fb1e7"
+                },
+                "fieldConfig": {
+                    "defaults": {
+                        "unit": "bytes"
+                    }
+                },
+                "gridPos": {
+                    "x": 12,
+                    "y": 14,
+                    "w": 6,
+                    "h": 8
+                },
+                "targets": [
+                    {
+                        "expr": "sum(container_memory_working_set_bytes{namespace=\"$namespace\",container!=\"POD\",image!=\"\"})",
+                        "refId": "A"
+                    }
+                ],
+                "title": "Memory used",
+                "type": "timeseries"
+            },
+            {
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "a0fa9d88-8932-41f7-af80-6f678d4fb1e7"
+                },
+                "fieldConfig": {
+                    "defaults": {
+                        "unit": "bytes"
+                    }
+                },
+                "gridPos": {
+                    "x": 12,
+                    "y": 6,
+                    "w": 6,
+                    "h": 8
+                },
+                "targets": [
+                    {
+                        "expr": "sum(kube_pod_container_resource_requests{namespace=\"$namespace\",resource=\"memory\",unit=\"byte\"} * on(namespace,pod,cluster) group_left() max by(namespace,pod,cluster) (last_over_time(kube_pod_status_phase{namespace=\"$namespace\",phase=\"Running\"}[10m])))",
+                        "refId": "A"
+                    }
+                ],
+                "title": "Memory allocated (requests)",
+                "type": "timeseries"
+            },
+            {
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "a0fa9d88-8932-41f7-af80-6f678d4fb1e7"
+                },
+                "fieldConfig": {
+                    "defaults": {
+                        "unit": "short"
+                    },
+                    "overrides": []
+                },
+                "gridPos": {
+                    "x": 6,
+                    "y": 6,
+                    "w": 6,
+                    "h": 8
+                },
+                "targets": [
+                    {
+                        "expr": "sum(kube_pod_container_resource_requests{resource=\"nvidia_com_gpu\",namespace=\"$namespace\"} * on(namespace,pod,cluster) group_left() max by(namespace,pod,cluster) (last_over_time(kube_pod_status_phase{namespace=\"$namespace\",phase=\"Running\"}[10m])))",
+                        "legendFormat": "GPUs allocated",
+                        "refId": "A"
+                    }
+                ],
+                "title": "GPU allocated (requests, count)",
+                "type": "timeseries"
+            },
+            {
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "a0fa9d88-8932-41f7-af80-6f678d4fb1e7"
+                },
+                "fieldConfig": {
+                    "defaults": {
+                        "unit": "bytes"
+                    }
+                },
+                "gridPos": {
+                    "x": 18,
+                    "y": 14,
+                    "w": 6,
+                    "h": 8
+                },
+                "targets": [
+                    {
+                        "expr": "sum(kubelet_volume_stats_used_bytes{namespace=\"$namespace\"})",
+                        "refId": "A"
+                    }
+                ],
+                "title": "Storage (PVC) used",
+                "type": "timeseries"
+            },
+            {
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "a0fa9d88-8932-41f7-af80-6f678d4fb1e7"
+                },
+                "fieldConfig": {
+                    "defaults": {
+                        "unit": "bytes"
+                    }
+                },
+                "gridPos": {
+                    "x": 18,
+                    "y": 6,
+                    "w": 6,
+                    "h": 8
+                },
+                "id": 222,
+                "targets": [
+                    {
+                        "expr": "sum(kubelet_volume_stats_capacity_bytes{namespace=\"$namespace\"})",
+                        "legendFormat": "Storage allocated (requests)",
+                        "refId": "A"
+                    }
+                ],
+                "title": "Storage allocated (requests)",
+                "type": "timeseries"
+            },
+            {
+                "collapsed": false,
+                "gridPos": {
+                    "h": 1,
+                    "w": 24,
+                    "x": 0,
+                    "y": 38
+                },
+                "id": 220,
+                "title": "CPU Hours",
+                "type": "row"
+            },
+            {
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "a0fa9d88-8932-41f7-af80-6f678d4fb1e7"
+                },
+                "fieldConfig": {
+                    "defaults": {
+                        "unit": "none",
+                        "decimals": 1,
+                        "displayName": "CPU core-hours used (selected period)"
+                    }
+                },
+                "gridPos": {
+                    "h": 6,
+                    "w": 8,
+                    "x": 0,
+                    "y": 47
+                },
+                "id": 203,
+                "options": {
+                    "reduceOptions": {
+                        "calcs": [
+                            "lastNotNull"
+                        ]
+                    },
+                    "orientation": "auto",
+                    "textMode": "auto",
+                    "colorMode": "value",
+                    "graphMode": "none"
+                },
+                "targets": [
+                    {
+                        "expr": "sum_over_time(sum(rate(container_cpu_usage_seconds_total{namespace=\"$namespace\",container!=\"POD\",container!=\"\"}[5m]))[$__range:5m]) * 5 / 60",
+                        "legendFormat": "CPU core-hours used",
+                        "refId": "A"
+                    }
+                ],
+                "title": "CPU core-hours used (selected period)",
+                "description": "Total CPU core-hours actually consumed over the selected time range.",
+                "type": "stat"
+            },
+            {
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "a0fa9d88-8932-41f7-af80-6f678d4fb1e7"
+                },
+                "fieldConfig": {
+                    "defaults": {
+                        "unit": "none",
+                        "decimals": 1,
+                        "displayName": "CPU core-hours allocated (selected period)"
+                    }
+                },
+                "gridPos": {
+                    "h": 6,
+                    "w": 8,
+                    "x": 8,
+                    "y": 47
+                },
+                "id": 201,
+                "options": {
+                    "reduceOptions": {
+                        "calcs": [
+                            "lastNotNull"
+                        ]
+                    },
+                    "orientation": "auto",
+                    "textMode": "auto",
+                    "colorMode": "value",
+                    "graphMode": "none"
+                },
+                "targets": [
+                    {
+                        "expr": "sum_over_time(sum(kube_pod_container_resource_requests{namespace=\"$namespace\",resource=\"cpu\",unit=\"core\"} * on(namespace,pod,cluster) group_left() max by(namespace,pod,cluster) (last_over_time(kube_pod_status_phase{namespace=\"$namespace\",phase=\"Running\"}[10m])))[$__range:5m]) * 5 / 60",
+                        "legendFormat": "CPU core-hours allocated",
+                        "refId": "A"
+                    }
+                ],
+                "title": "CPU core-hours allocated (requests) [selected period]",
+                "description": "Total allocated CPU core-hours for running pods over the selected time range.",
+                "type": "stat"
+            },
+            {
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "a0fa9d88-8932-41f7-af80-6f678d4fb1e7"
+                },
+                "fieldConfig": {
+                    "defaults": {
+                        "unit": "none",
+                        "decimals": 1,
+                        "displayName": "CPU core-hours allocated no-join (selected period)"
+                    }
+                },
+                "gridPos": {
+                    "h": 6,
+                    "w": 8,
+                    "x": 16,
+                    "y": 47
+                },
+                "id": 211,
+                "options": {
+                    "reduceOptions": {
+                        "calcs": [
+                            "lastNotNull"
+                        ]
+                    },
+                    "orientation": "auto",
+                    "textMode": "auto",
+                    "colorMode": "value",
+                    "graphMode": "none"
+                },
+                "targets": [
+                    {
+                        "expr": "sum_over_time(sum(kube_pod_container_resource_requests{namespace=\"$namespace\",resource=\"cpu\",unit=\"core\"})[$__range:5m]) * 5 / 60",
+                        "legendFormat": "CPU core-hours allocated (no join)",
+                        "refId": "A"
+                    }
+                ],
+                "title": "CPU core-hours allocated (requests, no join) [control]",
+                "description": "Control panel: CPU core-hours from requests without phase join. Compare with 'CPU core-hours allocated' above to check for scrape gaps.",
+                "type": "stat"
+            },
+            {
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "a0fa9d88-8932-41f7-af80-6f678d4fb1e7"
+                },
+                "fieldConfig": {
+                    "defaults": {
+                        "unit": "none",
+                        "decimals": 1,
+                        "displayName": "GPU hours used (selected period)"
+                    }
+                },
+                "collapsed": false,
+                "gridPos": {
+                    "h": 1,
+                    "w": 24,
+                    "x": 0,
+                    "y": 53
+                },
+                "id": 221,
+                "title": "GPU Hours",
+                "type": "row"
+            },
+            {
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "a0fa9d88-8932-41f7-af80-6f678d4fb1e7"
+                },
+                "fieldConfig": {
+                    "defaults": {
+                        "unit": "none",
+                        "decimals": 1,
+                        "displayName": "GPU hours used (selected period)"
+                    }
+                },
+                "gridPos": {
+                    "h": 6,
+                    "w": 8,
+                    "x": 0,
+                    "y": 54
+                },
+                "id": 204,
+                "options": {
+                    "reduceOptions": {
+                        "calcs": [
+                            "lastNotNull"
+                        ]
+                    },
+                    "orientation": "auto",
+                    "textMode": "auto",
+                    "colorMode": "value",
+                    "graphMode": "none"
+                },
+                "targets": [
+                    {
+                        "expr": "sum_over_time(sum(label_replace(DCGM_FI_DEV_GPU_UTIL, \"node\", \"$1\", \"Hostname\", \"(.+)\") * on(node) group_left() max by(node) (kube_pod_info{namespace=\"$namespace\"}))[$__range:5m]) / 100 * 5 / 60",
+                        "legendFormat": "GPU hours used",
+                        "refId": "A"
+                    }
+                ],
+                "title": "GPU hours used (selected period) [node-level approx]",
+                "description": "GPU-hours used based on DCGM_FI_DEV_GPU_UTIL (0-100%) × allocated GPUs × time. Node-level approximation — same caveat as GPU memory panel. Not available for b-* namespaces.",
+                "type": "stat"
+            },
+            {
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "a0fa9d88-8932-41f7-af80-6f678d4fb1e7"
+                },
+                "fieldConfig": {
+                    "defaults": {
+                        "unit": "none",
+                        "decimals": 1,
+                        "displayName": "GPU hours allocated (selected period)"
+                    }
+                },
+                "gridPos": {
+                    "h": 6,
+                    "w": 8,
+                    "x": 8,
+                    "y": 54
+                },
+                "id": 202,
+                "options": {
+                    "reduceOptions": {
+                        "calcs": [
+                            "lastNotNull"
+                        ]
+                    },
+                    "orientation": "auto",
+                    "textMode": "auto",
+                    "colorMode": "value",
+                    "graphMode": "none"
+                },
+                "targets": [
+                    {
+                        "expr": "sum_over_time(sum(kube_pod_container_resource_requests{namespace=\"$namespace\",resource=\"nvidia_com_gpu\"} * on(namespace,pod,cluster) group_left() max by(namespace,pod,cluster) (last_over_time(kube_pod_status_phase{namespace=\"$namespace\",phase=\"Running\"}[10m])))[$__range:5m]) * 5 / 60",
+                        "legendFormat": "GPU hours allocated",
+                        "refId": "A"
+                    }
+                ],
+                "title": "GPU hours allocated (requests) [selected period]",
+                "description": "Total allocated GPU-hours for running pods over the selected time range.",
+                "type": "stat"
+            },
+            {
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "a0fa9d88-8932-41f7-af80-6f678d4fb1e7"
+                },
+                "fieldConfig": {
+                    "defaults": {
+                        "unit": "none",
+                        "decimals": 1,
+                        "displayName": "GPU hours allocated no-join (selected period)"
+                    }
+                },
+                "gridPos": {
+                    "h": 6,
+                    "w": 8,
+                    "x": 16,
+                    "y": 54
+                },
+                "id": 212,
+                "options": {
+                    "reduceOptions": {
+                        "calcs": [
+                            "lastNotNull"
+                        ]
+                    },
+                    "orientation": "auto",
+                    "textMode": "auto",
+                    "colorMode": "value",
+                    "graphMode": "none"
+                },
+                "targets": [
+                    {
+                        "expr": "sum_over_time(sum(kube_pod_container_resource_requests{namespace=\"$namespace\",resource=\"nvidia_com_gpu\"})[$__range:5m]) * 5 / 60",
+                        "legendFormat": "GPU hours allocated (no join)",
+                        "refId": "A"
+                    }
+                ],
+                "title": "GPU hours allocated (requests, no join) [control]",
+                "description": "Control panel: GPU hours from requests without phase join. Compare with 'GPU hours allocated' above to check for scrape gaps.",
+                "type": "stat"
+            },
+            {
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "a0fa9d88-8932-41f7-af80-6f678d4fb1e7"
+                },
+                "fieldConfig": {
+                    "defaults": {
+                        "unit": "percentunit",
+                        "min": 0,
+                        "max": 1
+                    }
+                },
+                "gridPos": {
+                    "x": 6,
+                    "y": 14,
+                    "w": 6,
+                    "h": 8
+                },
+                "id": 223,
+                "targets": [
+                    {
+                        "expr": "sum(label_replace(DCGM_FI_DEV_GPU_UTIL, \"node\", \"$1\", \"Hostname\", \"(.+)\") * on(node) group_left() max by(node) (kube_pod_info{namespace=\"$namespace\"})) / 100",
+                        "legendFormat": "GPU utilization [node-level approx]",
+                        "refId": "A"
+                    }
+                ],
+                "title": "GPU utilization (%) [node-level approx]",
+                "description": "GPU utilization via DCGM_FI_DEV_GPU_UTIL (0-100%). Node-level approximation — same caveat as GPU hours used panel. Not available for b-* namespaces.",
+                "type": "timeseries"
+            },
+            {
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "a0fa9d88-8932-41f7-af80-6f678d4fb1e7"
+                },
+                "fieldConfig": {
+                    "defaults": {
+                        "unit": "decgbytes"
+                    }
+                },
+                "gridPos": {
+                    "x": 6,
+                    "y": 22,
+                    "w": 6,
+                    "h": 8
+                },
+                "id": 20,
+                "options": {
+                    "noValue": "N/A (no GPU data)"
+                },
+                "targets": [
+                    {
+                        "expr": "(sum by (node) (label_replace(DCGM_FI_DEV_FB_USED, \"node\", \"$1\", \"Hostname\", \"(.+)\") * on(node) group_left() max by (node) (kube_pod_info{namespace=\"$namespace\"})) / 1024) or (0 * absent(kube_pod_info{namespace=\"$namespace\", cluster=\"nerc-ocp-prod\"}))",
+                        "legendFormat": "GPU memory used (GiB) [0 = no DCGM data]",
+                        "refId": "A"
+                    }
+                ],
+                "title": "GPU memory used (GiB) [node-level approx]",
+                "description": "GPU VRAM usage via DCGM exporter (node-level approximation).\n\nDCGM_FI_DEV_FB_USED is node/GPU-level — if multiple namespaces share a GPU node, each will show the full node VRAM. No pod-level VRAM metric is available from DCGM.\n\n⚠️ Not available for Barcelona projects (b-* namespaces) — the beta-test cluster does not run a DCGM exporter.",
+                "type": "timeseries"
+            },
+            {
+                "collapsed": false,
+                "gridPos": {
+                    "h": 1,
+                    "w": 24,
+                    "x": 0,
+                    "y": 30
+                },
+                "id": 240,
+                "panels": [
+                    {
+                        "datasource": {
+                            "type": "prometheus",
+                            "uid": "a0fa9d88-8932-41f7-af80-6f678d4fb1e7"
+                        },
+                        "fieldConfig": {
+                            "defaults": {
+                                "unit": "Bps"
+                            }
+                        },
+                        "gridPos": {
+                            "x": 0,
+                            "y": 31,
+                            "w": 12,
+                            "h": 8
+                        },
+                        "targets": [
+                            {
+                                "expr": "sum(rate(container_network_receive_bytes_total{namespace=\"$namespace\"}[5m]) + rate(container_network_transmit_bytes_total{namespace=\"$namespace\"}[5m]))",
+                                "refId": "A"
+                            }
+                        ],
+                        "title": "Network throughput (Rx + Tx)",
+                        "type": "timeseries"
+                    },
+                    {
+                        "datasource": {
+                            "type": "prometheus",
+                            "uid": "a0fa9d88-8932-41f7-af80-6f678d4fb1e7"
+                        },
+                        "fieldConfig": {
+                            "defaults": {
+                                "unit": "watt"
+                            }
+                        },
+                        "gridPos": {
+                            "x": 12,
+                            "y": 31,
+                            "w": 12,
+                            "h": 8
+                        },
+                        "targets": [
+                            {
+                                "expr": "(sum(rate(container_cpu_usage_seconds_total{namespace=\"$namespace\",container!=\"POD\",container!=\"\"}[5m])) * 15) + ((sum(kube_pod_container_resource_requests{resource=\"nvidia_com_gpu\",namespace=\"$namespace\"}) or vector(0)) * 250)",
+                                "legendFormat": "Estimated power (W)",
+                                "refId": "A"
+                            }
+                        ],
+                        "title": "Estimated power usage (heuristic)",
+                        "type": "timeseries"
+                    }
+                ],
+                "title": "Other Metrics",
+                "type": "row"
+            }
+        ],
+        "refresh": "1m",
+        "schemaVersion": 39,
+        "style": "dark",
+        "tags": [
+            "nairr",
+            "rhoai",
+            "mvp"
+        ],
+        "templating": {
+            "list": [
+                {
+                    "current": {
+                        "text": "multi-modal-semantic-routing-for-vllm-d266df",
+                        "value": "multi-modal-semantic-routing-for-vllm-d266df"
+                    },
+                    "label": "RHOAI Project / Namespace",
+                    "name": "namespace",
+                    "query": "multi-modal-semantic-routing-for-vllm-d266df,b-multi-modal-semantic-routing-for-vllm-d266df,ts-data-agent-0a0cee,b-ts-data-agent-0a0cee,efficient-memory-offloading-765cab,b-efficient-memory-offloading-765cab,model-merging-47c2fd,reliability-for-llm-agents-3fc129,mllm-interpretation-and-failure-investigation-c8fa7f,kv-cache-compression-c45372,adaptive-kv-cache-compression-for-agentic-ai-6f3c1f,evaluating-and-improving-applications--ef7fda",
+                    "type": "custom"
+                }
+            ]
+        },
+        "time": {
+            "from": "now/M",
+            "to": "now"
+        },
+        "timepicker": {
+            "quick_ranges": [
+                {
+                    "display": "This month",
+                    "from": "now/M",
+                    "to": "now"
+                },
+                {
+                    "display": "Last month",
+                    "from": "now-1M/M",
+                    "to": "now-1M/M+1M"
+                },
+                {
+                    "display": "Last 30 days",
+                    "from": "now-30d",
+                    "to": "now"
+                },
+                {
+                    "display": "Last 90 days",
+                    "from": "now-90d",
+                    "to": "now"
+                },
+                {
+                    "display": "Last 6 months",
+                    "from": "now-6M",
+                    "to": "now"
+                },
+                {
+                    "display": "Last 1 year",
+                    "from": "now-1y",
+                    "to": "now"
+                }
+            ]
+        },
+        "timezone": "browser",
+        "title": "NAIRR Pilot Project Dashboard (MVP) v1",
+        "uid": "nairr-pilot-mvp-v1",
+        "version": 1
+    }
