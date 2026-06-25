@@ -2,6 +2,8 @@ apiVersion: policy.networking.k8s.io/v1alpha1
 kind: AdminNetworkPolicy
 metadata:
   name: restrict-suhruth-test-egress
+  labels:
+    nerc.mghpcc.org/kustomized: "true"
 spec:
   priority: 50
   subject:
@@ -13,50 +15,88 @@ spec:
         matchLabels:
           app: openclaw
   egress:
-  # Rule 1: allow DNS lookups to OpenShift DNS so pods can resolve hostnames.
-  - name: "allow-dns"
-    action: "Allow"
-    to:
-    - namespaces:
-        matchLabels:
-          kubernetes.io/metadata.name: openshift-dns
-    ports:
-    - portNumber:
-        protocol: UDP
-        port: 5353
-    - portNumber:
-        protocol: TCP
-        port: 5353
-  # Rule 2: allow HTTPS access to the Kubernetes API server for cluster API calls.
-  - name: "allow-kube-api"
-    action: "Allow"
-    to:
-    - pods:
-        namespaceSelector:
-          matchLabels:
-            kubernetes.io/metadata.name: default
-        podSelector:
-          matchLabels:
-            component: apiserver
-    ports:
-    - portNumber:
-        protocol: TCP
-        port: 443
-  # Rule 3: allow access to local LLM service within the same namespace.
-  - name: "allow-local-llm"
-    action: "Allow"
-    to:
-    - namespaces:
-        matchLabels:
-          kubernetes.io/metadata.name: suhruth-test
-    ports:
-    - portNumber:
-        protocol: TCP
-        port: 8443
-  # Rule 4: deny all remaining IPv4 and IPv6 egress destinations not matched above.
-  - name: "deny-all-other-egress"
-    action: "Deny"
-    to:
-    - networks:
-      - 0.0.0.0/0
-      - ::/0
+    # Rule 1: Allow DNS
+    - action: Allow
+      name: allow-dns
+      ports:
+        - portNumber:
+            port: 5353
+            protocol: UDP
+        - portNumber:
+            port: 5353
+            protocol: TCP
+      to:
+        - namespaces:
+            matchLabels:
+              kubernetes.io/metadata.name: openshift-dns
+
+    # Rule 2: Allow Kubernetes API (FIXED — use control plane node IPs + port 6443)
+    - action: Allow
+      name: allow-kube-api
+      ports:
+        - portNumber:
+            port: 6443
+            protocol: TCP
+        - portNumber:
+            port: 443
+            protocol: TCP
+      to:
+        - networks:
+            - 172.30.0.1/32    # Kubernetes API service ClusterIP
+            - 10.30.8.23/32    # ctl-0
+            - 10.30.8.24/32    # ctl-1
+            - 10.30.8.25/32    # ctl-2
+
+    # Rule 3: Allow intra-namespace traffic
+    - action: Allow
+      name: allow-local-llm
+      ports:
+        - portNumber:
+            port: 8443
+            protocol: TCP
+      to:
+        - namespaces:
+            matchLabels:
+              kubernetes.io/metadata.name: suhruth-test
+
+    # Rule 4: Allow OpenShift OAuth router (for GitHub login flow)
+    - action: Allow
+      name: allow-openshift-oauth
+      ports:
+        - portNumber:
+            port: 443
+            protocol: TCP
+      to:
+        - networks:
+            - 199.94.63.12/32  # *.apps.ocp-test.nerc.mghpcc.org (OpenShift router)
+
+    # Rule 5: Allow GitHub (for OAuth identity provider)
+    - action: Allow
+      name: allow-github
+      ports:
+        - portNumber:
+            port: 443
+            protocol: TCP
+      to:
+        - networks:
+            - 140.82.112.0/20  # GitHub
+
+    # Rule 6: Allow Google APIs (Vertex AI + OAuth2 for litellm)
+    - action: Allow
+      name: allow-google-apis
+      ports:
+        - portNumber:
+            port: 443
+            protocol: TCP
+      to:
+        - networks:
+            - 216.239.32.0/22    # us-east5-aiplatform.googleapis.com (Vertex AI)
+            - 192.178.0.0/15     # oauth2.googleapis.com (Google OAuth)
+
+    # Rule 7: Deny everything else
+    - action: Deny
+      name: deny-all-other-egress
+      to:
+        - networks:
+            - 0.0.0.0/0
+            - "::/0"
