@@ -68,7 +68,8 @@ spec:
             protocol: TCP
       to:
         - networks:
-            - 199.94.63.12/32  # *.apps.ocp-test.nerc.mghpcc.org (OpenShift router)
+            - 199.94.63.12/32  # *.apps.ocp-test.nerc.mghpcc.org (external router IP)
+            - 10.30.8.22/32    # internal cluster DNS resolution for oauth-openshift.apps
 
     # Rule 5: Allow GitHub (for OAuth identity provider)
     - action: Allow
