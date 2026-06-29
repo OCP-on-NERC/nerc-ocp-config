@@ -47,12 +47,27 @@ spec:
             - 10.30.8.24/32    # ctl-1
             - 10.30.8.25/32    # ctl-2
 
-    # Rule 3: Allow intra-namespace traffic
+    # Rule 3: Allow intra-namespace traffic (vLLM kube-rbac-proxy)
     - action: Allow
       name: allow-local-llm
       ports:
         - portNumber:
             port: 8443
+            protocol: TCP
+      to:
+        - namespaces:
+            matchLabels:
+              kubernetes.io/metadata.name: suhruth-test
+
+    # Rule 3b: Allow Presidio services (PII detection for LiteLLM guardrails)
+    - action: Allow
+      name: allow-presidio
+      ports:
+        - portNumber:
+            port: 5001
+            protocol: TCP
+        - portNumber:
+            port: 5002
             protocol: TCP
       to:
         - namespaces:
