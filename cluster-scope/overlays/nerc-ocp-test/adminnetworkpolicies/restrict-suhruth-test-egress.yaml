@@ -60,14 +60,12 @@ spec:
               kubernetes.io/metadata.name: suhruth-test
 
     # Rule 3b: Allow Presidio services (PII detection for LiteLLM guardrails)
+    # Note: Presidio uses port 3000 by default (not 5001/5002)
     - action: Allow
       name: allow-presidio
       ports:
         - portNumber:
-            port: 5001
-            protocol: TCP
-        - portNumber:
-            port: 5002
+            port: 3000
             protocol: TCP
       to:
         - namespaces:
