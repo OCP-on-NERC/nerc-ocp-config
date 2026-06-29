@@ -105,7 +105,7 @@ spec:
       to:
         - networks:
             - 216.239.32.0/22    # us-east5-aiplatform.googleapis.com (Vertex AI)
-            - 192.178.0.0/15     # oauth2.googleapis.com (Google OAuth)
+            - 142.250.0.0/15     # oauth2.googleapis.com (Google OAuth - CORRECT IP RANGE)
 
     # Rule 7: Deny everything else
     - action: Deny
