@@ -1,0 +1,29 @@
+name: freeze-window
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+  # Allow manual re-runs for re-checking the freeze status
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    name: check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: install uv
+        run: |
+          pip install uv
+
+      - name: Evaluate freeze window (UTC)
+        id: freeze
+        shell: bash
+        run: |
+          echo "Actual time (UTC): $(date -u)"
+          echo ""
+          uv run ci/freeze-window.py check
