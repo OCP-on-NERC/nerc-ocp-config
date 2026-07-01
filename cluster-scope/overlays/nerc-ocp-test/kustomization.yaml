@@ -15,6 +15,7 @@ resources:
   - machineconfigs
   - nodenetworkconfigurationpolicies
   - adminnetworkpolicies
+  - egressfirewalls
   - feature/odf
   - feature/rhoai
   - rbac

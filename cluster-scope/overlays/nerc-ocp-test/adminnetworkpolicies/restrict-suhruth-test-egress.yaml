@@ -95,17 +95,18 @@ spec:
         - networks:
             - 140.82.112.0/20  # GitHub
 
-    # Rule 6: Allow Google APIs (Vertex AI + OAuth2 for litellm)
+    # Rule 6: Allow HTTPS egress
+    # EgressFirewall (namespace-level) restricts which domains can be reached
+    # AdminNetworkPolicy (pod-level) restricts which pods can make HTTPS requests
     - action: Allow
-      name: allow-google-apis
+      name: allow-https-egress
       ports:
         - portNumber:
             port: 443
             protocol: TCP
       to:
         - networks:
-            - 216.239.32.0/22    # us-east5-aiplatform.googleapis.com (Vertex AI)
-            - 142.250.0.0/15     # oauth2.googleapis.com (Google OAuth - CORRECT IP RANGE)
+            - 0.0.0.0/0
 
     # Rule 7: Deny everything else
     - action: Deny

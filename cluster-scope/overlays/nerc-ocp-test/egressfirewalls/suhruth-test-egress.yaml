@@ -1,0 +1,60 @@
+apiVersion: k8s.ovn.org/v1
+kind: EgressFirewall
+metadata:
+  name: suhruth-test-egress
+  namespace: suhruth-test
+spec:
+  egress:
+  # Rule 1: Allow DNS to OpenShift DNS service
+  - type: Allow
+    to:
+      cidrSelector: 172.30.0.10/32
+    ports:
+      - protocol: UDP
+        port: 53
+      - protocol: TCP
+        port: 53
+
+  # Rule 2: Allow internal pod network (for Presidio, Kubernetes API, etc.)
+  - type: Allow
+    to:
+      cidrSelector: 10.0.0.0/8
+
+  # Rule 3: Allow internal service network
+  - type: Allow
+    to:
+      cidrSelector: 172.30.0.0/16
+
+  # Rule 4: Allow OpenShift OAuth router
+  - type: Allow
+    to:
+      cidrSelector: 199.94.63.12/32
+
+  # Rule 5: Allow Google OAuth (specific domain only)
+  - type: Allow
+    to:
+      dnsName: oauth2.googleapis.com
+
+  # Rule 6: Allow Vertex AI endpoints (specific subdomain only)
+  - type: Allow
+    to:
+      dnsName: "*.aiplatform.googleapis.com"
+
+  # Rule 7: Allow Google accounts for OAuth flow
+  - type: Allow
+    to:
+      dnsName: accounts.google.com
+
+  # Rule 8: Allow GitHub for OAuth
+  - type: Allow
+    to:
+      dnsName: github.com
+
+  - type: Allow
+    to:
+      dnsName: "*.github.com"
+
+  # Rule 9: Deny everything else
+  - type: Deny
+    to:
+      cidrSelector: 0.0.0.0/0
