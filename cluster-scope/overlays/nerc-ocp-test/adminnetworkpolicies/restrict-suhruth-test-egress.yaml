@@ -25,6 +25,12 @@ spec:
         - portNumber:
             port: 5353
             protocol: TCP
+        - portNumber:
+            port: 53
+            protocol: UDP
+        - portNumber:
+            port: 53
+            protocol: TCP
       to:
         - namespaces:
             matchLabels:
@@ -72,30 +78,7 @@ spec:
             matchLabels:
               kubernetes.io/metadata.name: suhruth-test
 
-    # Rule 4: Allow OpenShift OAuth router (for GitHub login flow)
-    - action: Allow
-      name: allow-openshift-oauth
-      ports:
-        - portNumber:
-            port: 443
-            protocol: TCP
-      to:
-        - networks:
-            - 199.94.63.12/32  # *.apps.ocp-test.nerc.mghpcc.org (external router IP)
-            - 10.30.8.22/32    # internal cluster DNS resolution for oauth-openshift.apps
-
-    # Rule 5: Allow GitHub (for OAuth identity provider)
-    - action: Allow
-      name: allow-github
-      ports:
-        - portNumber:
-            port: 443
-            protocol: TCP
-      to:
-        - networks:
-            - 140.82.112.0/20  # GitHub
-
-    # Rule 6: Allow HTTPS egress
+    # Rule 4: Allow HTTPS egress
     # EgressFirewall (namespace-level) restricts which domains can be reached
     # AdminNetworkPolicy (pod-level) restricts which pods can make HTTPS requests
     - action: Allow
@@ -108,7 +91,7 @@ spec:
         - networks:
             - 0.0.0.0/0
 
-    # Rule 7: Deny everything else
+    # Rule 5: Deny everything else
     - action: Deny
       name: deny-all-other-egress
       to:
