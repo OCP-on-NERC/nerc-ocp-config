@@ -15,7 +15,7 @@ spec:
         matchLabels:
           app: openclaw
   egress:
-    # Rule 1: Allow DNS
+    # Allow DNS
     - action: Allow
       name: allow-dns
       ports:
@@ -36,7 +36,7 @@ spec:
             matchLabels:
               kubernetes.io/metadata.name: openshift-dns
 
-    # Rule 2: Allow Kubernetes API (FIXED — use control plane node IPs + port 6443)
+    # Allow Kubernetes API (control plane node IPs + port 6443)
     - action: Allow
       name: allow-kube-api
       ports:
@@ -53,7 +53,7 @@ spec:
             - 10.30.8.24/32    # ctl-1
             - 10.30.8.25/32    # ctl-2
 
-    # Rule 3: Allow intra-namespace traffic (vLLM kube-rbac-proxy)
+    # Allow intra-namespace traffic (vLLM kube-rbac-proxy)
     - action: Allow
       name: allow-local-llm
       ports:
@@ -65,20 +65,22 @@ spec:
             matchLabels:
               kubernetes.io/metadata.name: suhruth-test
 
-    # Rule 3b: Allow Presidio services (PII detection for LiteLLM guardrails)
-    # Note: Presidio uses port 3000 by default (not 5001/5002)
+    # Allow TrustyAI Guardrails Orchestrator and detector services
     - action: Allow
-      name: allow-presidio
+      name: allow-trustyai-guardrails
       ports:
         - portNumber:
-            port: 3000
+            port: 8033
+            protocol: TCP
+        - portNumber:
+            port: 8000
             protocol: TCP
       to:
         - namespaces:
             matchLabels:
               kubernetes.io/metadata.name: suhruth-test
 
-    # Rule 4: Allow HTTPS egress
+    # Allow HTTPS egress
     # EgressFirewall (namespace-level) restricts which domains can be reached
     # AdminNetworkPolicy (pod-level) restricts which pods can make HTTPS requests
     - action: Allow
@@ -91,7 +93,7 @@ spec:
         - networks:
             - 0.0.0.0/0
 
-    # Rule 5: Deny everything else
+    # Deny everything else
     - action: Deny
       name: deny-all-other-egress
       to:
