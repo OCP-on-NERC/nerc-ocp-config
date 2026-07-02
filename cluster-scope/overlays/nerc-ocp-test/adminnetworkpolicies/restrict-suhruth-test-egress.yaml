@@ -70,10 +70,13 @@ spec:
       name: allow-trustyai-guardrails
       ports:
         - portNumber:
-            port: 8033
+            port: 8032
             protocol: TCP
         - portNumber:
-            port: 8000
+            port: 8034
+            protocol: TCP
+        - portNumber:
+            port: 8080
             protocol: TCP
       to:
         - namespaces:
