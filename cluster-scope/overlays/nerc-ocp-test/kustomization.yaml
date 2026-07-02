@@ -16,6 +16,7 @@ resources:
   - nodenetworkconfigurationpolicies
   - adminnetworkpolicies
   - egressfirewalls
+  - trustyai
   - feature/odf
   - feature/rhoai
   - rbac
