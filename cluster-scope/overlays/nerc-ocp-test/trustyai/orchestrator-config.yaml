@@ -17,7 +17,7 @@ data:
       - anthropic-version
 
     # Chat generation service - LiteLLM proxy endpoint
-    chat_generation:
+    openai:
       service:
         hostname: localhost
         port: 4000
@@ -25,29 +25,12 @@ data:
 
     # Detector services for guardrails
     detectors:
-      # PII detector (replaces Presidio)
-      pii-detector:
+      # Built-in PII detector (regex-based, runs as sidecar)
+      # Detects: email, SSN, credit card, phone numbers, etc.
+      built-in-detector:
         type: text_contents
         service:
-          hostname: guardrails-detector-pii.suhruth-test.svc.cluster.local
-          port: 8000
+          hostname: localhost
+          port: 8080
         chunker_id: whole_doc_chunker
         default_threshold: 0.75
-
-      # HAP (Hate, Abuse, Profanity) detector
-      hap-detector:
-        type: text_contents
-        service:
-          hostname: guardrails-detector-hap.suhruth-test.svc.cluster.local
-          port: 8000
-        chunker_id: whole_doc_chunker
-        default_threshold: 0.65
-
-      # Jailbreak/prompt injection detector
-      jailbreak-detector:
-        type: text_contents
-        service:
-          hostname: guardrails-detector-jailbreak.suhruth-test.svc.cluster.local
-          port: 8000
-        chunker_id: whole_doc_chunker
-        default_threshold: 0.70
