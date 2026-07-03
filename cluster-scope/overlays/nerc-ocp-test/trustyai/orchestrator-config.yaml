@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: trustyai-orchestrator-config
+  namespace: suhruth-test
+  labels:
+    app: trustyai-orchestrator
+data:
+  config.yaml: |
+    # TrustyAI Guardrails Orchestrator Configuration for OpenClaw
+    # Monitors Claude Vertex AI calls via LiteLLM proxy
+
+    # Passthrough headers for Claude API authentication
+    passthrough_headers:
+      - authorization
+      - x-api-key
+      - anthropic-version
+
+    # Chat generation service - LiteLLM proxy endpoint
+    openai:
+      service:
+        hostname: localhost
+        port: 4000
+        # LiteLLM runs as sidecar in OpenClaw pod
+
+    # Detector services for guardrails
+    detectors:
+      # Built-in PII detector (regex-based, runs as sidecar)
+      # Detects: email, SSN, credit card, phone numbers, etc.
+      built-in-detector:
+        type: text_contents
+        service:
+          hostname: localhost
+          port: 8080
+        chunker_id: whole_doc_chunker
+        default_threshold: 0.75

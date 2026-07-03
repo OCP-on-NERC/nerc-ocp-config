@@ -15,7 +15,7 @@ spec:
         matchLabels:
           app: openclaw
   egress:
-    # Rule 1: Allow DNS
+    # Allow DNS
     - action: Allow
       name: allow-dns
       ports:
@@ -25,12 +25,18 @@ spec:
         - portNumber:
             port: 5353
             protocol: TCP
+        - portNumber:
+            port: 53
+            protocol: UDP
+        - portNumber:
+            port: 53
+            protocol: TCP
       to:
         - namespaces:
             matchLabels:
               kubernetes.io/metadata.name: openshift-dns
 
-    # Rule 2: Allow Kubernetes API (FIXED — use control plane node IPs + port 6443)
+    # Allow Kubernetes API (control plane node IPs + port 6443)
     - action: Allow
       name: allow-kube-api
       ports:
@@ -47,7 +53,7 @@ spec:
             - 10.30.8.24/32    # ctl-1
             - 10.30.8.25/32    # ctl-2
 
-    # Rule 3: Allow intra-namespace traffic (vLLM kube-rbac-proxy)
+    # Allow intra-namespace traffic (vLLM kube-rbac-proxy)
     - action: Allow
       name: allow-local-llm
       ports:
@@ -59,55 +65,35 @@ spec:
             matchLabels:
               kubernetes.io/metadata.name: suhruth-test
 
-    # Rule 3b: Allow Presidio services (PII detection for LiteLLM guardrails)
-    # Note: Presidio uses port 3000 by default (not 5001/5002)
+    # Allow TrustyAI Guardrails Orchestrator and detector services
     - action: Allow
-      name: allow-presidio
+      name: allow-trustyai-guardrails
       ports:
         - portNumber:
-            port: 3000
+            port: 8033
+            protocol: TCP
+        - portNumber:
+            port: 8000
             protocol: TCP
       to:
         - namespaces:
             matchLabels:
               kubernetes.io/metadata.name: suhruth-test
 
-    # Rule 4: Allow OpenShift OAuth router (for GitHub login flow)
+    # Allow HTTPS egress
+    # EgressFirewall (namespace-level) restricts which domains can be reached
+    # AdminNetworkPolicy (pod-level) restricts which pods can make HTTPS requests
     - action: Allow
-      name: allow-openshift-oauth
+      name: allow-https-egress
       ports:
         - portNumber:
             port: 443
             protocol: TCP
       to:
         - networks:
-            - 199.94.63.12/32  # *.apps.ocp-test.nerc.mghpcc.org (external router IP)
-            - 10.30.8.22/32    # internal cluster DNS resolution for oauth-openshift.apps
+            - 0.0.0.0/0
 
-    # Rule 5: Allow GitHub (for OAuth identity provider)
-    - action: Allow
-      name: allow-github
-      ports:
-        - portNumber:
-            port: 443
-            protocol: TCP
-      to:
-        - networks:
-            - 140.82.112.0/20  # GitHub
-
-    # Rule 6: Allow Google APIs (Vertex AI + OAuth2 for litellm)
-    - action: Allow
-      name: allow-google-apis
-      ports:
-        - portNumber:
-            port: 443
-            protocol: TCP
-      to:
-        - networks:
-            - 216.239.32.0/22    # us-east5-aiplatform.googleapis.com (Vertex AI)
-            - 142.250.0.0/15     # oauth2.googleapis.com (Google OAuth - CORRECT IP RANGE)
-
-    # Rule 7: Deny everything else
+    # Deny everything else
     - action: Deny
       name: deny-all-other-egress
       to:
