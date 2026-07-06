@@ -25,6 +25,7 @@ spec:
         contains(groups[*], 'nerc-ops')  && 'Admin' ||
         contains(groups[*], 'nerc-logs-metrics')  && 'Admin' ||
         'Deny'
+      role_attribute_strict: 'true'
       auth_url: 'https://dex-dex.apps.obs.nerc.mghpcc.org/auth'
       scopes: openid email groups profile
     log:
