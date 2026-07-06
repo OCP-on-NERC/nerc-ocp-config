@@ -47,6 +47,10 @@ data:
       - __name__=~"^log_.*"
       - __name__=~"^gpu_operator_.*"
       - __name__=~"^DCGM_FI_.*"
+
+      # Locally pre-aggregated DCGM gauges (max/avg over 5m recording rules),
+      # so the 300s collection interval does not miss short GPU bursts:
+      - __name__=~"^nerc:dcgm_.*"
       - __name__=~"^argocd_.*"
 
       # Consolidate kube*:

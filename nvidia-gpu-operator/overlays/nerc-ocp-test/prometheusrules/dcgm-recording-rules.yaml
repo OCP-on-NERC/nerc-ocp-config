@@ -1,0 +1,30 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: dcgm-recording-rules
+spec:
+  groups:
+    - name: nerc-dcgm-5m-aggregations
+      # ACM Observability only forwards one point-in-time sample every 300s
+      # (observabilityAddonSpec.interval). These rules pre-aggregate the DCGM
+      # gauges locally over the same window, so the forwarded sample carries
+      # the full 5-minute history instead of an instantaneous value: max5m
+      # catches short bursts, avg5m keeps the integral correct.
+      interval: 30s
+      rules:
+        - record: nerc:dcgm_gpu_util:max5m
+          expr: max_over_time(DCGM_FI_DEV_GPU_UTIL[5m])
+        - record: nerc:dcgm_gpu_util:avg5m
+          expr: avg_over_time(DCGM_FI_DEV_GPU_UTIL[5m])
+        - record: nerc:dcgm_gr_engine_active:max5m
+          expr: max_over_time(DCGM_FI_PROF_GR_ENGINE_ACTIVE[5m])
+        - record: nerc:dcgm_gr_engine_active:avg5m
+          expr: avg_over_time(DCGM_FI_PROF_GR_ENGINE_ACTIVE[5m])
+        - record: nerc:dcgm_fb_used:max5m
+          expr: max_over_time(DCGM_FI_DEV_FB_USED[5m])
+        - record: nerc:dcgm_fb_used:avg5m
+          expr: avg_over_time(DCGM_FI_DEV_FB_USED[5m])
+        - record: nerc:dcgm_power_usage:max5m
+          expr: max_over_time(DCGM_FI_DEV_POWER_USAGE[5m])
+        - record: nerc:dcgm_power_usage:avg5m
+          expr: avg_over_time(DCGM_FI_DEV_POWER_USAGE[5m])
