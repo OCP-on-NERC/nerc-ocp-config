@@ -65,6 +65,7 @@ spec:
               region = us-east-1
               access_key_id = ${WASABI_AK}
               secret_access_key = ${WASABI_SK}
+              no_check_bucket = true
               RC
               DST=wasabi-us:nerc-metrics-backup
               RC=0
