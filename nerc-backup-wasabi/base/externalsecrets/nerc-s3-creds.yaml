@@ -1,0 +1,15 @@
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: nerc-s3-creds
+spec:
+  refreshInterval: 1h
+  secretStoreRef:
+    name: nerc-cluster-secrets
+    kind: ClusterSecretStore
+  target:
+    name: nerc-s3-creds
+  dataFrom:
+    # same source Loki uses for the NERC S3 store
+    - extract:
+        key: $ENV/$CLUSTER/loki-thanos-object-storage

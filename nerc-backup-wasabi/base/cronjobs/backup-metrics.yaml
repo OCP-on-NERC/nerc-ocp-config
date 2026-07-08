@@ -1,0 +1,85 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: backup-metrics
+spec:
+  schedule: "0 2 * * *"          # daily 02:00 UTC
+  concurrencyPolicy: Forbid       # no parallel run
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      backoffLimit: 2
+      activeDeadlineSeconds: 21600   # 6h
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+          - name: rclone
+            image: rclone/rclone:latest
+            # NERC and Wasabi keys from Vault (ExternalSecrets nerc-s3-creds + wasabi-creds).
+            # rclone.conf is built at runtime; no static key material.
+            env:
+            - name: NERC_ENDPOINT
+              valueFrom:
+                secretKeyRef:
+                  name: nerc-s3-creds
+                  key: endpoint
+            - name: NERC_AK
+              valueFrom:
+                secretKeyRef:
+                  name: nerc-s3-creds
+                  key: access_key_id
+            - name: NERC_SK
+              valueFrom:
+                secretKeyRef:
+                  name: nerc-s3-creds
+                  key: access_key_secret
+            - name: WASABI_AK
+              valueFrom:
+                secretKeyRef:
+                  name: wasabi-creds
+                  key: access_key_id
+            - name: WASABI_SK
+              valueFrom:
+                secretKeyRef:
+                  name: wasabi-creds
+                  key: secret_access_key
+            command: ["/bin/sh", "-c"]
+            args:
+            - |
+              set -u
+              CFG=/tmp/rclone.conf
+              cat > "$CFG" <<RC
+              [nerc]
+              type = s3
+              provider = Other
+              endpoint = ${NERC_ENDPOINT}
+              access_key_id = ${NERC_AK}
+              secret_access_key = ${NERC_SK}
+
+              [wasabi-us]
+              type = s3
+              provider = Wasabi
+              endpoint = s3.wasabisys.com
+              region = us-east-1
+              access_key_id = ${WASABI_AK}
+              secret_access_key = ${WASABI_SK}
+              RC
+              DST=wasabi-us:nerc-metrics-backup
+              RC=0
+              for B in acm-metrics acm-metrics-hypershift2 acm-metrics-test open-telemetry open-telemetry-test; do
+                echo ">>> $B -> $DST/$B/ ($(date -u +%FT%TZ))"
+                rclone copy "nerc:$B" "$DST/$B" \
+                  --config "$CFG" \
+                  --transfers 16 --checkers 32 --fast-list \
+                  --retries 3 --low-level-retries 10 \
+                  --stats 60s --stats-one-line -v 2>&1 | tail -10
+                rc=$?
+                [ $rc -ne 0 ] && { echo "WARN: $B rc=$rc"; RC=1; }
+              done
+              echo "===== nerc-metrics-backup ====="
+              rclone size "$DST" --config "$CFG" 2>&1 | tail -2
+              echo "Status: $([ $RC -eq 0 ] && echo ALLE OK || echo mit WARNUNGEN)"
+              rm -f "$CFG"
+              exit $RC
