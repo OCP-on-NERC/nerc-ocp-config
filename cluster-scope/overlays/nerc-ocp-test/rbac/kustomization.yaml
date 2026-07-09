@@ -4,3 +4,4 @@ resources:
   - nerc-test-people.yaml
   - nerc-test-perses.yaml
   - nerc-test-cost-management.yaml
+  - trustyai-guardrails-suhruth.yaml
