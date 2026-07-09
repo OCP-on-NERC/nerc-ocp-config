@@ -1,7 +1,8 @@
 apiVersion: k8s.ovn.org/v1
 kind: EgressFirewall
 metadata:
-  name: suhruth-test-egress
+  # OVN-Kubernetes requires the EgressFirewall in a namespace to be named "default"
+  name: default
   namespace: suhruth-test
 spec:
   egress:
