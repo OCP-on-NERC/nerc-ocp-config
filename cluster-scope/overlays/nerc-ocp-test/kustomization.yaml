@@ -6,6 +6,8 @@ resources:
   - ../common
   - ../../base/rbac.authorization.k8s.io/clusterroles/allow-edit-rbac
   - ../../base/rbac.authorization.k8s.io/clusterroles/application-edit
+  - ../../base/rbac.authorization.k8s.io/clusterroles/opendatahub-cluster-reader
+  - ../../base/rbac.authorization.k8s.io/clusterroles/opendatahub-nerc-ops
   - ../../base/core/namespaces/openshift-gitops
   - ../../base/core/namespaces/dex
   - externalsecrets
