@@ -69,7 +69,7 @@ spec:
               RC
               # loki-logs is a LIVE bucket (audit/ rotates, grows). copy not sync,
               # one pass per job (no wrapper loop -> no runaway). high --transfers.
-              DST=wasabi-us:nerc-loki-backup
+              DST=wasabi-us:nerc-loki-backup-bu
               RC=0
               for B in loki-logs loki-logs-test; do
                 echo ">>> $B -> $DST/$B/ ($(date -u +%FT%TZ))"

@@ -67,7 +67,7 @@ spec:
               secret_access_key = ${WASABI_SK}
               no_check_bucket = true
               RC
-              DST=wasabi-us:nerc-metrics-backup
+              DST=wasabi-us:nerc-metrics-backup-bu
               RC=0
               for B in acm-metrics acm-metrics-hypershift2 acm-metrics-test open-telemetry open-telemetry-test; do
                 echo ">>> $B -> $DST/$B/ ($(date -u +%FT%TZ))"
