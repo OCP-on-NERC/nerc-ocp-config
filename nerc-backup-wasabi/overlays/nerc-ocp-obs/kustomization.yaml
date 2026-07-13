@@ -21,4 +21,4 @@ patches:
       spec:
         dataFrom:
           - extract:
-              key: nerc/nerc-ocp-obs/wasabi-backup
+              key: nerc/nerc-ocp-obs/wasabi-backup-bu

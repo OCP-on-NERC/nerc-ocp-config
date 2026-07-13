@@ -5,16 +5,16 @@ cluster via rclone CronJobs. Avoids slow external uplinks; runs at datacenter
 bandwidth.
 
 ## What gets backed up (rclone `copy`, NOT `sync`; keeps deleted objects)
-- **nerc-metrics-backup/** from acm-metrics, acm-metrics-hypershift2,
+- **nerc-metrics-backup-bu/** from acm-metrics, acm-metrics-hypershift2,
   acm-metrics-test, open-telemetry, open-telemetry-test (each as a prefix).
-- **nerc-loki-backup/** from loki-logs, loki-logs-test.
+- **nerc-loki-backup-bu/** from loki-logs, loki-logs-test.
 - Target region: Wasabi us-east-1 (s3.wasabisys.com).
 
 ## Structure
 - `base/namespace.yaml`; namespace `nerc-backup-wasabi`.
 - `base/externalsecrets/`; pulls both key pairs from Vault
   (`$ENV/$CLUSTER/loki-thanos-object-storage` for NERC;
-  `$ENV/$CLUSTER/wasabi-backup` for Wasabi). The overlay sets the concrete path.
+  `$ENV/$CLUSTER/wasabi-backup-bu` for Wasabi). The overlay sets the concrete path.
 - `base/cronjobs/`; two CronJobs (backup-metrics 02:00, backup-loki 02:30 UTC).
   Each builds the rclone.conf at runtime from the secrets; no static key material.
 
