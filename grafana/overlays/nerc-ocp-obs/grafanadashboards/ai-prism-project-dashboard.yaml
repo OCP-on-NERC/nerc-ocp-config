@@ -650,19 +650,18 @@ spec:
         "style": "dark",
         "tags": [
             "ai-prism",
-            "rhoai",
-            "mvp"
+            "rhoai"
         ],
         "templating": {
             "list": [
                 {
                     "current": {
-                        "text": "multi-modal-semantic-routing-for-vllm-d266df",
-                        "value": "multi-modal-semantic-routing-for-vllm-d266df"
+                        "text": "b-prism",
+                        "value": "b-prism"
                     },
                     "label": "RHOAI Project / Namespace",
                     "name": "namespace",
-                    "query": "multi-modal-semantic-routing-for-vllm-d266df,b-multi-modal-semantic-routing-for-vllm-d266df",
+                    "query": "b-prism",
                     "type": "custom"
                 }
             ]
