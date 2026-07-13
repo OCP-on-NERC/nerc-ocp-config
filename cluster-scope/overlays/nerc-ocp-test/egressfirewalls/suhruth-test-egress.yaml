@@ -36,24 +36,24 @@ spec:
     to:
       dnsName: oauth2.googleapis.com
 
-  # Allow Vertex AI endpoints (specific subdomain only)
+  # Allow Vertex AI endpoint for us-east5 region
   - type: Allow
     to:
-      dnsName: "*.aiplatform.googleapis.com"
+      dnsName: us-east5-aiplatform.googleapis.com
 
   # Allow Google accounts for OAuth flow
   - type: Allow
     to:
       dnsName: accounts.google.com
 
-  # Allow GitHub for OAuth
+  # Allow GitHub for OAuth and API access
   - type: Allow
     to:
       dnsName: github.com
 
   - type: Allow
     to:
-      dnsName: "*.github.com"
+      dnsName: api.github.com
 
   # Deny everything else
   - type: Deny
