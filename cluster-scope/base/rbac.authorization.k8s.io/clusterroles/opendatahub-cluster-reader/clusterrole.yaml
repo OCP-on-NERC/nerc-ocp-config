@@ -13,3 +13,19 @@ rules:
       - list
       - get
       - watch
+  - apiGroups:
+      - opendatahub.io
+    resources:
+      - '*'
+    verbs:
+      - list
+      - get
+      - watch
+  - apiGroups:
+      - console.openshift.io
+    resources:
+      - '*'
+    verbs:
+      - list
+      - get
+      - watch
