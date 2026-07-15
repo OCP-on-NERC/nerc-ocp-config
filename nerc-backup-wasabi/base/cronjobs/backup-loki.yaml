@@ -100,6 +100,6 @@ spec:
               done
               echo "===== nerc-loki-backup ====="
               rclone size "$DST" --config "$CFG" 2>&1 | tail -2
-              echo "Status: $([ $RC -eq 0 ] && echo ALLE OK || echo mit WARNUNGEN)"
+              echo "Status: $([ $RC -eq 0 ] && echo ALL OK || echo with WARNINGS)"
               rm -f "$CFG" /tmp/out.txt
               exit $RC
