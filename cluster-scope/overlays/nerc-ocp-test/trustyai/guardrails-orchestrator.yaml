@@ -25,6 +25,12 @@ spec:
   # Number of replicas for high availability
   replicas: 1
 
+  # OpenTelemetry tracing configuration
+  otelExporter:
+    otlpProtocol: grpc
+    enableTraces: true
+    otlpTracesEndpoint: http://opentelemetry-collector.opentelemetry.svc:4317
+
   # Service configuration
   serviceConfig:
     type: ClusterIP
