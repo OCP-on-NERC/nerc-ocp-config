@@ -8,7 +8,6 @@ resources:
   - opentelemetry-tempostack.yaml
   - opentelemetry-collector.yaml
   - opentelemetry-instrumentation.yaml
-  - tempo-distributor-allow-collector.yaml
 labels:
   - includeSelectors: true
     pairs:
