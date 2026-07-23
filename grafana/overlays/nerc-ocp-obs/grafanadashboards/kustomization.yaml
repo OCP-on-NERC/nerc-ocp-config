@@ -11,3 +11,4 @@ resources:
   - kueue-metrics-dashboard.yaml
   - nairr-pilot-project-dashboard.yaml
   - ai-prism-project-dashboard.yaml
+  - ai-prism-project-dashboard-v2.yaml
