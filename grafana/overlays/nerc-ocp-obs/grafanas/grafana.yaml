@@ -24,6 +24,7 @@ spec:
         contains(groups[*], 'cluster-admins') && 'Admin' ||
         contains(groups[*], 'nerc-ops')  && 'Admin' ||
         contains(groups[*], 'nerc-logs-metrics')  && 'Admin' ||
+        contains(groups[*], 'buha25') && 'Viewer' ||
         'Deny'
       role_attribute_strict: 'true'
       auth_url: 'https://dex-dex.apps.obs.nerc.mghpcc.org/auth'
