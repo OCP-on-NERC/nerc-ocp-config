@@ -78,6 +78,7 @@ patches:
               - ocp-on-nerc/nerc-ops
               - ocp-on-nerc/nerc-logs-metrics
               - ocp-on-nerc/nerc-obs-admins
+              - ocp-on-nerc/buha25
   - patch: |
       - op: replace
         path: /spec/dataFrom/0/extract/key
