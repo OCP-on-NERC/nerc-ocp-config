@@ -73,16 +73,33 @@ spec:
               RC=0
               for B in loki-logs loki-logs-test; do
                 echo ">>> $B -> $DST/$B/ ($(date -u +%FT%TZ))"
+                # --log-level NOTICE keeps only the final stats summary (no
+                # per-object INFO lines), so /tmp/out.txt stays tiny even for
+                # millions of objects. Output to a file (not a pipe) so rc
+                # captures rclone (not tail), then pull the delta lines out.
                 rclone copy "nerc:$B" "$DST/$B" \
                   --config "$CFG" \
                   --transfers 64 --checkers 96 --fast-list \
                   --retries 3 --low-level-retries 10 \
-                  --stats 300s --stats-one-line -v 2>&1 | tail -15
+                  --ignore-errors \
+                  --stats 300s --stats-log-level NOTICE --log-level NOTICE > /tmp/out.txt 2>&1
                 rc=$?
-                [ $rc -ne 0 ] && { echo "WARN: $B rc=$rc"; RC=1; }
+                # delta of this bucket run (objects + bytes actually copied)
+                grep -E "^Transferred:" /tmp/out.txt | tail -2 | sed "s/^/    delta: /"
+                grep -E "^Errors:" /tmp/out.txt | tail -1 | sed "s/^/    /"
+                # rclone exit 4 = non-fatal errors (e.g. transient 404 from
+                # objects deleted at the source during the run; loki audit/
+                # rotates constantly). With --ignore-errors the copy still
+                # finishes; treat 4 as a warning, not a job failure. Only other
+                # non-zero codes fail the job.
+                if [ $rc -eq 4 ]; then
+                  echo "    NOTE: $B rc=4 (non-fatal errors, see Errors above; source objects rotated)"
+                elif [ $rc -ne 0 ]; then
+                  echo "WARN: $B rc=$rc"; RC=1
+                fi
               done
               echo "===== nerc-loki-backup ====="
               rclone size "$DST" --config "$CFG" 2>&1 | tail -2
-              echo "Status: $([ $RC -eq 0 ] && echo ALLE OK || echo mit WARNUNGEN)"
-              rm -f "$CFG"
+              echo "Status: $([ $RC -eq 0 ] && echo ALL OK || echo with WARNINGS)"
+              rm -f "$CFG" /tmp/out.txt
               exit $RC
