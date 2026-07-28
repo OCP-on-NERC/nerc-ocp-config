@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Login</title>
+    <style type="text/css">
+      body {
+        font-family: "Open Sans", Helvetica, Arial, sans-serif;
+        font-size: 14px;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: #f0f2f5;
+      }
+      .login-container {
+        width: 100%;
+        max-width: 500px;
+        margin-top: 40px;
+      }
+      /* Prominent Warning Notification Block */
+      .warning-banner {
+        background-color: #faeaea;
+        border: 2px solid #c91111;
+        border-radius: 4px;
+        padding: 16px;
+        margin-bottom: 24px;
+        display: flex;
+        align-items: flex-start;
+      }
+      .warning-icon {
+        color: #c91111;
+        margin-right: 12px;
+        flex-shrink: 0;
+        width: 24px;
+        height: 24px;
+      }
+      .warning-text {
+        color: #7d1010;
+        font-weight: 600;
+        line-height: 1.5;
+        margin: 0;
+      }
+      /* Styled Provider List Container */
+      .provider-list {
+        background: #ffffff;
+        padding: 24px;
+        border-radius: 4px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      }
+      .provider-item {
+        margin-bottom: 12px;
+      }
+      .provider-item:last-child {
+        margin-bottom: 0;
+      }
+      .provider-link {
+        display: block;
+        padding: 12px;
+        background-color: #0066cc;
+        color: #ffffff;
+        text-align: center;
+        text-decoration: none;
+        font-weight: bold;
+        border-radius: 4px;
+      }
+      .provider-link:hover {
+        background-color: #004b99;
+      }
+    </style>
+  </head>
+  <body>
+
+    <div class="login-container">
+
+      <!-- Prominent Warning Block -->
+      <div class="warning-banner">
+        <!-- Inline SVG Warning Triangle Icon -->
+        <svg class="warning-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://w3.org">
+          <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+        </svg>
+        <p class="warning-text">
+          <strong style="font-weight: 800; font-size: 15px;">IMPORTANT</strong>: All NERC services will be suspended on 7/31/2026. <a href="https://massopen.cloud/faq/">More Details</a>.
+        </p>
+      </div>
+
+      <!-- Provider Selection Box -->
+      <div class="provider-list">
+        <h2 style="margin-top: 0; margin-bottom: 16px; font-size: 18px; color: #333;">Select a Login Provider:</h2>
+
+        {{ range $provider := .Providers }}
+          <div class="provider-item">
+            <!-- This is an example of customizing display for a particular provider based on its Name -->
+            {{ if eq $provider.Name "anypassword" }}
+              <a class="provider-link" href="{{$provider.URL}}">Log in with any username/password</a>
+            {{ else }}
+              <a class="provider-link" href="{{$provider.URL}}">{{$provider.Name}}</a>
+            {{ end }}
+          </div>
+        {{ end }}
+      </div>
+
+    </div>
+
+  </body>
+</html>

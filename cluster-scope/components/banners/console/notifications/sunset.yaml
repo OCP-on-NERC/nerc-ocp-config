@@ -1,0 +1,12 @@
+apiVersion: console.openshift.io/v1
+kind: ConsoleNotification
+metadata:
+  name: sunset-banner
+spec:
+  text: "𝗜𝗠𝗣𝗢𝗥𝗧𝗔𝗡𝗧: All NERC services will be suspended on 7/31/2026."
+  location: BannerTop
+  color: '#ffffff'
+  backgroundColor: '#cc0000'
+  link:
+    href: 'https://massopen.cloud/faq/'
+    text: "More Details"
