@@ -62,6 +62,7 @@ components:
   # this must come last in order to apply
   # to all resources.
   - ../../components/argocd-skip-dryrun
+  - ../../components/banners
 
 generatorOptions:
   disableNameSuffixHash: true
@@ -191,6 +192,13 @@ patches:
     target:
       kind: Subscription
       name: serverless-operator
+  - target:
+      kind: ExternalSecret
+      name: custom-login-templates
+    patch: |
+      - op: replace
+        path: /spec/data/0/remoteRef/key
+        value: nerc/nerc-ocp-prod/openshift-config/custom-login-templates
 labels:
   - includeSelectors: true
     pairs:
