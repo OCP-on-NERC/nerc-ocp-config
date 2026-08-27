@@ -12,6 +12,6 @@ parameters:
   csi.storage.k8s.io/node-stage-secret-namespace: openshift-storage
   csi.storage.k8s.io/provisioner-secret-name: rook-csi-rbd-provisioner
   csi.storage.k8s.io/provisioner-secret-namespace: openshift-storage
-  imageFeatures: layering
+  imageFeatures: layering,deep-flatten,exclusive-lock,object-map,fast-diff
   imageFormat: "2"
   pool: nerc_ocp_test_1_rbd
