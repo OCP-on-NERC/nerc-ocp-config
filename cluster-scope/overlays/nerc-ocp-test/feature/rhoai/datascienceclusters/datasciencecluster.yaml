@@ -4,35 +4,40 @@ metadata:
   name: default-dsc
 spec:
   components:
-    codeflare:
-      managementState: Managed
-    kserve:
-      managementState: Managed
-      nim:
-        managementState: Managed
-      rawDeploymentServiceConfig: Headless
-      serving:
-        ingressGateway:
-          certificate:
-            type: OpenshiftDefaultIngress
-        managementState: Managed
-        name: knative-serving
-    modelregistry:
-      managementState: Managed
-      registriesNamespace: rhoai-model-registries
-    trustyai:
-      managementState: Managed
-    ray:
-      managementState: Managed
-    kueue:
-      managementState: Managed
-    workbenches:
+    aipipelines:
       managementState: Managed
     dashboard:
       managementState: Managed
-    modelmeshserving:
+    feastoperator: {}
+    kserve:
       managementState: Managed
-    datasciencepipelines:
+      modelsAsService:
+        managementState: Removed
+      nim:
+        managementState: Managed
+      rawDeploymentServiceConfig: Headless
+    kueue:
+      defaultClusterQueueName: default
+      defaultLocalQueueName: default
+      managementState: Removed
+    llamastackoperator: {}
+    mlflowoperator:
+      managementState: Removed
+    modelregistry:
       managementState: Managed
+      registriesNamespace: rhoai-model-registries
+    ray:
+      managementState: Managed
+    trainer:
+      managementState: Removed
     trainingoperator:
       managementState: Removed
+    trustyai:
+      eval:
+        lmeval:
+          permitCodeExecution: deny
+          permitOnline: deny
+      managementState: Managed
+    workbenches:
+      managementState: Managed
+      workbenchNamespace: rhods-notebooks
